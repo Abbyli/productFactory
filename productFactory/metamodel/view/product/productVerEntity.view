@@ -1,0 +1,4623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="chen-gy" />
+         <creationTime value="2015-12-02 16:23:35" />
+         <modificationTime value="2016-03-10 11:42:34" />
+         <version value="1.0.0" />
+         <comment><![CDATA[产品配置]]></comment>
+      </baseInfo>
+      <dependences ><dependence name="factory/product/navigateButtonProduct" type="viewc" sc="ProductFactory" dc="factory" ref="product/navigateButtonProduct" /></dependences>
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<dependence name="pfproduct2model.business.xml"
+		ref="pfproduct2model.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="getArithVersionObj" sync="true">
+		<comment><![CDATA[根据工厂产品信息和版本信息查询计算引擎版本对象]]>
+		</comment>
+		<context>
+			<pojo name="pfObjProduct" dataStoreName="pfObjProduct_processor" />
+			<pojo name="pfObjProductVer" dataStoreName="pfObjProductVer_processor" />
+		</context>
+		<arguments>
+			<argument name="pfObjProduct" type="dataStore"></argument>
+			<argument name="pfObjProductVer" type="dataStore"></argument>
+		</arguments>
+		<bo name="pfproduct2model.business.xml" method="pfproduct.qryArithVer"></bo>
+	</pMethod>
+	<pMethod name="getPfProductEntityModelList" onSuccess="getPfProductEntityModelListSuccess">
+		<comment><![CDATA[产品配置页面,查询实体树]]>
+		</comment>
+		<context>
+			<string name="modelVersionId" />
+		</context>
+		<arguments>
+			<argument name="modelVersionId" type="string"></argument>
+		</arguments>
+		<bo name="pfentity.business.xml" method="pfentity.model.getPfEntityModelTree"></bo>
+	</pMethod>
+	<pMethod name="getPfEntityproperties" onSuccess="getPfEntitypropertiesSuccess">
+		<comment><![CDATA[查询实体属性列表（分页）]]>
+		</comment>
+		<context>
+			<string name="pageNumber" />
+			<string name="pageSize" />
+			<string name="entityId" />
+		</context>
+		<arguments>
+			<argument name="pageNumber" type="string"></argument>
+			<argument name="pageSize" type="string"></argument>
+			<argument name="entityId" type="string"></argument>
+		</arguments>
+		<bo name="pfentityproperty.business.xml" method="pfentityproperty.getPfEntityproperties"></bo>
+	</pMethod>
+	<pMethod name="addPfEntityTree" onSuccess="addPfEntityTreeSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfentity.business.xml" method="pfentity.addPfEntityTree"></bo>
+		<context>
+			<pojo name="pfMEntity" dataStoreName="pfMEntity_form" />
+		</context>
+		<arguments>
+			<argument name="pfMEntity" type="dataStore"></argument>
+		</arguments>
+	</pMethod>
+	<dependence name="pfentity.business.xml"
+		ref="pfentity.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<dependence name="pfentityproperty.business.xml"
+		ref="pfentityproperty.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="updPfEntityTree" onSuccess="updPfEntityTreeSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfentity.business.xml" method="pfentity.updPfEntityTree"></bo>
+		<context>
+			<pojo name="pfMEntity" dataStoreName="pfMEntity_form" />
+		</context>
+		<arguments>
+			<argument name="pfMEntity" type="dataStore"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="delPfEntity" onSuccess="delPfEntitySuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfentity.business.xml" method="pfentity.delPfEntity"></bo>
+		<context>
+			<string name="id" /><string name="childIds" />
+		</context>
+		<arguments>
+			
+		<argument name="id" type="string"></argument><argument name="childIds" type="string"></argument></arguments>
+	</pMethod>
+	<pMethod name="checkBusinessKey" onSuccess="checkBusinessKeySuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfentity.business.xml" method="pfentity.basic.checkBusinessKey"></bo>
+		<context>
+			<string name="entityId" />
+			<string name="businessPrimaryKey" />
+			<string name="businessForeignKey" />
+		</context>
+		<arguments>
+			<argument name="entityId" type="string"></argument>
+			<argument name="businessPrimaryKey" type="string"></argument>
+			<argument name="businessForeignKey" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="delPfEntityProperty" onSuccess="delPfEntityPropertySuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfentityproperty.business.xml" method="pfentityproperty.delPfEntityProperty"></bo>
+		<context>
+			<string name="id" />
+		</context>
+		<arguments>
+			<argument name="id" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="saveOrder" onSuccess="saveOrderSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfentity.business.xml" method="pfentity.saveOrder"></bo>
+<context><pojo name="selectRow" dataStoreName="pfMProperty_grid" /><pojo name="destRow" dataStoreName="pfMProperty_grid" /><string name="type" /></context><arguments><argument name="selectRow" type="dataStore"></argument><argument name="destRow" type="dataStore"></argument><argument name="type" type="string"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfObjProduct_processor" dependence="pfObjProduct"
+		dc="factory" path="pfObjProduct.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="productCode" label="产品编码" type="string" length="32" />
+			<column name="name" label="产品名称" type="string" length="300" />
+			<column name="description" label="备注" type="string" length="3000" />
+			<column name="productType" label="暂定为套餐类型扩展字段" type="number"
+				length="22" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+	<dataStore name="pfObjProductVer_processor" dependence="pfObjProductVer"
+		dc="factory" path="pfObjProductVer.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="verCode" label="版本号" type="string" length="16" />
+			<column name="description" label="备注" type="string" length="3000" />
+			<column name="status" label="1:编辑中 2:待审核 3:待发布 4:已发布 0:激活 "
+				type="number" length="22" />
+			<column name="productObjId" label="关联的产品ID" type="string"
+				length="32" />
+			<column name="modelVerId" label="关联的模型版本ID" type="string"
+				length="32" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+	<dataStore name="treeDTO" dependence="treeDTO" dc="factory"
+		path="treeDTO.dto" type="dto">
+		<columns>
+			<column name="id" label="节点ID" type="string" />
+			<column name="label" label="标题" type="string" />
+			<column name="type" label="节点类型" type="string" />
+			<column name="parentid" label="父节点ID" type="string" />
+			<column name="state" label="是否已保存" type="boolean" />
+			<column name="isLeaf" label="是否叶子" type="boolean" />
+			<column name="isopen" label="是否 展开" type="integer" />
+			<column name="entityid" label="实体ID" type="string" />
+			<column name="relation" label="与上层实体对应关系（1：1对1，0：1对n）" type="integer" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+	<dataStore name="pfMProperty_grid" dependence="pfMProperty"
+		dc="factory" path="pfMProperty.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="eneityId" label="所属实体ID" type="string" length="32" />
+			<column name="name" label="属性中文名称" type="string" length="300" />
+			<column name="field" label="属性英文名称" type="string" length="32" />
+			<column name="bizCode" label="业务代码" type="string" length="32" />
+			<column name="baseModelFlag" label="0:非基础模型 1:基础模型" type="number"
+				length="22" />
+			<column name="canDelFlag" label="0:可删除 1:不可删除" type="number"
+				length="22" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+	<dataStore name="pfMEntity_form" dependence="pfMEntity" dc="factory"
+		path="pfMEntity.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="pid" label="父实体ID" type="string" length="32" />
+			<column name="nameCn" label="实体中文名称" type="string" length="300" />
+			<column name="nameEn" label="实体英文名称" type="string" length="128" />
+			<column name="bizPk" label="业务主键" type="string" length="32" />
+			<column name="bizFk" label="如果是根实体，业务外键可为空" type="string"
+				length="32" />
+			<column name="entityRel" label="0:一对N 1:一对一" type="number"
+				length="22" />
+			<column name="baseModelFlag" label="0:非基础模型 1:基础模型" type="number"
+				length="22" />
+			<column name="modelVerId" label="关联的模型版本ID" type="string"
+				length="32" />
+			<column name="orderNum" label="排序字段" type="number" length="22" />
+			<column name="keyWord" label="实体关键字" type="string" length="64" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><borderLayout id="borderLayout2" showTitleBar="false" design="headline"><borderPane id="borderPane3" showTitleBar="false" splitLine="false" region="left" maxSize="100px" minSize="100px"><component id="component1" label="Component" comp-ref="factory/product/navigateButtonProduct"/></borderPane><borderPane id="borderPane4" region="right" minSize="100px" width="70%" showTitleBar="false"><adaptiveContainer id="adaptiveContainer1"><adaptivePane id="adaptivePane1"><titlePane id="titlePane1" width="100%" flexible="false" title="实体模型配置" height="150px"><div id="div6" type="buttons" height="30px"><button id="btn_check" label="模型校验" width="100px" class="titlePane-button" iconClass="common_base_btn common_check_btn">
+	<events>
+		<event name="onClick" handlerFunction="btn_check_onClick">
+			<function name="btn_check_onClick" arguments="event">
+				<script><![CDATA[var node = unieap.byId("pfproductentity_tree").getCurrentNode();
+
+if (node 
+    && node.getItem() 
+    && node.getItem().data 
+    && node.getItem().data.id != "-1") {
+    
+//    var entityId = node.getItem().data.entityId;
+    var entityId = node.getItem().data.id;
+    if (entityId) {
+		var businessPrimaryKey = unieap.byId("bizPk__productentity").getValue();
+		var businessForeignKey = unieap.byId("bizFk__productentity").getValue();
+        view.processor.checkBusinessKey(entityId, businessPrimaryKey, businessForeignKey);
+    }
+    
+}    
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="btn_addentity" label="新增子实体" width="100px"
+	class="titlePane-button" iconClass="common_base_btn common_new_btn">
+	<events>
+		<event name="onClick" handlerFunction="btn_addentity_onClick">
+			<function name="btn_addentity_onClick" arguments="event">
+				<script><![CDATA[var menuTree = unieap.byId("pfproductentity_tree");
+//获取当前节点
+var parentNode = menuTree.getCurrentNode(); 
+if (!parentNode) {
+    return;
+}
+var parentData = parentNode.getData();
+var parentId = parentData.id;
+//如果当前节点未保存不能增加新节点
+if(parentId && parentId != ""){
+	//建立第一个实体节点时,与上层实体关系必须为1对1,不能修改,业务外键禁用,不能填写, add 20160128
+	if(parentId == "-1"){
+		//跟节点
+		var children = parentNode.getChildren();
+		if(children){
+			var child_count = children.length;
+			if(child_count > 0){	
+				//跟节点下1级节点只有1个	
+				return;
+			}
+		}
+	}
+	//赋值
+	var bizPk_p = parentData.bizPk; //业务主键
+	var yyyyMMddHHmmss = unieap.dateFormat(value,'yyyyMMddHHmmss',{dataType:"string",valueFormat:'yyyyMMdd'});
+	var name = "新建实体" + yyyyMMddHHmmss;
+	//创建树节点
+	var data = {
+	    "id":"",
+	    "pid":parentId,
+	    "nameCn":name,
+	    "keyWord":"",
+	    "nameEn":"",
+	    "bizPk":"",
+	    "bizFk":bizPk_p,
+	    "entityRel":1,
+	    "baseModelFlag":0,
+//	    "canDelFlag":"",
+	    "modelVerId":view.thisModelVersionId,
+	    "orderNum":""
+	};
+	menuTree.createNode(data, parentNode); //给当前节点添加一个孩子节点
+	unieap.byId("pfproductentity_tree").expandNode(parentNode);
+	var children = parentNode.getChildren();
+	var newNode = children[children.length - 1];
+	//设置点击
+	unieap.byId("pfproductentity_tree").setCurrentNode(newNode);
+	unieap.byId("pfproductentity_tree").onClick(newNode);
+}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="btn_saveentity" label="保 存" width="100px"
+	class="titlePane-button" iconClass="common_base_btn common_save_btn">
+	<events>
+		<event name="onClick" handlerFunction="btn_saveentity_onClick">
+			<function name="btn_saveentity_onClick" arguments="event">
+				<script><![CDATA[if(!unieap.byId("form_productentity").validate(false)){
+	return;
+}
+//var currentNode = unieap.byId("pfproductentity_tree").getCurrentNode();
+//if (!currentNode) {
+//    return;
+//}
+//var currentData = currentNode.getData();
+var ds = view.form.getDataStore("form_productentity");
+//ds.getRowSet().getRow(0).setItemValue("id",currentData.id);
+//ds.getRowSet().getRow(0).setItemValue("pid",currentData.pid);
+//ds.getRowSet().getRow(0).setItemValue("baseModelFlag",currentData.baseModelFlag);
+//ds.getRowSet().getRow(0).setItemValue("canDelFlag",currentData.canDelFlag);	
+//ds.getRowSet().getRow(0).setItemValue("modelVerId",currentData.modelVerId);
+//unieap.debug(ds);
+var id = ds.getRowSet().getRow(0).getItemValue("id");
+if(id){
+	//update
+	if(unieap.byId("form_productentity").isModified()){
+		view.processor.updPfEntityTree(ds);
+	}
+}else{
+	//add
+	view.processor.addPfEntityTree(ds);
+}
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="btn_delentity" label="删 除" width="100px"
+	class="titlePane-button" iconClass="common_base_btn common_del_btn">
+	<events>
+		<event name="onClick" handlerFunction="btn_delentity_onClick">
+			<function name="btn_delentity_onClick" arguments="event">
+				<script><![CDATA[var node = unieap.byId("pfproductentity_tree").getCurrentNode();
+
+if (node 
+    && node.getItem() 
+    && node.getItem().data 
+    && node.getItem().data.id != "-1") {
+    
+    //不存在初始数据
+//	var baseModelFlag = node.getItem().data.baseModelFlag;
+//    if (baseModelFlag && baseModelFlag == "1") { 
+//		MessageBox.alert({
+//		    title: "提示",
+//		    message: "初始数据不能删除！",
+//		    type: "warn",
+//		    iconCloseComplete: false,
+//		    onComplete: function(){
+//		    }
+//		});
+//        return;
+//    }
+    //子节点
+	thisNodeArray = new Array();
+	if (node && node.item) {
+		//递归遍历treeNodeId
+		if (node.item.children) {		
+			for (var i = 0; i < node.item.children.length; i++){ 
+				var childNodeItem = node.item.children[i];
+				recursion(childNodeItem);
+			}
+		}
+	}
+    
+    MessageBox.confirm({
+        message: "是否删除？",
+        yesStr: "是",
+        noStr: "否",
+        //关闭右上角的"X"按钮时执行onComplete函数
+        iconCloseComplete:false,
+        onComplete: function(value) {
+            if (value) {
+                var entityId = node.getItem().data.id;
+                var childIds = thisNodeArray.toString();
+                thisNodeArray = null;
+                view.processor.delPfEntity(entityId, childIds);
+            }
+        }
+    }, dojo.byId("confirm"));
+        
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template1" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    
+    
+  <form binding-store="pfMEntity_form" id="form_productentity">
+    <tableLayout id="form_productentity_tableLayout" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="15%" />
+        <col width="35%" />
+        <col width="15%" />
+        <col width="35%" />
+      </colgroup>
+      <tbody>
+        <tr id="form_productentity_1_tr">
+          <td id="nameCn__productentity_label_td" rowSpan="1" align="right">
+            <label id="nameCn__productentity_label" value="中文名称：" />
+          </td>
+          <td colSpan="1" id="nameCn__productentity_td" rowSpan="1">
+            <textBox binding-name="nameCn" id="nameCn__productentity" maxLength="300" width="100%" required="true"></textBox>
+          </td>
+          <td id="nameEn__productentity_label_td" rowSpan="1" align="right">
+            <label id="nameEn__productentity_label" value="英文名称：" />
+          </td>
+          <td colSpan="1" id="nameEn__productentity_td" rowSpan="1">
+            <textBox binding-name="nameEn" id="nameEn__productentity" maxLength="128" width="100%"></textBox>
+          </td>
+        </tr>
+        <tr id="form_productentity_3_tr">
+          <td id="key__productentity_label_td" rowSpan="1" align="right">
+            <label id="key__productentity_label" value="关键字：" />
+          </td>
+          <td colSpan="1" id="key__productentity_td" rowSpan="1">
+            <textBox binding-name="keyWord" id="key__productentity" maxLength="64" width="100%" required="true"></textBox>
+          </td>
+          <td id="entityRel__productentity_label_td" rowSpan="1" align="right">
+            <label id="entityRel__productentity_label" value="与上层实体关系：" />
+          </td>
+          <td colSpan="1" id="entityRel__productentity_td" rowSpan="1">
+            <radioButtonGroup binding-name="entityRel" id="entityRel__productentity" maxLength="22" width="100%" cols="2" dataProvider-store="relationDS" labelAlign="right"></radioButtonGroup>
+          </td>
+        </tr>
+        <tr id="form_productentity_5_tr">
+          <td id="bizPk__productentity_label_td" rowSpan="1" align="right">
+            <label id="bizPk__productentity_label" value="业务主键：" />
+          </td>
+          <td colSpan="1" id="bizPk__productentity_td" rowSpan="1">
+            <textBox binding-name="bizPk" id="bizPk__productentity" maxLength="32" width="100%" required="true"></textBox>
+          </td>
+          <td id="bizFk__productentity_label_td" rowSpan="1" align="right">
+            <label id="bizFk__productentity_label" value="业务外键：" />
+          </td>
+          <td colSpan="1" id="bizFk__productentity_td" rowSpan="1">
+            <textBox binding-name="bizFk" id="bizFk__productentity" maxLength="32" width="100%"></textBox>
+          </td>
+        </tr>
+        <tr id="form_productentity_6_tr">
+          <td id="orderNum__productentity_label_td" rowSpan="1" align="right">
+            <label id="orderNum__productentity_label" value="序号：" />
+          </td>
+          <td colSpan="1" id="orderNum__productentity_td" rowSpan="1">
+            <numberTextBox binding-name="orderNum" id="orderNum__productentity" maxLength="22" width="100%"></numberTextBox>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </tableLayout>
+  </form></template></titlePane></adaptivePane><adaptivePane id="adaptivePane2" autoHeight="true"><titlePane id="titlePane2" title="实体模型属性配置" width="100%" flexible="false" height="100%"><div id="div_button" height="30px" type="buttons" width="100%"><button
+	id="up" label="上 移" class="titlePane-button" width="100px" iconClass="common_base_btn common_moveup_btn">
+	<events>
+		<event name="onClick" handlerFunction="up_onClick">
+			<function name="up_onClick" arguments="event">
+				<script><![CDATA[var selectRow = view.grid.getRow("grid_productentity");
+if(selectRow){
+	//如果是第1行,不处理
+	var rowIndex = unieap.byId("grid_productentity").getManager("SelectionManager").getSelectedRowIndexs();
+	destIndex = parseInt(rowIndex) - 1;
+	orderFlag = true;
+	if(rowIndex != 0){		
+		var previousRow = view.grid.getRow("grid_productentity", parseInt(rowIndex) - 1);
+		view.processor.saveOrder(selectRow, previousRow, "up");
+	}	
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="down" label="下 移" class="titlePane-button"
+	width="100px" iconClass="common_base_btn common_movedown_btn">
+	<events>
+		<event name="onClick" handlerFunction="down_onClick">
+			<function name="down_onClick" arguments="event">
+				<script><![CDATA[var selectRow = view.grid.getRow("grid_productentity");
+var allcount = view.grid.getDataStore("grid_productentity").getRowSet().getRowCount();
+if(selectRow){
+	//如果是最后1行,不处理
+	var rowIndex = unieap.byId("grid_productentity").getManager("SelectionManager").getSelectedRowIndexs();
+	destIndex = parseInt(rowIndex) + 1;
+	orderFlag = true;
+	if(rowIndex != allcount - 1){
+		var nextRow = view.grid.getRow("grid_productentity", destIndex);
+		view.processor.saveOrder(selectRow, nextRow, "down");	
+	}
+	
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button><button
+	id="btn_addproperty" label="新 增" width="100px" class="titlePane-button" iconClass="common_base_btn common_new_btn">
+	<events>
+		<event name="onClick" handlerFunction="btn_addproperty_onClick">
+			<function name="btn_addproperty_onClick" arguments="event">
+				<script><![CDATA[//获取当前节点
+var menuTree = unieap.byId("pfproductentity_tree");
+var node = menuTree.getCurrentNode();
+if (!node) {
+    return;
+}
+var data = node.getData();
+var nodeId = data.id;
+if (nodeId == "-1") {
+    return;
+}
+//var entityId = data.entityId;
+var entityId = data.id;
+//var newDC = new unieap.ds.DataCenter();
+//viewc
+var newDC = navigateButtonProduct.prepareDCParameter();
+newDC.setParameter("entityId", entityId);
+newDC.setParameter("type", "add");
+view.navigator.forward("ProductFactory","factory","product/productVerPropertyShow","模型属性",newDC);
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="btn_delproperty" label="删 除 no" width="100px"
+	class="titlePane-button" style="display:none">
+	<events>
+		<event name="onClick" handlerFunction="btn_delproperty_onClick">
+			<function name="btn_delproperty_onClick" arguments="event">
+				<script><![CDATA[//var selectRow = view.grid.getRows("grid_productentity");
+//if (selectRow 
+//    && selectRow.rowSet 
+//    && selectRow.rowSet.primary 
+//    && selectRow.rowSet.primary.length == 1) {
+//    
+//    //业务主键和业务外键不能删除
+//	var field = selectRow.rowSet.primary[0].field;
+//	var bizPk = unieap.byId("bizPk__productentity").getValue();
+//	var bizFk = unieap.byId("bizFk__productentity").getValue();
+//	if(field == bizPk){
+//		MessageBox.alert({
+//			title:"提示",
+//        	message: "业务主键不允许删除！"
+//    	});
+//		return;
+//	}
+//	if(field == bizFk){
+//		MessageBox.alert({
+//			title:"提示",
+//        	message: "业务外键不允许删除！"
+//    	});
+//		return;
+//	}
+//    MessageBox.confirm({
+//        message: "是否删除？",
+//        yesStr: "是",
+//        noStr: "否",
+//        //关闭右上角的"X"按钮时执行onComplete函数
+//        iconCloseComplete:false,
+//        onComplete: function(value) {
+//            if (value) {
+//                var delId = selectRow.rowSet.primary[0].id;
+//                view.processor.delPfEntityProperty(delId);
+//            }
+//        }
+//    }, dojo.byId("confirm"));
+//}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template2" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <xgrid binding-store="pfMProperty_grid" edit-editType="readonly" height="100%" id="grid_productentity" rows-rowsPerPage="10" selection-selectType="single" views-rowBar="true" views-rowNumber="true">
+    <header>
+      <row>
+        <xcell dataType="string" enable="false" height="25px" id="cell_name__productentity" label="属性中文名称" name="name" width="30%">
+          <events>
+            <event handlerFunction="cell_name__productentity_formatter" name="formatter">
+              <function arguments="inValue,inRowIndex" name="cell_name__productentity_formatter">
+                <script><![CDATA[//style=\"text-decoration:none\"
+return "<a href=\"javascript:;\" onclick=\"productVerEntity.goPfEntityPropertyShow('"+inValue+"','"+inRowIndex+"')\">"+inValue+"</a>";]]></script>
+              </function>
+            </event>
+          </events>
+        </xcell>
+        <xcell dataType="string" enable="false" height="25px" id="cell_field__productentity" label="属性英文名称" name="field" width="30%"></xcell>
+        <xcell dataType="string" enable="false" height="25px" id="cell_bizCode__productentity" label="业务代码" name="bizCode" width="30%"></xcell>
+        <xcell enable="false" id="cell_control__productentity"
+	label="操作" name="control" width="10%" styles="text-align:center">
+	<events>
+		<event name="formatter" handlerFunction="cell_control__productentity_formatter">
+			<function name="cell_control__productentity_formatter"
+				arguments="inValue,inRowIndex">
+				<script><![CDATA[var delImg=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_o.png";
+var delImg_h=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_h.png";
+
+var delHTML="<img src='"+delImg+"' style='cursor:pointer;' title='删除' onclick='productVerEntity.del("+inRowIndex+");' onmouseover='this.src=\""+delImg_h+"\"' onmouseout='this.src=\""+delImg+"\"'></img>";
+return delHTML;]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+      </row>
+    </header>
+    <events>
+      <event handlerFunction="grid_productentity_binding_rpc" name="binding-rpc">
+        <function arguments="store,load" name="grid_productentity_binding_rpc">
+          <script><![CDATA[//view.processor.getPfEntityproperties(store.getPageNumber(),store.getPageSize(), thisEntityId);
+view.processor.getPfEntityproperties(store.getPageNumber(),store.getPageSize(), thisNodeId);]]></script>
+        </function>
+      </event>
+    </events>
+  </xgrid></template></titlePane></adaptivePane></adaptiveContainer></borderPane><borderPane id="borderPane5" showTitleBar="false" splitLine="false" region="center"><titlePane id="titlePane3" height="100%" width="100%" title="实体层次" flexible="false"><div id="div_tree" height="100%"></div></titlePane></borderPane></borderLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[navigateButtonProduct.activeNavigateButton("productProperty_copy1");
+
+view.navigator.receiveData("模型", function(dc) {  
+    if (dc != null) {
+    	/**
+			20160226产品版本进入, 默认从模型页面改为险种页面, 模型页面的load函数在险种页面执行一遍,
+		*/
+        var pfObjProductVer = dc.getDataStore("pfObjProductVer");
+        var pfObjProduct = dc.getDataStore("pfObjProduct");
+        //产品id
+        view.thisProductId = pfObjProduct.rowSet.primary[0].id; 
+        //产品版本id
+        view.thisProductVersionId = pfObjProductVer.rowSet.primary[0].id;
+        //产品版本关联模型版本id
+        view.thisModelVersionId = pfObjProductVer.rowSet.primary[0].modelVerId;                  
+        //根节点名
+        view.treeRootName = pfObjProduct.rowSet.primary[0].name+pfObjProductVer.rowSet.primary[0].verCode;	
+        var sync_dc = view.processor.getArithVersionObj(pfObjProduct, pfObjProductVer);
+        //产品版本关联的算法引擎UiVersion对象Id
+        view.thisArithVerId = sync_dc.getDataStore("rtnUiVersion").getRowSet().getRow(0).getData().id;
+        //放入dataCenter
+        dataCenter.setParameter("thisProductId", view.thisProductId);
+        dataCenter.setParameter("thisProductVersionId", view.thisProductVersionId);
+        dataCenter.setParameter("thisModelVersionId", view.thisModelVersionId);
+        dataCenter.setParameter("treeRootName", view.treeRootName);
+        dataCenter.setParameter("thisArithVerId", view.thisArithVerId);    
+        dataCenter.addDataStore("pfObjProductVer", pfObjProductVer);
+        dataCenter.addDataStore("pfObjProduct", pfObjProduct);
+        //按钮禁用
+		unieap.byId("btn_check").setDisabled(true);
+		unieap.byId("btn_saveentity").setDisabled(true);
+		unieap.byId("btn_delentity").setDisabled(true);	
+		unieap.byId("up").setDisabled(true);
+		unieap.byId("down").setDisabled(true);
+		unieap.byId("btn_addproperty").setDisabled(true);
+		unieap.byId("btn_delproperty").setDisabled(true); 
+        //清空form
+        unieap.byId("form_productentity").clear();
+        //清空grid
+		unieap.byId("grid_productentity").getBinding().getDataStore().getRowSet().deleteAllRows();      
+		//动态树清空
+        unieap.destroyWidgets(unieap.getElementById("div_tree"));      
+        //动态树生成 
+        view.processor.getPfProductEntityModelList(view.thisModelVersionId);
+    }
+});
+
+view.navigator.onComplete("title", function(dc) {
+    if (dc == "ok") {
+	    var menuTree = unieap.byId("pfproductentity_tree");
+        //获取当前节点
+        var node = menuTree.getCurrentNode(); 
+        var data = node.getData();
+		var entityId = data.id;
+        view.processor.getPfEntityproperties("1", "10", entityId);
+    }
+});
+
+]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[//var type = new unieap.ds.DataStore("fileType", [ {
+//    CODEVALUE : 'RATE',
+//    CODENAME : "费率表"
+//}, {
+//    CODEVALUE : 'CASHVALUE',
+//    CODENAME : "现金价值表"
+//}, {
+//    CODEVALUE : 'PROFITCLAUSE',
+//    CODENAME : "利益条款"
+//},{
+//    CODEVALUE : 'BASICCLAUSE',
+//    CODENAME : "基本条款"
+//},{
+//    CODEVALUE : 'PREPARECASH',
+//    CODENAME : "准备金表"
+//},{
+//    CODEVALUE : 'ADJUSTRATE',
+//    CODENAME : "现金价值插值调整因子表"
+//},{
+//    CODEVALUE : 'ADDITIONALRATE',
+//    CODENAME : "附加费用率"
+//},{
+//    CODEVALUE : 'OTHERS',
+//    CODENAME : "其它"
+//}]);
+//dataCenter.addDataStore("fileType", type);
+
+var relationDS = new unieap.ds.DataStore("relationDS",[
+            {CODEVALUE:"1", CODENAME:"1 对 1"},
+            {CODEVALUE:"0", CODENAME:"1 对 N"}
+]);
+
+dataCenter.addDataStore(relationDS);]]></script></function></event></events><dependence name="factory/product2/pfsceneDialog" type="view" sc="ProductFactory" dc="factory" ref="product2/pfsceneDialog" /><dependence name="factory/pfprdtruleDialog" type="view" sc="ProductFactory" dc="factory" ref="pfprdtruleDialog" /><dependence name="factory/pfprdtalgorithmDialog" type="view" sc="ProductFactory" dc="factory" ref="pfprdtalgorithmDialog" /><dependence name="factory/pfprdtextpointWindow" type="view" sc="ProductFactory" dc="factory" ref="pfprdtextpointWindow" /><dependence name="factory/productGroup/productGroupAddProduct" type="view" sc="ProductFactory" dc="factory" ref="productGroup/productGroupAddProduct" /><dependence name="factory/product2/productRiskDialog" type="view" sc="ProductFactory" dc="factory" ref="product2/productRiskDialog" /><dependence name="factory/product2/pfscenemodel" type="view" sc="ProductFactory" dc="factory" ref="product2/pfscenemodel" /><dependence name="factory/product2/pfproduct2model" type="view" sc="ProductFactory" dc="factory" ref="product2/pfproduct2model" /><dependence name="factory/product2/pfproduct2property" type="view" sc="ProductFactory" dc="factory" ref="product2/pfproduct2property" /><dependence name="factory/pfprdtfileDialog" type="view" sc="ProductFactory" dc="factory" ref="pfprdtfileDialog" /><dependence name="factory/product2/pfprdtsceneDialog" type="view" sc="ProductFactory" dc="factory" ref="product2/pfprdtsceneDialog" /></controls>
+      <scripts ><function name="goPfElement" arguments="inValue,inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[//inValue
+//inRowIndex
+var row = view.grid.getRow("pfelement_grid", inRowIndex);
+var newDC = new unieap.ds.DataCenter();
+newDC.setParameter("type", "upd");
+newDC.setParameter("data", row);
+
+view.navigator.forward("ProductFactory","factory","product2/pfelement","产品要素",newDC);]]>
+	</script>
+</function><function name="nodeClick" arguments="node">
+	<script><![CDATA[//unieap.byId("form_productentity").clear();
+unieap.byId("grid_productentity").getBinding().getDataStore().getRowSet().deleteAllRows();	
+var data = node.getData();
+thisNodeId = data.id;
+//form赋值
+var newds = new unieap.ds.DataStore("pfMEntity_form", [data]);
+newds.rowSetName = "com.neusoft.fdframework.productfactory.entity.PfMEntity";
+view.form.setDataStore("form_productentity", newds);
+//判断节点类型
+if (thisNodeId != "-1") {
+	//子节点	 
+	//按钮
+    unieap.byId("btn_check").setDisabled(false);
+	unieap.byId("btn_saveentity").setDisabled(false);
+	unieap.byId("btn_delentity").setDisabled(false);	
+	unieap.byId("up").setDisabled(false);
+	unieap.byId("down").setDisabled(false);
+	unieap.byId("btn_addproperty").setDisabled(false);
+	unieap.byId("btn_delproperty").setDisabled(false); 
+	//form启用
+	var subObjs = unieap.byId("form_productentity").getDescendants();
+	for(var i = 0; i < subObjs.length; i++){
+		var thisId = subObjs[i].id;
+		dijit.byId(thisId).setDisabled(false);	
+	}
+	var pid = data.pid;
+	//如果是第1个节点 禁用业务外键, 与上层实体关系
+	if(pid == "-1"){
+		unieap.byId("bizFk__productentity").setDisabled(true);
+		unieap.byId("entityRel__productentity").setDisabled(true);
+	}else{
+		unieap.byId("bizFk__productentity").setDisabled(false);
+		unieap.byId("entityRel__productentity").setDisabled(false);
+	}
+	//form赋值
+//	unieap.byId("nameCn__productentity").setValue(data.nameCn);
+//    unieap.byId("key__productentity").setValue(data.key);
+//    unieap.byId("nameEn__productentity").setValue(data.nameEn);
+//    unieap.byId("bizPk__productentity").setValue(data.bizPk);
+//    unieap.byId("bizFk__productentity").setValue(data.bizFk);
+//    unieap.byId("entityRel__productentity").setValue(data.entityRel);
+//    unieap.byId("orderNum__productentity").setValue(data.orderNum);
+    //清除form更新标志
+//    unieap.byId("form_productentity").getBinding().getDataStore().getRowSet().resetUpdate(0);
+    //查询模型属性
+    if(thisNodeId != ""){
+    	view.processor.getPfEntityproperties("1", "10", thisNodeId);    
+    }
+} else {
+   	//跟节点 
+	//按钮
+	unieap.byId("btn_check").setDisabled(true);
+	unieap.byId("btn_saveentity").setDisabled(true);
+	unieap.byId("btn_delentity").setDisabled(true);	
+	unieap.byId("up").setDisabled(true);
+	unieap.byId("down").setDisabled(true);
+	unieap.byId("btn_addproperty").setDisabled(true);
+	unieap.byId("btn_delproperty").setDisabled(true); 
+	//form禁用
+	var subObjs = unieap.byId("form_productentity").getDescendants();
+	for(var i = 0; i < subObjs.length; i++){
+		var thisId = subObjs[i].id;
+		dijit.byId(thisId).setDisabled(true);	
+	}
+}
+]]>
+	</script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function name="getPfProductEntityModelListSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfProductEntityModelList方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//var newDS = dc.getDataStore("treelist");
+//var root = unieap.byId("tabPane7entityproperty_tree").getRootNode();
+//var arg={query:{name:'pid',relation:'=',value:'-2'}};
+//unieap.byId("tabPane7entityproperty_tree").getBinding().setDataStore(root, newDS, arg);
+//unieap.byId("tabPane7entityproperty_tree").expandAllNodes();
+var ds = dc.getDataStore("pfLevelEntityTree");
+dataCenter.addDataStore("pfLevelEntityTree", ds);
+//生成树
+var div = unieap.getElementById("div_tree");
+//var treeRootNodeName = thisModelNameCn + thisModelVersionVersion
+var html = "<div dojoType='unieap.tree.Tree' height='100%' id='pfproductentity_tree' label='"+view.treeRootName+"' " + 
+    "binding=\"{id:'id',label:'nameCn',parent:'pid',query:{name:'pid',relation:'=',value:'-1'},rootNodeId:'-1',store:'pfLevelEntityTree'}\" "+
+    "onClick=\"productVerEntity.nodeClick\"></div>";
+div.innerHTML = html;
+dojo.parser.parse(div);
+//设置树节点样式
+//unieap.byId("pfproductentity_tree").getLabelStyle = function(item,opened,isexp){
+//    if(item.data.baseModelFlag && item.data.baseModelFlag == "1"){
+//		return {fontWeight:"normal",color:"red"};
+//	}else{
+//		return {fontWeight:"normal",color:"black"};
+//	}
+//}
+unieap.byId("pfproductentity_tree").expandAllNodes();
+
+]]></script>
+</function><function name="getPfEntitypropertiesSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfEntityproperties方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result = dc.getDataStore("pfEntityproperties");
+view.grid.setDataStore("grid_productentity", result);
+//判断排序
+if(orderFlag){
+	unieap.byId("grid_productentity").getManager("SelectionManager").setSelect(destIndex,true);
+	orderFlag = false;
+}]]></script>
+</function><function name="addPfEntityTreeSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:addPfEntityTree方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//MessageBox.alert({
+MessageBox.autoCloseAlert({
+    title: "提示",
+    message: "保存成功！",
+    type: "info"
+    //durationTime:"3000"
+});
+var returnObj = dc.dataStores.rtnPfMEntity_T.rowSet.primary[0];
+//构造新节点的数据
+var newData = {
+    "id":returnObj.id,
+    "pid":returnObj.pid,
+    "nameCn":returnObj.nameCn,
+    "keyWord":returnObj.keyWord,
+    "nameEn":returnObj.nameEn,
+    "bizPk":returnObj.bizPk,
+    "bizFk":returnObj.bizFk,
+    "entityRel":returnObj.entityRel,
+    "baseModelFlag":returnObj.baseModelFlag,
+    //"canDelFlag":returnObj.canDelFlag,
+    "modelVerId":returnObj.modelVerId,
+    "orderNum":returnObj.orderNum
+};
+//树节点刷新
+var currentNode = unieap.byId("pfproductentity_tree").getCurrentNode();
+currentNode.item.data = newData;
+unieap.byId("pfproductentity_tree").freshNodeLabel(currentNode);
+//form赋值
+view.form.setDataStore("form_productentity", dc.getDataStore("rtnPfMEntity_T"));
+//grid查询模型属性
+view.processor.getPfEntityproperties("1", "10", returnObj.id);
+
+]]></script>
+</function><function name="updPfEntityTreeSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:updPfEntityTree方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//MessageBox.alert({
+MessageBox.autoCloseAlert({
+    title: "提示",
+    message: "保存成功！",
+    type: "info"
+    //durationTime:"3000"
+});
+var returnObj = dc.dataStores.rtnPfMEntity_T.rowSet.primary[0];
+//构造新节点的数据
+var newData = {
+    "id":returnObj.id,
+    "pid":returnObj.pid,
+    "nameCn":returnObj.nameCn,
+    "keyWord":returnObj.keyWord,
+    "nameEn":returnObj.nameEn,
+    "bizPk":returnObj.bizPk,
+    "bizFk":returnObj.bizFk,
+    "entityRel":returnObj.entityRel,
+    "baseModelFlag":returnObj.baseModelFlag,
+    //"canDelFlag":returnObj.canDelFlag,
+    "modelVerId":returnObj.modelVerId,
+    "orderNum":returnObj.orderNum
+};
+//树节点刷新
+var currentNode = unieap.byId("pfproductentity_tree").getCurrentNode();
+currentNode.item.data = newData;
+unieap.byId("pfproductentity_tree").freshNodeLabel(currentNode);
+var rtnPrimaryValue = dc.parameters.rtnPrimaryValue;
+var rtnForeignValue = dc.parameters.rtnForeignValue;
+if (rtnPrimaryValue == "1" || rtnForeignValue == "1") {
+    view.processor.getPfEntityproperties("1", "10", returnObj.id);
+}  
+]]></script>
+</function><function name="delPfEntitySuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:delPfEntity方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var node = unieap.byId("pfproductentity_tree").getCurrentNode();
+unieap.byId("pfproductentity_tree").deleteNode(node,true); //删除树节点
+
+//清空grid,form
+//var ds={
+//    metaData:{},
+//    pageSize:10,
+//    pageNumber:1,
+//    recordCount:0,
+//    name:'store1',
+//    rowset:[]
+//}
+//var dataStore = new unieap.ds.DataStore('pfEntityproperties',ds);
+//view.grid.setDataStore("pfentityproperty_grid", dataStore);
+unieap.byId("grid_productentity").getBinding().getDataStore().getRowSet().deleteAllRows();
+unieap.byId("form_productentity").clear();]]></script>
+</function><function name="checkBusinessKeySuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:checkBusinessKey方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var businessPrimaryKeySize = dc.parameters.businessPrimaryKeySize;
+var businessForeignKeySize = dc.parameters.businessForeignKeySize;
+var messageCheck = "";
+/**
+主键：查询实体列表中是否存在
+外键：查询实体列表中是否存在，查询上层主键
+*/
+if (businessPrimaryKeySize == 0 ) {
+    //校验主键
+	messageCheck = "实体没有定义‘业务主键’属性！"    
+} else if (businessPrimaryKeySize != 0 ) {  
+	//校验外键(查询上层主键)
+    var node = unieap.byId("pfproductentity_tree").getCurrentNode();
+    var parentNode = node.getParent();           
+    var parentNodeData = parentNode.getData();
+    var parentNodeId = parentNodeData.id;
+    //第一级不校验外键
+    if (parentNodeId != "-1") {        
+	    //查询上层主键
+	    var parentBusinessPrimaryKey = parentNode.getItem().data.bizPk;
+	    var businessForeignKey = unieap.byId("bizFk__productentity").getValue();
+	    if (businessForeignKey != parentBusinessPrimaryKey) {
+	        messageCheck = "实体‘业务外键’属性与上层实体'业务主键'属性不一致！";
+	    } else {
+        	if(businessForeignKeySize == 0){
+        		messageCheck = "实体没有定义‘业务外键’属性！";
+        	}     	
+        }    
+    }   
+}
+if(messageCheck == ""){
+	MessageBox.autoCloseAlert({
+	    title: "提示",
+	    message: "校验成功！",
+	    type: "info"
+	});
+}else{
+	MessageBox.alert({
+	    title: "提示",
+	    message: messageCheck
+	});
+}
+]]></script>
+</function><function name="delPfEntityPropertySuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:delPfEntityProperty方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[view.processor.getPfEntityproperties("1", "10", thisNodeId);]]></script>
+</function><function name="goPfEntityPropertyShow" arguments="inValue,inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[//inValue
+//inRowIndex
+var row = view.grid.getRow("grid_productentity", inRowIndex);
+var entityPropertyId = row.rowSet.primary[0].id;
+//var nameCn = row.rowSet.primary[0].nameCn;
+var nameCn = row.rowSet.primary[0].name;
+
+//var newDC = new unieap.ds.DataCenter();
+//viewc
+var newDC = navigateButtonProduct.prepareDCParameter();
+newDC.setParameter("entityPropertyId", entityPropertyId);
+newDC.setParameter("entityNameCn", nameCn);
+newDC.setParameter("type", "upd");
+newDC.addDataStore("pfEntityProperty", row);
+view.navigator.forward("ProductFactory","factory","product/productVerPropertyShow","模型属性",newDC);
+
+]]>
+	</script>
+</function><function
+	name="saveOrderSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:saveOrder方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var message = dc.getParameter("rtnOrderMessage");
+if(message == ""){
+	//排序成功
+	var node = unieap.byId("pfproductentity_tree").getCurrentNode();
+	var data = node.getData();
+	var nodeId = data.id;
+	//判断节点类型
+	if (nodeId != "-1") {
+	    if(nodeId != ""){
+	    	view.processor.getPfEntityproperties("1", "10", nodeId);
+	    } 
+	}
+}
+
+]]></script>
+</function><function name="del" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var selectRow = view.grid.getRow("grid_productentity", inRowIndex);
+if (selectRow 
+    && selectRow.rowSet 
+    && selectRow.rowSet.primary 
+    && selectRow.rowSet.primary.length == 1) {
+    
+    //业务主键和业务外键不能删除
+	var field = selectRow.rowSet.primary[0].field;
+	var bizPk = unieap.byId("bizPk__productentity").getValue();
+	var bizFk = unieap.byId("bizFk__productentity").getValue();
+	if(field == bizPk){
+		MessageBox.alert({
+			title:"提示",
+        	message: "业务主键不允许删除！"
+    	});
+		return;
+	}
+	if(field == bizFk){
+		MessageBox.alert({
+			title:"提示",
+        	message: "业务外键不允许删除！"
+    	});
+		return;
+	}
+    MessageBox.confirm({
+        message: "是否删除？",
+        yesStr: "是",
+        noStr: "否",
+        //关闭右上角的"X"按钮时执行onComplete函数
+        iconCloseComplete:false,
+        onComplete: function(value) {
+            if (value) {
+                var delId = selectRow.rowSet.primary[0].id;
+                view.processor.delPfEntityProperty(delId);
+            }
+        }
+    }, dojo.byId("confirm"));
+}
+
+]]>
+	</script>
+</function><variable name="thisProductId"><script><![CDATA[null]]></script><comment><![CDATA[产品id
+]]></comment></variable><variable name="thisProductVersionId"><script><![CDATA[null]]></script><comment><![CDATA[产品版本id
+]]></comment></variable><variable name="thisModelVersionId"><script><![CDATA[null]]></script><comment><![CDATA[产品版本关联模型版本id
+]]></comment></variable><variable name="thisArithVerId"><script><![CDATA[null]]></script><comment><![CDATA[算法引擎UiVersion对象Id
+]]></comment></variable><variable name="treeRootName"><script><![CDATA[null]]></script><comment><![CDATA[根节点名
+]]></comment></variable><variable name="thisNodeId"><script><![CDATA[null]]></script><comment><![CDATA[选中的nodeId
+]]></comment></variable><variable name="destIndex"><script><![CDATA[null]]></script><comment><![CDATA[目标位置
+]]></comment></variable><variable name="orderFlag"><script><![CDATA[false]]></script><comment><![CDATA[]]></comment></variable><variable name="thisNodeArray"><script><![CDATA[null]]></script><comment><![CDATA[节点id集合
+]]></comment></variable><function name="recursion" arguments="nodeItem">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[//thisNodeArray
+if (nodeItem && nodeItem.data) {
+	
+	var nodeId = nodeItem.data.id;
+	thisNodeArray.push(nodeId);
+	
+	if (nodeItem.children) {
+		for (var i = 0; i < nodeItem.children.length; i++){
+			var childNode = nodeItem.children[i];
+			recursion(childNode);
+		}
+	}
+}]]>
+	</script>
+</function></scripts>
+      <templateInstances>
+	<templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form_productentity</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>userdef</colType>
+        <colsPropertyList>
+          <string>15</string>
+          <string>35</string>
+          <string>15</string>
+          <string>35</string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string>_productentity</string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>id</name>
+            <label>id</label>
+            <labelTD>
+              <id>id__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <labelInfo>
+                <id>id__productentity_label</id>
+                <value>id</value>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>label</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>Label</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>width</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>fontStyle</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontSize</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontWeight</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>color</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                </properties>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>id__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>id__productentity</id>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>textBox</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tabIndex</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>password</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>inputFilter_filterRule</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>nextFocusId</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>minLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>value</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>validatorClass</string>
+                    <string>unieap.form.FormWidgetValidator</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>private_widget</string>
+                    <string>unieap.form.TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>trim</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_prompts</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>validator_realTime</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>prompt_promptMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_duration</string>
+                    <string>1000</string>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>binding_dataType</string>
+                    <string>string</string>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorCode</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_regExp</string>
+                    <null/>
+                  </entry>
+                </properties>
+                <binding__name>id</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>pid</name>
+            <label>父实体ID</label>
+            <labelTD>
+              <id>pid__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <labelInfo>
+                <id>pid__productentity_label</id>
+                <value>父实体ID</value>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>label</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>Label</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>width</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>fontStyle</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontSize</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontWeight</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>color</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                </properties>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>pid__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>pid__productentity</id>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>textBox</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tabIndex</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>password</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>inputFilter_filterRule</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>nextFocusId</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>minLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>value</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>validatorClass</string>
+                    <string>unieap.form.FormWidgetValidator</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>private_widget</string>
+                    <string>unieap.form.TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>trim</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_prompts</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>validator_realTime</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>prompt_promptMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_duration</string>
+                    <string>1000</string>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>binding_dataType</string>
+                    <string>string</string>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorCode</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_regExp</string>
+                    <null/>
+                  </entry>
+                </properties>
+                <binding__name>pid</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>nameCn</name>
+            <label>中文名称：</label>
+            <labelTD>
+              <id>nameCn__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>nameCn__productentity_label</id>
+                <value>中文名称：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>nameCn__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>nameCn__productentity</id>
+                <properties/>
+                <binding__name>nameCn</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>300</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>300</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>nameEn</name>
+            <label>英文名称：</label>
+            <labelTD>
+              <id>nameEn__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>nameEn__productentity_label</id>
+                <value>英文名称：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>nameEn__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>nameEn__productentity</id>
+                <properties/>
+                <binding__name>nameEn</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>128</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>128</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>key</name>
+            <label>关键字：</label>
+            <labelTD>
+              <id>key__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>key__productentity_label</id>
+                <value>关键字：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>key__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>key__productentity</id>
+                <properties/>
+                <binding__name>key</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>64</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>64</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>entityRel</name>
+            <label>与上层实体关系：</label>
+            <labelTD>
+              <id>entityRel__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>entityRel__productentity_label</id>
+                <value>与上层实体关系：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>radioButtonGroup</controlType>
+            </labelTD>
+            <controlTD>
+              <id>entityRel__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>radioButtonGroup</controlType>
+                <id>entityRel__productentity</id>
+                <properties/>
+                <binding__name>entityRel</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>22</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>radioButtonGroup</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>number</type>
+            <length>22</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>bizPk</name>
+            <label>业务主键：</label>
+            <labelTD>
+              <id>bizPk__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>bizPk__productentity_label</id>
+                <value>业务主键：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>bizPk__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>bizPk__productentity</id>
+                <properties/>
+                <binding__name>bizPk</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>bizFk</name>
+            <label>业务外键：</label>
+            <labelTD>
+              <id>bizFk__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>bizFk__productentity_label</id>
+                <value>业务外键：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>bizFk__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>bizFk__productentity</id>
+                <properties/>
+                <binding__name>bizFk</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>baseModelFlag</name>
+            <label>0:非基础模型 1:基础模型</label>
+            <labelTD>
+              <id>baseModelFlag__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <labelInfo>
+                <id>baseModelFlag__productentity_label</id>
+                <value>0:非基础模型 1:基础模型</value>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>label</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>Label</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>width</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>fontStyle</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontSize</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontWeight</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>color</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                </properties>
+              </labelInfo>
+              <controlType>numberTextBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>baseModelFlag__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>numberTextBox</controlType>
+                <id>baseModelFlag__productentity</id>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>scale</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>numbertextBox</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tabIndex</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>password</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>NumberTextBox</string>
+                  </entry>
+                  <entry>
+                    <string>inputFilter_filterRule</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>nextFocusId</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>minLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>value</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>validatorClass</string>
+                    <string>unieap.form.FormWidgetValidator</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>private_widget</string>
+                    <string>unieap.form.NumberTextBox</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>trim</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>range_min</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>precision</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_prompts</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>validator_realTime</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>prompt_promptMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_duration</string>
+                    <string>1000</string>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>binding_dataType</string>
+                    <string>string</string>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorCode</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_regExp</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>range_max</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>range_allowDecimal</string>
+                    <string>true</string>
+                  </entry>
+                </properties>
+                <binding__name>baseModelFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>22</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <controlType>numberTextBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>number</type>
+            <length>22</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>canDelFlag</name>
+            <label>0:可删除 1:不可删除</label>
+            <labelTD>
+              <id>canDelFlag__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <labelInfo>
+                <id>canDelFlag__productentity_label</id>
+                <value>0:可删除 1:不可删除</value>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>label</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>Label</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>width</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>fontStyle</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontSize</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontWeight</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>color</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                </properties>
+              </labelInfo>
+              <controlType>numberTextBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>canDelFlag__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>numberTextBox</controlType>
+                <id>canDelFlag__productentity</id>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>scale</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>numbertextBox</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tabIndex</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>password</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>NumberTextBox</string>
+                  </entry>
+                  <entry>
+                    <string>inputFilter_filterRule</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>nextFocusId</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>minLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>value</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>validatorClass</string>
+                    <string>unieap.form.FormWidgetValidator</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>private_widget</string>
+                    <string>unieap.form.NumberTextBox</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>trim</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>range_min</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>precision</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_prompts</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>validator_realTime</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>prompt_promptMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_duration</string>
+                    <string>1000</string>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>binding_dataType</string>
+                    <string>string</string>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorCode</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_regExp</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>range_max</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>range_allowDecimal</string>
+                    <string>true</string>
+                  </entry>
+                </properties>
+                <binding__name>canDelFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>22</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <controlType>numberTextBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>number</type>
+            <length>22</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>modelVerId</name>
+            <label>关联的模型版本ID</label>
+            <labelTD>
+              <id>modelVerId__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <labelInfo>
+                <id>modelVerId__productentity_label</id>
+                <value>关联的模型版本ID</value>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>label</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>Label</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>width</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>fontStyle</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontSize</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontWeight</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>color</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                </properties>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>modelVerId__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>modelVerId__productentity</id>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>textBox</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tabIndex</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>password</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>inputFilter_filterRule</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>nextFocusId</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>minLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>value</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>validatorClass</string>
+                    <string>unieap.form.FormWidgetValidator</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>private_widget</string>
+                    <string>unieap.form.TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>trim</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_prompts</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>validator_realTime</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>prompt_promptMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_duration</string>
+                    <string>1000</string>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>binding_dataType</string>
+                    <string>string</string>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorCode</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_regExp</string>
+                    <null/>
+                  </entry>
+                </properties>
+                <binding__name>modelVerId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>orderNum</name>
+            <label>序号：</label>
+            <labelTD>
+              <id>orderNum__productentity_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>orderNum__productentity_label</id>
+                <value>序号：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>numberTextBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>orderNum__productentity_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>numberTextBox</controlType>
+                <id>orderNum__productentity</id>
+                <properties/>
+                <binding__name>orderNum</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>22</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>numberTextBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>number</type>
+            <length>22</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productentity_2_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productentity_5_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productentity_8_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productentity_11_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productentity_1_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productentity_3_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productentity_7_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productentity_6_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <lastStore>pfMEntity_form</lastStore>
+        <isIdChange>true</isIdChange>
+        <lastId>form_productentity</lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form_productentity_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form_productentity_saveButton</id>
+              <name>form_productentity_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form_productentity_resetButton</id>
+              <name>form_productentity_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form_productentity_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form_productentity</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <pMethodName>form_productentity_save</pMethodName>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form_productentity</id>
+        <properties/>
+        <isMerge>true</isMerge>
+        <binding__store>pfMEntity_form</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form_productentity_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>8</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance>
+	<templateInstance target="template2"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>false</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>pfMProperty_grid</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>id</name>
+            <label>id</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>id</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>eneityId</name>
+            <label>所属实体ID</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>eneityId</name>
+              <label>所属实体ID</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name</name>
+            <label>属性中文名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_name__productentity</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>name</name>
+              <label>属性中文名称</label>
+              <width>30%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>name__productentity_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>300</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>field</name>
+            <label>属性英文名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_field__productentity</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>field</name>
+              <label>属性英文名称</label>
+              <width>30%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>field__productentity_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>bizCode</name>
+            <label>业务代码</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_bizCode__productentity</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>bizCode</name>
+              <label>业务代码</label>
+              <width>30%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>bizCode__productentity_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>baseModelFlag</name>
+            <label>0:非基础模型 1:基础模型</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>baseModelFlag</name>
+              <label>0:非基础模型 1:基础模型</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>22</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>canDelFlag</name>
+            <label>0:可删除 1:不可删除</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>canDelFlag</name>
+              <label>0:可删除 1:不可删除</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>22</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>control</name>
+            <label>操作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_control__productentity</id>
+              <properties/>
+              <dataType></dataType>
+              <name>control</name>
+              <label>操作</label>
+              <width>10%</width>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>pfMProperty_grid</binding__store>
+        <views__rowBar>true</views__rowBar>
+        <selection__selectType>single</selection__selectType>
+        <id>grid_productentity</id>
+        <lastId>grid_productentity</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>PrdtRule_grid</name>
+            <entityClass>PrdtRule</entityClass>
+            <dc>factory</dc>
+            <type>dto</type>
+            <dependence>PrdtRule</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfElement_grid</name>
+            <entityClass>PfElement</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfElement</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfElement_form</name>
+            <entityClass>PfElement</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfElement</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfPrdtFile_grid</name>
+            <entityClass>PfPrdtFile</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfPrdtFile</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>RiskVersion_grid</name>
+            <entityClass>RiskVersion</entityClass>
+            <dc>factory</dc>
+            <type>dto</type>
+            <dependence>RiskVersion</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>PrdtAlgorithm_grid</name>
+            <entityClass>PrdtAlgorithm</entityClass>
+            <dc>factory</dc>
+            <type>dto</type>
+            <dependence>PrdtAlgorithm</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>PrdtExtpoint_grid</name>
+            <entityClass>PrdtExtpoint</entityClass>
+            <dc>factory</dc>
+            <type>dto</type>
+            <dependence>PrdtExtpoint</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfObjProduct_processor</name>
+            <entityClass>PfObjProduct</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfObjProduct</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfObjProductVer_processor</name>
+            <entityClass>PfObjProductVer</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfObjProductVer</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>treeDTO</name>
+            <entityClass>TreeDTO</entityClass>
+            <dc>factory</dc>
+            <type>dto</type>
+            <dependence>treeDTO</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfMEntity_form</name>
+            <entityClass>PfMEntity</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfMEntity</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfMProperty_grid</name>
+            <entityClass>PfMProperty</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfMProperty</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid_productentity_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <id>grid_productentity_ToolBar</id>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>grid_productentity_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid_productentity_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX>_productentity</ID__PREFIX>
+        <showToolBar>false</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string>_productentity</string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid_productentity</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance>
+</templateInstances>
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+</resources>
+   </dc:view>
+</dc:dc>
+

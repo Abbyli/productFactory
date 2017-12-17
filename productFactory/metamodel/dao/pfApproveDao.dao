@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.abclife.productfactory.dao.PfApproveDaoImpl" interface="">
+      <baseInfo>
+         <author value="neusoft" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.Date" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.abclife.productfactory.dto.ProApproveDTO" />
+      <import value="com.neusoft.abclife.productfactory.entity.TComboInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductDefApply" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductDefApprove" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductStatusInf" />
+      <import value="com.neusoft.abclife.util.StringUtil" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="ProApproveDTO" type="dto" dc="factoryabclife" ref="proApproveDTO" />
+      <dependence name="TComboInf" type="entity" dc="factoryabclife" ref="tComboInf" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TProductDefApply" type="entity" dc="factoryabclife" ref="tProductDefApply" />
+      <dependence name="TProductDefApprove" type="entity" dc="factoryabclife" ref="tProductDefApprove" />
+      <dependence name="TProductStatusInf" type="entity" dc="factoryabclife" ref="tProductStatusInf" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfApproveDaoImpl" returnType="" accessStrategy="public" />
+      <method name="queryApproveByInsur" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[审核查询
+@param tInsurtypeBasicInf
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="insur" type="com.neusoft.abclife.productfactory.dto.ProApproveDTO" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="queryApproveByCombo" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <parameter name="comboInf" type="com.neusoft.abclife.productfactory.dto.ProApproveDTO" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="saveApproveTrue" returnType="void" accessStrategy="public">
+         <comment><![CDATA[审核通过
+@param tInsurtypeBasicInf]]></comment>
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.dto.ProApproveDTO" />
+      </method>
+      <method name="saveApproveFalse" returnType="void" accessStrategy="public">
+         <comment><![CDATA[审核不通过
+@param tInsurtypeBasicInf]]></comment>
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.dto.ProApproveDTO" />
+      </method>
+      <method name="queryInsurById" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" accessStrategy="public">
+         <parameter name="dto" type="com.neusoft.abclife.productfactory.dto.ProApproveDTO" />
+      </method>
+      <method name="queryComboById" returnType="com.neusoft.abclife.productfactory.entity.TComboInf" accessStrategy="public">
+         <parameter name="dto" type="com.neusoft.abclife.productfactory.dto.ProApproveDTO" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

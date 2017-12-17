@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.fdframework.productfactory.dao.PfProduct2ModelDao" interface="">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.dto.ProductVerRiskVerDTO" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjProductRisk" />
+      <import value="com.neusoft.fdframework.util.StringUtil" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="ProductVerRiskVerDTO" type="dto" dc="factory" ref="ProductVerRiskVerDTO" />
+      <dependence name="PfMEntity" type="entity" dc="factory" ref="pfMEntity" />
+      <dependence name="PfMProperty" type="entity" dc="factory" ref="pfMProperty" />
+      <dependence name="PfObjProductRisk" type="entity" dc="factory" ref="pfObjProductRisk" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfProduct2ModelDao" returnType="" accessStrategy="public" />
+      <method name="addPfProduct2Risk" returnType="int" accessStrategy="public">
+         <comment><![CDATA[添加险种]]></comment>
+         <parameter name="pfObjProductRisk" type="com.neusoft.fdframework.productfactory.entity.PfObjProductRisk" />
+      </method>
+      <method name="checkPfProduct2Risk" returnType="com.neusoft.fdframework.productfactory.entity.PfObjProductRisk" accessStrategy="public">
+         <comment><![CDATA[校验是否险种版本是否重复]]></comment>
+         <parameter name="productVersionId" type="String" />
+         <parameter name="riskVersionId" type="String" />
+      </method>
+      <method name="delPfProduct2Risk" returnType="int" accessStrategy="public">
+         <comment><![CDATA[删除险种]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="getPfProduct2RiskList" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[查询已选险种列表(分页)]]></comment>
+         <parameter name="productVersionId" type="String" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="getPfProduct2RiskListNoPage" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询已选险种列表(无分页)]]></comment>
+         <parameter name="productVersionId" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

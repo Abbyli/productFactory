@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSourceManager xmlns="http://www.neusoft.com/report/datasource"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.neusoft.com/report/datasource">
+	<Category Name="rdb-sql" Caption="关系数据库SQL数据源"
+		SourceClass="com.neusoft.report.engine.dataset.datasource.impl.JDBCDataSource"
+		QuerierClass="com.neusoft.report.engine.dataset.executer.jdbc.JDBCDataSetExecuter">
+		<DataSource Name="northwind" Caption="Report30样例库" TransactionName="default"></DataSource>
+		<DataSource Name="UNIEAP" Caption="Report30样例库"  TransactionName="default"></DataSource>
+		<DataSource Name="unitele" Caption="Report30样例库"  TransactionName="default"></DataSource>
+		<DataSource Name="requisitepro" Caption="Report30样例库"  TransactionName="default"></DataSource>
+		<DataSource Name="mas_olap" Caption="Report30样例库"  TransactionName="default"></DataSource>
+		<DataSource Name="Workflow" Caption="工作流"  TransactionName="default"></DataSource>
+	</Category>
+	
+	<Category Name="sp" Caption="存储过程数据源" SourceClass="com.neusoft.report.engine.dataset.datasource.impl.SpDataSource" 
+	QuerierClass="com.neusoft.report.engine.dataset.executer.sp.JDBCSpDataSetExecuter">
+		<DataSource Name="northwind" Caption="Report30样例库"></DataSource>	
+	</Category>
+
+	<!-- Note: For non-Windows system, replace "\\" of the location with "//" -->
+	
+	<Category Name="xml" Caption="xml数据源" SourceClass="com.neusoft.report.engine.dataset.datasource.impl.XMLDataSource"
+	QuerierClass="com.neusoft.report.engine.dataset.executer.xml.XMLDataSetExecuter">
+		<DataSource Name="xml" Caption="xml测试">
+			<Parameters>
+				<Param Name="location" Value='\\xmldatasource'/>
+			</Parameters>
+		</DataSource>
+	</Category>
+	
+	
+	<!-- Note: For non-Windows system, replace "\\" of the location with "//" -->
+	
+	<Category Name="csv" Caption="csv数据源" SourceClass="com.neusoft.report.engine.dataset.datasource.impl.CSVDataSource"
+	QuerierClass="com.neusoft.report.engine.dataset.executer.csv.CSVDataSetExecuter">
+		<DataSource Name="csv" Caption="csv测试">
+			<Parameters>
+				<Param Name="location" Value='\\csvdatasource'/>
+				<Param Name="delimiter" Value=','/>
+				<Param Name="quoteChar" Value='"'/>
+				<Param Name="encoding" Value='utf-8'/>
+			</Parameters>
+		</DataSource>
+	</Category>
+	
+	
+	<Category Name="excel" Caption="excel数据源" SourceClass="com.neusoft.report.engine.dataset.datasource.impl.ExcelDataSource"
+	QuerierClass="com.neusoft.report.engine.dataset.executer.excel.ExcelDataSetExecuter">
+		<DataSource Name="excel" Caption="excel测试">
+			<Parameters>
+				<Param Name="location" Value='\\exceldatasource'/>
+				<Param Name="encoding" Value='utf-8'/>
+			</Parameters>
+		</DataSource>
+	</Category>
+	
+	<Category Name="inline" Caption="内嵌数据源" SourceClass="com.neusoft.report.engine.dataset.datasource.impl.InlineDataSource"
+	QuerierClass="com.neusoft.report.engine.dataset.executer.inline.InlineDataSetExecuter">
+		<DataSource Name="inline1" Caption="inline">
+		</DataSource>
+	</Category>
+	
+	<Category Name="api" Caption="自定义数据源" SourceClass="com.neusoft.report.engine.dataset.datasource.impl.APIDataSource"
+	QuerierClass="com.neusoft.report.engine.dataset.executer.api.APIDataSetExecuter">
+		<DataSource Name="sample API" Caption="Report30样例库">
+			<DataEntity Name="ReportTeam" Caption="members">
+				<Parameters>
+					<Param Name="classname" Value='com.neusoft.report.engine.dataset.executer.api.ReportTeam'/>
+				</Parameters>
+			</DataEntity>
+		</DataSource>
+		<DataSource Name="Workflow" Caption="工作流">
+			<DataEntity Name="WFTemplateDataSource" Caption="members">
+				<Parameters>
+					<Param Name="classname" Value='com.neusoft.uniflow.extension.report.datasource.Stat_WFTemplateDataSource'/>
+				</Parameters>
+			</DataEntity>
+			<DataEntity Name="WFInstanceDataSource" Caption="members">
+				<Parameters>
+					<Param Name="classname" Value='com.neusoft.uniflow.extension.report.datasource.Stat_WFInstanceDataSource'/>
+				</Parameters>
+			</DataEntity>
+			<DataEntity Name="PersonalWorkDataSource" Caption="members">
+				<Parameters>
+					<Param Name="classname" Value='com.neusoft.uniflow.extension.report.datasource.Stat_PersonalWorkDataSource'/>
+				</Parameters>
+			</DataEntity>
+		</DataSource>
+	</Category>
+	
+	<Category Name="datawindow" Caption="UniEAP 数据窗口数据源" SourceClass="com.neusoft.report.engine.dataset.datasource.impl.DataWindowDataSource" 
+	QuerierClass="com.neusoft.report.engine.dataset.executer.datawindow.DataWindowDataSetExecuter">
+		<DataSource Name="datawindow1" Caption="数据"></DataSource>
+	</Category>
+	
+	<Category Name="datastore" Caption="UniEAP DataStore 数据源" SourceClass="com.neusoft.report.engine.dataset.datasource.impl.DataStoreDataSource" 
+	QuerierClass="com.neusoft.report.engine.dataset.executer.datastore.DataStoreDataSetExecuter">
+	    <DataSource Name="datastore_v4_sessionFactory" Caption="datastore_v4_sessionFactory">
+			<Parameters>
+				<Param Name="metadataProvider" Value='com.neusoft.report.engine.dataset.datasource.impl.HibernateMetadataProvider'/>
+				<Param Name="sessionFactoryName" Value='sessionFactory'/>
+			</Parameters>
+		</DataSource>
+	    
+		<DataSource Name="datastore_1" Caption="DataStore 1">
+				<Parameters>
+					 <Param Name="metadataProvider" Value='com.neusoft.report.engine.dataset.datasource.impl.DrmDataStoreMetadataProvider'/>
+				</Parameters>
+		</DataSource>
+	</Category>
+	
+	<!--<Category Name="rdb-sql-simple" Caption="关系数据库简单SQL数据源"
+		SourceClass="com.neusoft.report.engine.dataset.datasource.impl.JDBCDataSource"
+		QuerierClass="com.neusoft.report.engine.dataset.executer.jdbc.JDBCDataSetExecuter">
+		<DataSource Name="northwind" Caption="Report30样例库"></DataSource>
+		<DataSource Name="UNIEAP" Caption="Report30样例库"></DataSource>
+	</Category>-->
+</DataSourceManager>

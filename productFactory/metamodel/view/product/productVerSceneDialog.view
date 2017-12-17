@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="think" />
+         <creationTime value="2016-01-26 13:40:56" />
+         <modificationTime value="2016-03-04 17:49:03" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getPfSortTree" onSuccess="getPfSortTreeSuccess"
+		sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfctlgbiz.business.xml" method="pfctlgbiz.getPfCtlgBizList"></bo>
+	</pMethod>
+	<dependence name="pfctlgbiz.business.xml"
+		ref="pfctlgbiz.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="getPfSceneComboBox" onSuccess="getPfSceneComboBoxSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfctlgscene.business.xml" method="pfctlgscene.getPfCtlgSceneListByBizId"></bo>
+		<context>
+			<string name="bizId" />
+		</context>
+		<arguments>
+			<argument name="bizId" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<dependence name="pfctlgscene.business.xml"
+		ref="pfctlgscene.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="addPfPrdtScene" onSuccess="addPfPrdtSceneSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfprdtscene.business.xml" method="pfprdtscene.addPfPrdtScene"></bo>
+<context><pojo name="pfObjScene" dataStoreName="pfObjScene_form" /></context><arguments><argument name="pfObjScene" type="dataStore"></argument></arguments></pMethod>
+<dependence name="pfprdtscene.business.xml" ref="pfprdtscene.business.xml | com.neusoft.fdframework.productfactory.business" dc="factory" /></processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfObjScene_form" dependence="pfObjScene" dc="factory"
+		path="pfObjScene.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="sceneId" label="关联的场景分类ID" type="string" length="32" />
+			<column name="ownerType" label="0:实体对象 1:险种版本对象 2:产品版本对象"
+				type="number" length="22" />
+			<column name="ownerObjId" label="关联的主对象ID" type="string"
+				length="32" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><template id="template1" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    <form binding-store="pfObjScene_form" id="form_productVerScene">
+      <tableLayout id="form_productVerScene_tableLayout" tableLayout="fixed" width="100%">
+        <colgroup>
+          <col width="25%" />
+          <col width="60%" />
+          <col width="15%" />
+        </colgroup>
+        <tbody>
+          <tr id="form_productVerScene_0_tr">
+            <td id="ctlgBizTemp__productVerScene_label_td" rowSpan="1" align="right">
+              <label id="ctlgBizTemp__productVerScene_label" value="业务分类：" />
+            </td>
+            <td colSpan="1" id="ctlgBizTemp__productVerScene_td" rowSpan="1">
+              <comboBoxTree id="ctlgBizTemp__productVerScene"
+	popup-height="200px"
+	treeJson-binding="{label:'name',parent:'pid',store:'list',query:{name:'pid',relation:'=',value:'-1'}}"
+	width="100%">
+	<events>
+		<event name="onChange" handlerFunction="ctlgBizTemp__productVerScene_onChange">
+			<function name="ctlgBizTemp__productVerScene_onChange"
+				arguments="value">
+				<script><![CDATA[view.processor.getPfSceneComboBox(value);]]></script>
+			</function>
+		</event>
+	</events>
+</comboBoxTree>
+            </td>
+            <td></td>
+          </tr>
+          <tr id="form_productVerScene_1_tr">
+            <td id="sceneId__productVerScene_label_td" rowSpan="1" align="right">
+              <label id="sceneId__productVerScene_label" value="场景分类：" />
+            </td>
+            <td colSpan="1" id="sceneId__productVerScene_td" rowSpan="1">
+              <comboBox binding-name="sceneId" id="sceneId__productVerScene" maxLength="32" width="100%" popup-height="150px" decoder-valueAttr="id" decoder-displayAttr="name" required="true"></comboBox>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </tableLayout>
+    </form>
+    <tableLayout id="form_productVerScene_ToolBarInfo" tableLayout="fixed" width="100%" class="toolbar-table">
+      <colgroup>
+        <col width="" />
+        
+        
+        
+        
+        
+        
+      </colgroup>
+      <tbody>
+        <tr height="30px">
+          <td align="right"><button id="form_productVerScene_saveButton"
+	label="保 存" width="100px" iconClass="common_base_btn common_save_btn">
+	<events>
+		<event name="onClick" handlerFunction="form_productVerScene_saveButton_onClick">
+			<function name="form_productVerScene_saveButton_onClick"
+				arguments="event">
+				<script><![CDATA[if(!unieap.byId("form_productVerScene").validate(false)){
+	return;
+}
+var pfPrdtScene = view.form.getDataStore("form_productVerScene");
+pfPrdtScene.rowSet.primary[0]["ownerType"] = 2; //产品版本对象
+pfPrdtScene.rowSet.primary[0]["ownerObjId"] = view.thisProductVersionId;
+//unieap.debug(pfPrdtScene);
+if (view.thisType == "add") {
+    view.processor.addPfPrdtScene(pfPrdtScene);
+    
+}
+// else if (view.thisType == "upd") {
+//    view.processor.updPfPrdtRule(pfPrdtRule);
+//}
+]]></script>
+			</function>
+		</event>
+	</events>
+</button></td>
+          
+          
+          
+          
+          
+          
+        </tr>
+      </tbody>
+    </tableLayout>
+  </template><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[var datas = unieap.getXDialog().dialogData;
+view.thisType = datas.type;
+view.thisProductVersionId = datas.productVersionId;
+
+view.processor.getPfSortTree();]]></script></function></event></events></controls>
+      <scripts ><function name="getPfSortTreeSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfSortTree方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore("list");
+dataCenter.addDataStore(ds);
+]]></script>
+</function><function name="getPfSceneComboBoxSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfSceneComboBox方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore("pfSceneComboBox");
+unieap.byId("sceneId__productVerScene").getDataProvider().setDataStore(ds);]]></script>
+</function><variable name="thisProductVersionId"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><variable name="thisType"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><function
+	name="addPfPrdtSceneSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:addPfPrdtScene方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var rtnMessage = dc.getParameter('rtnMessage');
+if(rtnMessage == ""){
+//	MessageBox.alert({
+	MessageBox.autoCloseAlert({
+		title: "提示",
+    	message: "保存成功！",
+    	type: "info",
+//    	durationTime:"3000",
+//    	iconCloseComplete: false,
+   	 	onComplete: function(){
+        	unieap.getXDialog().close(true);
+    	}
+	})
+
+}else{
+	MessageBox.alert({
+		title:'提示',
+		message:rtnMessage,
+		type: "info",
+    	iconCloseComplete: false,
+   	 	onComplete: function(){
+        	unieap.getXDialog().close(false);
+    	}
+	})
+
+}]]></script>
+</function></scripts>
+      <templateInstances ><templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form_productVerScene</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>userdef</colType>
+        <colsPropertyList>
+          <string>25</string>
+          <string>60</string>
+          <string>15</string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string>_productVerScene</string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>id</name>
+            <label>id</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>id</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ctlgBizTemp</name>
+            <label>业务分类：</label>
+            <labelTD>
+              <id>ctlgBizTemp__productVerScene_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>ctlgBizTemp__productVerScene_label</id>
+                <value>业务分类：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBoxTree</controlType>
+            </labelTD>
+            <controlTD>
+              <id>ctlgBizTemp__productVerScene_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBoxTree</controlType>
+                <id>ctlgBizTemp__productVerScene</id>
+                <properties/>
+                <binding__name></binding__name>
+                <binding__markDirty></binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBoxTree</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>true</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>sceneId</name>
+            <label>场景分类：</label>
+            <labelTD>
+              <id>sceneId__productVerScene_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>sceneId__productVerScene_label</id>
+                <value>场景分类：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>sceneId__productVerScene_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>sceneId__productVerScene</id>
+                <properties/>
+                <binding__name>sceneId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ownerType</name>
+            <label>0:实体对象 1:险种版本对象 2:产品版本对象</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>numberTextBox</controlType>
+                <properties/>
+                <binding__name>ownerType</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>22</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>number</type>
+            <length>22</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ownerObjId</name>
+            <label>关联的主对象ID</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>ownerObjId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productVerScene_0_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_productVerScene_1_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <isIdChange>true</isIdChange>
+        <lastId></lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form_productVerScene_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form_productVerScene_saveButton</id>
+              <name>form_productVerScene_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form_productVerScene_resetButton</id>
+              <name>form_productVerScene_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form_productVerScene_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form_productVerScene</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form_productVerScene</id>
+        <properties/>
+        <isMerge>false</isMerge>
+        <binding__store>pfObjScene_form</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form_productVerScene_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>2</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

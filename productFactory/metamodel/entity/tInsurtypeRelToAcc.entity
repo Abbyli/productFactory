@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+   <dc:entity class="com.neusoft.abclife.productfactory.entity.TInsurtypeRelToAcc" table="T_INSURTYPE_REL_TO_ACC" extends="com.neusoft.unieap.core.di.DomainObject">
+      <id name="insurtypeAccAssocId" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_ACC_ASSOC_ID" length="16" />
+         <generator class="sequence">
+            <param name="sequence" value="SEQ_INSURTYPE_REL_TO_ACC" />
+         </generator>
+      </id>
+      <property name="insurtypeId" label="险种ID" type="java.lang.Long" getStrategy="public" setStrategy="public" insert="false" update="false">
+         <column name="INSURTYPE_ID" not-null="false" length="16" />
+      </property>
+      <property name="insurtypeAccnoId" label="险种账号ID" type="java.lang.Long" getStrategy="public" setStrategy="public" insert="false" update="false">
+         <column name="INSURTYPE_ACCNO_ID" not-null="false" length="16" />
+      </property>
+      <many-to-one name="insurtypeObj" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_ID" not-null="false" length="16" />
+         <dependence ref="tInsurtypeBasicInf" />
+      </many-to-one>
+      <many-to-one name="insurtypeAccnoObj" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_ACCNO_ID" not-null="false" length="16" />
+         <dependence ref="tInsurtypeAccDef" />
+      </many-to-one>
+      <import value="java.io.Serializable" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.fdframework.core.annotation.Column" />
+      <import value="com.neusoft.fdframework.core.annotation.Entity" />
+      <import value="com.neusoft.fdframework.core.annotation.ID" />
+      <import value="com.neusoft.fdframework.core.annotation.Transient" />
+      <import value="com.neusoft.unieap.core.di.DomainObject" />    
+   </dc:entity>
+</dc:dc>
+

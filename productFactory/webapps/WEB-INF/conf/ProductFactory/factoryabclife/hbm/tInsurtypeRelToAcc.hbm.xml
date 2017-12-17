@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping> 
+	<class name="com.neusoft.abclife.productfactory.entity.TInsurtypeRelToAcc" table="T_INSURTYPE_REL_TO_ACC">
+		<id name="insurtypeAccAssocId" type="java.lang.Long">
+			<column length="16" name="INSURTYPE_ACC_ASSOC_ID"/>
+			<generator class="sequence">
+				<param name="sequence">SEQ_INSURTYPE_REL_TO_ACC</param>
+			</generator>
+		</id>
+		<property insert="false" name="insurtypeId" type="java.lang.Long" update="false">
+			<column length="16" name="INSURTYPE_ID" not-null="false"/>
+		</property>
+		<property insert="false" name="insurtypeAccnoId" type="java.lang.Long" update="false">
+			<column length="16" name="INSURTYPE_ACCNO_ID" not-null="false"/>
+		</property>
+		<many-to-one name="insurtypeObj" class="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf">
+			<column length="16" name="INSURTYPE_ID" not-null="false"/>
+		</many-to-one>
+		<many-to-one name="insurtypeAccnoObj" class="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef">
+			<column length="16" name="INSURTYPE_ACCNO_ID" not-null="false"/>
+		</many-to-one>
+	</class>
+</hibernate-mapping>
+	

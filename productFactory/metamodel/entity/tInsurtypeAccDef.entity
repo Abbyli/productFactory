@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+   <dc:entity class="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef" table="T_INSURTYPE_ACC_DEF" extends="com.neusoft.unieap.core.di.DomainObject">
+      <id name="insurtypeAccId" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_ACC_ID" length="16" />
+         <generator class="sequence">
+            <param name="sequence" value="SEQ_INSURTYPE_ACC_DEF" />
+         </generator>
+      </id>
+      <property name="insurtypeAccCode" label="险种账户代码" type="string" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_ACC_CODE" not-null="false" length="6" />
+      </property>
+      <property name="insurtypeAccName" label="险种账户名称" type="string" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_ACC_NAME" not-null="false" length="100" />
+      </property>
+      <property name="insurtypeAccOwner" label="所有人类型 1-投保人&#xA;2-被保人" type="string" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_ACC_OWNER" not-null="false" length="2" />
+      </property>
+      <property name="rateType" label="利率类型 1-固定利率&#xA;2-利率表" type="string" getStrategy="public" setStrategy="public">
+         <column name="RATE_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="fixRate" label="固定利率值" type="big_decimal" getStrategy="public" setStrategy="public">
+         <column name="FIX_RATE" not-null="false" length="16" />
+      </property>
+      <property name="accrualType" label="计息类型 1-不计息?&#xA;2-活期(天单利)&#xA;3-活期(天复利)?&#xA;4-1年定期?&#xA;5-1月定期?&#xA;6-6月定期" type="string" getStrategy="public" setStrategy="public">
+         <column name="ACCRUAL_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="accrualMethod" label="计息方法 1-积数计息法&#xA;2-逐笔计息法 " type="string" getStrategy="public" setStrategy="public">
+         <column name="ACCRUAL_METHOD" not-null="false" length="2" />
+      </property>
+      <property name="settleCyc" label="结算周期 ?单位为月" type="string" getStrategy="public" setStrategy="public">
+         <column name="SETTLE_CYC" not-null="false" length="4" />
+      </property>
+      <property name="insurtypeAccType" label="账户类型 002万能账户 004 红利账户 005 生存金账户" type="string" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_ACC_TYPE" not-null="false" length="6" />
+      </property>
+      <property name="settleType" label="结算类型 1-结算后计入本金&#xA;2-结算后不计入本金" type="string" getStrategy="public" setStrategy="public">
+         <column name="SETTLE_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="isProvision" label="是否计提 ?0-否&#xA;1-是" type="string" getStrategy="public" setStrategy="public">
+         <column name="IS_PROVISION" not-null="false" length="2" />
+      </property>
+      <property name="provisionCyc" label="计提周期 单位为月" type="string" getStrategy="public" setStrategy="public">
+         <column name="PROVISION_CYC" not-null="false" length="4" />
+      </property>
+      <property name="settleTimepoint" label="结算时点 1-每月一日&#xA;2-保单周年日" type="string" getStrategy="public" setStrategy="public">
+         <column name="SETTLE_TIMEPOINT" not-null="false" length="2" />
+      </property>
+      <property name="insertOper" label="插入操作员" type="string" getStrategy="public" setStrategy="public">
+         <column name="INSERT_OPER" not-null="false" length="40" />
+      </property>
+      <property name="insertTime" label="插入时间" type="date" getStrategy="public" setStrategy="public">
+         <column name="INSERT_TIME" not-null="false" />
+      </property>
+      <property name="updateOper" label="更新操作员" type="string" getStrategy="public" setStrategy="public">
+         <column name="UPDATE_OPER" not-null="false" length="40" />
+      </property>
+      <property name="updateTime" label="更新时间" type="date" getStrategy="public" setStrategy="public">
+         <column name="UPDATE_TIME" not-null="false" />
+      </property>
+      <property name="insertConsignor" label="插入委托人" type="string" getStrategy="public" setStrategy="public">
+         <column name="INSERT_CONSIGNOR" not-null="false" length="40" />
+      </property>
+      <property name="updateConsignor" label="更新委托人" type="string" getStrategy="public" setStrategy="public">
+         <column name="UPDATE_CONSIGNOR" not-null="false" length="40" />
+      </property>
+      <import value="java.io.Serializable" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.fdframework.core.annotation.Column" />
+      <import value="com.neusoft.fdframework.core.annotation.Entity" />
+      <import value="com.neusoft.fdframework.core.annotation.ID" />
+      <import value="com.neusoft.fdframework.core.annotation.Transient" />
+      <import value="com.neusoft.unieap.core.di.DomainObject" />
+   </dc:entity>
+</dc:dc>
+

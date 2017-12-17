@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="Administrator" />
+         <creationTime value="2015-11-20 13:07:02" />
+         <modificationTime value="2015-12-02 15:44:36" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<dependence name="rate.business.xml" ref="rate.business.xml | com.neusoft.business"
+		dc="config" />
+	<pMethod name="upload" sync="true" onSuccess="uploadSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<context>
+		<string name="formId4Upload" />
+	</context>
+	<arguments>
+		<argument name="formId4Upload" type="string"></argument>
+	</arguments>
+	<bo name="rate.business.xml" method="arithengine.config.rate.uploadRateFile"></bo>
+</pMethod>
+	<pMethod name="parseExcel" sync="true" onSuccess="parseExcelSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<context>
+		<string name="fliePath" /><string name="metaId" /><string name="updWay" />
+		
+	</context>
+	<arguments>
+		
+		
+	<argument name="fliePath" type="string"></argument><argument name="metaId" type="string"></argument><argument name="updWay" type="string"></argument></arguments>
+	<bo name="rate.business.xml" method="arithengine.config.rate.parseExcelData"></bo>
+</pMethod>
+</processor>
+      <messageWires />
+      <dataCenter />
+      <controls ><template id="template1" instance="false" type="com.neusoft.unieap.adaptiveLayout_1.0.0">
+    <adaptiveContainer id="adaptiveContainer1">
+      <adaptivePane height="120px" width="auto"><titlePane id="titlePane1" title="上传文件" flexible="false">
+      <template id="template2" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    <form id="uploadForm" enctype="multipart/form-data">
+      <tableLayout id="form1_tableLayout" tableLayout="fixed" width="100%">
+        <colgroup>
+          <col width="" />
+          <col width="" />
+          <col width="" />
+          <col width="" />
+        </colgroup>
+        <tbody>
+        	<tr>
+        		<td align="right"><label id="label1" value="导入方式："/></td>
+        		<td colSpan="2"><comboBox id="updWay" width="70%" dataProvider-store="updWayStore" required="true"></comboBox></td>
+        		<td></td>
+        	</tr>
+        	<tr id="form1_0_tr" height="35px">
+	            <td id="NewColumn1_label_td" rowSpan="1" align="right">
+	              <label id="NewColumn1_label" value="选择文件：" />
+	            </td>
+	            <td colSpan="2" id="NewColumn1_td" rowSpan="1">
+	            	<fileInput id="fileInput1" width="335px" fileFilter="xls" required="true"></fileInput>
+	            </td>
+	            <td></td>
+          </tr>
+        </tbody>
+      </tableLayout>
+    <tableLayout id="form1_ToolBarInfo" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="145px" />
+        <col width="145px" />
+      </colgroup>
+      <tbody>
+        <tr height="30px">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            
+          </td>
+          <td align="right">
+            
+          <button id="form1_saveButton" label="保存" width="60px"
+	height="19px">
+	<events>
+		<event name="onClick" handlerFunction="form1_saveButton_onClick">
+			<function name="form1_saveButton_onClick" arguments="event">
+				<script><![CDATA[var form=unieap.byId('uploadForm');
+var isValid=form.validate(false);
+
+var metaId=uploadfile.refId;
+if(isValid)
+{
+	view.processor.upload("uploadForm");
+}
+]]></script>
+			</function>
+		</event>
+	</events>
+</button></td>
+        </tr>
+      </tbody>
+    </tableLayout></form>
+    
+  </template></titlePane></adaptivePane>
+      
+    </adaptiveContainer>
+  </template><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[var dd = unieap.getXDialog().dialogData;
+uploadfile.refId=dd.refId;]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[var updWayStore=new unieap.ds.DataStore("updWayStore", [ {
+	CODENAME : '覆盖导入',
+	CODEVALUE : '1'
+}, {
+	CODENAME : '增量导入',
+	CODEVALUE : '0'
+}]);
+
+dataCenter.addDataStore("updWayStore", updWayStore);]]></script></function></event></events></controls>
+      <scripts ><variable name="refId"><script><![CDATA[]]></script><comment><![CDATA[]]></comment></variable><function
+	name="uploadSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:upload方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var fileName=dc.getParameter("result");
+
+view.processor.parseExcel(fileName, uploadfile.refId, unieap.byId("updWay").getValue());]]></script>
+</function><function name="parseExcelSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:parseExcel方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result=dc.getParameter("affectRows");
+var message="解析数据文件成功！";
+if(result<0){
+	message="解析数据文件失败，请核对文件格式是否与模板一致！";
+}
+MessageBox.alert({
+    title: '提示信息',
+    message: message,
+    onComplete: function () {
+    	unieap.getXDialog().setReturn(result);
+		unieap.getXDialog().close();
+    }
+});
+]]></script>
+</function></scripts>
+      <templateInstances ><templateInstance target="template2"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form1</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>none</colType>
+        <colsPropertyList>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList/>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>false</isDataStoreChange>
+        <isIdChange>true</isIdChange>
+        <lastId></lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form1_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_saveButton</id>
+              <name>form1_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_resetButton</id>
+              <name>form1_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form1_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form1</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form1</id>
+        <properties/>
+        <isMerge>false</isMerge>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form1_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>0</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

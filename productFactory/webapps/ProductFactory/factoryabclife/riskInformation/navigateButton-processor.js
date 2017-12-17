@@ -1,0 +1,1 @@
+ /*** @author liu.w * @creationTime 2016-01-22 08:48:26 * @modificationTime 2017-02-21 10:21:46 * @version 1.0.0* @generated */dojo.provide("_factoryabclife.riskInformation.navigateButton.Processor");dojo.declare("_factoryabclife.riskInformation.navigateButton.Processor",unieap.view.Processor, {});

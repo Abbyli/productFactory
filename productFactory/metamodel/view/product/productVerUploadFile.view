@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="suych" />
+         <creationTime value="2015-09-28 13:47:33" />
+         <modificationTime value="2016-03-07 14:44:11" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences ><dependence name="factory/risk/navigateButton" type="viewc" sc="ProductFactory" dc="factory" ref="risk/navigateButton" /><dependence name="factory/product/navigateButtonProduct" type="viewc" sc="ProductFactory" dc="factory" ref="product/navigateButtonProduct" /></dependences>
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	
+	<dependence name="spd.uploadfile.business.xml"
+		ref="spd.uploadfile.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="getFiles" onSuccess="getFilesSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			
+			<string name="verId" /><string name="type" /><string name="pageNumber" />
+			<string name="pageSize" />
+		</context>
+		<arguments>
+
+
+
+			
+			
+			
+		<argument name="verId" type="string"></argument><argument name="type" type="string"></argument><argument name="pageNumber" type="string"></argument><argument name="pageSize" type="string"></argument></arguments>
+		<pagingQuery pageNumber="1" pageSize="10" calcRecordCount="true"></pagingQuery>
+		<bo name="spd.uploadfile.business.xml" method="UploadFileService.getFiles"></bo>
+	</pMethod>
+	<pMethod name="delFile" onSuccess="delFileSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="spd.uploadfile.business.xml" method="UploadFileService.delFile"></bo>
+		<context>
+			<string name="id" />
+		</context>
+		<arguments>
+			<argument name="id" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<dependence name="pfattachtypedef.business.xml"
+		ref="pfattachtypedef.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="getPfAttachTypeDefsNoPage" onSuccess="getPfAttachTypeDefsNoPageSuccess" sync="true">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfattachtypedef.business.xml" method="pfattachtypedef.getPfAttachTypeDefsNoPage"></bo>
+</pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfPrdtFile" dependence="pfPrdtFile" dc="factory"
+		path="pfPrdtFile.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="productVerId" label="PRODUCT_VER_ID" type="string"
+				length="32" />
+			<column name="type" label="TYPE" type="string" length="16" />
+			<column name="name" label="NAME" type="string" length="1024" />
+			<column name="path" label="PATH" type="string" length="1024" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+	<dataStore name="pfPrdtFile1" dependence="pfPrdtFile" dc="factory"
+		path="pfPrdtFile.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="productVerId" label="PRODUCT_VER_ID" type="string"
+				length="32" />
+			<column name="type" label="TYPE" type="string" length="16" />
+			<column name="name" label="NAME" type="string" length="1024" />
+			<column name="path" label="PATH" type="string" length="1024" />
+			<column name="uploadTime" label="上传时间" type="date" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+	<dataStore name="pfObjAttach_grid" dependence="pfObjAttach"
+		dc="factory" path="pfObjAttach.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="code" label="编码" type="string" length="128" />
+			<column name="name" label="文件名称" type="string" length="300" />
+			<column name="uploadTime" label="上传时间" type="date" />
+			<column name="ownerType" label="0:实体对象 1:险种版本对象 2:产品版本对象"
+				type="number" length="22" />
+			<column name="ownerObjId" label="关联的主对象ID" type="string"
+				length="32" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><xdialog id="addDialog" title="添加文件"
+	view-ref="factory/product/productVerUploadFileDialog" width="800px"
+	height="350px" isExpand="false">
+	<events>
+		<event name="onComplete" handlerFunction="addDialog_onComplete">
+			<function name="addDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[view.processor.getFiles(thisProductVersionId, "2", "1", "10");
+
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><borderLayout id="borderLayout1" showTitleBar="false" design="headline"><borderPane id="borderPane0" showTitleBar="false" splitLine="false" region="left" maxSize="100px" minSize="100px"><component id="component1" label="Component" comp-ref="factory/product/navigateButtonProduct" /></borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><titlePane height="100%" title="文件列表" flexible="false"><div id="div1" height="30px" type="buttons"><button
+	id="btn_riskVerAttachAdd" label="新 增" width="100px" class="titlePane-button" iconClass="common_base_btn common_new_btn">
+	<events>
+		<event name="onClick" handlerFunction="btn_riskVerAttachAdd_onClick">
+			<function name="btn_riskVerAttachAdd_onClick" arguments="event">
+				<script><![CDATA[var xdialog = unieap.byId("addDialog");
+xdialog.dialogData = {
+    type: "add",
+    productVerId: thisProductVersionId,
+    arithVerId: thisArithVerId,
+    commonDecoder: commonDecoder_file
+};
+xdialog.show();
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="btn_riskVerAttachDel" label="删 除 no" width="100px"
+	class="titlePane-button" style="display:none">
+	<events>
+		<event name="onClick" handlerFunction="btn_riskVerAttachDel_onClick">
+			<function name="btn_riskVerAttachDel_onClick" arguments="event">
+				<script><![CDATA[//var data = view.grid.getRows("grid_riskVerAttach");
+//if (data 
+//    && data.rowSet 
+//    && data.rowSet.primary 
+//    && data.rowSet.primary.length == 1) {
+//    
+//    MessageBox.confirm({
+//        message: "是否删除？",
+//        yesStr: "是",
+//        noStr: "否",
+//        //关闭右上角的"X"按钮时执行onComplete函数
+//        iconCloseComplete:false,
+//        onComplete: function(value) {
+//            if (value) {
+//                var delId = data.rowSet.primary[0].id;
+//                view.processor.delFile(delId);
+//            }
+//        }
+//    }, dojo.byId("confirm"));
+//}]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template4" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <xgrid binding-store="pfObjAttach_grid" edit-editType="readonly" height="100%" id="grid_riskVerAttach" rows-rowsPerPage="10" selection-selectType="none" views-rowBar="false" views-rowNumber="true">
+    <toolbar paging-userPageSize="false"></toolbar>
+    <header>
+      <row>
+        <xcell dataType="string" enable="false" height="25px" id="cell_name__riskVerAttach" label="文件名称" name="name" width="40%"></xcell>
+        <xcell dataType="date" displayFormatter-dataFormat="yyyy-MM-dd hh:mm:ss" displayFormatter-declaredClass="unieap.form.DateDisplayFormatter" enable="false" height="25px" id="cell_uploadTime__riskVerAttach" label="上传时间" name="uploadTime" width="30%"></xcell>
+        <xcell dataType="string" enable="false" height="25px" id="cell_code__riskVerAttach" label="附件类型" name="code" width="20%"></xcell>
+        <xcell enable="false" id="cell_control__riskVerAttach"
+	label="操作" name="control" width="10%" styles="text-align:center">
+	<events>
+		<event name="formatter" handlerFunction="cell_control__riskVerAttach_formatter">
+			<function name="cell_control__riskVerAttach_formatter"
+				arguments="inValue,inRowIndex">
+				<script><![CDATA[var delImg=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_o.png";
+var delImg_h=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_h.png";
+
+var delHTML="<img src='"+delImg+"' style='cursor:pointer;' title='删除' onclick='productVerUploadFile.del("+inRowIndex+");' onmouseover='this.src=\""+delImg_h+"\"' onmouseout='this.src=\""+delImg+"\"'></img>";
+return delHTML;]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+      </row>
+    </header>
+    <events>
+      <event handlerFunction="grid2_binding_rpc" name="binding-rpc">
+        <function arguments="store,load" name="grid2_binding_rpc">
+          <script><![CDATA[view.processor.getFiles(thisProductVersionId, "2", store.getPageNumber(), store.getPageSize());]]></script>
+        </function>
+      </event>
+    </events>
+  </xgrid></template></titlePane></borderPane></borderLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[navigateButtonProduct.activeNavigateButton("file_copy1");
+
+view.navigator.receiveData("附件列表", function(dc) {
+	//grid清空
+	unieap.byId("grid_riskVerAttach").getBinding().getRowSet().deleteAllRows();
+    thisProductVersionId = dc.getParameter("thisProductVersionId");
+    thisArithVerId = dc.getParameter("thisArithVerId");
+    navigateButtonProduct.receiveDCParameter(dc);
+    //查询 编码 
+    view.processor.getPfAttachTypeDefsNoPage();
+	//查询险种版本关联的附件
+	view.processor.getFiles(thisProductVersionId, "2", "1", "10");
+});
+]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[//var type = new unieap.ds.DataStore("type", [ {
+//    CODEVALUE : '0',
+//    CODENAME : "否"
+//}, {
+//    CODEVALUE : '1',
+//    CODENAME : "是"
+//}]);
+//var type = new unieap.ds.DataStore("type", [ {
+//    CODEVALUE : 'RATE',
+//    CODENAME : "费率表"
+//}, {
+//    CODEVALUE : 'CASHVALUE',
+//    CODENAME : "现金价值表"
+//}, {
+//    CODEVALUE : 'PROFITCLAUSE',
+//    CODENAME : "利益条款"
+//},{
+//    CODEVALUE : 'BASICCLAUSE',
+//    CODENAME : "基本条款"
+//},{
+//    CODEVALUE : 'PREPARECASH',
+//    CODENAME : "准备金表"
+//},{
+//    CODEVALUE : 'ADJUSTRATE',
+//    CODENAME : "现金价值插值调整因子表"
+//},{
+//    CODEVALUE : 'ADDITIONALRATE',
+//    CODENAME : "附加费用率"
+//},{
+//    CODEVALUE : 'OTHERS',
+//    CODENAME : "其它"
+//}]);
+//dataCenter.addDataStore("type", type);
+]]></script></function></event></events><dependence name="factory/pfprdtfileDialog" type="view" sc="ProductFactory" dc="factory" ref="pfprdtfileDialog" /><dependence name="factory/risk/riskVerUploadFileDialog" type="view" sc="ProductFactory" dc="factory" ref="risk/riskVerUploadFileDialog" /><dependence name="factory/product/productVerUploadFileDialog" type="view" sc="ProductFactory" dc="factory" ref="product/productVerUploadFileDialog" /></controls>
+      <scripts ><function name="getFilesSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getFiles方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result = dc.getDataStore('files');
+view.grid.setDataStore("grid_riskVerAttach", result);]]></script>
+</function><function name="delFileSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:delFile方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[view.processor.getFiles(thisProductVersionId, "2", "1", "10");]]></script>
+</function><function name="getPfAttachTypeDefsNoPageSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfAttachTypeDefsNoPage方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[commonDecoder_file = dc.getDataStore("rtnPfAttachTypeDefsNoPage")
+		.clone("commonDecoder_file"+new Date().getTime());
+unieap.byId("grid_riskVerAttach").getLayoutManager().getCell("code").decoder 
+		= {store:commonDecoder_file, valueAttr:'code', displayAttr:'name'};]]></script>
+</function><variable name="thisProductVersionId"><script><![CDATA[""]]></script><comment><![CDATA[]]></comment></variable><variable name="thisArithVerId"><script><![CDATA[""]]></script><comment><![CDATA[]]></comment></variable><variable name="commonDecoder_file"><script><![CDATA[""]]></script><comment><![CDATA[]]></comment></variable><function
+	name="del" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var data = view.grid.getRow("grid_riskVerAttach", inRowIndex);
+if (data 
+    && data.rowSet 
+    && data.rowSet.primary 
+    && data.rowSet.primary.length == 1) {
+    
+    MessageBox.confirm({
+        message: "是否删除？",
+        yesStr: "是",
+        noStr: "否",
+        //关闭右上角的"X"按钮时执行onComplete函数
+        iconCloseComplete:false,
+        onComplete: function(value) {
+            if (value) {
+                var delId = data.rowSet.primary[0].id;
+                view.processor.delFile(delId);
+            }
+        }
+    }, dojo.byId("confirm"));
+}]]>
+	</script>
+</function></scripts>
+      <templateInstances>
+	<templateInstance target="template4"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>pfPrdtFile1</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>id</name>
+            <label>id</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>id</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name</name>
+            <label>文件名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_name__riskVerAttach</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>name</name>
+              <label>文件名称</label>
+              <width>40%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>name__riskVerAttach_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>300</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>uploadTime</name>
+            <label>上传时间</label>
+            <type>date</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_uploadTime__riskVerAttach</id>
+              <properties/>
+              <dataType>date</dataType>
+              <name>uploadTime</name>
+              <label>上传时间</label>
+              <width>30%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>dateTextBox</editor>
+              <displayFormatter__dataFormat>yyyy-MM-dd hh:mm:ss</displayFormatter__dataFormat>
+              <displayFormatter__declaredClass>unieap.form.DateDisplayFormatter</displayFormatter__declaredClass>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>uploadTime__riskVerAttach_dateTextBox</id>
+                <properties/>
+                <controlType>dateTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>code</name>
+            <label>附件类型</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_code__riskVerAttach</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>code</name>
+              <label>附件类型</label>
+              <width>20%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>code__riskVerAttach_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>128</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>ownerType</name>
+            <label>0:实体对象 1:险种版本对象 2:产品版本对象</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>ownerType</name>
+              <label>0:实体对象 1:险种版本对象 2:产品版本对象</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>22</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>ownerObjId</name>
+            <label>关联的主对象ID</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>ownerObjId</name>
+              <label>关联的主对象ID</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>control</name>
+            <label>操作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_control__riskVerAttach</id>
+              <properties/>
+              <dataType></dataType>
+              <name>control</name>
+              <label>操作</label>
+              <width>10%</width>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>pfObjAttach_grid</binding__store>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid_riskVerAttach</id>
+        <lastId>grid_riskVerAttach</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfPrdtFile</name>
+            <entityClass>PfPrdtFile</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfPrdtFile</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfPrdtFile1</name>
+            <entityClass>PfPrdtFile</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfPrdtFile</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid_riskVerAttach_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <paging__userPageSize>false</paging__userPageSize>
+          <id>grid_riskVerAttach_ToolBar</id>
+          <export__options></export__options>
+          <innerButtons></innerButtons>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>grid2_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid_riskVerAttach_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX>_riskVerAttach</ID__PREFIX>
+        <showToolBar>true</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string>_riskVerAttach</string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid_riskVerAttach</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance>
+</templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

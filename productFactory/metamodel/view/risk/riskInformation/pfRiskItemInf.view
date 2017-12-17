@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="zhy" />
+         <creationTime value="2016-08-11 16:36:39" />
+         <modificationTime value="2016-10-14 11:14:51" />
+         <version value="1.0.0" />
+         <comment><![CDATA[保全项定义]]></comment>
+      </baseInfo>
+      <dependences ><dependence name="factoryabclife/riskInformation/navigateButton" type="viewc" sc="ProductFactory" dc="factoryabclife" ref="riskInformation/navigateButton" /></dependences>
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="queryItem" onSuccess="queryItemSuccess" onError="">
+		<comment><![CDATA[]]>
+		</comment>
+		<context></context>
+		<arguments></arguments>
+		<bo name="pfRiskItem.business.xml" method="pfRiskItem.queryItem"></bo>
+	</pMethod>
+	<dependence name="pfRiskItem.business.xml"
+		ref="pfRiskItem.business.xml | com.neusoft.abclife.productfactory.business"
+		dc="factoryabclife" />
+	<pMethod name="saveItem" onSuccess="saveItemSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfRiskItem.business.xml" method="pfRiskItem.saveItem"></bo>
+		<context>
+			<string name="riskIrem" />
+			<pojo name="basic" dataStoreName="tInsurtypeBasicInf_form" />
+		</context>
+		<arguments>
+			<argument name="riskIrem" type="string"></argument>
+			<argument name="basic" type="dataStore"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="queryRiskItem" onSuccess="queryRiskItemSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfRiskItem.business.xml" method="pfRiskItem.queryRiskItem"></bo>
+<context><pojo name="basic" dataStoreName="tInsurtypeBasicInf_form" /></context><arguments><argument name="basic" type="dataStore"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="tInsurtypeBasicInf_form" dependence="tInsurtypeBasicInf"
+		dc="factoryabclife" path="tInsurtypeBasicInf.entity" type="entity">
+		<columns>
+			<column name="insurtypeId" label="id" type="bigint" length="16" />
+			<column name="insurtypeCode" label="险种编码" type="string"
+				length="6" />
+			<column name="insurtypeName" label="险种名称" type="string"
+				length="120" />
+			<column name="verNo" label="同一时刻只有一个版本起售" type="bigint"
+				length="16" />
+			<column name="insurtypeAbbr" label="险种简称" type="string"
+				length="90" />
+			<column name="insurtypeEngName" label="险种英文名称" type="string"
+				length="120" />
+			<column name="insurtypeEngAbbr" label="险种英文简称" type="string"
+				length="90" />
+			<column name="designType" label="普通 分红 万能 投连" type="string"
+				length="2" />
+			<column name="insurtypeStatus" label="有效 无效" type="string"
+				length="2" />
+			<column name="insurtypeLevel1Cat" label="一级分类：
+人寿保险
+年金保险
+意外险
+健康险
+委托管理业务"
+				type="string" length="2" />
+			<column name="insurtypeLevel2Cat" label="险种二级分类" type="string"
+				length="2" />
+			<column name="insurtypeLevel3Cat" label="险种三级分类" type="string"
+				length="2" />
+			<column name="insurtypeLevel4Cat" label="险种四级分类" type="string"
+				length="2" />
+			<column name="insurtypeLevel5Cat" label="险种五级分类" type="string"
+				length="2" />
+			<column name="isDividendInsur" label="同一时刻只有一个版本起售" type="string"
+				length="2" />
+			<column name="isUniversalInsur" label="是否万能险" type="string"
+				length="2" />
+			<column name="isUnitLinkedInsur" label="是否投连险" type="string"
+				length="2" />
+			<column name="isTaxable" label="是否应缴税
+" type="string" length="2" />
+			<column name="isPermitSeparateSell" label="是否允许单独销售" type="string"
+				length="2" />
+			<column name="isMatureLiab" label="是否有满期责任" type="string"
+				length="2" />
+			<column name="isAccType" label="是否账户类型" type="string" length="2" />
+			<column name="isAnnuityType" label="是否年金类型" type="string"
+				length="2" />
+			<column name="isIncludeWaiveLiab" label="是否包含豁免责任" type="string"
+				length="2" />
+			<column name="mainCovRiderFlg" label="主险 附加险" type="string"
+				length="2" />
+			<column name="termType" label="长期 短期 极短期" type="string"
+				length="2" />
+			<column name="isPermitInsurRenew" label="是否允许续保" type="string"
+				length="2" />
+			<column name="isPassMaterialRiskAssess" label="是否通过重大风险评测"
+				type="string" length="2" />
+			<column name="insurtypeDesc" label="险种描述" type="string"
+				length="500" />
+		</columns>
+	</dataStore>
+	<dataStore name="tPsItemDef_grid" dependence="tPsItemDef" dc="factoryabclife"
+		path="tPsItemDef.entity" type="entity">
+		<columns>
+			<column name="psItemId" label="id" type="bigint" length="16" />
+			<column name="psItemCode" label="保全项目编码" type="string" length="20" />
+			<column name="psItemName" label="保全项目名称" type="string" length="60" />
+			<column name="psType" label="G-团险 I-个险 B-通用" type="string"
+				length="2" />
+			<column name="isCalcItem" label="Y 是 N 否" type="string"
+				length="2" />
+			<column name="psHierar" label="保全层级" type="string" length="2" />
+			<column name="transinCtrl" label="跳转控制" type="string" length="60" />
+			<column name="authorityCtrl" label="权限控制" type="string"
+				length="60" />
+			<column name="insertOper" label="插入操作员" type="string" length="40" />
+			<column name="insertTime" label="插入时间" type="date" />
+			<column name="updateOper" label="更新操作员" type="string" length="40" />
+			<column name="updateTime" label="更新时间" type="date" />
+			<column name="insertConsignor" label="插入委托人" type="string"
+				length="40" />
+			<column name="updateConsignor" label="更新委托人" type="string"
+				length="40" />
+		</columns>
+	</dataStore>
+	<dataStore name="tInsurtypePsItemDef" dependence="tInsurtypePsItemDef"
+		dc="factoryabclife" path="tInsurtypePsItemDef.entity" type="entity">
+		<columns>
+			<column name="insurtypePsItemId" label="id" type="bigint"
+				length="16" />
+			<column name="insurtypeId" label="险种ID" type="bigint" length="16" />
+			<column name="psItemId" label="保全项ID" type="bigint" length="16" />
+			<column name="finanProcessType" label="财务处理类型" type="string"
+				length="2" />
+			<column name="psItemAttrib" label="保全项目属性" type="string"
+				length="60" />
+			<column name="insertOper" label="插入操作员" type="string" length="40" />
+			<column name="insertTime" label="插入时间" type="date" />
+			<column name="updateOper" label="更新操作员" type="string" length="40" />
+			<column name="updateTime" label="更新时间" type="date" />
+			<column name="insertConsignor" label="插入委托人" type="string"
+				length="40" />
+			<column name="updateConsignor" label="更新委托人" type="string"
+				length="40" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><borderLayout id="borderLayout1" showTitleBar="false" design="headline"><borderPane id="borderPane0" showTitleBar="false" splitLine="false" region="left"><component id="component1" label="Component" comp-ref="factoryabclife/riskInformation/navigateButton"/></borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><titlePane id="titlePane2" title="保全项定义" flexible="false" height="100%"><checkBoxGroup id="checkBoxGroup1" labelAlign="right" decoder-displayAttr="psItemName" width="100%" decoder-valueAttr="psItemId" disabled="true"></checkBoxGroup></titlePane></borderPane></borderLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[view.navigator.receiveData("险种保全项信息", function(dc){
+var tInsurtypeBasicInf=dc.getDataStore("tInsurtypeBasicInf");
+//重复加载数据
+dataCenter.addDataStore("tInsurtypeBasicInf", tInsurtypeBasicInf);
+view.processor.queryItem();
+//navigateButton.showBtn(dc.getDataStore('tInsurtypeBasicInf'));
+});
+navigateButton.activeNavigateButton("item");]]></script></function></event></events></controls>
+      <scripts ><function name="queryItemSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:queryItem方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result = dc.getDataStore("queryItemResult");
+unieap.byId("checkBoxGroup1").getDataProvider().setDataStore(result);
+//险种保全查询
+var basic = dataCenter.getDataStore("tInsurtypeBasicInf");
+view.processor.queryRiskItem(basic);]]></script>
+</function><function
+	name="saveItemSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:saveItem方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[MessageBox.autoCloseAlert({title:"提示",
+message:"保存成功"});
+
+]]>
+	</script>
+</function><function name="queryRiskItemSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:queryRiskItem方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result = dc.getDataStore("queryRiskItemResult");
+var count = result.getRowSet().getRowCount();
+if(count>0){
+	var value = result.rowSet.primary[0].psItemId;
+	for(var i=1,j=count;i<j;i++){
+	value = value+","+result.rowSet.primary[i].psItemId;	
+	}
+	unieap.byId("checkBoxGroup1").setValue(value);
+}
+]]></script>
+</function></scripts>
+      <templateInstances>
+</templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

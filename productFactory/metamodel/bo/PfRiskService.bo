@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.fdframework.productfactory.blo.PfRiskServiceImpl" interface="" scope="prototype">
+      <import value="java.math.BigDecimal" />
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.beans.BeanUtils" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.arithmetic.blo.VersionService" />
+      <import value="com.neusoft.arithmetic.entity.UiVersion" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfModelVersionDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfPrdtAlgorithmDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfPrdtExtpointDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfPrdtRuleDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfRiskDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfRiskVerDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.UploadFileDao" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMVersion" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjAlgo" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjAttach" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjHook" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjProductRisk" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjRule" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfRisk" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfRiskVer" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="PfMVersion" type="entity" dc="factory" ref="pfMVersion" />
+      <dependence name="PfObjAlgo" type="entity" dc="factory" ref="pfObjAlgo" />
+      <dependence name="PfObjAttach" type="entity" dc="factory" ref="pfObjAttach" />
+      <dependence name="PfObjHook" type="entity" dc="factory" ref="pfObjHook" />
+      <dependence name="PfObjProductRisk" type="entity" dc="factory" ref="pfObjProductRisk" />
+      <dependence name="PfObjRisk" type="entity" dc="factory" ref="pfObjRisk" />
+      <dependence name="PfObjRiskVer" type="entity" dc="factory" ref="pfObjRiskVer" />
+      <dependence name="PfObjRule" type="entity" dc="factory" ref="pfObjRule" />
+      <dependence name="PfRisk" type="entity" dc="factory" ref="pfRisk" />
+      <dependence name="PfRiskVer" type="entity" dc="factory" ref="pfRiskVer" />
+      <method name="PfRiskServiceImpl" returnType="" accessStrategy="public" />
+      <method name="saveRisk" returnType="String" accessStrategy="public">
+         <comment><![CDATA[保存险种 (riskCode, nameCn不能重复)]]></comment>
+         <parameter name="pfObjRisk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="saveRisk_new" returnType="String" accessStrategy="public">
+         <comment><![CDATA[保存险种 (riskCode, nameCn不能重复) new]]></comment>
+         <parameter name="pfRisk" type="com.neusoft.fdframework.productfactory.entity.PfRisk" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="getRisks" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[查询险种]]></comment>
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="getRisksByCondition" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[查询险种条件]]></comment>
+         <parameter name="pfObjRisk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="getRisksByCondition_new" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[查询险种条件 new]]></comment>
+         <parameter name="pfRisk" type="com.neusoft.fdframework.productfactory.entity.PfRisk" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="getProductById" returnType="com.neusoft.fdframework.productfactory.entity.PfObjRisk" accessStrategy="public">
+         <comment><![CDATA[根据id查询险种]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="updateRiskVer" returnType="String" accessStrategy="public">
+         <comment><![CDATA[更新险种版本信息 (verCode 不能重复)]]></comment>
+         <parameter name="risk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      </method>
+      <method name="delRiskVer" returnType="String" accessStrategy="public">
+         <comment><![CDATA[删除险种版本信息,校验是否被产品使用]]></comment>
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      </method>
+      <method name="copyRiskByModelVerId" returnType="String" accessStrategy="public">
+         <comment><![CDATA[根据模型复制险种(verCode 不能重复)
+复制selectModelVerId对应的模型版本信息和模型版本下的实体和属性]]></comment>
+         <parameter name="risk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+         <parameter name="selectModelVerId" type="String" />
+      </method>
+      <method name="copyRiskByRiskVerId" returnType="String" accessStrategy="public">
+         <comment><![CDATA[根据险种复制险种(verCode 不能重复)
+由selectRiskVerId获取选中险种版本关联的模型版本id,复制对应的模型版本信息和模型版本下的实体和属性]]></comment>
+         <parameter name="risk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+         <parameter name="selectRiskVerId" type="String" />
+      </method>
+      <method name="addRiskVer_new" returnType="String" accessStrategy="public">
+         <comment><![CDATA[新增险种版本(verCode 不能重复)]]></comment>
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfRiskVer" />
+      </method>
+      <method name="delRisk" returnType="String" accessStrategy="public">
+         <comment><![CDATA[删除险种, 校验险种版本是否被产品使用
+关联的险种版本状态 -1,险种版本关联模型版本状态-1]]></comment>
+         <parameter name="pfObjRisk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+      </method>
+      <method name="addVer2Arith" returnType="String" accessStrategy="public">
+         <comment><![CDATA[向算法引擎同步添加版本信息
+@param pfProduct
+@param pfProductVersion
+add by dong-yw@neusoft.com 同步向算法引擎添加版本信息]]></comment>
+         <parameter name="pfObjRisk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+         <parameter name="pfObjRiskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      </method>
+      <method name="getArithVersionObj" returnType="com.neusoft.arithmetic.entity.UiVersion" accessStrategy="public">
+         <comment><![CDATA[根据工厂产品信息和版本信息查询计算引擎版本对象
+@param verProperty
+@return]]></comment>
+         <parameter name="pfObjRisk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+         <parameter name="pfObjRiskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

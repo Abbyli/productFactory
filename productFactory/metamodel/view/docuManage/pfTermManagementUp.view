@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="Neusoft" />
+         <creationTime value="2016-10-18 16:00:59" />
+         <modificationTime value="2016-10-28 09:41:53" />
+         <version value="1.0.0" />
+         <comment><![CDATA[条案上传]]></comment>
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="saveUploadInfo" onSuccess="saveUploadInfoSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<context>
+		
+		<string name="formId4Upload" /><pojo name="tInsurtypeBasicInf" dataStoreName="tInsurtypeBasicInf_up" />
+	</context>
+	<arguments>
+		
+		
+	<argument name="formId4Upload" type="string"></argument><argument name="tInsurtypeBasicInf" type="dataStore"></argument></arguments>
+	<bo name="PfTermManagement.business.xml" method="PfTermManagement.uploadInfo"></bo>
+</pMethod>
+<dependence name="PfTermManagement.business.xml" ref="PfTermManagement.business.xml | com.neusoft.abclife.productfactory.business" dc="factoryabclife" /></processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="tInsurtypeBasicInf_up" dependence="tInsurtypeBasicInf"
+		dc="factoryabclife" path="tInsurtypeBasicInf.entity" type="entity">
+		<columns>
+			<column name="insurtypeId" label="id" type="bigint" length="16" />
+			<column name="insurtypeCode" label="险种编码" type="string"
+				length="6" />
+			<column name="insurtypeName" label="险种名称" type="string"
+				length="120" />
+			<column name="verNo" label="同一时刻只有一个版本起售" type="bigint"
+				length="16" />
+			<column name="insurtypeAbbr" label="险种简称" type="string"
+				length="90" />
+			<column name="insurtypeEngName" label="险种英文名称" type="string"
+				length="120" />
+			<column name="insurtypeEngAbbr" label="险种英文简称" type="string"
+				length="90" />
+			<column name="designType" label="普通 分红 万能 投连" type="string"
+				length="2" />
+			<column name="insurtypeStatus" label="有效 无效" type="string"
+				length="2" />
+			<column name="insurtypeLevel1Cat" label="一级分类：
+人寿保险
+年金保险
+意外险
+健康险
+委托管理业务"
+				type="string" length="2" />
+			<column name="insurtypeLevel2Cat" label="险种二级分类" type="string"
+				length="2" />
+			<column name="insurtypeLevel3Cat" label="险种三级分类" type="string"
+				length="2" />
+			<column name="insurtypeLevel4Cat" label="险种四级分类" type="string"
+				length="2" />
+			<column name="insurtypeLevel5Cat" label="险种五级分类" type="string"
+				length="2" />
+			<column name="isDividendInsur" label="同一时刻只有一个版本起售" type="string"
+				length="2" />
+			<column name="isUniversalInsur" label="是否万能险" type="string"
+				length="2" />
+			<column name="isUnitLinkedInsur" label="是否投连险" type="string"
+				length="2" />
+			<column name="isTaxable" label="是否应缴税
+" type="string" length="2" />
+			<column name="isPermitSeparateSell" label="是否允许单独销售" type="string"
+				length="2" />
+			<column name="isMatureLiab" label="是否有满期责任" type="string"
+				length="2" />
+			<column name="isAccType" label="是否账户类型" type="string" length="2" />
+			<column name="isAnnuityType" label="是否年金类型" type="string"
+				length="2" />
+			<column name="isIncludeWaiveLiab" label="是否包含豁免责任" type="string"
+				length="2" />
+			<column name="mainCovRiderFlg" label="主险 附加险" type="string"
+				length="2" />
+			<column name="termType" label="长期 短期 极短期" type="string"
+				length="2" />
+			<column name="isPermitInsurRenew" label="是否允许续保" type="string"
+				length="2" />
+			<column name="isPassMaterialRiskAssess" label="是否通过重大风险评测"
+				type="string" length="2" />
+			<column name="insurtypeDesc" label="险种描述" type="string"
+				length="500" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><form id="upform" enctype="multipart/form-data"><tableLayout id="tableLayout2" width="100%"><colgroup><col width="10%" /><col width="80%" /><col width="10%" /></colgroup><tbody><tr height="25px"><td></td><td><fileInput id="fileInput1" height="30px" width="100%"></fileInput></td><td></td></tr></tbody></tableLayout></form><tableLayout id="tableLayout1" width="100%"><colgroup><col width="150px" /></colgroup><tbody><tr height="25px"><td align="right" class="toolbar_"><button
+	id="button1" label="确&amp;nbsp认" width="100px" class="myButton"
+	style="border-left:1px solid #BEBEBE;border-bottom:1px solid #BEBEBE;border-right:1px solid #BEBEBE;border-top:1px solid #BEBEBE;">
+	<events>
+		<event name="onClick" handlerFunction="button1_onClick">
+			<function name="button1_onClick" arguments="event">
+				<script><![CDATA[
+var tInsurtypeBasicInf = unieap.getXDialog().dialogData.gridDS;
+//unieap.debug(tInsurtypeBasicInf);
+view.processor.saveUploadInfo("upform", tInsurtypeBasicInf);]]></script>
+			</function>
+		</event>
+	</events>
+</button></td></tr></tbody></tableLayout></controls>
+      <scripts ><function name="saveUploadInfoSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:saveUploadInfo方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var info = dc.getParameter("uploadInfo");
+if(info == ""){
+	MessageBox.autoCloseAlert({
+		title:'提示',
+		message:'保存成功！',
+		onComplete:function(){
+			unieap.getXDialog().close(true);
+		}
+	});	
+}else{
+	MessageBox.alert({
+		title:'提示',
+		message:info
+	});
+}]]>
+	</script>
+</function></scripts>
+      <templateInstances />
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+	<resource type="style"
+		src="/ProductFactory/factoryabclife/navigateButton/btn.css" />
+</resources>
+   </dc:view>
+</dc:dc>
+

@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="chen-gy" />
+         <creationTime value="2015-10-10 14:28:35" />
+         <modificationTime value="2016-03-21 11:39:46" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getPfSortTree" sync="true" onSuccess="">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfctlgbiz.business.xml" method="pfctlgbiz.getPfCtlgBizList"></bo>
+	</pMethod>
+	<pMethod name="getPfParamList" onSuccess="" sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfparamdef.business.xml" method="pfparamdef.getPfParamDefsNoPage"></bo>
+	</pMethod>
+	<pMethod name="addPfContactPoint" onSuccess="addPfContactPointSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<pojo name="pfCtlgHook" dataStoreName="pfCtlgHook_form" /><string name="paramIds" />
+		</context>
+		<arguments>
+			
+		<argument name="pfCtlgHook" type="dataStore"></argument><argument name="paramIds" type="string"></argument></arguments>
+		<bo name="pfctlghook.business.xml" method="pfctlghook.addPfCtlgHook"></bo>
+	</pMethod>
+	<pMethod name="updPfContactPoint" onSuccess="updPfContactPointSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<pojo name="pfCtlgHook" dataStoreName="pfCtlgHook_form" /><string name="paramIds" />
+		</context>
+		<arguments>
+			
+		<argument name="pfCtlgHook" type="dataStore"></argument><argument name="paramIds" type="string"></argument></arguments>
+		<bo name="pfctlghook.business.xml" method="pfctlghook.updPfCtlgHook"></bo>
+	</pMethod>
+	<dependence name="pfctlgbiz.business.xml"
+		ref="pfctlgbiz.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<dependence name="pfctlghook.business.xml"
+		ref="pfctlghook.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<dependence name="pfparamdef.business.xml"
+		ref="pfparamdef.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="getPfParamIds" sync="true">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfparamdef.business.xml" method="pfparamdef.queryPfParamRefByCtlgId"></bo>
+<context><string name="ctlgId" /></context><arguments><argument name="ctlgId" type="string"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfCtlgHook_form" dependence="pfCtlgHook" dc="factory"
+		path="pfCtlgHook.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="name" label="接触点名称" type="string" length="300" />
+			<column name="code" label="接触点Function名称" type="string"
+				length="64" />
+			<column name="description" label="接触点功能描述" type="string"
+				length="3000" />
+			<column name="ctlgBizId" label="所属业务分类ID" type="string"
+				length="32" />
+			<column name="paramsId" label="关联参数ID" type="string" length="32" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><template id="template3" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    
+    
+  <form binding-store="pfCtlgHook_form" id="form1">
+      <tableLayout id="form1_tableLayout" tableLayout="fixed" width="100%">
+        <colgroup>
+          <col width="30%" />
+          <col width="50%" />
+          <col width="20%" />
+        </colgroup>
+        <tbody>
+          <tr id="form1_0_tr">
+            <td id="name_label_td" rowSpan="1" align="right">
+              <label id="name_label" value="接触点名称：" />
+            </td>
+            <td colSpan="1" id="name_td" rowSpan="1">
+              <textBox binding-name="name" id="name" maxLength="240" width="100%" required="true"></textBox>
+            </td>
+            <td></td>
+          </tr>
+          
+          <tr id="form1_1_tr">
+            <td id="code_label_td" rowSpan="1" align="right">
+              <label id="code_label" value="Function名称：" />
+            </td>
+            <td colSpan="1" id="code_td" rowSpan="1">
+              <textBox binding-name="code" id="code" maxLength="64" width="100%" required="true"></textBox>
+            </td>
+            <td rowSpan="1"></td>
+          </tr>
+                    
+          <tr height="25px">
+            <td align="right">
+            	<label id="description_label" value="功能描述：" />
+            </td>
+            <td>
+            	<textarea binding-name="description" id="description" maxLength="1500" width="100%"></textarea>
+            </td>
+            <td></td>
+          </tr>
+          <tr id="form1_3_tr">
+            <td id="ctlgBizId_label_td" rowSpan="1" align="right">
+              	<label id="ctlgBizId_label" value="所属业务分类：" />
+            </td>
+            <td colSpan="1" id="ctlgBizId_td" rowSpan="1">             
+            	<comboBoxTree binding-name="ctlgBizId" id="ctlgBizId" maxLength="32" popup-height="150px" 
+            		treeJson-binding="{label:'name',parent:'pid',store:'list',query:{name:'pid',relation:'=',value:'-1'}}" 
+            		width="100%" required="true"></comboBoxTree>
+            </td>
+            <td></td>
+          </tr>
+          <tr id="form1_4_tr">
+            <td id="paramsId_label_td" rowSpan="1" align="right">
+              	<label id="paramsId_label" value="参数：" />
+            </td>
+            <td colSpan="1" id="paramsId_td" rowSpan="1">              
+            	<comboBox id="paramsId" width="100%" decoder-valueAttr="id" decoder-displayAttr="name" popup-height="150px" 
+            		popup-displayStyle="multi" dataProvider-store="rtnPfParamDefsNoPage"></comboBox>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </tableLayout>
+    </form></template><tableLayout id="form_ToolBar" tableLayout="fixed" width="100%" class="btnTable">
+      <colgroup>
+        <col width="" />
+        
+        
+        
+        
+        
+        
+      </colgroup>
+      <tbody>
+        <tr height="30px" class="btnTableTr">
+          <td align="right"><button id="pfcontactpoint_form_saveButton"
+	label="保 存" width="100px" iconClass="common_base_btn common_save_btn">
+	<events>
+		<event name="onClick" handlerFunction="pfcontactpoint_form_saveButton_onClick">
+			<function name="pfcontactpoint_form_saveButton_onClick"
+				arguments="event">
+				<script><![CDATA[var form = unieap.byId("form1");
+if(!form.validate(false)){
+    return;
+}
+var data = form.getBinding().getDataStore();
+var paramIds = unieap.byId("paramsId").getValue();
+if (view.thisType == "add") {
+	view.processor.addPfContactPoint(data, paramIds);
+	
+} else if (view.thisType == "upd") {
+	data.setRowSetName("com.neusoft.fdframework.productfactory.entity.PfCtlgHook");
+	view.processor.updPfContactPoint(data, paramIds);
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button></td>
+          
+          
+          
+          
+          
+          
+        </tr>
+      </tbody>
+    </tableLayout><events><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[//业务分类
+view.processor.getPfSortTree();
+//参数
+view.processor.getPfParamList();]]></script></function></event><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[var dd = unieap.getXDialog().dialogData;
+view.thisType = dd.type;
+if (view.thisType == "upd") {
+	//根据id查询关联的参数
+	var dc = view.processor.getPfParamIds(dd.pfcontactpoint.getRowSet().getRow(0).getItemValue("id"));
+	var paramIds = dc.getParameter("rtnParamIds");
+	unieap.byId("paramsId").setValue(paramIds.substring(0, paramIds.length - 1));
+	//form赋值
+	view.form.setDataStore("form1", dd.pfcontactpoint);
+}
+//function名称命名增加校验,字母开头,由字母数字下划线组成
+unieap.byId("code").getValidator().regExp = /^[a-zA-Z]{1}(_?[a-zA-Z0-9]+)*$/;
+]]></script></function></event></events></controls>
+      <scripts ><function name="addPfContactPointSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:addPfContactPoint方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//MessageBox.alert({
+MessageBox.autoCloseAlert({
+    title: "提示",
+    message: "保存成功！",
+    type: "info",
+//    durationTime:"3000",
+//    iconCloseComplete: false,
+    onComplete: function(){
+    	unieap.getXDialog().close(true);
+    }
+});
+]]></script>
+</function><function name="updPfContactPointSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:updPfContactPoint方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//MessageBox.alert({
+MessageBox.autoCloseAlert({
+    title: "提示",
+    message: "保存成功！",
+    type: "info",
+//    durationTime:"3000",
+//    iconCloseComplete: false,
+    onComplete: function(){
+    	unieap.getXDialog().close(true);
+    }
+});
+]]></script>
+</function><variable name="thisType"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable></scripts>
+      <templateInstances>
+	<templateInstance target="template3"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form1</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>userdef</colType>
+        <colsPropertyList>
+          <string>40</string>
+          <string>40</string>
+          <string>20</string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>id</name>
+            <label>id</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>id</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>name</name>
+            <label>名称</label>
+            <labelTD>
+              <id>name_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>name_label</id>
+                <value>名称</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>name_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>name</id>
+                <properties/>
+                <binding__name>name</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>240</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>240</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>code</name>
+            <label>接触点Function名称</label>
+            <labelTD>
+              <id>code_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>code_label</id>
+                <value>接触点Function名称</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>code_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>code</id>
+                <properties/>
+                <binding__name>code</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>64</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>64</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>description</name>
+            <label>接触点功能描述</label>
+            <labelTD>
+              <id>description_label_td</id>
+              <rowSpan>2</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>description_label</id>
+                <value>接触点功能描述</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textarea</controlType>
+            </labelTD>
+            <controlTD>
+              <id>description_td</id>
+              <rowSpan>2</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textarea</controlType>
+                <id>description</id>
+                <properties/>
+                <binding__name>description</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>2</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1500</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textarea</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1500</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ctlgBizId</name>
+            <label>所属业务分类ID</label>
+            <labelTD>
+              <id>ctlgBizId_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>ctlgBizId_label</id>
+                <value>所属业务分类ID</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>ctlgBizId_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>ctlgBizId</id>
+                <properties/>
+                <binding__name>ctlgBizId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>paramsId</name>
+            <label>关联参数ID</label>
+            <labelTD>
+              <id>paramsId_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>paramsId_label</id>
+                <value>关联参数ID</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>paramsId_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>paramsId</id>
+                <properties/>
+                <binding__name>paramsId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_0_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_1_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_2_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_3_3_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_3_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_4_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <isIdChange>true</isIdChange>
+        <lastId></lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form1_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_saveButton</id>
+              <name>form1_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_resetButton</id>
+              <name>form1_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form1_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form1</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form1</id>
+        <properties/>
+        <isMerge>false</isMerge>
+        <binding__store>pfCtlgHook_form</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form1_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>6</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance>
+</templateInstances>
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+	<resource type="style"
+		src="/ProductFactory/factory/navigateButton/toolBarBtn.css" />
+</resources>
+   </dc:view>
+</dc:dc>
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.fdframework.productfactory.dao.PfPrdtExtpointDao" interface="">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.dto.ObjHookCtlgHookParamDto" />
+      <import value="com.neusoft.fdframework.productfactory.dto.PrdtHookDto" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjHook" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="ObjHookCtlgHookParamDto" type="dto" dc="factory" ref="ObjHookCtlgHookParam" />
+      <dependence name="PrdtHookDto" type="dto" dc="factory" ref="PrdtHook" />
+      <dependence name="PfObjHook" type="entity" dc="factory" ref="pfObjHook" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfPrdtExtpointDao" returnType="" accessStrategy="public" />
+      <method name="getPfPrdtExtpoints" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[获得版本关联的接触点
+type = 1 险种版本, type = 2产品版本]]></comment>
+         <parameter name="verId" type="String" />
+         <parameter name="type" type="int" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="getPfPrdtExtpointDTOs" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[获得版本关联的接触点
+type = 1 险种版本, type = 2产品版本]]></comment>
+         <parameter name="verId" type="String" />
+         <parameter name="type" type="int" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="addPfPrdtExtpoint" returnType="int" accessStrategy="public">
+         <comment><![CDATA[新增险种版本关联的接触点]]></comment>
+         <parameter name="pfObjHook" type="com.neusoft.fdframework.productfactory.entity.PfObjHook" />
+      </method>
+      <method name="updPfPrdtExtpoint" returnType="int" accessStrategy="public">
+         <comment><![CDATA[更新险种版本关联的接触点]]></comment>
+         <parameter name="pfObjHook" type="com.neusoft.fdframework.productfactory.entity.PfObjHook" />
+      </method>
+      <method name="delPfPrdtExtpoint" returnType="int" accessStrategy="public">
+         <comment><![CDATA[删除险种版本关联的接触点]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="getDataListByRiskVerId" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获得险种版本关联的接触点,险种版本复制功能使用]]></comment>
+         <parameter name="riskVerId" type="String" />
+      </method>
+      <method name="getHookParamListByVerId" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获得版本关联的接触点,关联出接触点类型和参数,发布使用]]></comment>
+         <parameter name="verId" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="liu.w" />
+         <creationTime value="2016-01-22 08:48:26" />
+         <modificationTime value="2016-06-07 16:39:22"/>
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor />
+      <message>
+         <triggers />
+         <listeners />
+      </message>
+      <dataCenter />
+      <controls ><html id="html1"><![CDATA[<!--<style>
+.navBtn_back {
+	margin-bottom:5px;
+	border-left-width: 0px !important;
+    	border-right-width: 0px !important;
+}
+.navBtn_back button{
+	background-color:#ebf3fb !important;
+}
+.navBtn {
+	margin-bottom:5px;
+	border:0px !important;
+}
+.navBtn button{
+	background-color:#ebf3fb !important;
+}
+.navBtn-icon{
+	margin-right:8px;
+	margin-bottom:0px;
+	display:inline-block;
+	width:24px;
+	height:24px;
+	background:url("../../ProductFactory/factory/navigateButton/icon.png") no-repeat;
+}
+.navBtn_back{
+	background:url("../../ProductFactory/factory/navigateButton/icon_back.png") no-repeat;
+}
+.unieap .navBtn-active .u-form-btn-txt{
+	color:#1e81d4;
+	font-weight: bold;
+}
+.navBtn_active{
+	background:url("../../ProductFactory/factory/navigateButton/icon_active.png") no-repeat;
+}
+</style>-->]]></html><div id="div1" height="100%" style="background-color:#ebf3fb;height:100%"><button id="button_back" label="返&amp;nbsp;&amp;nbsp;&amp;nbsp;回" toolTip="返回" width="100px" class="navBtn_back" iconClass="navBtn-icon navBtn_back" height="28px">
+	<events>
+		<event name="onClick" handlerFunction="button_back_onClick">
+			<function name="button_back_onClick" arguments="event">
+				<script><![CDATA[view.navigator.prePage("返回", null);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="base" label="基本属性" width="100px" class="navBtn"
+	height="27px" iconClass="navBtn-icon">
+	<events>
+		<event name="onClick" handlerFunction="base_onClick">
+			<function name="base_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "基本属性"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factory","risk/newPfRiskBaseInfo","基本属性",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="duty" label="定价责任" iconClass="navBtn-icon" width="100px" height="27px" class="navBtn"></button></div></controls>
+      <scripts ><function name="backToRiskConfig" arguments="navigatorContainer">
+	<script><![CDATA[//navigatorContainer.tablistContainer.style.display="none";
+var navigatorList = navigatorContainer.navigatorList;
+var page = null;
+for(var i = 0;i<navigatorList.length;i++){
+	if(navigatorList[i].title == "险种版本"){
+		page =	navigatorList[i];
+		break;
+	}
+}
+navigatorContainer.tablist.onButtonClick(page);]]>
+	</script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function name="prepareDCParameter" arguments="">
+	<script><![CDATA[var newDC = new unieap.ds.DataCenter();
+newDC.setParameter("riskVerId", dataCenter.getParameter("riskVerId"));
+newDC.setParameter("riskName", dataCenter.getParameter("riskName"));
+newDC.setParameter("riskCode", dataCenter.getParameter("riskCode"));
+return newDC;]]>
+	</script>
+</function><function name="receiveDCParameter" arguments="dc">
+	<script><![CDATA[dataCenter.setParameter("riskVerId", dc.getParameter("riskVerId"));
+dataCenter.setParameter("riskName", dc.getParameter("riskName"));
+dataCenter.setParameter("riskCode", dc.getParameter("riskCode"));
+
+
+]]>
+	</script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function name="activeNavigateButton" arguments="id">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var navbtn = unieap.byId(id);
+navbtn.setIconClass("navBtn-icon navBtn_active");
+dojo.addClass(navbtn.domNode,"navBtn-active")]]>
+	</script>
+</function></scripts>
+      <templateInstances />
+      <resources>
+	<resource type="style"
+		src="/ProductFactory/factory/navigateButton/navigateButton.css" />
+</resources>
+   </dc:view>
+</dc:dc>
+

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.abclife.productfactory.blo.PfPrestDutyBoImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="neusoft" />
+      </baseInfo>
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.abclife.productfactory.dao.PfPrestDutyDaoImpl" />
+      <import value="com.neusoft.abclife.productfactory.entity.TClaimGivepayDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TGivepaidProcessDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjFormula" />
+      <import value="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProtecLiabDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TSurvvGivepayDef" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TClaimGivepayDef" type="entity" dc="factoryabclife" ref="tClaimGivepayDef" />
+      <dependence name="TGivepaidProcessDef" type="entity" dc="factoryabclife" ref="tGivepaidProcessDef" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TObjFormula" type="entity" dc="factoryabclife" ref="tObjFormula" />
+      <dependence name="TPricingLiabDef" type="entity" dc="factoryabclife" ref="tPricingLiabDef" />
+      <dependence name="TProtecLiabDef" type="entity" dc="factoryabclife" ref="tProtecLiabDef" />
+      <dependence name="TSurvvGivepayDef" type="entity" dc="factoryabclife" ref="tSurvvGivepayDef" />
+      <method name="PfPrestDutyBoImpl" returnType="" accessStrategy="public" />
+      <method name="getPfInsurtypePrest" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[定价责任查询
+@param insurtypebasciinf
+@return]]></comment>
+         <parameter name="insurtypebasciinf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="queryPriceDutyId" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[保障责任查询 分页
+@param priceDutyId
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="priceDutyId" type="Long" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="queryPriceDutyIdNoPage" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[保障责任查询 无分页
+@param priceDutyId
+@return]]></comment>
+         <parameter name="priceDutyId" type="Long" />
+      </method>
+      <method name="queryClaim" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[理赔给付查询
+@param tqueryClaim
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tqueryClaim" type="Long" />
+      </method>
+      <method name="addPrest" returnType="String" accessStrategy="public">
+         <comment><![CDATA[保障责任添加
+@param prest
+@return]]></comment>
+         <parameter name="prest" type="com.neusoft.abclife.productfactory.entity.TProtecLiabDef" />
+      </method>
+      <method name="addPrestClaim" returnType="String" accessStrategy="public">
+         <comment><![CDATA[理赔给付保存
+@param prestClaim
+@param givePaid
+@param protecLiabType
+@param opt
+@return]]></comment>
+         <parameter name="prestClaim" type="com.neusoft.abclife.productfactory.entity.TClaimGivepayDef" />
+         <parameter name="givePaid" type="java.util.List" />
+         <parameter name="protecLiabType" type="String" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="delPrestClaim" returnType="void" accessStrategy="public">
+         <comment><![CDATA[理赔和给付后删除
+@param tdelClaim
+@param type]]></comment>
+         <parameter name="tdelClaim" type="com.neusoft.abclife.productfactory.entity.TClaimGivepayDef" />
+         <parameter name="type" type="String" />
+      </method>
+      <method name="queryGivePaid" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[给付后处理查询
+@param givepatId
+@return]]></comment>
+         <parameter name="givepatId" type="String" />
+      </method>
+      <method name="saveTSurvvGivepayDef" returnType="String" accessStrategy="public">
+         <comment><![CDATA[保存生存给付信息
+@param tSurvvGivepayDef
+@param opt
+@return]]></comment>
+         <parameter name="tSurvvGivepayDef" type="com.neusoft.abclife.productfactory.entity.TSurvvGivepayDef" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="queryTSurvvGivepayDef" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询生存给付信息
+@param tProtecLiabDef
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tProtecLiabDef" type="com.neusoft.abclife.productfactory.entity.TProtecLiabDef" />
+      </method>
+      <method name="delTSurvvGivepayDef" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除生存给付信息
+@param tSurvvGivepayDef]]></comment>
+         <parameter name="tSurvvGivepayDef" type="com.neusoft.abclife.productfactory.entity.TSurvvGivepayDef" />
+         <parameter name="type" type="String" />
+      </method>
+      <method name="delTProtecLiabDef" returnType="void" accessStrategy="public">
+         <comment><![CDATA[保障责任删除
+@param tProtecLiabDef]]></comment>
+         <parameter name="tProtecLiabDef" type="com.neusoft.abclife.productfactory.entity.TProtecLiabDef" />
+      </method>
+      <method name="getTObjFormula" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询对象公式数据
+@param id
+@param type
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="id" type="Long" />
+         <parameter name="type" type="String" />
+      </method>
+      <method name="getAllProtecLiab" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获取所有的保障责任
+@return]]></comment>
+      </method>
+   </dc:bo>
+</dc:dc>
+

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.abclife.productfactory.dao.WebServiceDaoImpl" interface="">
+      <baseInfo>
+         <author value="neusoft" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="java.util.Locale" />
+      <import value="java.util.Map" />
+      <import value="java.util.Set" />
+      <import value="java.util.Map.Entry" />
+      <import value="java.util.regex.Matcher" />
+      <import value="java.util.regex.Pattern" />
+      <import value="org.springframework.jdbc.support.rowset.SqlRowSet" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.abclife.productfactory.entity.TClaimGivepayDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TComboAttrib" />
+      <import value="com.neusoft.abclife.productfactory.entity.TComboInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TComboInsurtype" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypePsAttribDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeRelToAcc" />
+      <import value="com.neusoft.abclife.productfactory.entity.TLiabLimit" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjFormula" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjSkelement" />
+      <import value="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProInterfaceRef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductInsurtypeMatchRel" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductParamDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TPropShowDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProtecLiabDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TSurvvGivepayDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TWaiveLiab" />
+      <import value="com.neusoft.abclife.util.StringUtil" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TClaimGivepayDef" type="entity" dc="factoryabclife" ref="tClaimGivepayDef" />
+      <dependence name="TComboAttrib" type="entity" dc="factoryabclife" ref="tComboAttrib" />
+      <dependence name="TComboInf" type="entity" dc="factoryabclife" ref="tComboInf" />
+      <dependence name="TComboInsurtype" type="entity" dc="factoryabclife" ref="tComboInsurtype" />
+      <dependence name="TInsurtypeAccDef" type="entity" dc="factoryabclife" ref="tInsurtypeAccDef" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TInsurtypePsAttribDef" type="entity" dc="factoryabclife" ref="tInsurtypePsAttribDef" />
+      <dependence name="TInsurtypeRelToAcc" type="entity" dc="factoryabclife" ref="tInsurtypeRelToAcc" />
+      <dependence name="TLiabLimit" type="entity" dc="factoryabclife" ref="tLiabLimit" />
+      <dependence name="TObjFormula" type="entity" dc="factoryabclife" ref="tObjFormula" />
+      <dependence name="TObjSkelement" type="entity" dc="factoryabclife" ref="tObjSkelement" />
+      <dependence name="TPricingLiabDef" type="entity" dc="factoryabclife" ref="tPricingLiabDef" />
+      <dependence name="TProInterfaceRef" type="entity" dc="factoryabclife" ref="tProInterfaceRef" />
+      <dependence name="TProductInsurtypeMatchRel" type="entity" dc="factoryabclife" ref="tProductInsurtypeMatchRel" />
+      <dependence name="TProductParamDef" type="entity" dc="factoryabclife" ref="tProductParamDef" />
+      <dependence name="TPropShowDef" type="entity" dc="factoryabclife" ref="tPropShowDef" />
+      <dependence name="TProtecLiabDef" type="entity" dc="factoryabclife" ref="tProtecLiabDef" />
+      <dependence name="TSurvvGivepayDef" type="entity" dc="factoryabclife" ref="tSurvvGivepayDef" />
+      <dependence name="TWaiveLiab" type="entity" dc="factoryabclife" ref="tWaiveLiab" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="WebServiceDaoImpl" returnType="" accessStrategy="public" />
+      <method name="queryRisk" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" accessStrategy="public">
+         <comment><![CDATA[获取险种信息
+@param riskID
+@return]]></comment>
+         <parameter name="riskID" type="Long" />
+      </method>
+      <method name="queryRiskByCode" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" accessStrategy="public">
+         <parameter name="riskCode" type="String" />
+      </method>
+      <method name="queryAddRisk" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" accessStrategy="public">
+         <comment><![CDATA[获取搭配险种信息
+@param riskID
+@return]]></comment>
+         <parameter name="riskCode" type="String" />
+      </method>
+      <method name="priceDuty" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获取定价责任信息
+@param priceDuty
+@return]]></comment>
+         <parameter name="priceDuty" type="Long" />
+      </method>
+      <method name="getPriceElement" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获取定价要素基本信息
+@param riskId
+@return]]></comment>
+         <parameter name="priceId" type="Long" />
+         <parameter name="type" type="String" />
+      </method>
+      <method name="getProperty" returnType="com.neusoft.abclife.productfactory.entity.TPropShowDef" accessStrategy="public">
+         <comment><![CDATA[获取属性展示信息
+@param riskId
+@return]]></comment>
+         <parameter name="property" type="Long" />
+      </method>
+      <method name="prestDuty" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获取保障责任
+@param priceId
+@return]]></comment>
+         <parameter name="priceId" type="Long" />
+      </method>
+      <method name="getClaimPay" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获取理赔给付信息
+@param priceId
+@return]]></comment>
+         <parameter name="protecId" type="Long" />
+      </method>
+      <method name="getLivePay" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获取生存给付信息
+@param priceId
+@return]]></comment>
+         <parameter name="protecId" type="Long" />
+      </method>
+      <method name="getMatch" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获取搭配信息
+@param priceId
+@return]]></comment>
+         <parameter name="match" type="String" />
+      </method>
+      <method name="getParam" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获取参数定义信息
+@param priceId
+@return]]></comment>
+         <parameter name="riskId" type="String" />
+         <parameter name="paramType" type="String" />
+         <parameter name="ascrib" type="String" />
+      </method>
+      <method name="getTPricingLiabDef" returnType="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" accessStrategy="public">
+         <comment><![CDATA[查定价责任
+@param riskId
+@param dutyCode
+@return]]></comment>
+         <parameter name="riskId" type="Long" />
+         <parameter name="dutyCode" type="String" />
+      </method>
+      <method name="getTObjFormula" returnType="java.util.List" accessStrategy="public">
+         <parameter name="dutyId" type="Long" />
+      </method>
+      <method name="getAllInsurtypeBasicInf" returnType="java.util.List" accessStrategy="public" />
+      <method name="getAllComboInf" returnType="java.util.List" accessStrategy="public" />
+      <method name="getComboInf" returnType="com.neusoft.abclife.productfactory.entity.TComboInf" accessStrategy="public">
+         <parameter name="id" type="String" />
+      </method>
+      <method name="getProInter" returnType="com.neusoft.abclife.productfactory.entity.TProInterfaceRef" accessStrategy="public">
+         <parameter name="id" type="String" />
+      </method>
+      <method name="getAllProInter" returnType="java.util.List" accessStrategy="public" />
+      <method name="getComboInsur" returnType="java.util.List" accessStrategy="public">
+         <parameter name="comboId" type="String" />
+      </method>
+      <method name="getComboPricing" returnType="java.util.List" accessStrategy="public">
+         <parameter name="riskId" type="Long" />
+         <parameter name="comboId" type="String" />
+      </method>
+      <method name="getComboInsurtypeByid" returnType="java.util.List" accessStrategy="public">
+         <parameter name="comboID" type="String" />
+      </method>
+      <method name="getComboInsurtypeByInsurId" returnType="java.util.List" accessStrategy="public">
+         <parameter name="comboID" type="String" />
+         <parameter name="insurtypeId" type="Long" />
+      </method>
+      <method name="getComboInfAttrib" returnType="com.neusoft.abclife.productfactory.entity.TComboAttrib" accessStrategy="public">
+         <parameter name="comboID" type="String" />
+      </method>
+      <method name="getInsurToAcc" returnType="java.util.List" accessStrategy="public">
+         <parameter name="insurtypeId" type="String" />
+      </method>
+      <method name="queryRateMax" returnType="org.springframework.jdbc.support.rowset.SqlRowSet" accessStrategy="public">
+         <comment><![CDATA[表外费率用从大到小
+@return]]></comment>
+         <parameter name="tableName" type="String" />
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="queryRateMin" returnType="org.springframework.jdbc.support.rowset.SqlRowSet" accessStrategy="public">
+         <comment><![CDATA[表外费率用从小到大
+@return]]></comment>
+         <parameter name="tableName" type="String" />
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="getRateMaxSQL" returnType="String" accessStrategy="private">
+         <comment><![CDATA[从大到小查
+@param tableName
+@param set
+@return]]></comment>
+         <parameter name="tableName" type="String" />
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="getRateMinSQL" returnType="String" accessStrategy="private">
+         <comment><![CDATA[从小到大查
+@param tableName
+@param set
+@return]]></comment>
+         <parameter name="tableName" type="String" />
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="getRateQuerySQLAttr" returnType="Object[]" accessStrategy="private">
+         <comment><![CDATA[参数
+@param set
+@return]]></comment>
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="queryLiabLimit" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询责任限额]]></comment>
+         <parameter name="limitType" type="String" />
+         <parameter name="riskCode" type="String" />
+         <parameter name="riskVer" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="protecLiabCode" type="String" />
+         <parameter name="refProtecLiabCode" type="String" />
+      </method>
+      <method name="getFeeFlag" returnType="int" accessStrategy="public">
+         <comment><![CDATA[是否扣费
+@param pricingLiabId
+@return]]></comment>
+         <parameter name="pricingLiabId" type="Long" />
+      </method>
+      <method name="getWaiveLiab" returnType="com.neusoft.abclife.productfactory.entity.TWaiveLiab" accessStrategy="public">
+         <comment><![CDATA[豁免责任
+@param riskId
+@param dutyCode
+@return]]></comment>
+         <parameter name="riskId" type="String" />
+         <parameter name="dutyCode" type="String" />
+      </method>
+      <method name="getPsAttrib" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypePsAttribDef" accessStrategy="public">
+         <comment><![CDATA[保全属性]]></comment>
+         <parameter name="riskId" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.fdframework.productfactory.dao.PfRiskVerDao" interface="">
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjProductRisk" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfRiskVer" />
+      <import value="com.neusoft.fdframework.util.StringUtil" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="PfObjProductRisk" type="entity" dc="factory" ref="pfObjProductRisk" />
+      <dependence name="PfObjRisk" type="entity" dc="factory" ref="pfObjRisk" />
+      <dependence name="PfObjRiskVer" type="entity" dc="factory" ref="pfObjRiskVer" />
+      <dependence name="PfRiskVer" type="entity" dc="factory" ref="pfRiskVer" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfRiskVerDao" returnType="" accessStrategy="public" />
+      <method name="checkRiskVer" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[校验险种版本 新增 修改]]></comment>
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      </method>
+      <method name="checkRiskVer_new" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[校验险种版本 新增 修改 new]]></comment>
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfRiskVer" />
+      </method>
+      <method name="checkRiskVerForDel" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[校验险种版本 删除]]></comment>
+         <parameter name="riskVerId" type="String" />
+      </method>
+      <method name="addPfRiskVer" returnType="void" accessStrategy="public">
+         <comment><![CDATA[保存险种版本]]></comment>
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      </method>
+      <method name="addPfRiskVer_new" returnType="void" accessStrategy="public">
+         <comment><![CDATA[保存险种版本new]]></comment>
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfRiskVer" />
+      </method>
+      <method name="updatePfRiskVer" returnType="void" accessStrategy="public">
+         <comment><![CDATA[更新险种版本]]></comment>
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      </method>
+      <method name="delRiskVer" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除险种版本]]></comment>
+         <parameter name="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" />
+      </method>
+      <method name="getRiskVersionByRiskVerId" returnType="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" accessStrategy="public">
+         <comment><![CDATA[通过险种版本id获得险种版本]]></comment>
+         <parameter name="riskVerId" type="String" />
+      </method>
+      <method name="getRiskVersionsByRiskId" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[通过险种id获得险种版本(分页)]]></comment>
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+         <parameter name="riskId" type="String" />
+      </method>
+      <method name="getRiskVersionsByRiskId_new" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[通过险种id获得险种版本(分页)new]]></comment>
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+         <parameter name="riskId" type="String" />
+      </method>
+      <method name="getRiskVersionsByRiskIdNoPage" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[通过险种id获得险种版本]]></comment>
+         <parameter name="riskId" type="String" />
+      </method>
+      <method name="getStatusRiskVersionsByRiskId" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[通过险种id获得险种可用版本
+只查询发布和激活状态的险种版本
+1:编辑中2:待审核3:待发布4:已发布0:激活]]></comment>
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+         <parameter name="riskId" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

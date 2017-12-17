@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Interaction page</title>
+	<script type="text/javascript">
+		var search = window.location.search || "?",
+			search = search.substring(1).split("&"),
+			parameters = {},
+			hash = window.location.hash || "#{}",
+			ineraction = eval("("+hash.substring(1)+")");
+		
+		for(var i=0,s;s=search[i];i++){
+			s=s.split("=");
+			parameters[s[0]] = s[1];
+		}
+		(function(){
+			var widget = parent.parent.dijit.byId(parameters["widgetId"]);
+			if(null==widget){
+				var func = arguments.callee;
+				setTimeout(function(){
+					func();
+				},20);
+				return;
+			}
+				
+			if("height" in ineraction){
+				widget.setContentHeight(Number(ineraction["height"]));
+			}
+			/***不支持跨域事件发布和订阅操作
+			else if("publish" in ineraction){
+				parent.parent.dojo.publish(ineraction["publish"],ineraction["args"]);
+			}
+			else if("subscribe" in ineraction){
+				widget["_grandsonWin"] = window;
+				var method = ineraction["method"],
+					topic = ineraction["subscribe"],
+					handle = (widget["_grandson_"+method] || {}).handle;
+				if(handle){
+					parent.parent.dojo.unsubscribe(handle);
+				}
+				widget["_grandson_"+method] = new Function("this._grandsonWin.subscribe(\""+method+"\",arguments);");
+				widget["_grandson_"+method].handle = parent.parent.dojo.subscribe(topic,widget,"_grandson_"+method);
+			}
+			else if("unsubscribe" in ineraction){
+				parent.parent.dojo.unsubscribe(widget["_grandson_"+ineraction["method"]].handle);
+			}
+			subscribe = function(method,args){
+				alert(method+""+args);
+			}	
+			*/
+		})();
+	</script>
+</head>
+<body>
+</body>
+</html>

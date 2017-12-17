@@ -1,0 +1,95 @@
+
+--T_ASSESS_NET_PREM （评估净保费）
+create table T_ASSESS_NET_PREM
+(
+  ASSESS_ID                      NUMBER(16) not null,
+  INSURTYPE_CODE                   VARCHAR2(20),      
+  SINGLE_PAY_OR_REGUL_PAY          VARCHAR2(1),   
+  PAYMNT_PERIOD                    NUMBER(10),
+  INSURPERIOD                      NUMBER(10),
+  INSURD_GENDER                   VARCHAR2(2),    
+  APPLY_AGE                       NUMBER(3),
+  ANNUITY_START_DRAW_AGE          NUMBER(3),
+  
+  FIRSTPERIOD_RENEW               VARCHAR2(2),
+  ASSESS_NET_PREM                 NUMBER(20,2),
+  ASSESS_NET_PREM_TYPE            VARCHAR2(2),
+  BASIC_SUM                       NUMBER(20,6),
+  INSERT_OPER VARCHAR2(40),
+  INSERT_TIME DATE,
+  UPDATE_OPER VARCHAR2(40),
+  UPDATE_TIME DATE,
+  INSERT_CONSIGNOR VARCHAR2(40),
+  UPDATE_CONSIGNOR  VARCHAR2(40)  
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64
+    next 1
+    minextents 1
+    maxextents unlimited
+  );
+comment on table T_ASSESS_NET_PREM
+  is '准备金因子';
+comment on column T_ASSESS_NET_PREM.ASSESS_ID
+  is '准备金因子id';
+comment on column T_ASSESS_NET_PREM.INSURTYPE_CODE
+  is '险种编码';
+comment on column T_ASSESS_NET_PREM.SINGLE_PAY_OR_REGUL_PAY
+  is '趸/期交';
+comment on column T_ASSESS_NET_PREM.PAYMNT_PERIOD
+  is '交费期间';
+comment on column T_ASSESS_NET_PREM.INSURPERIOD
+  is '保险期间';
+comment on column T_ASSESS_NET_PREM.INSURD_GENDER
+  is '被保险人性别';
+comment on column T_ASSESS_NET_PREM.APPLY_AGE
+  is '投保年龄';
+comment on column T_ASSESS_NET_PREM.ANNUITY_START_DRAW_AGE
+  is '年金开始领取年龄';
+comment on column T_ASSESS_NET_PREM.FIRSTPERIOD_RENEW
+  is '首/续期';
+comment on column T_ASSESS_NET_PREM.ASSESS_NET_PREM
+  is '评估净保费';
+comment on column T_ASSESS_NET_PREM.ASSESS_NET_PREM_TYPE
+  is '评估净保费类型';
+comment on column T_ASSESS_NET_PREM.BASIC_SUM
+  is '基本保额';
+comment on column T_ASSESS_NET_PREM.INSERT_OPER
+  is '插入操作员';
+comment on column T_ASSESS_NET_PREM.INSERT_TIME
+  is '插入时间';
+comment on column T_ASSESS_NET_PREM.UPDATE_OPER
+  is '更新操作员';
+comment on column T_ASSESS_NET_PREM.UPDATE_TIME
+  is '更新时间';
+comment on column T_ASSESS_NET_PREM.INSERT_CONSIGNOR
+  is '插入委托人';
+comment on column T_ASSESS_NET_PREM.UPDATE_CONSIGNOR
+  is '更新委托人';
+  
+alter table T_ASSESS_NET_PREM
+  add constraint PK_ASSESS_NET_PREM primary key (ASSESS_ID)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+--创建序列
+create sequence SEQ_ASSESS_NET_PREM
+minvalue 1
+maxvalue 9999999999999999999999999999
+start with 1
+increment by 1
+nocache;

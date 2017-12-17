@@ -1,0 +1,116 @@
+
+/****
+		dijit.ProgressBar
+ ****/
+
+.unieap .dijitProgressBar {
+	margin:2px 0px 2px 0px;
+}
+
+.unieap .dijitProgressBarEmpty{
+	/* outer container and background of the bar that's not finished yet*/
+
+	background:#fff url("../images/progressbar/progressBarEmpty.png") repeat-x center center;
+	border-color: #8ba0bd;
+}
+
+.unieap .dijitProgressBarTile{
+	/* inner container for finished portion when in 'tile' (image) mode */
+	background:#f0f0f0 url("../images/progressbar/progressBarFull.png") repeat-x center center;
+}
+
+.unieap .dijitProgressBarFull {
+	border-right:1px solid #8ba0bd;
+}
+
+.unieap .dijitProgressBarLabel {
+	/* Set to a color that contrasts with both the "Empty" and "Full" parts. */
+	color:#293a4b;
+}
+
+.unieap .dijitProgressBarIndeterminate .dijitProgressBarTile {
+	/* use an animated gif for the progress bar in 'indeterminate' mode */
+	background:#cad2de url("../images/progressbar/progressBarAnim.gif") repeat-x center center;
+}
+
+
+
+.dijitProgressBarEmpty{
+	/* outer container and background of the bar that's not finished yet*/
+	position:relative;overflow:hidden;
+	border:1px solid black; 	/* a11y: border necessary for high-contrast mode */
+	z-index:0;			/* establish a stacking context for this progress bar */
+}
+
+.dijitProgressBarFull {
+	/* outer container for background of bar that is finished */
+	position:absolute;
+	overflow:hidden;
+	z-index:-1;
+	top:0;
+	width:100%;
+}
+.dj_ie6 .dijitProgressBarFull {
+	height:1.6em;
+}
+
+.dijitProgressBarTile {
+	/* inner container for finished portion */
+	position:absolute;
+	overflow:hidden;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	margin:0;
+	padding:0;
+	width:auto;
+	height:auto;
+	background-color:#aaa;
+	background-attachment: fixed;
+}
+
+.dijit_a11y .dijitProgressBarTile{
+	/* a11y:  The border provides visibility in high-contrast mode */
+	border-width:4px;
+	border-style:solid;
+	background-color:transparent !important;
+}
+
+.dj_ie6 .dijitProgressBarTile {
+	/* width:auto works in IE6 with position:static but not position:absolute */
+	position:static;
+	/* height:auto or 100% does not work in IE6 */
+	height:1.6em;
+}
+
+.dijitProgressBarIndeterminate .dijitProgressBarLabel {
+	visibility:hidden;
+}
+
+.dijitProgressBarIndeterminate .dijitProgressBarTile {
+	/* animated gif for 'indeterminate' mode */
+}
+
+.dijitProgressBarIndeterminateHighContrastImage {
+	display:none;
+}
+
+.dijit_a11y .dijitProgressBarIndeterminate .dijitProgressBarIndeterminateHighContrastImage {
+	display:block;
+	position:absolute;
+	top:0;
+	bottom:0;
+	margin:0;
+	padding:0;
+	width:100%;
+	height:auto;
+}
+
+.dijitProgressBarLabel {
+	display:block;
+	position:static;
+	width:100%;
+	text-align:center;
+	background-color:transparent !important;
+}

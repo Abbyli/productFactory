@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/jee
+       http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    
+	<!-- 默认的事件触发器 -->
+<!--    <bean id="defaultEngineEvent" class="com.neusoft.fdframework.arithmetic.engine.blo.DefaultEngineEvent"/>-->
+    <!-- 配置信息缓存对象 -->
+<!--    <bean id="configCache" class="com.neusoft.fdframework.arithmetic.engine.cache.LocalConfigCache" scope="singleton">-->
+    	<!--清理任务的间隔（单位：秒）,默认12小时 -->
+ <!--   	<property name="clearnPeriod" value="3600"></property>
+    </bean>-->
+    
+<!--     <bean id="configCache" class="com.neusoft.fdframework.arithmetic.engine.cache.CouchBaseConfigCache" scope="singleton"> -->
+		<!--缓存超时时间（单位：秒）,默认是2小时 -->
+<!--     	<property name="cacheTimeOut" value="60" /> -->
+<!--     	<property name="couchBaseLockTemplate" ref="couchBaseLockTemplate"/> -->
+<!--     </bean> -->
+<!--     <bean id="couchbaseClientSupport" class="com.neusoft.fdframework.arithmetic.engine.cache.CouchbaseClientSupport" scope="singleton" init-method="init"> -->
+ 		<!--多个url地址用,号分隔 -->
+<!-- 		<property name="url" value="http://127.0.0.1:8091/pools"/> -->
+<!-- 		<property name="bucketName" value="arith" /> -->
+<!-- 		<property name="password" value="neusoft" /> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="couchBaseLockTemplate" class="com.neusoft.fdframework.arithmetic.engine.cache.CouchBaseLockTemplate" scope="singleton"> -->
+		<!-- 同步锁时间（单位：秒）,默认30秒 -->
+<!--     	<property name="syncLockTime" value="30" /> -->
+    	<!-- 缓存锁的Key值 -->
+<!-- 		<property name="lockKey" value="ariengine_cahce_lock_key" /> -->
+<!-- 		<property name="couchbaseClientSupport" ref="couchbaseClientSupport"/> -->
+<!-- 	</bean> -->
+	
+    <!-- 算法引擎核心服务类 -->
+<!--    <bean id="engineService" class="com.neusoft.fdframework.arithmetic.engine.blo.EngineService">
+        <property name="defaultEngineEvent" ref="defaultEngineEvent"></property>
+        <property name="configCache" ref="configCache"></property>
+        <property name="formulaEngine" ref="formulaEngine"></property>
+        <property name="ruleEngine" ref="ruleEngine"></property>
+    </bean> -->
+    <!-- 公式引擎 -->
+<!--    <bean id="formulaEngine" class="com.neusoft.fdframework.arithmetic.engine.formula.FormulaEngineImpl">
+    	<property name="configCache" ref="configCache"></property>
+    	<property name="historyWriter" ref="historyWriter"></property>
+    </bean> -->
+    <!-- 规则引擎 -->
+<!--    <bean id="ruleEngine" class="com.neusoft.fdframework.arithmetic.engine.rule.RuleEngineImpl">
+    	<property name="configCache" ref="configCache"></property>
+    	<property name="historyWriter" ref="historyWriter"></property>
+    </bean> -->
+    
+    
+<!--     <bean id="historyWriter" class="com.neusoft.fdframework.arithmetic.engine.history.AsyncHistoryWriter">
+    	<property name="threadPoolTaskExecutor" ref="historyWriter.ThreadPool"></property>-->
+    	<!-- 记录等级 1:全部,2:出错时记录,3:不记录-->
+<!--    	<property name="recordLevel" value="1"></property>
+    </bean>-->
+<!--    <bean id="historyWriter.ThreadPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="4" />
+        <property name="maxPoolSize" value="8" />
+    </bean> -->
+    <!-- 算法引擎的支撑数据源 -->
+    <!-- tomcat本地开发使用 -->
+    <bean id="fdframework.pf.supportDataSource" class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">                
+        <!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl" />
+        <property name="username" value="cpgcdev" />
+        <property name="password" value="cpgcdev" />
+        <property name="maxActive" value="2" />
+        <property name="maxWait" value="5000" />
+        <property name="validationQuery" value="select 1 from dual" />
+        <property name="testOnBorrow" value="true" />
+        <property name="testOnReturn" value="true" />
+        <property name="testWhileIdle" value="true" />
+        <property name="minIdle" value="1" /> -->
+    </bean>
+    <!--weblogic使用
+    	
+    <bean id="fdframework.arithmetic.supportDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+         <property name="jndiName" value="pc_datasource"/>
+    </bean>
+    -->
+    <bean id="fdframework.pf.supportNamedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg>
+          	<ref bean="fdframework.pf.supportDataSource"/>
+        </constructor-arg>
+    </bean>
+    <bean id="customerDatasource.pf.dao.daoTemplate" class="com.neusoft.fdframework.jdbc.CustomerDataSourceDaoTemplates">
+    	<property name="npJdbcTemplate" ref="fdframework.pf.supportNamedParameterJdbcTemplate"></property>
+    </bean>
+    
+    <!--  <bean id="fdframework.arithmetic.dynamicDataSource" class="com.neusoft.fdframework.arithmetic.engine.job.common.AriDynamicDataSource">
+    </bean>
+    <bean id="fdframework.arithmetic.sqlNamedParameterJdbcTemplate" class="com.neusoft.fdframework.arithmetic.engine.jdbc.source.DynamicDataSourceNamedParameterJdbcTemplate">
+        <constructor-arg>
+          <ref bean="fdframework.arithmetic.dynamicDataSource"/>
+        </constructor-arg>
+    </bean>
+    <bean id="customerDatasource.dao.sqlParamDaoTemplate" class="com.neusoft.fdframework.jdbc.CustomerDataSourceDaoTemplate">
+    	<property name="npJdbcTemplate" ref="fdframework.arithmetic.sqlNamedParameterJdbcTemplate"></property>
+    </bean>-->
+    
+     <!--<bean id="defaultIndicatorLoader" class="com.neusoft.fdframework.arithmetic.engine.indicator.DefaultIndicatorLoader">
+     </bean>-->
+     
+      <!-- 本地 费率结果缓存，使用ehcache实现-->
+	<!--<bean id="ariEngineCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation">
+			<value>classpath:ari_ehcache.xml</value>
+		</property>
+	</bean>
+	<bean id="ariEngineCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+	    <property name="cacheManager" ref="ariEngineCacheManager" />
+	    <property name="cacheName" value="ariEngineCache" />
+	</bean>
+	<bean id="rateResultCacheHelper" class="com.neusoft.fdframework.arithmetic.engine.cache.LocalRateResultCacheHelper">
+	    <property name="cache" ref="ariEngineCache" />
+	</bean>-->
+	
+	<!-- 分布式费率结果缓存，使用CouchBase实现-->
+<!-- 	<bean id="rateResultCacheHelper" class="com.neusoft.fdframework.arithmetic.engine.cache.CouchBaseRateResultCacheHelper"> -->
+<!-- 	    <property name="couchbaseClientSupport" ref="couchbaseClientSupport"/> -->
+	    <!--缓存超时时间（单位：秒）,默认是2分钟 -->
+<!-- 		<property name="elementTimeOut" value="120" /> -->
+<!-- 	</bean> -->
+   
+</beans>
+

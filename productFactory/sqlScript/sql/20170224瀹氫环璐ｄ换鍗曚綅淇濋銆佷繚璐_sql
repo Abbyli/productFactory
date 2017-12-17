@@ -1,0 +1,18 @@
+update t_formula_def  set expression = 'mult*amntPremUnit', memo = '份数*单位保额(保费)' where id = '50';
+update t_formula_def  set expression = 'mult*amntPremUnit', memo = '份数*单位保额(保费)' where id = '28';
+update t_formula_def  set expression = 'mult*amntPremUnit/1000*getPremRate(''${pricingLiabCode}'',''${riskVer}'',''${unit}'')', memo = '份数*单位保额(保费)/1000*费率' where id = '47';
+update t_formula_def  set expression = 'mult*amntPremUnit/1000*getPremRate(''${pricingLiabCode}'',''${riskVer}'',''${unit}'')*getPayIntv(''${payIntv}'')',  memo = '份数*单位保额(保费)/1000*费率*交费因子' where id = '72';
+
+
+insert into t_Formula_Param_Ref (ID, FORMULA_ID, NAME, PROPERTY, PARAM_TYPE, RETURN_TYPE, RETURN_TYPE_CLASS, REF_VALUE)
+values (215, 72, '单位保额(保费)', 'amntPremUnit', '2', 'number', '', 'Bom.amntPremUnit');
+
+insert into t_Formula_Param_Ref (ID, FORMULA_ID, NAME, PROPERTY, PARAM_TYPE, RETURN_TYPE, RETURN_TYPE_CLASS, REF_VALUE)
+values (216, 47, '单位保额(保费)', 'amntPremUnit', '2', 'number', '', 'Bom.amntPremUnit');
+
+insert into t_Formula_Param_Ref (ID, FORMULA_ID, NAME, PROPERTY, PARAM_TYPE, RETURN_TYPE, RETURN_TYPE_CLASS, REF_VALUE)
+values (217, 28, '单位保额(保费)', 'amntPremUnit', '2', 'number', '', 'Bom.amntPremUnit');
+
+insert into t_Formula_Param_Ref (ID, FORMULA_ID, NAME, PROPERTY, PARAM_TYPE, RETURN_TYPE, RETURN_TYPE_CLASS, REF_VALUE)
+values (218, 50, '单位保额(保费)', 'amntPremUnit', '2', 'number', '', 'Bom.amntPremUnit');
+

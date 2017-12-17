@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="Administrator" />
+         <creationTime value="2015-08-10 12:25:21" />
+         <modificationTime value="2015-11-26 16:37:48" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getBomAttribute" title="获取Bom的参数列表" onSuccess="getBomAttributeSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="rule.business.xml" method="arithengine.config.rule.getBomAttribute"></bo>
+		<context>
+			<string name="bomId" />
+		</context>
+		<arguments>
+			<argument name="bomId" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<dependence name="rule.business.xml" ref="rule.business.xml | com.neusoft.business"
+		dc="config" />
+	
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="iFConditionPojo" dependence="iFConditionPojo"
+		dc="config" path="com.neusoft.arithmetic.pojo.IFConditionPojo" type="pojo">
+		<columns>
+			<column name="returnKey" label="returnKey" type="string" />
+			<column name="property" label="property" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="condition" label="condition" type="string" />
+			<column name="fixValue" label="fixValue" type="string" />
+			<column name="type" label="type" type="string" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><template id="template1" instance="false" type="com.neusoft.unieap.adaptiveLayout_1.0.0">
+    <adaptiveContainer id="adaptiveContainer1">
+      <adaptivePane adaptiveHeight="100%" autoHeight="true" height="220px" width="auto">
+        
+      <template id="template2" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    <form binding-store="iFConditionPojo" id="form1">
+      <tableLayout id="form1_tableLayout" tableLayout="fixed" width="100%" height="76px">
+        <colgroup>
+          <col width="13%" />
+          <col width="20%" />
+          <col width="1%" />
+          <col width="5%" />
+          <col width="20%" />
+          <col width="20px" />
+        </colgroup>
+        <tbody>
+        <tr id="form1_1_tr">
+            <td id="returnKey_label_td" rowSpan="1" align="right">
+              <label id="typeChoose_label" value="参数类型：" />
+            </td>
+            <td colSpan="1" id="returnKey_td" rowSpan="1">
+              <comboBox binding-name="type" dataProvider-store="typeStore"
+	id="type" popup-height="300px" width="100%" decoder-valueAttr="id"
+	decoder-displayAttr="name">
+	<events>
+		<event name="onChange" handlerFunction="type_onChange">
+			<function name="type_onChange" arguments="value">
+				<script><![CDATA[setValue_sel.typeChage(value);]]></script>
+			</function>
+		</event>
+	</events>
+</comboBox>
+            </td>
+            <td id="property_label_td" rowSpan="1">
+              
+            </td>
+            <td colSpan="1" id="property_td" rowSpan="1" align="right">
+              
+            </td>
+            <td id="condition_label_td" rowSpan="1">
+              
+            </td>
+            <td colSpan="1" id="condition_td" rowSpan="1">
+              
+            </td>
+          </tr>
+          <tr id="form1_2_tr">
+            <td id="returnKey_label_td" rowSpan="1" align="right">
+              <label id="returnKey_label" value="参数：" />
+            </td>
+            <td colSpan="1" id="returnKey_td" rowSpan="1">
+              <comboBox binding-name="returnKey"
+	dataProvider-store="paramStore" id="returnKey" popup-height="300px"
+	width="100%" decoder-valueAttr="returnKey" decoder-displayAttr="name">
+	<events>
+		<event name="onChange" handlerFunction="returnKey_onChange">
+			<function name="returnKey_onChange" arguments="value">
+				<script><![CDATA[var ds=unieap.byId("returnKey").getDataProvider().getDataStore();
+unieap.byId("property").setRequired(false);
+if(ds&&ds.getRowSet().getRowCount(0)>0)
+{
+	for(var i=0;i<ds.getRowSet().getRowCount(0);i++)
+	{
+		var returnType = ds.getRowSet().getRow(i).getItemValue("returnType");
+		var returnKey=ds.getRowSet().getRow(i).getItemValue("returnKey");
+		if(returnKey==value)
+		{
+			if(returnType!='string'&&returnType!='number'&&returnType!='date')
+			{
+				if(setValue_sel.returnType=='string'||setValue_sel.returnType=='number'||setValue_sel.returnType=='date')
+				{
+					unieap.byId("property").setDisplay("");
+					unieap.byId("property").setRequired(true);
+					unieap.getElementById("property_label").style.display='';
+					view.processor.getBomAttribute(returnType);
+				}
+			}
+			else
+			{
+				unieap.byId("property").setDisplay("none");
+				unieap.getElementById("property_label").style.display='none';
+				var attributeStore=new unieap.ds.DataStore("attributeStore");
+				unieap.byId("property").getDataProvider().setDataStore(attributeStore);
+			}
+		}
+	}
+}
+	
+		
+]]></script>
+			</function>
+		</event>
+	</events>
+</comboBox>
+            </td>
+            <td id="property_label_td" rowSpan="1">
+              
+            </td>
+            <td colSpan="1" id="property_td" rowSpan="1" align="right">
+              
+            <label id="property_label" value="属性：" /></td>
+            <td id="condition_label_td" rowSpan="1">
+              
+            <comboBox binding-name="property" dataProvider-store="attributeStore" id="property" popup-height="300px" width="100%" decoder-valueAttr="property" decoder-displayAttr="name"></comboBox></td>
+            <td colSpan="1" id="condition_td" rowSpan="1">
+              
+            </td>
+          </tr>
+          <tr id="form1_7_tr">
+            <td id="returnKey_label_td" rowSpan="1" align="right">
+              
+            <label id="fixValue_label" value="值：" /></td>
+            <td colSpan="1" id="returnKey_td" rowSpan="1">
+              
+            
+            
+            <numberTextBox id="numberTextBox1" width="100%" range-min="0" range-max="999999999"></numberTextBox><dateTextBox id="dateTextBox1" width="100%" valueFormatter-dataFormat="yyyy-MM-dd HH:mm:ss" displayFormatter-dataFormat="yyyy-MM-dd HH:mm:ss"></dateTextBox><textBox id="fixValue" width="100%" binding-name="fixValue"></textBox>
+            
+            </td>
+            <td id="property_label_td" rowSpan="1">
+              
+            </td>
+            <td colSpan="1" id="property_td" rowSpan="1" align="right">
+              
+            </td>
+            <td id="condition_label_td" rowSpan="1">
+              
+            </td>
+            <td colSpan="1" id="condition_td" rowSpan="1">
+              
+            </td>
+          </tr>
+        </tbody>
+      </tableLayout>
+    </form>
+    <tableLayout id="form1_ToolBarInfo" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="85px" />
+        <col width="85px" />
+      </colgroup>
+      <tbody>
+        <tr height="30px">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td align="right"></td>
+          <td>
+            <button id="form1_saveButton" label="确定" width="80px">
+	<events>
+		<event name="onClick" handlerFunction="form1_saveButton_onClick">
+			<function name="form1_saveButton_onClick" arguments="event">
+				<script><![CDATA[var type=unieap.byId("type").getValue();
+var refValue="";
+var name="";
+var returnType=setValue_sel.returnType;
+var form = unieap.byId('form1');
+//校验form
+if(!form.validate(true)){
+	return;
+}
+
+if(type=='1')
+{
+	var returnKey=unieap.byId("returnKey").getValue();
+	var returnKeyText=unieap.byId("returnKey").getText();
+	var property=unieap.byId("property").getValue();
+	var propertyText=unieap.byId("property").getText();
+	if(property)
+	{
+		refValue="${#"+returnKey+"."+property+"}";
+		name=returnKeyText+"."+propertyText;
+	}
+	else
+	{
+		refValue="${#"+returnKey+"}";
+		name=returnKeyText;
+	}
+}
+else if(type=='2')
+{
+	if(returnType=="string")
+	{
+//		refValue="'"+unieap.byId("fixValue").getValue()+"'";
+		refValue=unieap.byId("fixValue").getValue();
+		name=refValue;
+	}
+	else if(returnType=="number")
+	{
+		refValue=unieap.byId("numberTextBox1").getValue();
+		name=refValue;
+	}
+	else if(returnType=="date")
+	{
+		refValue="'#"+unieap.byId("dateTextBox1").getValue()+"#'";
+		name=refValue;
+	}
+}
+
+var retObj={refValue:refValue,name:name};
+unieap.getXDialog().setReturn(retObj);
+unieap.getXDialog().close();
+	
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td>
+            <button id="form1_resetButton" label="关闭" width="80px">
+	<events>
+		<event name="onClick" handlerFunction="form1_resetButton_onClick">
+			<function name="form1_resetButton_onClick" arguments="event">
+				<script><![CDATA[unieap.getXDialog().close();]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+        </tr>
+      </tbody>
+    </tableLayout>
+  </template></adaptivePane>
+    </adaptiveContainer>
+  </template><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[unieap.byId("property").setDisplay("none");
+
+unieap.getElementById("property_label").style.display='none';
+unieap.byId("type").setValue("1");
+
+setValue_sel.getObjById("form1_7_tr").style({display:"none"}); 
+setValue_sel.getObjById("form1_2_tr").style({display:"none"});
+
+var ruleContext=null;
+var returnType=null;
+var dialogDs=unieap.getXDialog().dialogData;
+if(dialogDs.data !=null){
+	ruleContext= dialogDs.data.ruleContext;
+	returnType=dialogDs.data.returnType;
+	setValue_sel.returnType=returnType;
+	var paramStore=dataCenter.getDataStore("paramStore");
+	var paraArray=ruleContext.getParamListByReturnType(returnType);
+	if(paraArray&&paraArray.length>0)
+	{
+		for(var i=0,n=paraArray.length;i<n;i++)
+		{
+			paramStore.getRowSet().addRow(paraArray[i]);
+		}
+	}
+	if(returnType=="string")
+	{
+		unieap.byId("fixValue").setDisplay("");
+		unieap.byId("numberTextBox1").setDisplay("none");
+		unieap.byId("dateTextBox1").setDisplay("none");
+	}
+	else if(returnType=="number")
+	{
+		unieap.byId("fixValue").setDisplay("none");
+		unieap.byId("numberTextBox1").setDisplay("");
+		unieap.byId("dateTextBox1").setDisplay("none");
+	}
+	else if(returnType=="date")
+	{
+		unieap.byId("fixValue").setDisplay("none");
+		unieap.byId("numberTextBox1").setDisplay("none");
+		unieap.byId("dateTextBox1").setDisplay("");
+	}
+	else
+	{
+		unieap.byId("fixValue").setDisplay("none");
+		unieap.byId("numberTextBox1").setDisplay("none");
+		unieap.byId("dateTextBox1").setDisplay("none");
+	}
+}
+
+
+//ruleContext=new RuleContext();
+//var returnType="date";
+//setValue_sel.returnType=returnType;
+//ruleContext.addParam({returnKey:"param1",name:"参数1",returnType:"string"}); 
+//ruleContext.addParam({returnKey:"param2",name:"参数2",returnType:"number"}); 
+//ruleContext.addParam({returnKey:"param3",name:"参数3",returnType:"date"}); 
+//ruleContext.addParam({returnKey:"param4",name:"参数4",returnType:"61b1ed8ca7eb4a27a471394e82e68e38"}); 
+//paramStore=dataCenter.getDataStore("paramStore");
+//var paraArray=ruleContext.getParamListByReturnType(returnType);
+//if(paraArray&&paraArray.length>0)
+//{
+//	for(var i=0,n=paraArray.length;i<n;i++)
+//	{
+//		paramStore.getRowSet().addRow(paraArray[i]);
+//	}
+//	if(returnType=="string")
+//	{
+//		unieap.byId("fixValue").setDisplay("");
+//		unieap.byId("numberTextBox1").setDisplay("none");
+//		unieap.byId("dateTextBox1").setDisplay("none");
+//	}
+//	else if(returnType=="number")
+//	{
+//		unieap.byId("fixValue").setDisplay("none");
+//		unieap.byId("numberTextBox1").setDisplay("");
+//		unieap.byId("dateTextBox1").setDisplay("none");
+//	}
+//	else if(returnType=="date")
+//	{
+//		unieap.byId("fixValue").setDisplay("none");
+//		unieap.byId("numberTextBox1").setDisplay("none");
+//		unieap.byId("dateTextBox1").setDisplay("");
+//	}
+//	else
+//	{
+//		unieap.byId("fixValue").setDisplay("none");
+//		unieap.byId("numberTextBox1").setDisplay("none");
+//		unieap.byId("dateTextBox1").setDisplay("none");
+//	}
+//}
+setValue_sel.typeChage("1");
+
+]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[var paramStore=new unieap.ds.DataStore("paramStore");
+var attributeStore=new unieap.ds.DataStore("attributeStore");
+var typeStore=new unieap.ds.DataStore("typeStore");
+typeStore.getRowSet().addRow({id:'1',name:'引用值'});
+typeStore.getRowSet().addRow({id:'2',name:'固定值'});
+
+dataCenter.addDataStore("paramStore", paramStore);
+dataCenter.addDataStore("attributeStore", attributeStore);
+dataCenter.addDataStore("typeStore", typeStore);]]></script></function></event></events></controls>
+      <scripts ><function name="getBomAttributeSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getBomAttribute方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[try { 
+	var store = dc.getDataStore("result");
+	var ds = new unieap.ds.DataStore("realStore");
+	if(store&&store.getRowSet().getRowCount(0)>0)
+	{
+		for(var i=0,n=store.getRowSet().getRowCount(0);i<n;i++)
+		{
+			var type = store.getRowSet().getRow(i).getItemValue("TYPE");
+			if(setValue_sel.returnType==type)
+			{
+				var row=store.getRowSet().getRow(i).getData();
+				ds.getRowSet().addRow(row);
+			}
+		}
+	}
+	unieap.byId("property").getDataProvider().setDataStore(ds);//刷新store
+} catch (e){
+}
+]]></script>
+</function><function name="typeChage" arguments="value">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(value=='1')
+{//1:引用值;
+	setValue_sel.getObjById("form1_2_tr").style({display:""}); 
+	setValue_sel.getObjById("form1_7_tr").style({display:"none"}); 
+	unieap.byId("fixValue").setRequired(false)
+	unieap.byId("numberTextBox1").setRequired(false);
+	unieap.byId("dateTextBox1").setRequired(false);
+}
+else if(value=='2')
+{//2:固定值
+	setValue_sel.getObjById("form1_2_tr").style({display:"none"}); 
+	setValue_sel.getObjById("form1_7_tr").style({display:""});
+	var returnType=setValue_sel.returnType;
+	if(returnType=="string")
+	{
+		unieap.byId("fixValue").setRequired(true)
+		unieap.byId("numberTextBox1").setRequired(false);
+		unieap.byId("dateTextBox1").setRequired(false);
+	}
+	else if(returnType=="number")
+	{
+		unieap.byId("fixValue").setRequired(false)
+		unieap.byId("numberTextBox1").setRequired(true);
+		unieap.byId("dateTextBox1").setRequired(false);
+	}
+	else if(returnType=="date")
+	{
+		unieap.byId("fixValue").setRequired(false)
+		unieap.byId("numberTextBox1").setRequired(false);
+		unieap.byId("dateTextBox1").setRequired(true);
+	}
+}
+	
+		
+]]>
+	</script>
+</function><function name="getObjById" arguments="objId">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(objId){
+	return dojo.query("#"+unieap.getElementById(objId).id);
+}]]>
+	</script>
+</function></scripts>
+      <templateInstances>
+<templateInstance target="template2"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form1</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>six_1320</colType>
+        <colsPropertyList>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>returnKey</name>
+            <label>参数：</label>
+            <labelTD>
+              <id>returnKey_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>returnKey_label</id>
+                <value>参数：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>returnKey_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>returnKey</id>
+                <properties/>
+                <binding__name>returnKey</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>paramStore</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>property</name>
+            <label>属性：</label>
+            <labelTD>
+              <id>property_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>property_label</id>
+                <value>属性：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>property_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>property</id>
+                <properties/>
+                <binding__name>property</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>attributeStore</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>condition</name>
+            <label>表达式：</label>
+            <labelTD>
+              <id>condition_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>condition_label</id>
+                <value>表达式：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>condition_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>condition</id>
+                <properties/>
+                <binding__name>condition</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>name</name>
+            <label>描述：</label>
+            <labelTD>
+              <id>name_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>name_label</id>
+                <value>描述：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>name_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>name</id>
+                <properties/>
+                <binding__name>name</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_2_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_3_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <isIdChange>true</isIdChange>
+        <lastId></lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form1_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_saveButton</id>
+              <name>form1_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_resetButton</id>
+              <name>form1_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form1_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form1</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form1</id>
+        <properties/>
+        <isMerge>false</isMerge>
+        <binding__store>iFConditionPojo</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form1_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>2</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+	<resource type="jsp" src="/arithengine/jsp/pop.jsp" />
+</resources>
+   </dc:view>
+</dc:dc>
+

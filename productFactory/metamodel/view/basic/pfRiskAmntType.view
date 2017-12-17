@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="Administrator" />
+         <creationTime value="2016-07-19 17:17:47" />
+         <modificationTime value="2017-03-10 11:03:48" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getAllPfRiskAmntType" onSuccess="getAllPfRiskAmntTypeSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfriskamnttype.business.xml" method="pfriskamnttype.getAllPfRiskAmntTypeDaoImpl"></bo>
+		<context>
+			<string name="pageNumber" />
+			<string name="pageSize" />
+		</context>
+		<arguments>
+			<argument name="pageNumber" type="string"></argument>
+			<argument name="pageSize" type="string"></argument>
+		</arguments>
+		<pagingQuery pageNumber="1" pageSize="20" calcRecordCount="true"></pagingQuery>
+	</pMethod>
+	<dependence name="pfriskamnttype.business.xml"
+		ref="pfriskamnttype.business.xml | com.neusoft.abclife.productfactory.business"
+		dc="factoryabclife" />
+	<pMethod name="delRiskAmntType" onSuccess="delRiskAmntTypeSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfriskamnttype.business.xml" method="pfriskamnttype.delTfRiskamntType"></bo>
+<context><pojo name="tfRiskamntType" dataStoreName="tRiskamntTypeDef_grid" /></context><arguments><argument name="tfRiskamntType" type="dataStore"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="tRiskamntTypeDef_grid" dependence="tRiskamntTypeDef"
+		dc="factoryabclife" path="tRiskamntTypeDef.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="bigint" length="16" />
+			<column name="riskamntName" label="风险保额名称" type="string"
+				length="100" />
+			<column name="riskamntType" label="风险保额类型" type="string"
+				length="6" />
+			<column name="busiType" label="场景业务分类" type="string" length="2" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><titlePane id="titlePane1" width="100%" height="100%" title="风险保额定义" flexible="false"><div id="div1" height="30px" type="buttons"><button
+	id="add" label="新&amp;nbsp增" width="100px" class="titlePane-button">
+	<events>
+		<event name="onClick" handlerFunction="add_onClick">
+			<function name="add_onClick" arguments="event">
+				<script><![CDATA[var dialog = unieap.byId("addDialog");
+dialog.dialogData={"opt":"add"};
+dialog.show();]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template1" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <xgrid binding-store="tRiskamntTypeDef_grid" edit-editType="readonly"
+	height="100%" id="grid1" rows-rowsPerPage="10" selection-selectType="none"
+	views-rowBar="false" views-rowNumber="true">
+	
+	<header>
+		<row>
+			<xcell dataType="string" enable="false" height="25px"
+				id="cell_riskamntName" label="风险保额名称" name="riskamntName" width="45%"></xcell>
+			<xcell dataType="string" enable="false" height="25px"
+				id="cell_riskamntType" label="风险保额类型" name="riskamntType" width="45%"></xcell>
+			<xcell enable="false" id="cell_control_riskamnt" label="操作"
+	name="control_riskamnt" width="10%">
+	<events>
+		<event name="formatter" handlerFunction="cell_control_riskamnt_formatter">
+			<function name="cell_control_riskamnt_formatter" arguments="inValue,inRowIndex">
+				<script><![CDATA[var editImg=unieap.WEB_APP_NAME +"/ProductFactory/factoryabclife/gridBtn/ui/btn_edit.png";
+var editImg_h=unieap.WEB_APP_NAME +"/ProductFactory/factoryabclife/gridBtn/ui/btn_edit_h.png";
+var delImg=unieap.WEB_APP_NAME +"/ProductFactory/factoryabclife/gridBtn/ui/btn_delete_o.png";
+var delImg_h=unieap.WEB_APP_NAME +"/ProductFactory/factoryabclife/gridBtn/ui/btn_delete_h.png";
+
+var editHTML="<img src='"+editImg+"' style='cursor:pointer;' title='修改' onclick='pfRiskAmntType.edit("+inRowIndex+");' ></img>";
+var delHTML="<img src='"+delImg+"' style='cursor:pointer;' title='删除' onclick='pfRiskAmntType.del("+inRowIndex+");' ></img>";
+return editHTML+"&nbsp;&nbsp;"+delHTML;]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+		</row>
+	</header>
+	<toolbar paging-userPageSize="false"></toolbar><events>
+		<event name="binding-rpc" handlerFunction="grid1_binding_rpc">
+			<function name="grid1_binding_rpc" arguments="store,load">
+				<script><![CDATA[view.processor.getAllPfRiskAmntType(store.getPageNumber(), store.getPageSize());]]></script>
+			</function>
+		</event>
+	</events>
+</xgrid></template></titlePane><xdialog id="addDialog" title="风险保额新增"
+	view-ref="factoryabclife/basic/pfRiskAmntTypeDialog" width="680px"
+	height="130px">
+	<events>
+		<event name="onComplete" handlerFunction="addDialog_onComplete">
+			<function name="addDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[view.processor.getAllPfRiskAmntType(1, 20);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><dependence name="factoryabclife/basic/pfRiskAmntTypeDialog" type="view" sc="ProductFactory" dc="factoryabclife" ref="basic/pfRiskAmntTypeDialog" /><xdialog
+	id="updateDialog" title="风险保额类型修改" width="680px" height="130px"
+	view-ref="factoryabclife/basic/pfRiskAmntTypeDialog">
+	<events>
+		<event name="onComplete" handlerFunction="updateDialog_onComplete">
+			<function name="updateDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[view.processor.getAllPfRiskAmntType(1,20);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[view.processor.getAllPfRiskAmntType(1, 20);]]></script></function></event></events></controls>
+      <scripts ><function name="getAllPfRiskAmntTypeSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getAllPfRiskAmntType方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[view.grid.setDataStore("grid1",dc.getDataStore("getAllPfRiskAmntTypeDaoImpl"));]]></script>
+</function><function name="edit" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var row = view.grid.getRow("grid1", inRowIndex);
+if (row 
+	&& row.rowSet 
+	&& row.rowSet.primary 
+	&& row.rowSet.primary.length == 1) {
+	
+	var status = row.rowSet.primary[0].status;
+	//20160309改, -1状态不可用
+	if(status == -1){
+		return;	
+	}else{
+		var dialog = unieap.byId("updateDialog");
+		dialog.dialogData={"opt":"update","riskamnt":row};
+		dialog.show();
+	}	
+}]]>
+	</script>
+</function><function name="delRiskAmntTypeSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:delRiskAmntType方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[view.processor.getAllPfRiskAmntType(1, 20);]]></script>
+</function><function name="del" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var data = view.grid.getRow("grid1", inRowIndex);
+if (data 
+    && data.rowSet 
+    && data.rowSet.primary 
+    && data.rowSet.primary.length == 1) {
+    
+    MessageBox.confirm({
+        message: "是否删除？",
+        yesStr: "是",
+        noStr: "否",
+        //关闭右上角的"X"按钮时执行onComplete函数
+        iconCloseComplete:false,
+        onComplete: function(value) {
+            if (value) {
+               view.processor.delRiskAmntType(data);
+            }
+        }
+    }, dojo.byId("confirm"));
+}
+]]></script>
+</function></scripts>
+      <templateInstances ><templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>tRiskamntTypeDef_grid</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>id</name>
+            <label>id</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>id</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>16</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>riskamntName</name>
+            <label>风险保额名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_riskamntName</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>riskamntName</name>
+              <label>风险保额名称</label>
+              <width>45%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_riskamntName_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>100</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>riskamntType</name>
+            <label>风险保额类型</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_riskamntType</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>riskamntType</name>
+              <label>风险保额类型</label>
+              <width>45%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_riskamntType_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>6</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>busiType</name>
+            <label>场景业务分类</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>busiType</name>
+              <label>场景业务分类</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>control_riskamnt</name>
+            <label>操作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_control_riskamnt</id>
+              <properties/>
+              <dataType></dataType>
+              <name>control_riskamnt</name>
+              <label>操作</label>
+              <width>10%</width>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>tRiskamntTypeDef_grid</binding__store>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid1</id>
+        <lastId>grid1</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>tRiskamntTypeDef_grid</name>
+            <entityClass>TRiskamntTypeDef</entityClass>
+            <dc>factoryabclife</dc>
+            <type>entity</type>
+            <dependence>tRiskamntTypeDef</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid1_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <paging__userPageSize>true</paging__userPageSize>
+          <id>grid1_ToolBar</id>
+          <export__options></export__options>
+          <innerButtons></innerButtons>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>grid1_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid1_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX></ID__PREFIX>
+        <showToolBar>true</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid1</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

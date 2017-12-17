@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="Administrator" />
+         <creationTime value="2015-11-08 18:01:33" />
+         <modificationTime value="2016-03-04 17:28:11" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getSortTree" onSuccess="getSortTreeSuccess"
+		sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfctlgbiz.business.xml" method="pfctlgbiz.getPfCtlgBizList"></bo>
+	</pMethod>
+	<pMethod name="getPfAlgorithmComboBox" onSuccess="getPfAlgorithmComboBoxSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<string name="bizId" />
+		</context>
+		<arguments>
+			<argument name="bizId" type="string"></argument>
+		</arguments>
+		<bo name="pfctlgalgo.business.xml" method="pfctlgalgo.getPfAlgorithmByBizId"></bo>
+	</pMethod>
+	<dependence name="pfctlgalgo.business.xml"
+		ref="pfctlgalgo.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<dependence name="pfctlgbiz.business.xml"
+		ref="pfctlgbiz.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfObjAlgo_form" dependence="pfObjAlgo" dc="factory"
+		path="pfObjAlgo.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="code" label="算法编码" type="string" length="128" />
+			<column name="description" label="备注" type="string" length="3000" />
+			<column name="ctlgAlgoId" label="关联的算法分类ID" type="string"
+				length="32" />
+			<column name="ownerType" label="0:实体对象 1:险种版本对象 2:产品版本对象"
+				type="number" length="22" />
+			<column name="ownerObjId" label="关联的主对象ID" type="string"
+				length="32" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><template id="template1" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    
+    
+  <form binding-store="pfObjAlgo_form" id="form_addArith">
+    <tableLayout id="form_addArith_tableLayout" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="25%" />
+        <col width="60%" />
+        <col width="15%" />
+      </colgroup>
+      <tbody>
+        <tr id="form_addArith_0_tr">
+          <td id="ctlgBizTemp__addArith_label_td" rowSpan="1" align="right">
+            <label id="ctlgBizTemp__addArith_label" value="业务分类：" />
+          </td>
+          <td colSpan="1" id="ctlgBizTemp__addArith_td" rowSpan="1">
+            <comboBoxTree id="ctlgBizTemp__addArith"
+	popup-height="200px"
+	treeJson-binding="{label:'name',parent:'pid',store:'list',query:{name:'pid',relation:'=',value:'-1'}}"
+	width="100%">
+	<events>
+		<event name="onChange" handlerFunction="ctlgBizTemp__addArith_onChange">
+			<function name="ctlgBizTemp__addArith_onChange" arguments="value">
+				<script><![CDATA[view.processor.getPfAlgorithmComboBox(value);]]></script>
+			</function>
+		</event>
+	</events>
+</comboBoxTree>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_addArith_1_tr">
+          <td id="ctlgAlgoId__addArith_label_td" rowSpan="1" align="right">
+            <label id="ctlgAlgoId__addArith_label" value="算法分类：" />
+          </td>
+          <td colSpan="1" id="ctlgAlgoId__addArith_td" rowSpan="1">
+            <comboBox binding-name="ctlgAlgoId" id="ctlgAlgoId__addArith" maxLength="32" width="100%" popup-height="150px" decoder-valueAttr="id" decoder-displayAttr="name" required="true"></comboBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_addArith_2_tr">
+          <td id="code__addArith_label_td" rowSpan="1" align="right">
+            <label id="code__addArith_label" value="算法编码：" />
+          </td>
+          <td colSpan="1" id="code__addArith_td" rowSpan="1">
+            <textBox binding-name="code" id="code__addArith" maxLength="128" width="100%" required="true"></textBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_addArith_3_tr">
+          <td id="description__addArith_label_td" rowSpan="1" align="right">
+            <label id="description__addArith_label" value="备注：" />
+          </td>
+          <td colSpan="1" id="description__addArith_td" rowSpan="1">
+            <textarea binding-name="description" id="description__addArith" maxLength="3000" width="100%" height="100px"></textarea>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </tableLayout>
+  </form><tableLayout id="form_addArith_ToolBarInfo" tableLayout="fixed" width="100%" class="toolbar-table">
+    <colgroup>
+      <col width="" />
+    </colgroup>
+    <tbody>
+      <tr height="30px">
+        <td align="right">
+          <button id="form_addArith_saveButton" label="确 定" width="100px" iconClass="common_base_btn common_save_btn">
+	<events>
+		<event handlerFunction="form_addArith_saveButton_onClick" name="onClick">
+			<function arguments="event" name="form_addArith_saveButton_onClick">
+				<script><![CDATA[if(!unieap.byId("form_addArith").validate(false)){
+	return;
+}
+var ds = view.form.getDataStore("form_addArith");
+unieap.getXDialog().setReturn(ds);
+unieap.getXDialog().close(true);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+        </td>
+      </tr>
+    </tbody>
+  </tableLayout></template><events><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[view.processor.getSortTree();]]></script></function></event></events></controls>
+      <scripts ><function name="getSortTreeSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getSortTree方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var treeDs = dc.getDataStore("list");
+dataCenter.addDataStore(treeDs);
+
+//
+//unieap.byId("sortId__addRule").setTreeJson({
+//	binding:{
+//		label:'name',
+//		parent:'pid',
+//		store:treeDs,
+//		query:{name:'pid',relation:'=',value:'-1'}
+//	}
+//});]]></script>
+</function><function name="getPfAlgorithmComboBoxSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfAlgorithmComboBox方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore("pfAlgorithmComboBox");
+unieap.byId("ctlgAlgoId__addArith").getDataProvider().setDataStore(ds);]]>
+	</script>
+</function></scripts>
+      <templateInstances ><templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form_addArith</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>userdef</colType>
+        <colsPropertyList>
+          <string>25</string>
+          <string>60</string>
+          <string>15</string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string>_addArith</string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>id</name>
+            <label>id</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>id</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ctlgBizTemp</name>
+            <label>业务分类：</label>
+            <labelTD>
+              <id>ctlgBizTemp__addArith_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>ctlgBizTemp__addArith_label</id>
+                <value>业务分类：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBoxTree</controlType>
+            </labelTD>
+            <controlTD>
+              <id>ctlgBizTemp__addArith_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBoxTree</controlType>
+                <id>ctlgBizTemp__addArith</id>
+                <properties/>
+                <binding__name></binding__name>
+                <binding__markDirty></binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBoxTree</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>true</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ctlgAlgoId</name>
+            <label>算法分类：</label>
+            <labelTD>
+              <id>ctlgAlgoId__addArith_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>ctlgAlgoId__addArith_label</id>
+                <value>算法分类：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>ctlgAlgoId__addArith_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>ctlgAlgoId__addArith</id>
+                <properties/>
+                <binding__name>ctlgAlgoId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>code</name>
+            <label>算法编码：</label>
+            <labelTD>
+              <id>code__addArith_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>code__addArith_label</id>
+                <value>算法编码：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>code__addArith_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>code__addArith</id>
+                <properties/>
+                <binding__name>code</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>128</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>128</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>description</name>
+            <label>备注：</label>
+            <labelTD>
+              <id>description__addArith_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>description__addArith_label</id>
+                <value>备注：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textarea</controlType>
+            </labelTD>
+            <controlTD>
+              <id>description__addArith_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textarea</controlType>
+                <id>description__addArith</id>
+                <properties/>
+                <binding__name>description</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>3000</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textarea</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>3000</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ownerObjId</name>
+            <label>关联的主对象ID</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>ownerObjId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ownerType</name>
+            <label>0:实体对象 1:险种版本对象 2:产品版本对象</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>numberTextBox</controlType>
+                <properties/>
+                <binding__name>ownerType</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>22</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>number</type>
+            <length>22</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_addArith_0_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_addArith_1_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_addArith_2_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_addArith_3_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_addArith_4_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <lastStore>pfEntityPropertyValueA</lastStore>
+        <isIdChange>true</isIdChange>
+        <lastId>form_addArith</lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form_addArith_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form_addArith_saveButton</id>
+              <name>form_addArith_saveButton</name>
+              <label>确定</label>
+              <type>button</type>
+              <width>100px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>确定</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form_addArith_resetButton</id>
+              <name>form_addArith_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form_addArith_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form_addArith</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <pMethodName>form_addArith_save</pMethodName>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form_addArith</id>
+        <properties/>
+        <isMerge>true</isMerge>
+        <binding__store>pfObjAlgo_form</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form_addArith_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>5</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

@@ -1,0 +1,1615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="chen-gy" />
+         <creationTime value="2015-10-20 10:15:54" />
+         <modificationTime value="2016-03-17 10:23:48" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences ><dependence name="factory/risk/navigateButton" type="viewc" sc="ProductFactory" dc="factory" ref="risk/navigateButton" /></dependences>
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getPfSortTree" onSuccess="getPfSortTreeSuccess" sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfctlgbiz.business.xml" method="pfctlgbiz.getPfCtlgBizList"></bo>
+	</pMethod>
+	<pMethod name="getPfContactPointComboBox" onSuccess="getPfContactPointComboBoxSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<string name="bizId" />
+		</context>
+		<arguments>
+			<argument name="bizId" type="string"></argument>
+		</arguments>
+		<bo name="pfctlghook.business.xml" method="pfctlghook.getPfContactPointListByBizId"></bo>
+	</pMethod>
+	<pMethod name="addPfPrdtExtpoint" onSuccess="addPfPrdtExtpointSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			
+		<pojo name="pfObjHook" dataStoreName="pfObjHook_form" /></context>
+		<arguments>
+			
+		<argument name="pfObjHook" type="dataStore"></argument></arguments>
+		<bo name="pfprdtextpoint.business.xml" method="pfprdtextpoint.addPfPrdtExtpoint"></bo>
+	</pMethod>
+	<dependence name="pfprdtextpoint.business.xml"
+		ref="pfprdtextpoint.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="updPfPrdtExtpoint" onSuccess="updPfPrdtExtpointSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprdtextpoint.business.xml" method="pfprdtextpoint.updPfPrdtExtpoint"></bo>
+		<context>
+			
+		<pojo name="pfObjHook" dataStoreName="pfObjHook_form" /></context>
+		<arguments>
+			
+		<argument name="pfObjHook" type="dataStore"></argument></arguments>
+	</pMethod>
+	<pMethod name="getPfContactPointListById" onSuccess="getPfContactPointListByIdSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<string name="id" />
+		</context>
+		<arguments>
+			<argument name="id" type="string"></argument>
+		</arguments>
+		<bo name="pfctlghook.business.xml" method="pfctlghook.getPfContactPointListById"></bo>
+	</pMethod>
+	<dependence name="pfctlgbiz.business.xml"
+		ref="pfctlgbiz.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<dependence name="pfctlghook.business.xml"
+		ref="pfctlghook.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfPrdtExtpoint_form" dependence="pfPrdtExtpoint"
+		dc="factory" path="pfPrdtExtpoint.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="productVerId" label="PRODUCT_VER_ID" type="string"
+				length="32" />
+			<column name="extpointCatelogId" label="EXTPOINT_CATELOG_ID"
+				type="string" length="32" />
+			<column name="code" label="CODE" type="string" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+	<dataStore name="pfObjHook_form" dependence="pfObjHook" dc="factory"
+		path="pfObjHook.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="sourcecode" label="接触点实现" type="string" />
+			<column name="ctlgHookId" label="关联的接触点分类ID" type="string"
+				length="32" />
+			<column name="ownerType" label="0:实体对象 1:险种版本对象 2:产品版本对象"
+				type="number" length="22" />
+			<column name="ownerObjId" label="关联的主对象ID" type="string"
+				length="32" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><borderLayout id="borderLayout1" showTitleBar="false" design="headline"><borderPane id="borderPane0" showTitleBar="false" splitLine="false" region="left" maxSize="100px" minSize="100px"><component id="component1" label="Component" comp-ref="factory/risk/navigateButton" /></borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><titlePane height="100%" title="接触点定义" private_displayOpen="true" flexible="false"><div id="div1" type="buttons" height="30px"><button
+	id="pfprdtextpoint_form_saveButton" label="保 存" width="100px"
+	class="titlePane-button" iconClass="common_base_btn common_save_btn">
+	<events>
+		<event name="onClick" handlerFunction="pfprdtextpoint_form_saveButton_onClick">
+			<function name="pfprdtextpoint_form_saveButton_onClick"
+				arguments="event">
+				<script><![CDATA[if(!unieap.byId("form_riskVerExtpoint").validate(false)){
+	return;
+}
+var pfPrdtExtpoint = unieap.byId("form_riskVerExtpoint").getBinding().getDataStore();
+pfPrdtExtpoint.rowSet.primary[0]["ownerType"] = 1; //险种版本对象
+pfPrdtExtpoint.rowSet.primary[0]["ownerObjId"] = view.thisRiskVerId;
+pfPrdtExtpoint.rowSet.primary[0]["sourcecode"] = view.codeMirror.getValue();
+if (view.thisType == "add") {
+    view.processor.addPfPrdtExtpoint(pfPrdtExtpoint);
+    
+} else if (view.thisType == "upd") {    
+    view.processor.updPfPrdtExtpoint(pfPrdtExtpoint);
+    
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template2" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    
+    
+  <form binding-store="pfObjHook_form" id="form_riskVerExtpoint">
+    <tableLayout id="form_riskVerExtpoint_tableLayout" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="25%" />
+        <col width="60%" />
+        <col width="15%" />
+      </colgroup>
+      <tbody>
+        <tr id="form_riskVerExtpoint_0_tr">
+          <td id="ctlgBizTemp__riskVerExtpoint_label_td" rowSpan="1" align="right">
+            <label id="ctlgBizTemp__riskVerExtpoint_label" value="业务分类：" />
+          </td>
+          <td colSpan="1" id="ctlgBizTemp__riskVerExtpoint_td" rowSpan="1">
+            <comboBoxTree id="ctlgBizTemp__riskVerExtpoint" popup-height="400px" treeJson-binding="{label:'name',parent:'pid',store:'list',query:{name:'pid',relation:'=',value:'-1'}}" width="100%">
+	<events>
+		<event name="onChange" handlerFunction="ctlgBizTemp__riskVerExtpoint_onChange">
+			<function name="ctlgBizTemp__riskVerExtpoint_onChange" arguments="value">
+				<script><![CDATA[view.processor.getPfContactPointComboBox(value);]]></script>
+			</function>
+		</event>
+	</events>
+</comboBoxTree>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_riskVerExtpoint_1_tr">
+          <td id="ctlgHookId__riskVerExtpoint_label_td" rowSpan="1" align="right">
+            <label id="ctlgHookId__riskVerExtpoint_label" value="接触点分类：" />
+          </td>
+          <td colSpan="1" id="ctlgHookId__riskVerExtpoint_td" rowSpan="1">
+            <comboBox binding-name="ctlgHookId" id="ctlgHookId__riskVerExtpoint" maxLength="32" width="100%" required="true" popup-height="300px" decoder-displayAttr="name" decoder-valueAttr="id"></comboBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_riskVerExtpoint_2_tr">
+          <td id="sourcecode__riskVerExtpoint_label_td" rowSpan="1" align="right">
+            <label id="sourcecode__riskVerExtpoint_label" value="接触点实现：" />
+          </td>
+          <td colSpan="1" id="sourcecode__riskVerExtpoint_td" rowSpan="1">
+            <textarea binding-name="sourcecode" id="sourcecode__riskVerExtpoint" width="100%" style="display:none"></textarea>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </tableLayout>
+  </form></template></titlePane></borderPane></borderLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[var codeNode = dojo.place("<textarea id='codeEditor'></textarea>", unieap.getElementById("sourcecode__riskVerExtpoint"), "after");
+navigateButton.activeNavigateButton("extPoint");
+view.codeMirror = CodeMirror.fromTextArea(codeNode, {
+  lineNumbers: true,
+  indentUnit:4,
+  styleActiveLine: true,
+  matchBrackets: true,
+  theme: "eclipse",
+  extraKeys: {
+    "F11": function(cm) {
+      cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+    },
+    "Alt-/": "autocomplete",
+    "Esc": function(cm) {
+      if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+    }
+  }
+});
+
+view.navigator.receiveData("接触点配置",function(dc) {
+	if (dc != null) {
+	    view.thisRiskVerId = dc.getParameter("riskVerId");
+	    view.thisType = dc.getParameter("type");
+	    //控制index.jsp监听onkeyup
+		dc.setParameter("runEsc", true);	    
+	    navigateButton.receiveDCParameter(dc);
+	}
+	//form清空
+	unieap.byId("form_riskVerExtpoint").clear();
+	if (view.thisType == "add") {  
+	   	view.initCodeMirror("");
+	
+	} else if (view.thisType == "upd") {
+	    view.tempPfprdtextpoint = dc.getDataStore("pfprdtextpoint");
+	    unieap.byId("ctlgHookId__riskVerExtpoint").getDataProvider().setDataStore(dc.getDataStore("commonDecoder"));
+	    view.form.setDataStore("form_riskVerExtpoint", view.tempPfprdtextpoint);   	    
+	    var sourceCode = view.tempPfprdtextpoint.getRowSet().getRow(0).getItemValue("sourcecode");
+	    if(sourceCode){
+	    	view.codeMirror.setValue(sourceCode);
+	    }else{
+	    	view.codeMirror.setValue("");
+	    }
+	    
+	}
+});
+
+
+
+
+
+]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[view.processor.getPfSortTree();]]></script></function></event></events></controls>
+      <scripts ><function name="getPfSortTreeSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfSortTree方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore("list");
+dataCenter.addDataStore(ds);
+
+
+]]></script>
+</function><function name="getPfContactPointComboBoxSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfContactPointComboBox方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore("pfContactPointComboBox");
+unieap.byId("ctlgHookId__riskVerExtpoint").getDataProvider().setDataStore(ds);
+//if(ds 
+//    && ds.rowSet 
+//    && ds.rowSet.primary 
+//    && ds.rowSet.primary.length != 0){
+//    var thisId = ds.rowSet.primary[0].id;
+//    unieap.byId("extpointCatelogId").setValue(thisId);          
+//}else{
+//    unieap.byId("extpointCatelogId").setValue(""); 
+//}]]></script>
+</function><function name="updPfPrdtExtpointSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:updPfPrdtExtpoint方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//MessageBox.alert({
+MessageBox.autoCloseAlert({
+    title: "提示",
+    message: "保存成功！",
+    type: "info",
+//    durationTime:"3000",
+//    iconCloseComplete: false,
+    onComplete: function(){
+		view.navigator.prePage("保存完成", {});
+    }
+});
+
+]]></script>
+</function><function name="addPfPrdtExtpointSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:addPfPrdtExtpoint方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//MessageBox.alert({
+MessageBox.autoCloseAlert({
+    title: "提示",
+    message: "保存成功！",
+    type: "info",
+//    durationTime:"3000",
+//    iconCloseComplete: false,
+    onComplete: function(){
+		view.navigator.prePage("保存完成", {});
+    }
+});
+
+]]></script>
+</function><function name="getPfContactPointListByIdSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfContactPointListById方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore("list");
+unieap.byId("extpointCatelogId").getDataProvider().setDataStore(ds);
+
+if (view.thisType == "upd") {
+    view.form.setDataStore("pfprdtextpoint_form", view.tempPfprdtextpoint);
+    
+    var ctlgBizId = ds.rowSet.primary[0].ctlgBizId;
+    unieap.byId("pfSortTree_treecombobox").setValue(ctlgBizId);
+    view.initCodeMirror(unieap.byId("code").getValue());
+}
+]]></script>
+</function><function name="initCodeMirror" arguments="code">
+	<script><![CDATA[view.codeMirror.setValue(code);
+]]>
+	</script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><variable name="thisType"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><variable name="thisRiskVerId"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><variable name="tempPfprdtextpoint"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><variable name="codeMirror"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable></scripts>
+      <templateInstances ><templateInstance target="template2"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form_riskVerExtpoint</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>userdef</colType>
+        <colsPropertyList>
+          <string>25</string>
+          <string>60</string>
+          <string>15</string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string>_riskVerExtpoint</string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>id</name>
+            <label>id</label>
+            <labelTD>
+              <id>id__riskVerExtpoint_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <labelInfo>
+                <id>id__riskVerExtpoint_label</id>
+                <value>id</value>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>label</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>Label</string>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>width</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>fontStyle</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontSize</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>fontWeight</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>color</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                </properties>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>id__riskVerExtpoint_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>id__riskVerExtpoint</id>
+                <properties>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>textBox</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>tabIndex</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>password</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>inputFilter_filterRule</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>nextFocusId</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>minLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>value</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>validatorClass</string>
+                    <string>unieap.form.FormWidgetValidator</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>private_widget</string>
+                    <string>unieap.form.TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>trim</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_prompts</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>validator_realTime</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>prompt_promptMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_duration</string>
+                    <string>1000</string>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>binding_dataType</string>
+                    <string>string</string>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorCode</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_regExp</string>
+                    <null/>
+                  </entry>
+                </properties>
+                <binding__name>id</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>td</string>
+                </entry>
+                <entry>
+                  <string>marginTop</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>marginLeft</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>align</string>
+                  <string>left</string>
+                </entry>
+                <entry>
+                  <string>marginRight</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>marginBottom</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>height</string>
+                  <string>auto</string>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valign</string>
+                  <string>middle</string>
+                </entry>
+              </properties>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ctlgBizTemp</name>
+            <label>业务分类：</label>
+            <labelTD>
+              <id>ctlgBizTemp__riskVerExtpoint_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>ctlgBizTemp__riskVerExtpoint_label</id>
+                <value>业务分类：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBoxTree</controlType>
+            </labelTD>
+            <controlTD>
+              <id>ctlgBizTemp__riskVerExtpoint_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBoxTree</controlType>
+                <id>ctlgBizTemp__riskVerExtpoint</id>
+                <properties/>
+                <binding__name></binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>-1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBoxTree</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>true</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ctlgHookId</name>
+            <label>接触点分类：</label>
+            <labelTD>
+              <id>ctlgHookId__riskVerExtpoint_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>ctlgHookId__riskVerExtpoint_label</id>
+                <value>接触点分类：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>ctlgHookId__riskVerExtpoint_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>ctlgHookId__riskVerExtpoint</id>
+                <properties/>
+                <binding__name>ctlgHookId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>auto</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>sourcecode</name>
+            <label>接触点实现：</label>
+            <labelTD>
+              <id>sourcecode__riskVerExtpoint_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>sourcecode__riskVerExtpoint_label</id>
+                <value>接触点实现：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textarea</controlType>
+            </labelTD>
+            <controlTD>
+              <id>sourcecode__riskVerExtpoint_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textarea</controlType>
+                <id>sourcecode__riskVerExtpoint</id>
+                <properties/>
+                <binding__name>sourcecode</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>-1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textarea</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ownerType</name>
+            <label>0:实体对象 1:险种版本对象 2:产品版本对象</label>
+            <labelTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <properties/>
+            </labelTD>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>numberTextBox</controlType>
+                <properties/>
+                <binding__name>ownerType</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>22</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>numberTextBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>number</type>
+            <length>22</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>ownerObjId</name>
+            <label>关联的主对象ID</label>
+            <labelTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <properties/>
+            </labelTD>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>ownerObjId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>pfprdtextpoint_form_0_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>30px</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>pfprdtextpoint_form_1_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>35px</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>pfprdtextpoint_form_2_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>35px</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>pfprdtextpoint_form_3_1_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>35px</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>pfprdtextpoint_form_3_2_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_riskVerExtpoint_0_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_riskVerExtpoint_1_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_riskVerExtpoint_2_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_riskVerExtpoint_3_tr</id>
+            <properties>
+              <entry>
+                <string>private_tag</string>
+                <string>tr</string>
+              </entry>
+              <entry>
+                <string>marginTop</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>marginLeft</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>events</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>width</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>marginRight</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>class</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>tip</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>private_label</string>
+                <string>Row</string>
+              </entry>
+              <entry>
+                <string>parentId</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>marginBottom</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>height</string>
+                <string>auto</string>
+              </entry>
+              <entry>
+                <string>style</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>left</string>
+                <string>0</string>
+              </entry>
+              <entry>
+                <string>top</string>
+                <string>0</string>
+              </entry>
+            </properties>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <lastStore>pfObjHook_form</lastStore>
+        <isIdChange>true</isIdChange>
+        <lastId>form_riskVerExtpoint</lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form_riskVerExtpoint_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>pfprdtextpoint_form_saveButton</id>
+              <name>pfprdtextpoint_form_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>pfprdtextpoint_form_resetButton</id>
+              <name>pfprdtextpoint_form_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form_riskVerExtpoint_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form_riskVerExtpoint</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <pMethodName>pfprdtextpoint_form_save</pMethodName>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form_riskVerExtpoint</id>
+        <properties/>
+        <isMerge>true</isMerge>
+        <binding__store>pfObjHook_form</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form_riskVerExtpoint_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>9</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+	<resource type="style"
+		src="/ProductFactory/factory/codemiroor/codemirror.css" />
+	<resource type="style"
+		src="/ProductFactory/factory/codemiroor/addon/dialog/dialog.css" />
+	<resource type="style"
+		src="/ProductFactory/factory/codemiroor/addon/search/matchesonscrollbar.css" />
+	<resource type="style"
+		src="/ProductFactory/factory/codemiroor/addon/hint/show-hint.css" />
+	<resource type="style"
+		src="/ProductFactory/factory/codemiroor/addon/display/fullscreen.css" />
+	<resource type="style"
+		src="/ProductFactory/factory/codemiroor/theme/eclipse.css" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/codemirror.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/js/javascript.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/dialog/dialog.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/display/fullscreen.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/search/searchcursor.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/search/search.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/scroll/annotatescrollbar.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/search/matchesonscrollbar.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/hint/show-hint.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/hint/javascript-hint.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/selection/active-line.js" />
+	<resource type="script"
+		src="/ProductFactory/factory/codemiroor/addon/edit/matchbrackets.js" />
+</resources>
+   </dc:view>
+</dc:dc>
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+  <dc:entity class="dzltest.clmtest.entity.TSysLog" table="T_SYS_LOG" extends="com.neusoft.unieap.core.di.DomainObject">
+    <id name="sysLogId" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="SYS_LOG_ID" length="16" />
+      <generator class="uuid" />
+    </id>
+    <property name="sysSn" label="系统流水号" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="SYS_SN" not-null="true" length="16" />
+    </property>
+    <property name="gatewayId" label="网关ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="GATEWAY_ID" not-null="false" length="10" />
+    </property>
+    <property name="gatewayCode" label="网关编码" type="string" getStrategy="public" setStrategy="public">
+      <column name="GATEWAY_CODE" not-null="false" length="30" />
+    </property>
+    <property name="serverNodeName" label="服务器节点名称" type="string" getStrategy="public" setStrategy="public">
+      <column name="SERVER_NODE_NAME" not-null="false" length="120" />
+    </property>
+    <property name="channelId" label="渠道ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="CHANNEL_ID" not-null="false" length="10" />
+    </property>
+    <property name="channelCode" label="渠道编码" type="string" getStrategy="public" setStrategy="public">
+      <column name="CHANNEL_CODE" not-null="false" length="30" />
+    </property>
+    <property name="bizSn" label="业务流水号" type="string" getStrategy="public" setStrategy="public">
+      <column name="BIZ_SN" not-null="false" length="40" />
+    </property>
+    <property name="txCode" label="交易编码" type="string" getStrategy="public" setStrategy="public">
+      <column name="TX_CODE" not-null="false" length="30" />
+    </property>
+    <property name="interCode" label="内部编码" type="string" getStrategy="public" setStrategy="public">
+      <column name="INTER_CODE" not-null="false" length="30" />
+    </property>
+    <property name="txUser" label="交易用户" type="string" getStrategy="public" setStrategy="public">
+      <column name="TX_USER" not-null="false" length="40" />
+    </property>
+    <property name="txOrg" label="交易机构" type="string" getStrategy="public" setStrategy="public">
+      <column name="TX_ORG" not-null="false" length="40" />
+    </property>
+    <property name="txInitiatorType" label="交易发起方类型" type="string" getStrategy="public" setStrategy="public">
+      <column name="TX_INITIATOR_TYPE" not-null="false" length="2" />
+    </property>
+    <property name="logType" label="01 发送 02 接收" type="string" getStrategy="public" setStrategy="public">
+      <column name="LOG_TYPE" not-null="false" length="2" />
+    </property>
+    <property name="logTime" label="日志时间" type="timestamp" getStrategy="public" setStrategy="public">
+      <column name="LOG_TIME" not-null="false" />
+    </property>
+    <property name="txStatus" label="01 成功 02 失败 03 超时" type="string" getStrategy="public" setStrategy="public">
+      <column name="TX_STATUS" not-null="false" length="2" />
+    </property>
+    <property name="remark" label="交易异常时，备注记录异常信息； 交易成功时，备注不记录信息" type="string" getStrategy="public" setStrategy="public">
+      <column name="REMARK" not-null="false" length="2000" />
+    </property>
+    <import value="java.io.Serializable" />
+    <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+    <import value="com.neusoft.fdframework.core.annotation.Column" />
+    <import value="com.neusoft.fdframework.core.annotation.Entity" />
+    <import value="com.neusoft.fdframework.core.annotation.ID" />
+    <import value="com.neusoft.fdframework.core.annotation.Transient" />
+    <import value="com.neusoft.unieap.core.di.DomainObject" />
+  </dc:entity>
+</dc:dc>
+

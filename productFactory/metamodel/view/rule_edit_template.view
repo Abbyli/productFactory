@@ -1,0 +1,5301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="user" />
+         <creationTime value="2015-07-23 14:51:21" />
+         <modificationTime value="2015-11-27 09:46:11" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="insertRule" title="新增规则" onSuccess="insertRuleSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="rule.business.xml" method="arithengine.config.rule.insertRule"></bo>
+		<context>
+			<pojo name="rule" dataStoreName="uiRule" />
+			<pojoList name="dataStructure" dataStoreName="uiParameterRef" />
+			
+		<pojo name="graphicData" dataStoreName="graphicData" /></context>
+		<arguments>
+			
+			
+			
+		<argument name="rule" type="dataStore"></argument><argument name="dataStructure" type="dataStore"></argument><argument name="graphicData" type="dataStore"></argument></arguments>
+	</pMethod>
+	<dependence name="rule.business.xml" ref="rule.business.xml | com.neusoft.business"
+		dc="config" />
+	<pMethod name="updateRule" title="修改规则" onSuccess="updateRuleSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<pojo name="rule" dataStoreName="uiRule" />
+			<pojoList name="dataStructure" dataStoreName="uiParameterRef" />
+			
+		<pojo name="graphicData" dataStoreName="graphicData" /></context>
+		<arguments>
+			
+			
+			
+		<argument name="rule" type="dataStore"></argument><argument name="dataStructure" type="dataStore"></argument><argument name="graphicData" type="dataStore"></argument></arguments>
+		<bo name="rule.business.xml" method="arithengine.config.rule.updateRule"></bo>
+	</pMethod>
+	<pMethod name="getNodeItemStr" title="getNodeItemStr"
+		onSuccess="getNodeItemStrSuccess">
+		<comment><![CDATA[getNodeItemStr]]>
+		</comment>
+		<bo name="rule.business.xml" method="arithengine.config.rule.getNodeItemStr"></bo>
+		<context>
+			<string name="ruleId" />
+		</context>
+		<arguments>
+			<argument name="ruleId" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="getBomList" onSuccess="getBomListSuccess" sync="true">
+	<comment><![CDATA[返回值类型：三个基本属性及BOM类型的集合]]></comment>
+	<context>
+		<string name="versionId" />
+	</context>
+	<arguments>
+		<argument name="versionId" type="string"></argument>
+	</arguments>
+	<bo name="versionObjectTrace.business.xml"
+		method="arithengine.basic.versionObjectTrace.getBomListByVersionId"></bo>
+</pMethod>
+	<pMethod name="getParameterList" onSuccess="getParameterListSuccess" sync="true">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="rule.business.xml" method="arithengine.config.rule.getParameterList"></bo>
+<context><string name="refId" /><string name="paramType" /></context><arguments><argument name="refId" type="string"></argument><argument name="paramType" type="string"></argument></arguments></pMethod>
+<dependence name="versionObjectTrace.business.xml" ref="versionObjectTrace.business.xml | com.neusoft.business" dc="basic" /></processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="uiRuleBusiness" dependence="uiRuleBusiness"
+		dc="aecommon" path="com.neusoft.arithmetic.entity.UiRuleBusiness"
+		type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="parentId" label="parentId" type="string" />
+			<column name="ruleId" label="ruleId" type="string" />
+			<column name="busiType" label="busiType" type="integer" />
+			<column name="subType" label="subType" type="integer" />
+			<column name="nodeId" label="nodeId" type="string" />
+			<column name="orderNum" label="orderNum" type="number" />
+			<column name="returnKey" label="returnKey" type="string" />
+			<column name="returnValue" label="returnValue" type="string" />
+			<column name="returnType" label="returnType" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="condition" label="condition" type="string" />
+			<column name="path" label="path" type="string" />
+			<column name="refId" label="refId" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+			<column name="returnTypeId" label="returnTypeId" type="string" />
+			<column name="sqlcontent" label="sqlcontent" type="string" />
+			<column name="dsId" label="dsId" type="string" />
+			<column name="className" label="className" type="string" />
+			<column name="methodName" label="methodName" type="string" />
+			<column name="parameterId" label="parameterId" type="string" />
+			<column name="scale" label="scale" type="integer" />
+			<column name="roundmode" label="roundmode" type="string" />
+			<column name="formulaexpression" label="formulaexpression"
+				type="string" />
+			<column name="property" label="property" type="string" />
+			<column name="kindId" label="kindId" type="string" />
+		</columns>
+	</dataStore>
+	<dataStore name="uiParameterRef" dependence="uiParameterRef"
+		dc="aecommon" path="com.neusoft.arithmetic.entity.UiParameterRef"
+		type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="paramType" label="paramType" type="integer" />
+			<column name="name" label="name" type="string" />
+			<column name="refId" label="refId" type="string" />
+			<column name="property" label="property" type="string" />
+			<column name="orderNum" label="orderNum" type="integer" />
+			<column name="kindId" label="kindId" type="string" />
+			<column name="parameterKind" label="parameterKind" type="string" />
+			<column name="isRequired" label="isRequired" type="string" />
+			<column name="returnType" label="returnType" type="string" />
+			<column name="returnTypeId" label="returnTypeId" type="string" />
+			<column name="argType" label="argType" type="string" />
+			<column name="ref" label="ref" type="string" />
+			<column name="refValue" label="refValue" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+		</columns>
+	</dataStore>
+	<dataStore name="uiRule" dependence="uiRule" dc="aecommon"
+		path="com.neusoft.arithmetic.entity.UiRule" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="ruleProperty" label="ruleProperty" type="string" />
+			<column name="ruleName" label="ruleName" type="string" />
+			<column name="versionId" label="versionId" type="string" />
+			<column name="version" label="version" type="string" />
+			<column name="versionName" label="versionName" type="string" />
+			<column name="kindId" label="kindId" type="string" />
+			<column name="ruleKind" label="ruleKind" type="string" />
+			<column name="ruleKindName" label="ruleKindName" type="string" />
+			<column name="memo" label="memo" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+			<column name="nodeContext" label="nodeContext" type="string" />
+		</columns>
+	</dataStore>
+	<dataStore name="graphicData" dependence="graphicData" dc="config"
+		path="com.neusoft.arithmetic.pojo.GraphicData" type="pojo">
+		<columns>
+			<column name="nodeContextJsonStr" label="nodeContextJsonStr"
+				type="string" />
+			<column name="graphicJosnStr" label="graphicJosnStr" type="string" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><xdialog id="xdialog1" title="参数"
+	view-ref="config/parameterList" width="1000px" height="500px">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog1_onComplete">
+			<function name="xdialog1_onComplete" arguments="returnObj">
+				<script><![CDATA[if(returnObj)
+{
+	var rowset = returnObj.getRowSet();
+	unieap.byId("name").setValue(rowset.getItemValue(0,"name"));
+	unieap.byId("returnKey").setValue(rowset.getItemValue(0,"property"));
+	if(rowset.getItemValue(0,"returnTypeId") != null){
+		var id=rowset.getItemValue(0,"returnTypeId");
+		unieap.byId("returnType").setValue(id);
+		unieap.byId("returnType").setText(rule_edit_template.getReturnTypeName(id));
+		
+	}else{
+		var id=rowset.getItemValue(0,"returnType");
+		unieap.byId("returnType").setValue(id);
+		unieap.byId("returnType").setText(rule_edit_template.getReturnTypeName(id));
+	}
+	var id = rowset.getItemValue(0,"id");
+	view.form.setPropertyValue("form1", "parameterId", id);
+	
+	
+	view.processor.getParameterList(id, "3");
+}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="xdialog2" title="各个部分入参" view-ref="config/rule_edit_params"
+	width="800px" height="500px">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog2_onComplete">
+			<function name="xdialog2_onComplete" arguments="returnObj">
+				<script><![CDATA[var retObj=returnObj;
+if(retObj)
+{
+	view.grid.setPropertyValue("grid1", "refValue", retObj.retValue, retObj.inRowIndex);
+	if(retObj.retName)
+	{
+		view.grid.setPropertyValue("grid1", "name", retObj.retName, retObj.inRowIndex);
+	}
+}
+
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="xdialog3" title="条件编写" view-ref="config/ifCondition_sel"
+	width="800px" height="500px">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog3_onComplete">
+			<function name="xdialog3_onComplete" arguments="returnObj">
+				<script><![CDATA[//unieap.debug(returnObj);
+//alert(returnObj.getParameter("condition"));
+//unieap.byId("busiType").setValue(1);
+//unieap.byId("condition").setValue(condition);
+
+if(returnObj)
+{
+	unieap.byId("name").setValue(returnObj.name);
+	unieap.byId("condition").setValue(returnObj.condition);
+}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="xdialog4" title="指标" width="800px"
+	height="500px" view-ref="config/rule_edit_indicator">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog4_onComplete">
+			<function name="xdialog4_onComplete" arguments="returnObj">
+				<script><![CDATA[var gridDs=returnObj;
+if(gridDs)
+{
+	var rowset = gridDs.getRowSet();
+
+	unieap.byId("name").setValue(rowset.getItemValue(0,"name"));
+	unieap.byId("returnKey").setValue(rowset.getItemValue(0,"indicator"));
+	unieap.byId("returnType").setValue("number");
+	unieap.byId("returnType").setText(rule_edit_template.getReturnTypeName("number"));
+	var id = rowset.getItemValue(0,"id");
+	view.form.setPropertyValue("form1", "parameterId", id);
+	
+	view.processor.getParameterList(id, "5");
+}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="xdialog5" title="SET" width="800px"
+	height="500px" view-ref="config/setValue_sel">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog5_onComplete">
+			<function name="xdialog5_onComplete" arguments="returnObj">
+				<script><![CDATA[if(returnObj)
+{
+//    unieap.byId("name").setValue(returnObj.name);
+    unieap.byId("returnValue").setValue(returnObj.refValue);
+}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="xdialog7" title="公式" open="false"
+	view-ref="config/formula_list_sel" width="800px" height="500px">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog7_onComplete">
+			<function name="xdialog7_onComplete" arguments="returnObj">
+				<script><![CDATA[if(returnObj)
+{
+	var rowset = returnObj.getRowSet();
+	unieap.byId("name").setValue(rowset.getItemValue(0,"fmlName"));
+	unieap.byId("returnKey").setValue(rowset.getItemValue(0,"fmlProperty"));
+	if(rowset.getItemValue(0,"returnType"))
+	{
+		var id=rowset.getItemValue(0,"returnType");
+		unieap.byId("returnType").setValue(id);
+		unieap.byId("returnType").setText(rule_edit_template.getReturnTypeName(id));
+	}
+	else
+	{
+		unieap.byId("returnType").setValue("number");
+		unieap.byId("returnType").setText("number");
+	}
+	
+	var id = rowset.getItemValue(0,"id");
+	view.form.setPropertyValue("form1", "refId", id);
+	view.processor.getParameterList(id, "1");
+}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="xdialog8" title="数据结构"
+	view-ref="config/rule_data_structure_dialog" width="800px" height="500px">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog8_onComplete">
+			<function name="xdialog8_onComplete" arguments="returnObj">
+				<script><![CDATA[
+rule_edit_template.gridDs = returnObj.getDataStore("gridDs");
+rule_edit_template.reBuildRuleContext();
+
+previousGridDs=rule_edit_template.gridDs;//修正第二个进行编辑页，上次新增的参数丢失的问题
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><template id="template1" instance="false" type="com.neusoft.unieap.adaptiveLayout_1.0.0">
+    
+  <adaptiveContainer id="adaptiveContainer1">
+      
+      
+      <adaptivePane height="75px" width="auto" id="adaptivePane2"><tableLayout id="tableLayout2" height="30px">
+      <colgroup><col width="30px" /><col width="30px" /><col width="30px" />
+      <col width="10px" />
+      <col width="30px" />
+      <col width="30px" />
+      <col width="30px" />
+      <col width="30px" />
+      <col width="30px" />
+      <col width="30px" />
+      <col width="10px" />
+      <col width="30px" />
+      <col width="10px" />
+      <col width="30px" />
+      <col width="10px" />
+      <col width="30px" />
+      <col width="30px" />
+      <col width="30px" />
+      </colgroup><tbody><tr>
+      <td align="center"><img id="img1_save" width="20px" height="20px"
+	src="arithengine/images/rule/icon_01_save.png" style="cursor:pointer;"
+	title="保存">
+	<events>
+		<event name="onclick" handlerFunction="img1_save_onclick">
+			<function name="img1_save_onclick" arguments="">
+				<script><![CDATA[
+var e=rule_edit_template.getEvent();    
+if (window.event) {  
+ 	e.cancelBubble=true;  
+} else {  
+ 	e.stopPropagation();  
+} 
+var nodeContext=rule_edit_template.nodeContext;
+var operateType=rule_edit_template.operateType;
+var ds = new unieap.ds.DataStore("graphicDataStore");
+ds.setRowSetName("com.neusoft.arithmetic.pojo.GraphicData");
+var data = {nodeContextJsonStr:nodeContext.toJson(),graphicJosnStr:rule_edit_template.flow.toJson()};
+ds.getRowSet().addRow(data);
+
+var nodeList=nodeContext.getNodeList();
+if(nodeList&&nodeList.size()>0)
+{
+	for(var i=0;i<nodeList.size();i++)
+	{
+		var node=nodeList.get(i);
+		if(!node.ifId)
+		{//除了join节点，其它都要校验
+			rule_edit_template.initForm(node.id);
+			if(!rule_edit_template.validForm(node.id))
+			{
+				nodeContext.setLastModifyNodeId(node.id);
+				rule_edit_template.flow.fireClick(nodeContext.getLastModifyNodeId());//选中新建的图形
+				return ;
+			}
+		}
+	}
+}
+
+if(operateType=='add')
+{
+	view.processor.insertRule(rule_edit_template.formDs, rule_edit_template.gridDs, ds);
+}
+else 
+{
+	view.processor.updateRule(rule_edit_template.formDs, rule_edit_template.gridDs, ds);
+}
+
+]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="img1_save_onmouseover">
+			<function name="img1_save_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_01_save_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="img1_save_onmouseout">
+			<function name="img1_save_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_01_save.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+<td align="center"><img id="img1_cancel" width="20px" height="20px"
+	src="arithengine/images/rule/icon_02_back.png" style="cursor:pointer;"
+	title="取消">
+	<events>
+		<event name="onclick" handlerFunction="img1_cancel_onclick">
+			<function name="img1_cancel_onclick" arguments="">
+				<script><![CDATA[parent.rule_edit_template_access.goBack();
+]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="img1_cancel_onmouseout">
+			<function name="img1_cancel_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_02_back.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="img1_cancel_onmouseover">
+			<function name="img1_cancel_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_02_back_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+<td align="center"><img id="del_btn" width="20px" height="20px"
+	src="arithengine/images/rule/icon_03_delete.png" style="cursor:pointer;"
+	title="删除">
+	<events>
+		<event name="onclick" handlerFunction="del_btn_onclick">
+			<function name="del_btn_onclick" arguments="">
+				<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var currentNode=rule_edit_template.flow.getCruuentNode();
+var e=rule_edit_template.getEvent();  
+if (window.event) {  
+ 	e.cancelBubble=true;  
+} else {  
+ 	e.stopPropagation();  
+} 
+
+if(currentNode)
+{
+	var id=currentNode.getId();
+//	if(!rule_edit_template.validForm(id))
+//	{//当前结点校验不合法，不法进行新增操作
+//		rule_edit_template.flow.fireClick(rule_edit_template.nodeContext.getLastModifyNodeId());//选中新建的图形
+//		return;
+//	}
+	if(id.substring(0, 4) == "rect")
+	{//只能删除矩形，矩形和线一起删除
+		var node=nodeContext.getNode(id);
+		var graphic=rule_edit_template.flow.getObjectById(id);
+		if(graphic.getData().type=='trueNode'||graphic.getData().type=='falseNode'||graphic.getData().type=='join')
+		{//这些结点不能删除
+			if(nodeContext.getLastModifyNodeId())
+			{
+				rule_edit_template.flow.fireClick(nodeContext.getLastModifyNodeId());//选中新建的图形
+			}
+			return;
+		}
+		if(graphic.getData().type=='fork')
+		{
+			 MessageBox.confirm({
+                onComplete: function (falg) {
+                    if (falg == true) {
+                        rule_edit_template.deleteIFNode(node.id);
+                        rule_edit_template.reBuildRuleContext();
+                        rule_edit_template.drawDots();
+                    }
+                },
+                //关闭右上角的"X"按钮时执行onComplete函数
+                iconCloseComplete: false,
+                message: "确认要删除该结点吗？"
+            }, dojo.byId("confirm"));
+		}
+		else
+		{
+			 MessageBox.confirm({
+                onComplete: function (falg) {
+                    if (falg == true) {
+                        rule_edit_template.deleteGeneralNode(node.id);
+                        rule_edit_template.reBuildRuleContext();
+                        rule_edit_template.drawDots();
+                    }
+                },
+                //关闭右上角的"X"按钮时执行onComplete函数
+                iconCloseComplete: false,
+                message: "确认要删除该结点吗？"
+            }, dojo.byId("confirm"));
+		}
+	}
+}
+else
+{
+	MessageBox.alert({
+        title: '提示信息',
+        message: "请选择一个结点",
+        onComplete: function () {
+        }
+	});
+}
+
+
+
+]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="del_btn_onmouseover">
+			<function name="del_btn_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_03_delete_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="del_btn_onmouseout">
+			<function name="del_btn_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_03_delete.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+		<td align="center"><img id="img6" width="1px" height="20px" src="arithengine/images/rule/line.png"></img></td>
+      <td align="center"><img id="parameter"
+	src="arithengine/images/rule/icon_04_P.png" style="cursor:pointer;"
+	title="参数" alt="参数" height="20px" width="20px">
+	<events>
+		<event name="onclick" handlerFunction="parameter_onclick">
+			<function name="parameter_onclick" arguments="">
+				<script><![CDATA[var data={
+	type:'parameter',
+	text:'加载参数',
+	validMehthod:rule_edit_template.validForm,
+	initFormMethod:rule_edit_template.initForm
+};
+generalAddNode(data);
+]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="parameter_onmouseover">
+			<function name="parameter_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_04_P_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	<event name="onmouseout" handlerFunction="parameter_onmouseout"><function name="parameter_onmouseout" arguments=""><script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_04_P.png";
+this.src=imgSrc;]]></script></function></event></events>
+</img>
+loadParam
+</td><td align="center"><img id="loadindicator"
+	src="arithengine/images/rule/icon_05_I.png" style="cursor:pointer;"
+	title="指标" alt="指标" height="20px" width="20px">
+	<events>
+		<event name="onclick" handlerFunction="loadindicator_onclick">
+			<function name="loadindicator_onclick" arguments="">
+				<script><![CDATA[var data={
+	type:'indicator',
+	text:'加载指标',
+	validMehthod:rule_edit_template.validForm,
+	initFormMethod:rule_edit_template.initForm
+};
+generalAddNode(data);]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="loadindicator_onmouseover">
+			<function name="loadindicator_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_05_I_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="loadindicator_onmouseout">
+			<function name="loadindicator_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_05_I.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td><td align="center"><img id="if" width="20px" height="20px"
+	src="arithengine/images/rule/icon_06_IF.png" style="cursor:pointer;"
+	title="判断">
+	<events>
+		<event name="onclick" handlerFunction="if_onclick">
+			<function name="if_onclick" arguments="">
+				<script><![CDATA[var data={
+	type:'fork',
+	text:'IF节点',
+	validMehthod:rule_edit_template.validForm,
+	initFormMethod:rule_edit_template.initForm
+};
+generalAddNode(data);]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="if_onmouseover">
+			<function name="if_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_06_IF_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="if_onmouseout">
+			<function name="if_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_06_IF.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td><td align="center"><img id="formula" width="20px" height="20px"
+	src="arithengine/images/rule/icon_07_F.png" style="cursor:pointer;"
+	title="公式">
+	<events>
+		<event name="onclick" handlerFunction="formula_onclick">
+			<function name="formula_onclick" arguments="">
+				<script><![CDATA[var data={
+	type:'formular',
+	text:'加载公式',
+	validMehthod:rule_edit_template.validForm,
+	initFormMethod:rule_edit_template.initForm
+};
+generalAddNode(data);]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="formula_onmouseover">
+			<function name="formula_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_07_F_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="formula_onmouseout">
+			<function name="formula_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_07_F.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td><td align="center"><img id="rule" width="20px" height="20px"
+	src="arithengine/images/rule/icon_09_R.png" style="cursor:pointer;"
+	title="规则">
+	<events>
+		<event name="onclick" handlerFunction="rule_onclick">
+			<function name="rule_onclick" arguments="">
+				<script><![CDATA[var data={
+	type:'rule',
+	text:'加载规则',
+	validMehthod:rule_edit_template.validForm,
+	initFormMethod:rule_edit_template.initForm
+};
+generalAddNode(data);]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="rule_onmouseover">
+			<function name="rule_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_09_R_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="rule_onmouseout">
+			<function name="rule_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_09_R.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td><td align="center"><img id="step" width="20px" height="20px"
+	src="arithengine/images/rule/icon_08_Set.png" style="cursor:pointer;"
+	title="赋值">
+	<events>
+		<event name="onclick" handlerFunction="step_onclick">
+			<function name="step_onclick" arguments="">
+				<script><![CDATA[var data={
+	type:'set',
+	text:'赋值',
+	validMehthod:rule_edit_template.validForm,
+	initFormMethod:rule_edit_template.initForm
+};
+generalAddNode(data);]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="step_onmouseover">
+			<function name="step_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_08_Set_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="step_onmouseout">
+			<function name="step_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_08_Set.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+<td align="center"><img id="img21" width="1px" height="20px" src="arithengine/images/rule/line.png"></img></td>
+<td align="center"><img id="img2" width="20px" height="20px"
+	src="arithengine/images/rule/icon_10_RSet.png" style="cursor:pointer;"
+	title="设置规则入参">
+	<events>
+		<event name="onclick" handlerFunction="img2_onclick">
+			<function name="img2_onclick" arguments="">
+				<script><![CDATA[var dialog = unieap.byId("xdialog8");
+//获取列表中的选择列	
+dialog.title="数据结构";
+dialog.dialogData = {formDs:previousFormDs,gridDs:previousGridDs};
+//弹出窗口方法
+dialog.show();]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="img2_onmouseover">
+			<function name="img2_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_10_RSet_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="img2_onmouseout">
+			<function name="img2_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_10_RSet.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+<td align="center"><img id="img7" width="1px" height="20px" src="arithengine/images/rule/line.png"></img></td>
+<td align="center"><img id="img1_copy1" width="20px" height="20px"
+	src="arithengine/images/rule/icon_11autoarg_.png" style="cursor:pointer;"
+	title="格式化">
+	<events>
+		<event name="onclick" handlerFunction="img1_copy1_onclick">
+			<function name="img1_copy1_onclick" arguments="">
+				<script><![CDATA[
+var e=rule_edit_template.getEvent();   
+if (window.event) {  
+ 	e.cancelBubble=true;  
+} else {  
+ 	e.stopPropagation();  
+} 
+//根据数据进行重绘
+rule_edit_template.reDraw();]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="img1_copy1_onmouseover">
+			<function name="img1_copy1_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_11autoarg__h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="img1_copy1_onmouseout">
+			<function name="img1_copy1_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_11autoarg_.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+<td align="center"><img id="img20" width="1px" height="20px" src="arithengine/images/rule/line.png"></img></td>
+<td align="center"><img id="img3" width="20px" height="20px"
+	src="arithengine/images/rule/icon_packup.png" title="展开" style="cursor:pointer;">
+	<events>
+		<event name="onclick" handlerFunction="img3_onclick">
+			<function name="img3_onclick" arguments="">
+				<script><![CDATA[rule_edit_template.showBottomDiv();
+]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="img3_onmouseover">
+			<function name="img3_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_packup_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="img3_onmouseout">
+			<function name="img3_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_packup.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img>
+<img id="img5" width="20px" height="20px"
+	src="arithengine/images/rule/icon_pulldown.png" title="关闭" style="cursor:pointer;">
+	<events>
+		<event name="onclick" handlerFunction="img5_onclick">
+			<function name="img5_onclick" arguments="">
+				<script><![CDATA[rule_edit_template.hideBottomDiv();
+]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="img5_onmouseover">
+			<function name="img5_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_pulldown_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="img5_onmouseout">
+			<function name="img5_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_pulldown.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+<td align="center" id="zoomTd1" style="display:none;" class='zoomTd'><img
+	id="zoom1" width="20px" height="20px"
+	src="arithengine/images/rule/icon_12_zoomin.png" style="cursor:pointer;"
+	title="放大">
+	<events>
+		<event name="onclick" handlerFunction="zoom1_onclick">
+			<function name="zoom1_onclick" arguments="">
+				<script><![CDATA[if(jQuery.browser.msie)
+{
+	MessageBox.alert({
+        title: '提示信息',
+        message: "IE浏览器此功能无效，请使用火狐或Chrome浏览器运行此功能。"
+	});
+	return;
+}
+rule_edit_template.currentCanvasWidth=rule_edit_template.currentCanvasWidth/ZOOM_LEVEL;
+rule_edit_template.currentCanvasHeight=rule_edit_template.currentCanvasHeight/ZOOM_LEVEL;
+if(rule_edit_template.currentCanvasWidth<=CANVAS_WIDTH)
+{
+	rule_edit_template.currentCanvasWidth=CANVAS_WIDTH;
+}
+if(rule_edit_template.currentCanvasHeight<=CANVAS_HEIGHT)
+{
+	rule_edit_template.currentCanvasHeight=CANVAS_HEIGHT;
+}
+rule_edit_template.flow.y.setViewBox(0,0,rule_edit_template.currentCanvasWidth, rule_edit_template.currentCanvasHeight, false);
+
+]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="zoom1_onmouseover">
+			<function name="zoom1_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_12_zoomin_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="zoom1_onmouseout">
+			<function name="zoom1_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_12_zoomin.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+<td align="center" id="zoomTd2" style="display:none;" class='zoomTd'><img
+	id="zoom2" width="20px" height="20px"
+	src="arithengine/images/rule/icon_13_zoomout.png" style="cursor:pointer;"
+	title="缩小">
+	<events>
+		<event name="onclick" handlerFunction="zoom2_onclick">
+			<function name="zoom2_onclick" arguments="">
+				<script><![CDATA[if(jQuery.browser.msie)
+{
+	MessageBox.alert({
+        title: '提示信息',
+        message: "IE浏览器此功能无效，请使用火狐或Chrome浏览器运行此功能。"
+	});
+	return;
+}
+
+rule_edit_template.currentCanvasWidth=rule_edit_template.currentCanvasWidth*ZOOM_LEVEL;
+rule_edit_template.currentCanvasHeight=rule_edit_template.currentCanvasHeight*ZOOM_LEVEL;
+rule_edit_template.flow.y.setViewBox(0,0,rule_edit_template.currentCanvasWidth, rule_edit_template.currentCanvasHeight, false);
+]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="zoom2_onmouseover">
+			<function name="zoom2_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_13_zoomout_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="zoom2_onmouseout">
+			<function name="zoom2_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_13_zoomout.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+
+
+</tr></tbody></tableLayout></adaptivePane><adaptivePane adaptiveHeight="100%" autoHeight="true" height="120px" width="auto" id="adaptivePane3"><div id="holder" style="height:99%;border:1px solid #BEBEBE;overflow:auto;position:relative;background:#fff url(../../arithengine/images/backimg.png)" height="155px"></div></adaptivePane>
+      <adaptivePane width="auto" id="adaptivePane4">
+        
+      <borderLayout id="borderLayout1" showTitleBar="false" design="headline" height="160px"><borderPane id="borderPane0" showTitleBar="false" splitLine="false" region="left" width="50%"><borderLayout id="borderLayout2" showTitleBar="false" design="headline"><borderPane id="borderPane2" showTitleBar="false" splitLine="false" region="top" fixed="true" height="80%">
+      <template id="template33" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    
+    
+  <form binding-store="uiRuleBusiness" id="form1">
+    <tableLayout id="form1_tableLayout" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="20%" />
+        <col width="30%" />
+        <col width="10%" />
+        <col width="15%" />
+        <col width="13%" />
+        <col width="12%" />
+      </colgroup>
+      <tbody>
+        <tr id="form1_1_tr">
+          <td id="name_label_td" rowSpan="1" align="right">
+            <label id="name_label" value="名称：" />
+          </td>
+          <td colSpan="1" id="name_td" rowSpan="1">
+            <textBox binding-name="name" id="name" width="100%" maxLength="255"></textBox>
+          </td>
+          <td><img id="img1" width="20px" height="20px" style="cursor:pointer;"
+	title="选择" src="arithengine/images/rule/icon_ property _setting.png">
+	<events>
+		<event name="onclick" handlerFunction="img1_onclick">
+			<function name="img1_onclick" arguments="">
+				<script><![CDATA[//unieap.debug(view.form.getDataStore("form1"));
+var ds = view.form.getDataStore("form1");
+var rowSet = ds.getRowSet();
+var busiType = rowSet.getItemValue(0,"busiType");
+var subType = rowSet.getItemValue(0,"subType");
+if(busiType == 5){
+//参数
+	var dialog = unieap.byId("xdialog1");
+	//获取列表中的选择列	
+	dialog.title="加载参数";
+	dialog.dialogData = {versionId:versionId};
+	//弹出窗口方法
+	dialog.show();
+}else if(busiType == 1) {
+//IF
+	var dialog = unieap.byId("xdialog3");
+	//获取列表中的选择列	
+	dialog.title="加载参数";
+	dialog.dialogData = {data:rule_edit_template.ruleContext};
+	//弹出窗口方法
+	dialog.show();
+}
+else if(busiType == 6) {
+//指标
+	var dialog = unieap.byId("xdialog4");
+	//获取列表中的选择列	
+	dialog.title="加载指标";
+	dialog.dialogData = {versionId:versionId};
+	//弹出窗口方法
+	dialog.show();
+}
+else if (busiType == 4 && subType == 41) {
+//FORMUAL
+    var dialog = unieap.byId("xdialog7");
+	dialog.title = "加载公式";
+	dialog.dialogData = {versionId : versionId};
+	dialog.show();
+} else if (busiType == 4 && subType == 42) {
+//RULE
+	var dialog = unieap.byId("xdialog6");
+	//获取列表中的选择列	
+	dialog.title="加载规则";
+	dialog.dialogData = {versionId:versionId};
+	//弹出窗口方法
+	dialog.show();
+
+} else if (busiType == 4 && subType == 43) {
+//SET
+    var dialog = unieap.byId("xdialog5");
+	dialog.title = "SET";
+	dialog.dialogData = {versionId : versionId};
+	dialog.show();
+}
+]]></script>
+			</function>
+		</event>
+		<event name="onmouseover" handlerFunction="img1_onmouseover">
+			<function name="img1_onmouseover" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_ property _setting_h.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+		<event name="onmouseout" handlerFunction="img1_onmouseout">
+			<function name="img1_onmouseout" arguments="">
+				<script><![CDATA[var imgSrc=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_ property _setting.png";
+this.src=imgSrc;]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr id="form1_2_tr">
+          <td id="parameter_label_td" rowSpan="1" align="right">
+          <label id="returnKey_labal" value="返回值标识：" width="100%" />
+          </td>
+          <td colSpan="1" id="parameter_td" rowSpan="1">
+          <textBox binding-name="returnKey" id="returnKey" width="100%" maxLength="255"></textBox>
+          </td>
+          <td> 
+          </td>
+          <td> <label id="parameter_label" value="返回值类型：" width="100%" /></td>
+          <td colSpan="2">
+<!--          <comboBox id="returnType" maxLength="1000" width="100%" binding-name="returnTypeId" dataProvider-store="returnTypeStore"></comboBox>-->
+          <comboBoxTree binding-name="returnTypeId" id="returnType"
+	maxLength="1000" popup-height="300px"
+	treeJson-binding="{store:'returnTypeStore',id:'id',label:'name',parent:'parentId',query:{name:'parentId',relation:'=',value:null}}"
+	width="100%" required="true">
+	<events>
+		<event name="onChange" handlerFunction="returnType_onChange">
+			<function name="returnType_onChange" arguments="value">
+				<script><![CDATA[if(value&&value.substring(0,7)=='version')
+{
+	this.setText(null);
+	this.setValue(null);
+	MessageBox.alert({
+	        title: '提示信息',
+	        message: "版本结点不可选择，请重新选择。",
+	        onComplete: function () {
+	        	instance.setText(null);
+	        	instance.setValue(null);
+	        }
+	});
+}]]></script>
+			</function>
+		</event>
+	</events>
+</comboBoxTree>
+          </td>
+        </tr>
+        <tr id="form1_3_tr">
+          <td id="condition_label_td" rowSpan="1" align="right">
+            
+          <label id="condition_label" value="条件表达式：" width="100%" /></td>
+          <td colSpan="3" id="condition_td" rowSpan="1">
+            
+          <textBox id="condition" width="100%" maxLength="255" binding-name="condition" readOnly="true"></textBox></td>
+          <td></td>
+          <td></td>
+        </tr>    
+        <tr id="form1_5_tr">
+          <td id="conditionShow_label_td" rowSpan="1" align="right">
+            
+          <label id="returnValue_label" value="返回值：" width="100%" /></td>
+          <td colSpan="3" id="conditionShow_td" rowSpan="1">
+            
+          <textBox id="returnValue" maxLength="4000" width="100%" binding-name="returnValue"></textBox></td>
+          <td id="button3_label_td" rowSpan="1">
+            
+          <img id="img4" width="16px" height="16px"
+	src="arithengine/images/add.gif" style="cursor:hand" title="设置返回值">
+	<events>
+		<event name="onclick" handlerFunction="img4_onclick">
+			<function name="img4_onclick" arguments="">
+				<script><![CDATA[if(unieap.byId("returnType").getText()){
+    var dialog = unieap.byId("xdialog5");
+	dialog.title = "SET";
+	dialog.dialogData = {data:{ruleContext:rule_edit_template.ruleContext,returnType:unieap.byId("returnType").getValue()}};
+	dialog.show();
+}else{
+    MessageBox.alert({
+        title: '提示信息',
+        message: "请选择返回值类型。",
+        onComplete: function () {
+        }
+});
+    
+}]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+          <td></td>
+        </tr>
+         <tr id="form1_6_tr">
+          <td align="right">
+          <label id="scale_label" value="精度：" width="100%" />
+          </td> 
+          <td>
+           <numberTextBox binding-name="scale" id="scale" maxLength="5" width="100%"></numberTextBox>
+          </td>
+          <td align="right">       
+          
+          </td>
+          <td >
+            
+          <label id="roundmode_label" value="舍入规则：" width="100%" /></td>        
+          <td colSpan="2"><comboBox binding-name="roundmode" id="roundmode" width="100%" dataProvider-store="roundmodeStore"></comboBox></td>
+        </tr>
+      </tbody>
+    </tableLayout>
+  </form></template>
+      </borderPane><borderPane id="borderPane3" showTitleBar="false" splitLine="false" region="center"><template id="template2" instance="true" type="com.neusoft.unieap.toolbar_1.0.0">
+    <tableLayout id="ToolBar1" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="85px" />
+      </colgroup>
+      <tbody>
+        <tr height="30px">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td align="center">
+            <button id="button11" label="保存" width="80px">
+	<events>
+		<event name="onClick" handlerFunction="button11_onClick">
+			<function name="button11_onClick" arguments="event">
+				<script><![CDATA[var id=view.form.getPropertyValue("form1", "id");
+var nodeId="rect"+id;
+rule_edit_template.validForm(nodeId);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+        </tr>
+      </tbody>
+    </tableLayout>
+  </template></borderPane></borderLayout></borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><template id="template3" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <xgrid binding-store="uiParameterRef" edit-editType="cellEdit" height="100%" id="grid1" rows-rowsPerPage="25" selection-selectType="none" views-rowBar="false" views-rowNumber="true">
+    <header>
+      <row>
+        <xcell dataType="string" maxLength="255" enable="false" height="25px" id="cell_name" label="名称" name="name" width="20%"></xcell>
+        <xcell dataType="string" maxLength="255" enable="false" height="25px" id="cell_property" label="标识" name="property" width="20%"></xcell>
+        <xcell dataType="string" maxLength="1000" decoder-store="returnTypeStore1"
+	enable="false" height="25px" id="cell_returnType" label="返回值类型" name="returnType"
+	width="20%">
+	<events>
+		<event name="formatter" handlerFunction="cell_returnType_formatter">
+			<function name="cell_returnType_formatter" arguments="inValue,inRowIndex">
+				<script><![CDATA[var ds=dataCenter.getDataStore("returnTypeStore");
+var grid_returnType=view.grid.getPropertyValue("grid1", "returnType", inRowIndex);
+var grid_returnTypeId=view.grid.getPropertyValue("grid1", "returnTypeId", inRowIndex);
+if(grid_returnTypeId)
+{
+	grid_returnType=grid_returnTypeId;
+}
+if(ds&&ds.getRowSet().getRowCount(0)>0)
+{
+	for(var i=0,n=ds.getRowSet().getRowCount(0);i<n;i++)
+	{
+		var codeValue = ds.getRowSet().getRow(i).getItemValue("id");
+		var codeName = ds.getRowSet().getRow(i).getItemValue("name");
+		if(grid_returnType==codeValue)
+		{
+			return codeName;
+		}
+	}
+}
+return "";]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+        <xcell dataType="string" enable="false" height="25px" id="cell_returnTypeId" label="returnTypeId" name="returnTypeId" width="0px"></xcell>
+        <xcell dataType="string" enable="true" enableTooltip="true" height="25px" id="cell_refValue" label="返回值" name="refValue" width="30%">
+          <editor>
+            <textBox id="cell_refValue_textBox" required="true" readOnly="true"></textBox>
+          </editor> 
+        </xcell>
+        <xcell enable="false" height="25px" id="cell_operation"
+	label="操作" name="operation" styles="text-align:center" width="10%">
+	<events>
+		<event handlerFunction="cell_operation_formatter" name="formatter">
+			<function arguments="inValue,inRowIndex" name="cell_operation_formatter">
+				<script><![CDATA[var operation_path=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_ property _setting.png";
+var operation_path_h=unieap.WEB_APP_NAME +"/arithengine/images/rule/icon_ property _setting_h.png";
+var operationHTML="<img src='"+operation_path+"' style='cursor:pointer;' title='入参' onclick='rule_edit_template.paramOperation("+inRowIndex+");' onmouseover='this.src=\""+operation_path_h+"\"' onmouseout='this.src=\""+operation_path+"\"'></img>";
+return operationHTML;]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+      </row>
+    </header>
+  </xgrid></template></borderPane></borderLayout></adaptivePane>
+      
+    </adaptiveContainer></template><xdialog id="xdialog6" title="规则"
+	view-ref="config/rule_edit_rule" width="800px" height="500px">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog6_onComplete">
+			<function name="xdialog6_onComplete" arguments="returnObj">
+				<script><![CDATA[var gridDs=returnObj;
+if(gridDs)
+{
+	var rowset  = gridDs.getRowSet();
+	unieap.byId("name").setValue(rowset.getItemValue(0,"ruleName"));
+	unieap.byId("returnKey").setValue(rowset.getItemValue(0,"ruleProperty"));
+	unieap.byId("returnType").setValue("number");
+	unieap.byId("returnType").setText(rule_edit_template.getReturnTypeName("number"));
+	var id = rowset.getItemValue(0,"id");
+	view.form.setPropertyValue("form1", "refId", id);
+	view.processor.getParameterList(id, "2");
+}
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><events><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[
+var ds1 = unieap.ds.DataStore("busiTypeStore",[
+	{CODENAME:'IF',CODEVALUE:'1'},
+	{CODENAME:'TRUE',CODEVALUE:'2'},
+	{CODENAME:'FALSE',CODEVALUE:'3'},
+	{CODENAME:'STEP',CODEVALUE:'4'},
+	{CODENAME:'LOADPARAMETER',CODEVALUE:'5'},
+	{CODENAME:'LOADINDICATOR',CODEVALUE:'6'}]);
+dataCenter.addDataStore("busiTypeStore",ds1);
+var ds2 = unieap.ds.DataStore("returnTypeStore1",[
+	{CODENAME:'字符串型',CODEVALUE:'string'},
+	{CODENAME:'日期型',CODEVALUE:'date'},
+	{CODENAME:'数字型',CODEVALUE:'number'}]);
+dataCenter.addDataStore("returnTypeStore1",ds1);
+var ds3 = unieap.ds.DataStore("subTypeStore",[
+	{CODENAME:'公式引用',CODEVALUE:41},
+	{CODENAME:'规则引用',CODEVALUE:42},
+	{CODENAME:'赋值',CODEVALUE:43}]);
+dataCenter.addDataStore("subTypeStore",ds3);
+var ds4 = unieap.ds.DataStore("roundmodeStore",[
+	{CODENAME:'UP',CODEVALUE:'UP'},
+	{CODENAME:'DOWN',CODEVALUE:'DOWN'},
+	{CODENAME:'CEILING',CODEVALUE:'CEILING'},
+	{CODENAME:'FLOOR',CODEVALUE:'FLOOR'},
+	{CODENAME:'HALF_UP',CODEVALUE:'HALF_UP'},
+	{CODENAME:'HALF_DOWN',CODEVALUE:'HALF_DOWN'},
+	{CODENAME:'HALF_EVEN',CODEVALUE:'HALF_EVEN'},
+	{CODENAME:'UNNECESSARY',CODEVALUE:'UNNECESSARY'}]);
+dataCenter.addDataStore("roundmodeStore",ds4);
+
+var returnTypeStore = unieap.ds.DataStore("returnTypeStore");//防止初始化时出异常
+dataCenter.addDataStore("returnTypeStore",returnTypeStore);
+
+
+
+]]></script></function></event><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[rule_edit_template.ruleContext=new RuleContext();
+var roundmodeStore=dataCenter.getDataStore("roundmodeStore");
+unieap.byId("roundmode").getDataProvider().setDataStore(roundmodeStore);
+	
+//view.navigator.receiveData("规则配置-Bussiness", receive);
+rule_edit_template.receive(parent.rule_edit_template_access.dc);
+//dojo.query("tr[id*=form1_7]").style({display:"none"}); 
+unieap.getElementById("img1").style.display='';
+
+unieap.byId("name").setRequired(false);
+unieap.byId("returnKey").setRequired(false);
+unieap.byId("returnValue").setRequired(false);
+unieap.byId("returnType").setRequired(false);
+
+
+//dojo.query("tr[id*=form1_1]").style({display:"none"}); 
+//dojo.query("tr[id*=form1_2]").style({display:"none"}); 
+//dojo.query("tr[id*=form1_5]").style({display:"none"}); 
+//dojo.query("tr[id*=form1_6]").style({display:"none"}); 
+
+unieap.getElementById("img3").style.display="none";
+
+rule_edit_template.getObjById("form1_1_tr").style({display:"none"}); 
+rule_edit_template.getObjById("form1_2_tr").style({display:"none"});
+rule_edit_template.getObjById("form1_5_tr").style({display:"none"});
+rule_edit_template.getObjById("form1_6_tr").style({display:"none"});
+]]></script></function></event></events><dependence name="config/parameterList" type="view" sc="arithengine" dc="config" ref="parameterList" /><dependence name="config/ifCondition_sel" type="view" sc="arithengine" dc="config" ref="ifCondition_sel" /><dependence name="config/rule_edit_params" type="view" sc="arithengine" dc="config" ref="rule_edit_params" /><dependence name="config/rule_edit_indicator" type="view" sc="arithengine" dc="config" ref="rule_edit_indicator" /><dependence name="config/rule_edit_rule" type="view" sc="arithengine" dc="config" ref="rule_edit_rule" /><dependence name="config/formula_list_sel" type="view" sc="arithengine" dc="config" ref="formula_list_sel" /><dependence name="config/setValue_sel" type="view" sc="arithengine" dc="config" ref="setValue_sel" /><dependence name="config/rule_data_structure_dialog" type="view" sc="arithengine" dc="config" ref="rule_data_structure_dialog" /></controls>
+      <scripts ><function name="initFlow" arguments="">
+	<script><![CDATA[//var normalNodeColor="#FFDEAD";
+//var ifNodeColor="#A0D8EF";
+var normalNodeColor="#f1f6ff";
+var ifNodeColor="#f3fffe";
+var normalNodeStroke="#9bbcf8";
+var ifNodeStroke="#93d9da";
+var fontSize=11;
+rule_edit_template.currentCanvasWidth=CANVAS_WIDTH;
+rule_edit_template.currentCanvasHeight=CANVAS_HEIGHT;
+rule_edit_template.RECT_SPAN_WIDTH= RECT_WIDTH*1.5;
+rule_edit_template.RECT_SPAN_HEIGHT = RECT_HEIGHT;
+if(!rule_edit_template.flow)
+{//只初始化一次
+	var flow=getInstance();
+	flow.config.tools.states={
+		fork : {showType: 'image&text',type : 'fork',
+			name : {text:'判断开始'},
+			text : {text:'分支',"font-size" : fontSize},
+			img : {src : unieap.WEB_APP_NAME+'/arithengine/images/rule/icon2_06_IF.png',width :20, height:20},
+			attr : {width:50 ,heigth:50,fill:ifNodeColor,stroke:ifNodeStroke},
+			props : {
+				text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'分支'},
+				temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+				temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+			}},
+		trueNode : {showType: 'image',type : 'trueNode',
+			name : {text:'是'},
+			text : {text:'是',"font-size" : fontSize},
+			img : {src : unieap.WEB_APP_NAME+'/arithengine/images/rule/icon_yes.png',width :36, height:36},
+			attr : {width:50 ,heigth:50,fill:ifNodeColor  },
+			props : {
+				text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'分支'},
+				temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+				temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+			}},
+		falseNode : {showType: 'image',type : 'falseNode',
+			name : {text:'否'},
+			text : {text:'否',"font-size" : fontSize},
+			img : {src : unieap.WEB_APP_NAME+'/arithengine/images/rule/icon_no.png',width :36, height:36},
+			attr : {width:50 ,heigth:50,fill:ifNodeColor  },
+			props : {
+				text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'分支'},
+				temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+				temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+			}},
+		join : {showType: 'image&text',type : 'join',
+			name : {text:'判断结束'},
+			text : {text:'合并',"font-size" : fontSize},
+			img : {src : unieap.WEB_APP_NAME+'/arithengine/images/rule/icon2_06_IF.png',width :20, height:20},
+			attr : {width:50 ,heigth:50,fill:ifNodeColor,stroke:ifNodeStroke },
+			props : {
+				text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'合并'},
+				temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+				temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+			}},
+		parameter : {showType: 'image&text',type : 'parameter',
+			name : {text:'参数'},
+			text : {text:'参数',"font-size" : fontSize},
+			img : {src : unieap.WEB_APP_NAME+'/arithengine/images/rule/icon2_04_p.png',width :20, height:20},
+			attr : {width:50 ,heigth:50,fill:normalNodeColor,stroke:normalNodeStroke},
+			props : {
+				text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'参数'},
+				temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+				temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+			}},
+		indicator : {showType: 'image&text',type : 'indicator',
+			name : {text:'指标'},
+			text : {text:'指标',"font-size" : fontSize},
+			img : {src : unieap.WEB_APP_NAME+'/arithengine/images/rule/icon2_05_l.png',width :20, height:20},
+			attr : {width:50 ,heigth:50,fill:normalNodeColor,stroke:normalNodeStroke },
+			props : {
+				text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'指标'},
+				temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+				temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+			}},
+		formular : {showType: 'image&text',type : 'formular',
+			name : {text:'公式'},
+			text : {text:'公式',"font-size" : fontSize},
+			img : {src : unieap.WEB_APP_NAME+'/arithengine/images/rule/icon2_07_F.png',width :20, height:20},
+			attr : {width:50 ,heigth:50,fill:normalNodeColor,stroke:normalNodeStroke },
+			props : {
+				text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'公式'},
+				temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+				temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+			}},
+		rule : {showType: 'image&text',type : 'rule',
+			name : {text:'规则'},
+			text : {text:'规则',"font-size" : fontSize},
+			img : {src : unieap.WEB_APP_NAME+'/arithengine/images/rule/icon2_09_R.png',width :20, height:20},
+			attr : {width:50 ,heigth:50,fill:normalNodeColor,stroke:normalNodeStroke },
+			props : {
+				text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'规则'},
+				temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+				temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+			}},
+		set : {showType: 'image&text',type : 'set',
+			name : {text:'赋值'},
+			text : {text:'赋值',"font-size" : fontSize},
+			img : {src : unieap.WEB_APP_NAME+'/arithengine/images/rule/icon2_08_Set.png',width :20, height:20},
+			attr : {width:50 ,heigth:50,fill:normalNodeColor,stroke:normalNodeStroke },
+			props : {
+				text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'赋值'},
+				temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+				temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+			}}
+	};
+	var data={
+		size:{width:CANVAS_WIDTH,height:CANVAS_HEIGHT},
+		basePath : "",
+//		restore : eval("({states:{rect1:{type:'start',text:{text:'开始'}, attr:{ x:384, y:10, width:101, height:50}, props:{text:{value:'开始'},temp1:{value:''},temp2:{value:''}}},rect2:{type:'task',text:{text:'任务1'}, attr:{ x:386, y:116, width:100, height:50}, props:{text:{value:'任务1'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}},rect3:{type:'fork',text:{text:'分支'}, attr:{ x:384, y:209, width:103, height:50}, props:{text:{value:'分支'},temp1:{value:''},temp2:{value:''}}},rect4:{type:'task',text:{text:'任务2'}, attr:{ x:192, y:317, width:100, height:50}, props:{text:{value:'任务2'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}},rect5:{type:'task',text:{text:'任务3'}, attr:{ x:385, y:317, width:100, height:50}, props:{text:{value:'任务3'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}},rect6:{type:'task',text:{text:'任务4'}, attr:{ x:556, y:320, width:100, height:50}, props:{text:{value:'任务4'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}},rect7:{type:'join',text:{text:'合并'}, attr:{ x:386, y:416, width:103, height:50}, props:{text:{value:'合并'},temp1:{value:''},temp2:{value:''}}},rect8:{type:'end',text:{text:'结束'}, attr:{ x:382, y:632, width:107, height:50}, props:{text:{value:'结束'},temp1:{value:''},temp2:{value:''}}},rect9:{type:'task',text:{text:'任务5'}, attr:{ x:384, y:528, width:100, height:50}, props:{text:{value:'任务5'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}}},paths:{path10:{from:'rect1',to:'rect2', dots:[],text:{text:'TO 任务1'},textPos:{x:37,y:-4}, props:{text:{value:''}}},path11:{from:'rect2',to:'rect3', dots:[],text:{text:'TO 分支'},textPos:{x:56,y:-1}, props:{text:{value:''}}},path12:{from:'rect3',to:'rect5', dots:[],text:{text:'TO 任务3'},textPos:{x:24,y:-5}, props:{text:{value:''}}},path13:{from:'rect5',to:'rect7', dots:[],text:{text:'TO 合并'},textPos:{x:41,y:8}, props:{text:{value:''}}},path14:{from:'rect7',to:'rect9', dots:[],text:{text:'TO 任务5'},textPos:{x:36,y:-5}, props:{text:{value:''}}},path15:{from:'rect9',to:'rect8', dots:[],text:{text:'TO 结束'},textPos:{x:32,y:0}, props:{text:{value:''}}},path16:{from:'rect3',to:'rect4', dots:[{x:244,y:232}],text:{text:'TO 任务2'},textPos:{x:0,y:-10}, props:{text:{value:'TO 任务2'}}},path17:{from:'rect4',to:'rect7', dots:[{x:242,y:435}],text:{text:'TO 合并'},textPos:{x:-3,y:17}, props:{text:{value:'TO 合并'}}},path18:{from:'rect3',to:'rect6', dots:[{x:607,y:234}],text:{text:'TO 任务4'},textPos:{x:0,y:-10}, props:{text:{value:'TO 任务4'}}},path19:{from:'rect6',to:'rect7', dots:[{x:607,y:439}],text:{text:'TO 合并'},textPos:{x:-8,y:16}, props:{text:{value:'TO 合并'}}}},props:{props:{name:{value:'新建流程'},key:{value:''},desc:{value:''}}}})"),
+		restore : "",
+		tools : {
+			save : {
+				onclick : function(data) {
+					alert('save:\n' + data);
+				}
+			}
+		}
+	};
+	flow.init(unieap.getElementById("holder"),data);
+	rule_edit_template.flow=flow;
+}
+rule_edit_template.lineMap={};
+rule_edit_template.nodeContext=new NodeContext(); 
+rule_edit_template.upperY=0;//Y的调整值，reDraw时使用
+rule_edit_template.initX=0;
+rule_edit_template.initY=100;
+	
+	
+rule_edit_template.flow.bindNodeBlur(function(node){
+	if(node&&rule_edit_template)
+	{
+		if (node.getId().substring(0, 4) == "rect")
+		{
+			rule_edit_template.nodeContext.setLastModifyNodeId(node.getId());
+		}
+	}
+});
+rule_edit_template.flow.removeAllNode();//清空所有结点
+var formDs=rule_edit_template.formDs;
+if(rule_edit_template.operateType!="add")
+{
+	if(formDs&&formDs.getRowSet().getRowCount(0)>0)
+	{
+		var ruleId = formDs.getRowSet().getRow(0).getItemValue("id");
+		view.processor.getNodeItemStr(ruleId);
+	}
+}
+else
+{//新增时，清空form和grid
+	unieap.byId("form1").clear();
+	var ds = new unieap.ds.DataStore("gridStore");
+	ds.setRowSetName("com.neusoft.arithmetic.entity.UiParameterRef");
+	view.grid.setDataStore("grid1", ds);
+}
+	
+	]]>
+	</script>
+</function><function name="generalAddNode" arguments="data">
+	<script><![CDATA[
+/*
+{
+	type:parameter,
+	text:text,
+	validMehthod:rule_edit_template.validForm,
+	initFormMethod:rule_edit_template.initForm
+}
+*/
+//var e = e || window.event;  
+var e=rule_edit_template.getEvent();
+if(e.stopPropagation) { //W3C阻止冒泡方法  
+    e.stopPropagation();  
+} else {  
+    e.cancelBubble = true; //IE阻止冒泡方法  
+}  
+var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var x=0;
+var y=100;
+var frontNodeId=rule_edit_template.flow.getCruuentNode()==null?null:rule_edit_template.flow.getCruuentNode().getId();
+if(frontNodeId==null)
+{
+	frontNodeId=nodeContext.getLastModifyNodeId();
+}
+if(frontNodeId&&rule_edit_template.flow.getObjectById(frontNodeId))
+{
+
+//	if(!data.validMehthod(frontNodeId))
+//	{//当前结点校验不合法，不法进行新增操作
+//		rule_edit_template.flow.fireClick(rule_edit_template.nodeContext.getLastModifyNodeId());//选中新建的图形
+//		return;
+//	}
+	var nodeData=rule_edit_template.flow.getObjectById(frontNodeId).getData();
+	if(frontNodeId.substring(0, 4)== "rect")
+	{
+		var node=nodeContext.getNode(frontNodeId);
+		if(node.nextNodeId==null&&node.children==null)
+		{//后面没有节点，直接追加
+			if(data.type=='fork')
+			{//追加IF结点
+				appendIFNode(frontNodeId);
+			}
+			else
+			{//追加普通结点
+				appendGeneralNode(frontNodeId,data);
+			}
+		}
+		else
+		{//后面已有节点，插入节点
+			if(nodeData.type!='fork')
+			{//IF结点后面不可以插入结点
+				if(data.type=='fork')
+				{//插入IF结点
+					insertIFNode(frontNodeId);
+				}
+				else
+				{//插入普通结点
+					insertGeneralNode(frontNodeId,data);
+				}
+			}
+		}
+	}
+}
+else
+{
+	if(data.type=='fork')
+	{
+		addRootIFNode();
+	}
+	else
+	{
+		addRootGeneralNode(data);
+	}
+
+}
+rule_edit_template.drawDots();
+if(nodeContext.getLastModifyNodeId())
+{
+	rule_edit_template.flow.fireClick(nodeContext.getLastModifyNodeId());//选中新建的图形
+	data.initFormMethod(nodeContext.getLastModifyNodeId());
+}
+
+
+]]>
+	</script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function
+	name="moveAll" arguments="rootNode,width,height">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeMap={};
+moveExecute(rootNode,width,height,nodeMap);
+]]></script>
+</function><function name="moveNode" arguments="node,width,height">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var tempGraph=rule_edit_template.flow.getObjectById(node.id);
+var tempGraphData=tempGraph.getData();
+tempGraphData.attr.x=tempGraph.getData().attr.x+width;
+tempGraphData.attr.y=tempGraph.getData().attr.y+height;
+
+rule_edit_template.flow.moveTo(tempGraph.getId(),tempGraphData.attr.x,tempGraphData.attr.y);]]></script>
+</function><function name="addRootGeneralNode" arguments="data">
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var x=rule_edit_template.initX;
+var y=rule_edit_template.initY;
+
+var rect=rule_edit_template.flow.addRect({type:data.type,text:{text:data.text}, attr:{ x:x,  y:y, width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});
+nodeContext.addNode({previousNodeId:null,nextNodeId:null,id:rect.getId(),children:null});
+var dataDC=rule_edit_template.getEmptyData(rect.getId(), data.type);
+nodeContext.setData(rect.getId(),dataDC);
+var nodeData=nodeContext.getNode(rect.getId());
+nodeData.level=1;
+
+nodeContext.setLastModifyNodeId(rect.getId());//更新lastModifyNodeId]]></script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function name="addRootIFNode" arguments="">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var x=rule_edit_template.initX;
+var y=rule_edit_template.initY;
+
+//1.创建IF相关节点，共4个
+var rect=rule_edit_template.flow.addRect({type:'fork',text:{text:'分支'}, attr:{ x:x,  y:y,width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//IF
+var trueRect=rule_edit_template.flow.addRect({type:'trueNode',text:{text:'是'}, attr:{ x:x+rule_edit_template.RECT_SPAN_WIDTH,  y:(y-RECT_HEIGHT)<=0?0:(y-RECT_HEIGHT),width:RECT_WIDTH_MIN, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//TRUE
+var falseRect=rule_edit_template.flow.addRect({type:'falseNode',text:{text:'否'}, attr:{ x:x+rule_edit_template.RECT_SPAN_WIDTH,  y:y+RECT_HEIGHT,width:RECT_WIDTH_MIN, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//FALSE
+var joinId=rect.getId()+"join";
+var joinRect=rule_edit_template.flow.addRect({id:joinId,type:'join',text:{text:'合并'}, attr:{ x:x+2*rule_edit_template.RECT_SPAN_WIDTH,  y:y,width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//ENDIF
+
+nodeContext.addNode({previousNodeId:null,nextNodeId:null,id:rect.getId(),children:[trueRect.getId(),falseRect.getId()]});
+nodeContext.addNode({previousNodeId:rect.getId(),nextNodeId:joinRect.getId(),id:trueRect.getId(),children:null});
+nodeContext.addNode({previousNodeId:rect.getId(),nextNodeId:joinRect.getId(),id:falseRect.getId(),children:null});
+nodeContext.addNode({previousNodeId:falseRect.getId(),nextNodeId:null,id:joinRect.getId(),children:null});
+
+nodeContext.getNode(rect.getId()).nextNodeId=null;
+
+var dataDC=rule_edit_template.getEmptyData(rect.getId(), 'fork');
+nodeContext.setData(rect.getId(),dataDC);
+dataDC=rule_edit_template.getEmptyData(trueRect.getId(), 'trueNode');
+nodeContext.setData(trueRect.getId(),dataDC);
+dataDC=rule_edit_template.getEmptyData(falseRect.getId(), 'falseNode');
+nodeContext.setData(falseRect.getId(),dataDC);
+dataDC=rule_edit_template.getEmptyData(joinRect.getId(), 'join');
+nodeContext.setData(joinRect.getId(),dataDC);
+var joinNode=nodeContext.getNode(joinRect.getId());
+joinNode.ifId=rect.getId();
+
+
+var ifNodeData=nodeContext.getNode(rect.getId());
+ifNodeData.level=1;//IF
+var trueNodeData=nodeContext.getNode(trueRect.getId());
+trueNodeData.level=ifNodeData.level+1;//trueNode
+var falseNodeData=nodeContext.getNode(falseRect.getId());
+falseNodeData.level=ifNodeData.level+1;//falseNode
+var joinNodeData=nodeContext.getNode(joinRect.getId());
+joinNodeData.level=ifNodeData.level;//join
+
+
+//2.创建连接线，共4条
+var line1=rule_edit_template.flow.addPath({from:rect.getId(),to:trueRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[rect.getId()+"_"+trueRect.getId()]=line1;
+var line2=rule_edit_template.flow.addPath({from:rect.getId(),to:falseRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[rect.getId()+"_"+falseRect.getId()]=line2;
+var line3=rule_edit_template.flow.addPath({from:trueRect.getId(),to:joinRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[trueRect.getId()+"_"+joinRect.getId()]=line3;
+var line4=rule_edit_template.flow.addPath({from:falseRect.getId(),to:joinRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[falseRect.getId()+"_"+joinRect.getId()]=line4;
+//3.设置True节点为当前节点
+nodeContext.setLastModifyNodeId(rect.getId());//更新lastModifyNodeId
+
+//nodeContext.loadData("['1','2']");]]></script>
+</function><function name="appendGeneralNode" arguments="frontNodeId,data">
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+
+var graphic=rule_edit_template.flow.getObjectById(frontNodeId);
+var x=graphic.getData().attr.x+rule_edit_template.RECT_SPAN_WIDTH;
+var y=graphic.getData().attr.y;//调整坐标
+var rect=rule_edit_template.flow.addRect({type:data.type,text:{text:data.text}, attr:{ x:x,  y:y, width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//画矩型
+
+var line=rule_edit_template.flow.addPath({from:frontNodeId,to:rect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});//连线
+nodeContext.addNode({previousNodeId:frontNodeId,nextNodeId:null,id:rect.getId(),children:null});//注册新节点
+var dataDC=rule_edit_template.getEmptyData(rect.getId(), data.type);
+nodeContext.setData(rect.getId(),dataDC);
+
+var frontNode=nodeContext.getNode(frontNodeId);
+var nodeData=nodeContext.getNode(rect.getId());
+nodeData.level=frontNode.level;//普通节点的Level等前一节点的Level
+
+
+nodeContext.setLastModifyNodeId(rect.getId());//更新lastModifyNodeId
+var lineKey=frontNodeId+"_"+rect.getId();
+lineMap[lineKey]=line;
+
+var testNode=nodeContext.getNode(rect.getId());
+]]></script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function name="insertGeneralNode" arguments="frontNodeId,data">
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var x=0;
+var y=100;
+
+var node=nodeContext.getNode(frontNodeId);
+//1.删除旧的连线
+var oldLineKey=node.id+"_"+node.nextNodeId;
+var oldLine=lineMap[oldLineKey];
+if(oldLine)
+{
+	rule_edit_template.flow.removeNode(oldLine.getId());
+}
+
+//2.创建新矩形
+var graphic=rule_edit_template.flow.getObjectById(frontNodeId);//取得选中的矩形
+x=graphic.getData().attr.x+rule_edit_template.RECT_SPAN_WIDTH;
+y=graphic.getData().attr.y;//调整坐标
+var rect=rule_edit_template.flow.addRect({type:data.type,text:{text:data.text}, attr:{ x:x,  y:y, width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//在后面画一个新矩形
+
+//3.注册新矩形,修改老节点的首、尾指针
+var tempId=node.nextNodeId;
+nodeContext.addNode({previousNodeId:frontNodeId,nextNodeId:tempId,id:rect.getId(),children:null});
+
+
+nodeContext.getNode(tempId).previousNodeId=rect.getId();
+
+
+//4.新增2条连接线,并注册信息
+var line=rule_edit_template.flow.addPath({from:frontNodeId,to:rect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+var lineKey=frontNodeId+"_"+rect.getId();
+lineMap[lineKey]=line;
+var line1=rule_edit_template.flow.addPath({from:rect.getId(),to:oldLine.getData().to, dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineKey=rect.getId()+"_"+oldLine.getData().to;
+lineMap[lineKey]=line1;
+
+var dataDC=rule_edit_template.getEmptyData(rect.getId(), data.type);
+nodeContext.setData(rect.getId(),dataDC);
+
+
+var frontNode=nodeContext.getNode(frontNodeId);
+var nodeData=nodeContext.getNode(rect.getId());
+nodeData.level=frontNode.level;//普通节点的Level等前一节点的Level
+
+
+//5.新增节点之后的节点，位置依次向后移动
+var newNode=nodeContext.getNode(rect.getId());
+if(newNode.nextNodeId)
+{
+	var nextNode=nodeContext.getNode(newNode.nextNodeId);
+	moveAll(nextNode,rule_edit_template.RECT_SPAN_WIDTH,0);
+}
+
+nodeContext.setLastModifyNodeId(rect.getId());//更新lastModifyNodeId]]></script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function name="appendIFNode" arguments="frontNodeId">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var x=0;
+var y=100;
+
+
+
+var graphic=rule_edit_template.flow.getObjectById(frontNodeId);
+var x=graphic.getData().attr.x+rule_edit_template.RECT_SPAN_WIDTH;
+//if(isIFChild(frontNodeId))
+//{
+//	y=graphic.getData().attr.y-rule_edit_template.RECT_HEIGHT*2;//调整坐标
+//}
+//else
+//{
+//	y=graphic.getData().attr.y;//调整坐标
+//}
+y=graphic.getData().attr.y;//调整坐标
+
+
+var upperY=y-RECT_HEIGHT;
+
+
+//1.创建IF相关节点，共4个
+var rect=rule_edit_template.flow.addRect({type:'fork', attr:{ x:x,  y:y,width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//IF
+var trueRect=rule_edit_template.flow.addRect({type:'trueNode', attr:{ x:x+rule_edit_template.RECT_SPAN_WIDTH,  y:(y-RECT_HEIGHT),width:RECT_WIDTH_MIN, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//TRUE
+var falseRect=rule_edit_template.flow.addRect({type:'falseNode', attr:{ x:x+rule_edit_template.RECT_SPAN_WIDTH,  y:y+RECT_HEIGHT,width:RECT_WIDTH_MIN, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//FALSE
+var joinId=rect.getId()+"join";
+var joinRect=rule_edit_template.flow.addRect({id:joinId,type:'join', attr:{ x:x+2*rule_edit_template.RECT_SPAN_WIDTH,  y:y,width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//ENDIF
+
+
+nodeContext.addNode({previousNodeId:frontNodeId,nextNodeId:null,id:rect.getId(),children:[trueRect.getId(),falseRect.getId()]});
+nodeContext.addNode({previousNodeId:rect.getId(),nextNodeId:joinRect.getId(),id:trueRect.getId(),children:null});
+nodeContext.addNode({previousNodeId:rect.getId(),nextNodeId:joinRect.getId(),id:falseRect.getId(),children:null});
+nodeContext.addNode({previousNodeId:falseRect.getId(),nextNodeId:null,id:joinRect.getId(),children:null});
+
+nodeContext.getNode(rect.getId()).nextNodeId=null;
+
+var dataDC=rule_edit_template.getEmptyData(rect.getId(), 'fork');
+nodeContext.setData(rect.getId(),dataDC);
+dataDC=rule_edit_template.getEmptyData(trueRect.getId(), 'trueNode');
+nodeContext.setData(trueRect.getId(),dataDC);
+dataDC=rule_edit_template.getEmptyData(falseRect.getId(), 'falseNode');
+nodeContext.setData(falseRect.getId(),dataDC);
+dataDC=rule_edit_template.getEmptyData(joinRect.getId(), 'join');
+nodeContext.setData(joinRect.getId(),dataDC);
+var joinNode=nodeContext.getNode(joinRect.getId());
+joinNode.ifId=rect.getId();
+
+var frontNode=nodeContext.getNode(frontNodeId);
+var ifNodeData=nodeContext.getNode(rect.getId());
+ifNodeData.level=frontNode.level;//IF
+var trueNodeData=nodeContext.getNode(trueRect.getId());
+trueNodeData.level=ifNodeData.level+1;//trueNode
+var falseNodeData=nodeContext.getNode(falseRect.getId());
+falseNodeData.level=ifNodeData.level+1;//falseNode
+var joinNodeData=nodeContext.getNode(joinRect.getId());
+joinNodeData.level=ifNodeData.level;//join
+
+
+//2.创建连接线，共4条
+var lineFront=rule_edit_template.flow.addPath({from:frontNodeId,to:rect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[frontNodeId+"_"+rect.getId()]=lineFront;
+var line1=rule_edit_template.flow.addPath({from:rect.getId(),to:trueRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[rect.getId()+"_"+trueRect.getId()]=line1;
+var line2=rule_edit_template.flow.addPath({from:rect.getId(),to:falseRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[rect.getId()+"_"+falseRect.getId()]=line2;
+var line3=rule_edit_template.flow.addPath({from:trueRect.getId(),to:joinRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[trueRect.getId()+"_"+joinRect.getId()]=line3;
+var line4=rule_edit_template.flow.addPath({from:falseRect.getId(),to:joinRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[falseRect.getId()+"_"+joinRect.getId()]=line4;
+//3.设置True节点为当前节点
+nodeContext.setLastModifyNodeId(rect.getId());//更新lastModifyNodeId
+
+
+if(upperY<0)
+{
+	//图型整体向下移动Math.abs(upperY)距离
+	moveAll(nodeContext.getRootNode(),0,RECT_HEIGHT);
+}
+]]></script>
+</function><function name="insertIFNode" arguments="frontNodeId">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var x=0;
+var y=100;
+
+
+var node=nodeContext.getNode(frontNodeId);
+//1.删除旧的连线
+var oldLineKey=node.id+"_"+node.nextNodeId;
+var oldLine=lineMap[oldLineKey];
+if(oldLine)
+{
+	rule_edit_template.flow.removeNode(oldLine.getId());
+}
+
+//2.创建新IF结点组
+var graphic=rule_edit_template.flow.getObjectById(frontNodeId);//取得选中的矩形
+x=graphic.getData().attr.x+rule_edit_template.RECT_SPAN_WIDTH;
+//if(isIFChild(frontNodeId))
+//{
+//	y=graphic.getData().attr.y-rule_edit_template.RECT_HEIGHT*2;//调整坐标
+//}
+//else
+//{
+//	y=graphic.getData().attr.y;//调整坐标
+//}
+y=graphic.getData().attr.y;//调整坐标
+var upperY=y-RECT_HEIGHT;
+
+
+//2-1.创建IF相关节点，共4个
+var tempId=node.nextNodeId;
+
+var rect=rule_edit_template.flow.addRect({type:'fork', attr:{ x:x,  y:y, width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//IF
+var trueRect=rule_edit_template.flow.addRect({type:'trueNode', attr:{ x:x+rule_edit_template.RECT_SPAN_WIDTH,  y:(y-RECT_HEIGHT), width:RECT_WIDTH_MIN, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//TRUE
+var falseRect=rule_edit_template.flow.addRect({type:'falseNode', attr:{ x:x+rule_edit_template.RECT_SPAN_WIDTH,  y:y+RECT_HEIGHT, width:RECT_WIDTH_MIN, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//FALSE
+var joinId=rect.getId()+"join";
+var joinRect=rule_edit_template.flow.addRect({id:joinId,type:'join', attr:{ x:x+2*rule_edit_template.RECT_SPAN_WIDTH,  y:y, width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//ENDIF
+
+
+nodeContext.addNode({previousNodeId:frontNodeId,nextNodeId:null,id:rect.getId(),children:[trueRect.getId(),falseRect.getId()]});
+nodeContext.addNode({previousNodeId:rect.getId(),nextNodeId:joinRect.getId(),id:trueRect.getId(),children:null});
+nodeContext.addNode({previousNodeId:rect.getId(),nextNodeId:joinRect.getId(),id:falseRect.getId(),children:null});
+nodeContext.addNode({previousNodeId:falseRect.getId(),nextNodeId:tempId,id:joinRect.getId(),children:null});
+
+nodeContext.getNode(rect.getId()).nextNodeId=null;
+
+
+//2-2.创建连接线，共4条
+var lineFront=rule_edit_template.flow.addPath({from:frontNodeId,to:rect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[frontNodeId+"_"+rect.getId()]=lineFront;
+var line1=rule_edit_template.flow.addPath({from:rect.getId(),to:trueRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[rect.getId()+"_"+trueRect.getId()]=line1;
+var line2=rule_edit_template.flow.addPath({from:rect.getId(),to:falseRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[rect.getId()+"_"+falseRect.getId()]=line2;
+var line3=rule_edit_template.flow.addPath({from:trueRect.getId(),to:joinRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[trueRect.getId()+"_"+joinRect.getId()]=line3;
+var line4=rule_edit_template.flow.addPath({from:falseRect.getId(),to:joinRect.getId(), dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[falseRect.getId()+"_"+joinRect.getId()]=line4;
+//2-3.设置True节点为当前节点
+nodeContext.setLastModifyNodeId(trueRect.getId());//更新lastModifyNodeId
+
+
+
+
+
+//3.,修改老节点的首、尾指针
+nodeContext.getNode(tempId).previousNodeId=joinRect.getId();
+
+
+//4.新增1条连接线,并注册信息
+var lineAfter=rule_edit_template.flow.addPath({from:joinRect.getId(),to:oldLine.getData().to, dots:[],text:{text:''},textPos:{x:37,y:-4}});
+lineMap[joinRect.getId()+"_"+oldLine.getData().to]=lineAfter;
+
+var dataDC=rule_edit_template.getEmptyData(rect.getId(), 'fork');
+nodeContext.setData(rect.getId(),dataDC);
+dataDC=rule_edit_template.getEmptyData(trueRect.getId(), 'trueNode');
+nodeContext.setData(trueRect.getId(),dataDC);
+dataDC=rule_edit_template.getEmptyData(falseRect.getId(), 'falseNode');
+nodeContext.setData(falseRect.getId(),dataDC);
+dataDC=rule_edit_template.getEmptyData(joinRect.getId(), 'join');
+nodeContext.setData(joinRect.getId(),dataDC);
+
+var joinNode=nodeContext.getNode(joinRect.getId());
+joinNode.ifId=rect.getId();
+
+
+var frontNode=nodeContext.getNode(frontNodeId);
+var ifNodeData=nodeContext.getNode(rect.getId());
+ifNodeData.level=frontNode.level;//IF
+var trueNodeData=nodeContext.getNode(trueRect.getId());
+trueNodeData.level=ifNodeData.level+1;//trueNode
+var falseNodeData=nodeContext.getNode(falseRect.getId());
+falseNodeData.level=ifNodeData.level+1;//falseNode
+var joinNodeData=nodeContext.getNode(joinRect.getId());
+joinNodeData.level=ifNodeData.level;//join
+
+
+//5.新增节点之后的节点，位置依次向后移动
+var newNode=nodeContext.getNode(joinRect.getId());
+if(newNode.nextNodeId)
+{
+	var nextNode=nodeContext.getNode(newNode.nextNodeId);
+	moveAll(nextNode,rule_edit_template.RECT_SPAN_WIDTH*3,0);
+}
+nodeContext.setLastModifyNodeId(rect.getId());//更新lastModifyNodeId
+
+if(upperY<0)
+{
+	//图型整体向下移动Math.abs(upperY)距离
+	moveAll(nodeContext.getRootNode(),0,Math.abs(upperY));
+}
+]]>
+	</script>
+</function><function name="moveExecute" arguments="rootNode,width,height,nodeMap">
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+if(rootNode)
+{
+	if(nodeMap[rootNode.id]==null)
+	{//未移动过的结点才移动
+		moveNode(rootNode,width,height);
+		nodeMap[rootNode.id]=rootNode;
+	}
+	if(rootNode.children&&rootNode.children.length>0)
+	{
+		for(var i=0,n=rootNode.children.length;i<n;i++)
+		{
+			var nextNode=nodeContext.getNode(rootNode.children[i]);
+			if(nextNode)
+			{
+				moveExecute(nextNode,width,height,nodeMap);
+			}
+		}
+	}
+	else if(rootNode.nextNodeId)
+	{
+		var nextNode=nodeContext.getNode(rootNode.nextNodeId);
+		moveExecute(nextNode,width,height,nodeMap);
+	}
+}]]></script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function name="deleteIFNode" arguments="id">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var ruleContext=rule_edit_template.ruleContext;
+var lineMap=rule_edit_template.lineMap;
+var node=nodeContext.getNode(id);
+
+var ifNode=node;
+var ifGraphic=rule_edit_template.flow.getObjectById(ifNode.id);
+var X1=ifGraphic.getData().attr.x;
+var joinNode=null;
+
+//1.删除IF
+rule_edit_template.flow.removeNode(node.id);
+nodeContext.removeNode(node);
+
+
+//2.删除true及其子结点
+//3.删除false及其子结点
+var children=node.children;
+if(children!=null&&children.length>0)
+{
+	for(var i=0;i<children.length;i++)
+	{
+		var childNode=nodeContext.getNode(children[i]);
+		rule_edit_template.flow.removeNode(childNode.id);//删除true
+		nodeContext.removeNode(childNode);
+		
+		
+		var nextNode=nodeContext.getNode(childNode.nextNodeId);
+		while(nextNode!=null)
+		{
+			var graphic=rule_edit_template.flow.getObjectById(nextNode.id);
+			if(graphic.getData().type=='join')
+			{//join节点
+				joinNode=nodeContext.getNode(nextNode.id);
+				break;
+			}
+			else if(graphic.getData().type=='fork')
+			{
+				nextNode=deleteIFNode(nextNode.id);//递归调用IF节点删除方法,nextNode变为子IF的join结点
+			}
+			else
+			{//普通结点
+				rule_edit_template.flow.removeNode(nextNode.id);
+				nodeContext.removeNode(nextNode);
+				if(nextNode)
+				{
+					var dc=nextNode.dataCenter;
+					var formStore=dc.getDataStore("formStore");
+					var returnKey = formStore.getRowSet().getRow(0).getItemValue("returnKey");
+					var property = formStore.getRowSet().getRow(0).getItemValue("property");
+					if(returnKey)
+					{
+						ruleContext.removeParam(returnKey);
+					}
+					else
+					{
+						ruleContext.removeParam(property);
+					}
+					
+				}
+				
+			}
+			if(nextNode.nextNodeId)
+			{
+				nextNode=nodeContext.getNode(nextNode.nextNodeId);
+			}
+			else
+			{
+				nextNode=null;
+			}
+		}
+	}
+}
+
+//4.删除fork结点
+var joinGraphic=rule_edit_template.flow.getObjectById(joinNode.id);
+var X2=joinGraphic.getData().attr.x;
+rule_edit_template.flow.removeNode(joinNode.id);
+var join_next_nodeId=joinNode.nextNodeId;
+nodeContext.removeNode(joinNode);
+//5.重新设置前后节点的指针,并画线
+if(ifNode.previousNodeId)
+{
+	var ifFrontNode=nodeContext.getNode(ifNode.previousNodeId);
+	if(ifFrontNode)
+	{
+		ifFrontNode.nextNodeId=join_next_nodeId;
+	}
+}
+if(nodeContext.getNode(ifNode.previousNodeId)&&ifNode.previousNodeId&&join_next_nodeId)
+{
+	var line=rule_edit_template.flow.addPath({from:ifNode.previousNodeId,to:join_next_nodeId, dots:[],text:{text:''},textPos:{x:37,y:-4}});//重新连线
+	var lineKey=ifNode.previousNodeId+"_"+join_next_nodeId;
+	lineMap[lineKey]=line;
+}
+//6.结点向左平移(取消)
+if(join_next_nodeId)
+{
+	var nextNode=nodeContext.getNode(join_next_nodeId);
+//	var span=(X2-X1)+rule_edit_template.RECT_SPAN_WIDTH;
+//	moveAll(nextNode,-Math.abs(span),0);
+}
+
+//7.选中默认结点
+if(ifNode.previousNodeId)
+{
+	nodeContext.setLastModifyNodeId(ifNode.previousNodeId);
+}
+else
+{
+	nodeContext.setLastModifyNodeId(join_next_nodeId);
+}
+if(nodeContext.getLastModifyNodeId())
+{
+	rule_edit_template.flow.fireClick(nodeContext.getLastModifyNodeId());
+}
+return joinNode;
+]]>
+	</script>
+</function><function name="deleteGeneralNode" arguments="id">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var ruleContext=rule_edit_template.ruleContext;
+var lineMap=rule_edit_template.lineMap;
+var node=nodeContext.getNode(id);
+
+rule_edit_template.flow.removeNode(node.id);//删除叶子节点及相关的连线
+
+nodeContext.removeNode(node);//删除节点注册信息,首尾指针会自动调整
+if(node)
+{
+	var dc=node.dataCenter;
+	var formStore=dc.getDataStore("formStore");
+	var returnKey = formStore.getRowSet().getRow(0).getItemValue("returnKey");
+	var property = formStore.getRowSet().getRow(0).getItemValue("property");
+	if(returnKey)
+	{
+		ruleContext.removeParam(returnKey);
+	}
+	else
+	{
+		ruleContext.removeParam(property);
+	}
+}
+
+if(node.previousNodeId&&node.nextNodeId)
+{
+	
+	var line=rule_edit_template.flow.addPath({from:node.previousNodeId,to:node.nextNodeId, dots:[],text:{text:''},textPos:{x:37,y:-4}});//重新连线
+	var lineKey=node.previousNodeId+"_"+node.nextNodeId;
+	lineMap[lineKey]=line;
+}
+//取消平移
+if(node.nextNodeId)
+{
+	var nextNode=nodeContext.getNode(node.nextNodeId);
+//	moveAll(nextNode,-rule_edit_template.RECT_SPAN_WIDTH,0);
+}
+if(node.previousNodeId)
+{
+	nodeContext.setLastModifyNodeId(node.previousNodeId);
+}
+else
+{
+	nodeContext.setLastModifyNodeId(node.nextNodeId);
+}
+
+if(nodeContext.getLastModifyNodeId())
+{
+	rule_edit_template.flow.fireClick(nodeContext.getLastModifyNodeId());//选中新建的图形
+}]]>
+	</script>
+</function><function name="validForm" arguments="nodeId">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+rule_edit_template.formDisabledTrue();
+//校验form
+var form = unieap.byId("form1");
+var grid = unieap.byId("grid1");
+//无论合法与否都要保存数据，以便后编辑和校验使用
+var node=nodeContext.getNode(nodeId);
+if(node)
+{
+	var nodeDC=node.dataCenter;
+	if(nodeDC)
+	{
+	    var dc = new unieap.ds.DataCenter();
+		dc.addDataStore("formStore", view.form.getDataStore("form1"));
+		dc.addDataStore("grideStore", unieap.byId("grid1").getBinding().getDataStore().clone("11"));
+		var nodeContext=rule_edit_template.nodeContext;
+		nodeContext.setData(nodeId,dc);
+		var name=view.form.getPropertyValue("form1", "name"); 
+		rule_edit_template.flow.changeRectText(nodeId,name);
+	}
+}
+if(!grid.validate(true)){
+  var node=nodeContext.getNode(nodeId);
+  rule_edit_template.formType(node.dataCenter);
+  return;
+}
+if(!form.validate(true)){
+	var node=nodeContext.getNode(nodeId);
+	rule_edit_template.formType(node.dataCenter);
+	return ;
+}else{
+	//合法了添加参数
+	rule_edit_template.reBuildRuleContext();
+	if(node)
+	{
+		rule_edit_template.formType(node.dataCenter);
+	}
+//	var node=nodeContext.getNode(nodeId);
+//	if(node)
+//	{
+//		var nodeDC=node.dataCenter;
+//		if(nodeDC)
+//		{
+//			rule_edit_template.formType(nodeDC);//控件显示
+//			var busiType = view.form.getPropertyValue("form1", "busiType");
+//			//ruleContext数据加载
+//			if(busiType!=1&&busiType!=2&&busiType!=3)
+//			{//IF,TRUE,FALSE不加ruleContext
+//				var ruleContext=rule_edit_template.ruleContext; 
+//				var returnKey=view.form.getPropertyValue("form1", "returnKey"); 
+//				var property=view.form.getPropertyValue("form1", "property"); 
+//				var returnType=view.form.getPropertyValue("form1", "returnType"); 
+//				var returnTypeId=view.form.getPropertyValue("form1", "returnTypeId"); 
+//				var key=null; 
+//				var type=null; 
+//				if(returnKey) 
+//				{ 
+//					key=returnKey; 
+//				} 
+//				else 
+//				{ 
+//					key=property; 
+//				} 
+//				if(returnTypeId) 
+//				{ 
+//					type=returnTypeId; 
+//				} 
+//				else 
+//				{ 
+//					type=returnType; 
+//				} 	
+//				ruleContext.addParam({returnKey:key,name:name,returnType:type});
+//			}
+//			
+//		}
+//	}
+		
+//	unieap.byId('form1').reset();
+	return true;
+}
+
+
+
+
+]]>
+	</script>
+</function><function name="initForm" arguments="nodeId">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[//alert("初始化FORM："+nodeId);
+var nodeContext=rule_edit_template.nodeContext;
+var node=nodeContext.getNode(nodeId);
+if(node)
+{
+	var dc=node.dataCenter;
+	rule_edit_template.formType(dc);//控件显示
+	if(dc)
+	{
+		var formStore=dc.getDataStore("formStore");
+		var grideStore=dc.getDataStore("grideStore");
+		view.form.setDataStore("form1", formStore);//加载数据
+		unieap.byId("grid1").getBinding().setDataStore(grideStore);
+		var returnTypeId=view.form.getPropertyValue("form1", "returnTypeId");
+		unieap.byId("returnType").setText(rule_edit_template.getReturnTypeName(returnTypeId));
+	}
+//	unieap.debug(dc);
+}
+
+]]></script>
+</function><function name="receive" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg1参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(!jQuery.browser.msie)
+{
+	jQuery(".zoomTd").css({display:""});
+}
+rule_edit_template.formDs=dc.getDataStore("formDs")
+rule_edit_template.gridDs= dc.getDataStore("gridDs");
+
+previousGridDs = dc.getDataStore("gridDs");
+var ruleContext = rule_edit_template.ruleContext;
+if (previousGridDs != null) {
+	var rowSet = previousGridDs.getRowSet();
+	var count = previousGridDs.getRowSet().getRowCount(0);
+	//加载ruleContext
+	for ( var i = 0; i < count; i++) {
+		var ruleContext = rule_edit_template.ruleContext;
+		var returnKey =previousGridDs.getRowSet().getRow(i).getItemValue("returnKey");
+		var property = previousGridDs.getRowSet().getRow(i).getItemValue("property");
+		var returnType = previousGridDs.getRowSet().getRow(i).getItemValue("returnType");
+		var returnTypeId = previousGridDs.getRowSet().getRow(i).getItemValue("returnTypeId");
+		var name=previousGridDs.getRowSet().getRow(i).getItemValue("name");
+		var key = null;
+		var type = null;
+		if (returnKey) {
+			key = returnKey;
+		} else {
+			key = property;
+		}
+		if (returnTypeId) {
+			type = returnTypeId;
+		} else {
+			type = returnType;
+		}
+		ruleContext.addParam({returnKey:key,name:name,returnType:type});
+	}
+    //加载结束
+}
+previousFormDs = dc.getDataStore("formDs");
+versionId = previousFormDs.getRowSet().getRow(0).getItemValue("versionId");
+
+view.processor.getBomList(versionId);
+rule_edit_template.operateType=dc.getParameter("type");
+
+rule_edit_template.initFlow();
+/*
+
+//保存
+	var count = view.grid.getDataStore('grid1').getRowSet().getRowCount(0); 
+
+	var busiType = unieap.byId("busiType").getValue()
+	//通过busiType判断grid里的数据是否属于parameter,指标等，给grid数据的Param_type赋值 
+	if(busiType == 5){
+	//参数时业务子类型为0，与STEP的subType（下拉框形式）数据冲突，所以单独赋值
+	    formDs.setItemValue(0,"subType",0);
+		for(var i=0;i<count;i++){
+	       gridRowSet.setItemValue(i,"paramType",4);
+	    }
+	}else if(busiType == 6){
+		for(var i=0;i<count;i++){
+	       gridRowSet.setItemValue(i,"paramType",5);
+	    }
+	}else if(busiType == 4){
+		for(var i=0;i<count;i++){
+	       gridRowSet.setItemValue(i,"paramType",6);
+	    }
+	}
+	//清空form,grid
+	unieap.byId('form1').reset();
+	for(var j=0;j<count;j++){
+	    view.grid.deleteRow('grid1',i);
+	}
+*/
+]]>
+	</script>
+</function><function name="reDraw" arguments="">
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var x=rule_edit_template.initX;
+var y=rule_edit_template.initY;
+var upperY=0;
+var rootNode=nodeContext.getRootNode();
+rule_edit_template.lineMap={};//重新初始化
+rule_edit_template.upperY=0;//重新初始化
+rule_edit_template.totalLevel=nodeContext.getMaxLevel();
+if(!rootNode)
+{//没有根结点，不需要进行重绘
+	return ;
+}
+//1.删除已有图形
+var nodeList=nodeContext.getNodeList();
+//if(nodeList&&nodeList.size()>0)
+//{
+//	for(var i=0,n=nodeList.size();i<n;i++)
+//	{
+//		var id=nodeList.get(i).id;
+//		
+//	}
+//}
+rule_edit_template.flow.removeAllNode();
+if(rootNode)
+{
+	var rectData=rule_edit_template.getRectData(rootNode.id);
+	//首节点只可能是普通结点或者IF结点
+	if(rectData.type=="fork")
+	{
+	 	rule_edit_template.drawIFNode(rootNode.id,x,y);//画IF后面的true和false分支
+	}
+	else
+	{
+		rule_edit_template.drawNormalNode(rootNode.id,x,y);//画后面的普通结点
+	}
+	//移动图形
+	if(rule_edit_template.upperY>0)
+	{
+		//图型整体向下移动Math.abs(upperY)距离
+		moveAll(nodeContext.getRootNode(),0,Math.abs(rule_edit_template.upperY));
+		rule_edit_template.upperY=0;//恢复默认值
+	}
+	//画线
+	var lineMap=rule_edit_template.lineMap;
+	for ( var lineKey in lineMap) {
+		var tempArr=lineKey.split("_");
+		var line=rule_edit_template.flow.addPath({from:tempArr[0],to:tempArr[1], dots:[],text:{text:''},textPos:{x:37,y:-4}, props:{text:{value:''}}});
+		lineMap[lineKey]=line;
+	}
+
+	rule_edit_template.drawDots();
+}
+nodeContext.setLastModifyNodeId(rootNode.id);//更新lastModifyNodeId
+if(nodeContext.getLastModifyNodeId())
+{
+	rule_edit_template.flow.fireClick(nodeContext.getLastModifyNodeId());//选中新建的图形
+}]]>
+	</script>
+</function><function name="getRectData" arguments="id">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var node=nodeContext.getNode(id);
+var rectData={id:id,type:'join',text:'合并'};
+var data=null;
+if(node)
+{
+	data=node.data;
+}
+if(data)
+{
+	var dc=node.dataCenter;
+//	var dc= new unieap.ds.DataCenter(data);
+	var ds=dc.getDataStore("formStore");
+	if(ds&&ds.getRowSet().getRowCount(0)>0)
+	{
+		var busiType = ds.getRowSet().getRow(0).getItemValue("busiType");
+		var subType = ds.getRowSet().getRow(0).getItemValue("subType");
+		var name=ds.getRowSet().getRow(0).getItemValue("name");
+		if(busiType==1)
+		{//IF
+			rectData.type="fork";
+			rectData.text=name;
+		}
+		else if(busiType==2)
+		{//true
+			rectData.type="trueNode";
+			rectData.text=name;
+		}
+		else if(busiType==3)
+		{//false
+			rectData.type="falseNode";
+			rectData.text=name;
+		}
+		else if(busiType==4)
+		{//step
+			if(subType==41)
+			{//公式
+				rectData.type="formular";
+				rectData.text=name;
+			}
+			else if(subType==42)
+			{//规则
+				rectData.type="rule";
+				rectData.text=name;
+			}
+			else if(subType==43)
+			{//赋值
+				rectData.type="set";
+				rectData.text=name;
+			}
+		}
+		else if(busiType==5)
+		{//loadparameter
+			rectData.type="parameter";
+			rectData.text=name;
+		}
+		else if(busiType==6)
+		{//loadIndicator
+			rectData.type="indicator";
+			rectData.text=name;
+		}
+	}
+}
+//alert(rectData.id+","+rectData.type+","+rectData.text);
+return rectData;]]></script>
+</function><function name="drawNormalNode" arguments="id,x,y">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var rectData=null;
+var node=nodeContext.getNode(id);
+
+//1.画矩形
+var rectData=rule_edit_template.getRectData(node.id);
+
+if(node.previousNodeId)
+{//普通节点的Y与前一结点的一样
+	var graphicPrevious=rule_edit_template.flow.getObjectById(node.previousNodeId);
+	y=graphicPrevious.getData().attr.y;
+}
+else
+{//Root节点 
+	var count=rule_edit_template.getTreeNodeY(rule_edit_template.totalLevel, node.level);
+	y=RECT_HEIGHT*count;
+}
+
+var rect=rule_edit_template.flow.addRect({id:rectData.id,type:rectData.type,text:{text:rectData.text}, attr:{ x:x,  y:y, width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//画矩型
+
+var ruleContext=rule_edit_template.ruleContext; 
+var dc=node.dataCenter;
+if(dc)
+{
+	var formStore=dc.getDataStore("formStore");
+	if(formStore&&formStore.getRowSet().getRowCount(0)>0)
+	{
+		var returnKey = formStore.getRowSet().getRow(0).getItemValue("returnKey");
+		var property = formStore.getRowSet().getRow(0).getItemValue("property");
+		var returnType = formStore.getRowSet().getRow(0).getItemValue("returnType");
+		var returnTypeId = formStore.getRowSet().getRow(0).getItemValue("returnTypeId");
+		var name = formStore.getRowSet().getRow(0).getItemValue("name");
+		var key=null; 
+		var type=null; 
+		if(returnKey) 
+		{ 
+			key=returnKey; 
+		} 
+		else 
+		{ 
+			key=property; 
+		} 
+		if(returnTypeId) 
+		{ 
+			type=returnTypeId; 
+		} 
+		else 
+		{ 
+			type=returnType; 
+		} 	
+		ruleContext.addParam({returnKey:key,name:name,returnType:type});
+	}
+}
+
+	
+//2.如果有下一节点，画连接线，并向后继续递归
+//3.如果没有下一节点，结束
+if(node.nextNodeId)
+{
+	lineMap[node.id+"_"+node.nextNodeId]={};//只记录不画
+	var nextRectData=rule_edit_template.getRectData(node.nextNodeId);
+	x=x+rule_edit_template.RECT_SPAN_WIDTH;//普通结点向右平移
+	if(nextRectData.type=="fork")
+	{
+	 	rule_edit_template.drawIFNode(node.nextNodeId,x,y);//画IF节点
+	}
+	else if(nextRectData.type=="join")
+	{
+	 	rule_edit_template.drawJoinNode(node.nextNodeId, x, y);//画join节点
+	}
+	else
+	{
+		rule_edit_template.drawNormalNode(node.nextNodeId,x,y);//画普通结点
+	}
+}
+
+]]>
+	</script>
+</function><function name="drawJoinNode" arguments="id,x,y">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var rectData=null;
+var node=nodeContext.getNode(id);
+
+
+//1.查询此join的图形是否已经存在，如果不存在画矩形
+var graphic=rule_edit_template.flow.getObjectById(node.id);
+if(graphic==null)
+{
+	var rectData=rule_edit_template.getRectData(node.id);
+//	y=y+rule_edit_template.RECT_HEIGHT;//join结点比True结点低一个高度
+	//join的y与匹配的if相同
+	if(node.ifId)
+	{//普通节点的Y与前一结点的一样
+		var graphicIF=rule_edit_template.flow.getObjectById(node.ifId);
+		y=graphicIF.getData().attr.y;
+	}
+	var rect=rule_edit_template.flow.addRect({id:rectData.id,type:rectData.type,text:{text:rectData.text}, attr:{ x:x,  y:y, width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//画矩型
+}
+else
+{
+	var x=Math.max(graphic.getData().attr.x, x);
+	//join的y与匹配的if相同
+	if(node.ifId)
+	{//普通节点的Y与前一结点的一样
+		var graphicIF=rule_edit_template.flow.getObjectById(node.ifId);
+		y=graphicIF.getData().attr.y;
+	}
+	rule_edit_template.flow.moveTo(node.id,x,y);
+	//FIX BUG False分支绘制完成后，再画Join及后面的结点
+	//2.如果有下一节点，画连接线，并向后继续递归
+	//3.如果没有下一节点，结束
+	if(node.nextNodeId)
+	{
+		lineMap[node.id+"_"+node.nextNodeId]={};//只记录不画
+		var nextRectData=rule_edit_template.getRectData(node.nextNodeId);
+		x=x+rule_edit_template.RECT_SPAN_WIDTH;//普通结点向右平移
+		if(nextRectData.type=="fork")
+		{
+		 	rule_edit_template.drawIFNode(node.nextNodeId,x,y);//画IF节点
+		}
+		else if(nextRectData.type=="join")
+		{
+		 	rule_edit_template.drawJoinNode(node.nextNodeId, x, y);//画join节点
+		}
+		else
+		{
+			rule_edit_template.drawNormalNode(node.nextNodeId,x,y);//画普通结点
+		}
+	}
+}
+
+
+]]></script>
+</function><function name="drawIFNode" arguments="id,x,y">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var lineMap=rule_edit_template.lineMap;
+var rectData=null;
+var node=nodeContext.getNode(id);
+//1.画矩形
+var rectData=rule_edit_template.getRectData(node.id);
+//IF的y与前一节点相同
+var ifY=0;
+if(node.previousNodeId)
+{//普通节点的Y与前一结点的一样
+	var graphicPrevious=rule_edit_template.flow.getObjectById(node.previousNodeId);
+	y=graphicPrevious.getData().attr.y;
+	ifY=y;
+}
+else
+{
+	var count=rule_edit_template.getTreeNodeY(rule_edit_template.totalLevel, node.level);
+	y=RECT_HEIGHT*count;
+	ifY=y;
+}
+var rect=rule_edit_template.flow.addRect({id:rectData.id,type:rectData.type,text:{text:rectData.text}, attr:{ x:x,  y:y, width:RECT_WIDTH, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//画矩型
+
+//2.画true结点以及，IF和True的连接线，并向后继续递归
+//3.画true结点以及，IF和True的连接线，并向后继续递归
+if(node.children&&node.children.length>0)
+{
+	var standardX=x;
+	var standardY=y;
+	
+	for(var i=0,n=node.children.length;i<n;i++)
+	{
+		lineMap[node.id+"_"+node.children[i]]={};//只记录不画
+		var nextRectData=rule_edit_template.getRectData(node.children[i]);
+		if(nextRectData.type=='trueNode')
+		{
+			x=standardX+rule_edit_template.RECT_SPAN_WIDTH;
+			//True结点的Y等于IF的Y-偏移量
+			var trueNode=nodeContext.getNode(node.children[i]);
+			var count=rule_edit_template.getTreeNodeY(rule_edit_template.totalLevel, trueNode.level);
+			y=ifY-RECT_HEIGHT*count;
+			rect=rule_edit_template.flow.addRect({id:nextRectData.id,type:nextRectData.type,text:{text:nextRectData.text}, attr:{ x:x,  y:y, width:RECT_WIDTH_MIN, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//画矩型
+		}
+		else if(nextRectData.type=='falseNode')
+		{
+			x=standardX+rule_edit_template.RECT_SPAN_WIDTH;
+			//false结点的Y等于IF的Y+偏移量
+			var falseNode=nodeContext.getNode(node.children[i]);
+			var count=rule_edit_template.getTreeNodeY(rule_edit_template.totalLevel, falseNode.level);
+			y=ifY+RECT_HEIGHT*count;
+			rect=rule_edit_template.flow.addRect({id:nextRectData.id,type:nextRectData.type,text:{text:nextRectData.text}, attr:{ x:x,  y:y, width:RECT_WIDTH_MIN, height:RECT_HEIGHT},onRectClick:rule_edit_template.nodeClick});//画矩型
+		}
+		var childNode=nodeContext.getNode(node.children[i]);
+		nextRectData=rule_edit_template.getRectData(childNode.nextNodeId);
+		x=x+rule_edit_template.RECT_SPAN_WIDTH;//普通结点向右平移
+		if(nextRectData.type=="fork")
+		{
+			lineMap[node.children[i]+"_"+childNode.nextNodeId]={};//只记录不画
+		 	rule_edit_template.drawIFNode(childNode.nextNodeId,x,y);//画IF节点
+		}
+		else if(nextRectData.type=="join")
+		{
+			lineMap[node.children[i]+"_"+childNode.nextNodeId]={};//只记录不画
+		 	rule_edit_template.drawJoinNode(childNode.nextNodeId, x, y);//画join节点
+		}
+		else
+		{
+			lineMap[node.children[i]+"_"+childNode.nextNodeId]={};//只记录不画
+			rule_edit_template.drawNormalNode(childNode.nextNodeId,x,y);//画普通结点
+		}
+	}
+}
+
+
+
+
+
+
+]]></script>
+</function><function name="genTestData" arguments="">
+	<script><![CDATA[var arr=new Array();
+	var dc = new unieap.ds.DataCenter();
+	var ds = new unieap.ds.DataStore("formStore");
+	var data = {id:"110",name:"110",busiType:5,subType:null,parentId:'-1'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:null,nextNodeId:'111',id:'110',children:null,data:'"+dc.toJson()+"'}");
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"111",name:"111",busiType:6,subType:null,parentId:'-1'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'110',nextNodeId:'112',id:'111',children:null,data:'"+dc.toJson()+"'}");
+	
+	
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"112",name:"112",busiType:1,subType:null,parentId:'-1'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'111',nextNodeId:null,id:'112',children:['113','114'],data:'"+dc.toJson()+"'}");
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"113",name:"113",busiType:2,subType:null,parentId:'112'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'112',nextNodeId:'116',id:'113',children:null,data:'"+dc.toJson()+"'}");
+	
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"114",name:"114",busiType:3,subType:null,parentId:'112'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'112',nextNodeId:'115',id:'114',children:null,data:'"+dc.toJson()+"'}");
+	
+	arr.push("{previousNodeId:'114',nextNodeId:null,id:'115',children:null,data:null}");//join
+	
+	
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"116",name:"116",busiType:1,subType:null,parentId:'113'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'113',nextNodeId:null,id:'116',children:['117','118'],data:'"+dc.toJson()+"'}");
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"117",name:"117",busiType:2,subType:null,parentId:'116'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'116',nextNodeId:'120',id:'117',children:null,data:'"+dc.toJson()+"'}");
+	
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"118",name:"118",busiType:3,subType:null,parentId:'116'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'116',nextNodeId:'119',id:'118',children:null,data:'"+dc.toJson()+"'}");
+	
+	arr.push("{previousNodeId:'118',nextNodeId:'115',id:'119',children:null,data:null}");//join
+	
+	
+	
+	
+	//120,121,122,123
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"116",name:"116",busiType:1,subType:null,parentId:'117'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'117',nextNodeId:null,id:'120',children:['121','122'],data:'"+dc.toJson()+"'}");
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"121",name:"121",busiType:2,subType:null,parentId:'120'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'120',nextNodeId:'124',id:'121',children:null,data:'"+dc.toJson()+"'}");
+	
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"122",name:"122",busiType:3,subType:null,parentId:'120'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'120',nextNodeId:'125',id:'122',children:null,data:'"+dc.toJson()+"'}");
+	
+	arr.push("{previousNodeId:'122',nextNodeId:'119',id:'123',children:null,data:null}");//join
+	
+	
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"124",name:"公式",busiType:4,subType:41,parentId:'121'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'121',nextNodeId:'123',id:'124',children:null,data:'"+dc.toJson()+"'}");
+	
+	
+	dc = new unieap.ds.DataCenter();
+	ds = new unieap.ds.DataStore("formStore");
+	data = {id:"125",name:"规则",busiType:4,subType:42,parentId:'122'};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+	arr.push("{previousNodeId:'122',nextNodeId:'123',id:'125',children:null,data:'"+dc.toJson()+"'}");
+
+	
+	
+	
+	var jsonStr="["+arr.join(",")+"]";
+	
+	return jsonStr;]]></script>
+</function><function name="getEmptyData" arguments="id,type">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var dc = new unieap.ds.DataCenter();
+var ds = new unieap.ds.DataStore("formStore");
+ds.setRowSetName("com.neusoft.arithmetic.entity.UiRuleBusiness");
+var parentId='-1';
+//前一结点如果是fork,Ture和Flase，parentId=前一节点的id,否则等于前一节点的parentId
+var node=nodeContext.getNode(id);
+if(node.previousNodeId)
+{
+	var previousNode=nodeContext.getNode(node.previousNodeId);
+	var previousNodeDataCenter=previousNode.dataCenter;
+	if(previousNodeDataCenter)
+	{
+		var formStore=previousNodeDataCenter.getDataStore("formStore");
+		if(formStore&&formStore.getRowSet().getRowCount(0)>0)
+		{
+			var busiType = formStore.getRowSet().getRow(0).getItemValue("busiType");
+			var previousId=formStore.getRowSet().getRow(0).getItemValue("id");
+			var previousParentId=formStore.getRowSet().getRow(0).getItemValue("parentId");
+			if(busiType==1||busiType==2||busiType==3)
+			{//true或false,fork
+				parentId=previousId;
+			}
+			else
+			{
+				parentId=previousParentId;
+			}
+		}
+	}
+	else
+	{//前一结点是join节点,根据joinNode.ifId找到IF节点，然后取IF结点的parentId做为当前节点 的parentId
+		var ifId=previousNode.ifId;
+		//alert(ifId);
+		if(ifId)
+		{
+			var ifNode=nodeContext.getNode(ifId);
+			var previousNodeDataCenter=ifNode.dataCenter;
+			var formStore=previousNodeDataCenter.getDataStore("formStore");
+			if(formStore&&formStore.getRowSet().getRowCount(0)>0)
+			{
+				var previousParentId=formStore.getRowSet().getRow(0).getItemValue("parentId");
+				parentId=previousParentId;
+			}
+		}
+		
+	}
+	
+}
+if(type=='fork')
+{
+	var data = {id:id.substring(4),name:'',busiType:1,subType:null,parentId:parentId};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+}
+else if(type=='trueNode')
+{
+	var data = {id:id.substring(4),name:'是',busiType:2,subType:null,parentId:parentId};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+}
+else if(type=='falseNode')
+{
+	var data = {id:id.substring(4),name:'否',busiType:3,subType:null,parentId:parentId};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+}
+else if(type=='join')
+{
+	dc=null;
+}
+else if(type=='parameter')
+{
+	var data = {id:id.substring(4),name:'加载参数',busiType:5,subType:52,parentId:parentId};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+}
+else if(type=='indicator')
+{
+	var data = {id:id.substring(4),name:'加载指标',busiType:6,subType:null,parentId:parentId};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+}
+else if(type=='formular')
+{
+	var data = {id:id.substring(4),name:'加载公式',busiType:4,subType:41,parentId:parentId};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+}
+else if(type=='rule')
+{
+	var data = {id:id.substring(4),name:'加载规则',busiType:4,subType:42,parentId:parentId};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+}
+else if(type=='set')
+{
+	var data = {id:id.substring(4),name:'赋值',busiType:4,subType:43,parentId:parentId};
+	ds.getRowSet().addRow(data);
+	dc.addDataStore('formStore',ds);
+}
+
+return dc;
+]]></script>
+</function><function name="insertRuleSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:insertRule方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var code = dc.getParameter("result");
+var message="操作失败！";
+if(code>0)
+{
+	message="操作成功！";
+} 
+else if(code==-1)
+{
+	message="规则标识重复，请重新输入！";
+}
+MessageBox.alert({
+        title: '提示信息',
+        message: message,
+        onComplete: function () {
+        	if(code>0)
+        	{
+        	     //新增成功返回起始页
+        	     parent.rule_edit_template_access.goBack();
+        	}
+        }
+});]]></script>
+</function><function name="updateRuleSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:updateRule方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var code = dc.getParameter("result");
+var message="操作失败！";
+if(code>0)
+{
+	message="操作成功！";
+} 
+else if(code==-1)
+{
+	message="规则标识重复，请重新输入！";
+}
+MessageBox.alert({
+        title: '提示信息',
+        message: message,
+        onComplete: function () {
+        	if(code>0)
+        	{
+        	     parent.rule_edit_template_access.goBack();
+        	}
+        }
+});]]></script>
+</function><function name="getNodeItemStrSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getNodeItemStr方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore("result");
+
+var graphicData={};
+if(ds&&ds.getRowSet().getRowCount(0)>0)
+{
+	var nodeContextJsonStr = ds.getRowSet().getRow(0).getItemValue("nodeContextJsonStr");
+	var graphicJosnStr=ds.getRowSet().getRow(0).getItemValue("graphicJosnStr");
+	graphicData.nodeContextJsonStr=nodeContextJsonStr;
+	graphicData.graphicJosnStr=graphicJosnStr;
+	rule_edit_template.nodeContext.loadData(graphicData.nodeContextJsonStr);
+	var ruleContext=rule_edit_template.ruleContext; 
+	var nodeList=rule_edit_template.nodeContext.getNodeList();
+	if(nodeList&&nodeList.size()>0)
+	{//添加规则上下文
+		for(var i=0,n=nodeList.size();i<n;i++)
+		{
+			var node=nodeList.get(i);
+			var dc=node.dataCenter;
+			if(dc)
+			{
+				var formStore=dc.getDataStore("formStore");
+				if(formStore&&formStore.getRowSet().getRowCount(0)>0)
+				{
+					var busiType = formStore.getRowSet().getRow(0).getItemValue("busiType");
+					if(busiType!=1&&busiType!=2&&busiType!=3)
+					{
+						var returnKey = formStore.getRowSet().getRow(0).getItemValue("returnKey");
+						var property = formStore.getRowSet().getRow(0).getItemValue("property");
+						var returnType = formStore.getRowSet().getRow(0).getItemValue("returnType");
+						var returnTypeId = formStore.getRowSet().getRow(0).getItemValue("returnTypeId");
+						var name = formStore.getRowSet().getRow(0).getItemValue("name");
+						var key=null; 
+						var type=null; 
+						if(returnKey) 
+						{ 
+							key=returnKey; 
+						} 
+						else 
+						{ 
+							key=property; 
+						} 
+						if(returnTypeId) 
+						{ 
+							type=returnTypeId; 
+						} 
+						else 
+						{ 
+							type=returnType; 
+						} 	
+						ruleContext.addParam({returnKey:key,name:name,returnType:type});
+					}
+				}
+			}
+		}
+	}
+}
+
+if(graphicData)
+{
+	var rootNode=null;
+	var nodeContext=rule_edit_template.nodeContext;
+	if(graphicData.graphicJosnStr)
+	{
+		var graphicJsonObj=eval("("+graphicData.graphicJosnStr+")");
+		if(graphicJsonObj&&graphicJsonObj.states)
+		{
+			for ( var rectId in graphicJsonObj.states) 
+			{
+				if (graphicJsonObj.states[rectId]) {
+					var rectObject=graphicJsonObj.states[rectId];
+					var node=rule_edit_template.nodeContext.getNode(rectId);
+					rectObject.id=rectId;//注册id
+					if(rootNode==null&&node.previousNodeId==null)
+					{
+						rootNode=node;
+					}
+					rectObject.onRectClick=rule_edit_template.nodeClick;//注册onclick事件
+					rule_edit_template.flow.addRect(rectObject);//画矩型
+				}
+			}
+		}
+		if(graphicJsonObj&&graphicJsonObj.paths)
+		{
+			rule_edit_template.lineMap={};
+			var lineMap=rule_edit_template.lineMap;
+			for ( var lineId in graphicJsonObj.paths) 
+			{
+				if (graphicJsonObj.paths[lineId]) {
+					var lineData=graphicJsonObj.paths[lineId];
+					var lineKey=lineData.from+"_"+lineData.to;
+					var line=rule_edit_template.flow.addPath(lineData);
+					lineMap[lineKey]=line;
+				}
+			}
+		}
+		if(rootNode)
+		{
+			nodeContext.setLastModifyNodeId(rootNode.id);//更新lastModifyNodeId
+			if(nodeContext.getLastModifyNodeId())
+			{
+				rule_edit_template.flow.fireClick(nodeContext.getLastModifyNodeId());//选中新建的图形
+			}
+		}
+	}
+	else
+	{
+		rule_edit_template.reDraw();
+	}
+}]]></script>
+</function><function name="formType" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(dc)
+{
+	var formStore=dc.getDataStore("formStore");
+	unieap.getElementById("img1").style.display='';
+	if(formStore&&formStore.getRowSet().getRowCount(0)>0)
+	{
+		var busiType = formStore.getRowSet().getRow(0).getItemValue("busiType");
+		var subType=formStore.getRowSet().getRow(0).getItemValue("subType");
+		unieap.byId("name").setRequired(false);
+		unieap.byId("returnKey").setRequired(false);
+		unieap.byId("returnValue").setRequired(false);
+		unieap.byId("returnValue").setReadOnly(false);
+		unieap.byId("returnValue").setDisabled(false); 
+		unieap.byId("returnType").setRequired(false);
+		unieap.byId("name").setDisabled(false);
+		unieap.byId("returnKey").setDisabled(false);
+		unieap.byId("returnType").setDisabled(false);
+//		dojo.query("tr[id*=form1_1]").style({display:""}); 
+//		dojo.query("tr[id*=form1_2]").style({display:""}); 
+//		dojo.query("tr[id*=form1_3]").style({display:""}); 
+//		dojo.query("tr[id*=form1_5]").style({display:""}); 
+//		dojo.query("tr[id*=form1_6]").style({display:""}); 
+		
+		
+		rule_edit_template.getObjById("form1_1_tr").style({display:""});
+		rule_edit_template.getObjById("form1_2_tr").style({display:""});
+		rule_edit_template.getObjById("form1_3_tr").style({display:""});
+		rule_edit_template.getObjById("form1_5_tr").style({display:""});
+		rule_edit_template.getObjById("form1_6_tr").style({display:""});
+		
+		
+		
+		if(busiType==1)
+		{//IF
+			unieap.byId("name").setRequired(true);
+//			dojo.query("tr[id*=form1_2]").style({display:"none"}); 
+//			dojo.query("tr[id*=form1_5]").style({display:"none"}); 
+//			dojo.query("tr[id*=form1_6]").style({display:"none"}); 
+			rule_edit_template.getObjById("form1_2_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_5_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_6_tr").style({display:"none"});
+			
+		}
+		else if(busiType==2)
+		{//True
+			unieap.getElementById("img1").style.display='none';
+			unieap.byId("name").setRequired(true);
+			unieap.byId("name").setDisabled(true);
+//			dojo.query("tr[id*=form1_2]").style({display:"none"}); 
+//			dojo.query("tr[id*=form1_3]").style({display:"none"}); 
+//			dojo.query("tr[id*=form1_5]").style({display:"none"}); 
+//			dojo.query("tr[id*=form1_6]").style({display:"none"}); 
+			rule_edit_template.getObjById("form1_2_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_3_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_5_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_6_tr").style({display:"none"});
+		}
+		else if(busiType==3)
+		{//False
+			unieap.getElementById("img1").style.display='none';
+			unieap.byId("name").setRequired(true);
+			unieap.byId("name").setDisabled(true);
+//			dojo.query("tr[id*=form1_2]").style({display:"none"}); 
+//			dojo.query("tr[id*=form1_3]").style({display:"none"});
+//			dojo.query("tr[id*=form1_5]").style({display:"none"}); 
+//			dojo.query("tr[id*=form1_6]").style({display:"none"}); 
+			rule_edit_template.getObjById("form1_2_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_3_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_5_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_6_tr").style({display:"none"});
+		}
+		else if(busiType==5)
+		{//parameter
+			unieap.byId("name").setRequired(true);
+			unieap.byId("returnKey").setRequired(true);
+			unieap.byId("returnKey").setDisabled(false);
+			unieap.byId("returnType").setRequired(true);
+			unieap.byId("returnType").setDisabled(true);
+//			dojo.query("tr[id*=form1_3]").style({display:"none"});
+//			dojo.query("tr[id*=form1_5]").style({display:"none"}); 
+//			dojo.query("tr[id*=form1_6]").style({display:"none"}); 
+			rule_edit_template.getObjById("form1_3_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_5_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_6_tr").style({display:"none"});
+		}
+		else if(busiType==6)
+		{//indicator
+			unieap.byId("name").setRequired(true);
+			unieap.byId("returnKey").setRequired(true);
+			unieap.byId("returnKey").setDisabled(false);
+			unieap.byId("returnType").setRequired(true);
+			unieap.byId("returnType").setDisabled(true);
+//			dojo.query("tr[id*=form1_3]").style({display:"none"});
+//			dojo.query("tr[id*=form1_5]").style({display:"none"}); 
+			rule_edit_template.getObjById("form1_3_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_5_tr").style({display:"none"});			
+		}
+		else if(busiType==4&&subType==41)
+		{//formual
+			unieap.byId("name").setRequired(true);
+			unieap.byId("returnKey").setRequired(true);
+			unieap.byId("returnKey").setDisabled(false);
+			unieap.byId("returnType").setRequired(true);
+			unieap.byId("returnType").setDisabled(true);
+//			dojo.query("tr[id*=form1_3]").style({display:"none"});
+//			dojo.query("tr[id*=form1_5]").style({display:"none"}); 
+			rule_edit_template.getObjById("form1_3_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_5_tr").style({display:"none"});
+		}
+		else if(busiType==4&&subType==42)
+		{//rule
+			unieap.byId("name").setRequired(true);
+			unieap.byId("returnKey").setRequired(true);
+			unieap.byId("returnKey").setDisabled(false);
+			unieap.byId("returnType").setRequired(true);
+			unieap.byId("returnType").setDisabled(false);
+//			dojo.query("tr[id*=form1_3]").style({display:"none"});
+//			dojo.query("tr[id*=form1_5]").style({display:"none"});
+			rule_edit_template.getObjById("form1_3_tr").style({display:"none"});
+			rule_edit_template.getObjById("form1_5_tr").style({display:"none"}); 
+		}
+		else if(busiType==4&&subType==43)
+		{//set
+			unieap.getElementById("img1").style.display='none';
+			unieap.byId("name").setRequired(true);
+			unieap.byId("returnKey").setRequired(true);
+			unieap.byId("returnKey").setDisabled(false);
+			unieap.byId("returnType").setRequired(true);
+			unieap.byId("returnType").setDisabled(false);
+			unieap.byId("returnValue").setRequired(true);
+			unieap.byId("returnValue").setReadOnly(true);
+//			dojo.query("tr[id*=form1_3]").style({display:"none"});
+			rule_edit_template.getObjById("form1_3_tr").style({display:"none"});
+		}
+	}
+}
+else
+{//join
+//	dojo.query("tr[id*=form1_1]").style({display:"none"}); 
+//	dojo.query("tr[id*=form1_2]").style({display:"none"}); 
+//	dojo.query("tr[id*=form1_3]").style({display:"none"});
+//	dojo.query("tr[id*=form1_5]").style({display:"none"}); 
+//	dojo.query("tr[id*=form1_6]").style({display:"none"}); 
+	rule_edit_template.getObjById("form1_1_tr").style({display:"none"});
+	rule_edit_template.getObjById("form1_2_tr").style({display:"none"});
+	rule_edit_template.getObjById("form1_3_tr").style({display:"none"});
+	rule_edit_template.getObjById("form1_5_tr").style({display:"none"});
+	rule_edit_template.getObjById("form1_6_tr").style({display:"none"});	
+}
+
+]]>
+	</script>
+</function><function name="paramOperation" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[
+
+view.grid.getRow("grid1", inRowIndex);
+//unieap.debug(view.grid.getRow("grid1", inRowIndex));
+//unieap.debug(rule_edit_template.ruleContext);
+//获取xdialog控件
+var dialog = unieap.byId("xdialog2");
+//获取列表中的选择列	
+dialog.title="每个部分的入参";
+dialog.dialogData = {inRowIndex:inRowIndex,gridDS:view.grid.getRow("grid1", inRowIndex),nodeContext:rule_edit_template.ruleContext};
+//弹出窗口方法
+dialog.show();
+]]>
+	</script>
+</function><function name="nodeClick" arguments="beforeId,nodeId">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[rule_edit_template.initForm(nodeId);
+
+rule_edit_template.showBottomDiv();]]>
+	</script>
+</function><function name="getBomListSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getBomList方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[try{
+var returnTypeStore = new unieap.ds.DataStore("returnTypeStore");
+returnTypeStore.setRowSetName("com.neusoft.arithmetic.entity.UiBom");
+var data1 = {id:'string',name:'字符串型'};
+returnTypeStore.getRowSet().addRow(data1);
+var data2 = {id:'date',name:'日期型'};
+returnTypeStore.getRowSet().addRow(data2);
+var data3 = {id:'number',name:'数字型'};
+returnTypeStore.getRowSet().addRow(data3);
+var ds = dc.getDataStore("result");
+if(ds&&ds.getRowSet().getRowCount(0)>0)
+{
+	for(var i=0,n=ds.getRowSet().getRowCount(0);i<n;i++)
+	{
+		var data=ds.getRowSet().getRow(i).getData();
+		returnTypeStore.getRowSet().addRow(data);
+	}
+}
+dataCenter.addDataStore("returnTypeStore",returnTypeStore);//grid格式化时使用
+var dataStoreName=getNewDataStoreName("returnTypeStore");
+dataCenter.addDataStore(dataStoreName, returnTypeStore);
+var treeJson={
+binding:{leaf:'leaf',store:dataStoreName,id:'id',parent:'parentId',label:'name',query:{name:'parentId',relation:'=',value:null}}
+};
+unieap.byId("returnType").setTreeJson(treeJson);
+}catch(e){
+}
+]]></script>
+</function><function name="getBomAttributeSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getBomAttribute方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var store = dc.getDataStore("result");]]></script>
+</function><function name="getParameterListSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getParameterList方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[
+/**
+     * 参数类型：4.loadparameter的参数,5指标的参数,6 step
+     */
+var busiType = view.form.getPropertyValue("form1", "busiType");
+var subType=view.form.getPropertyValue("form1", "subType");
+var id=view.form.getPropertyValue("form1", "id");
+var paramType=null;
+if(busiType==5)
+{//parameter
+	paramType=4;
+}
+else if(busiType==6)
+{//indicator
+	paramType=5;
+}
+else if(busiType==4&&subType==41)
+{//formual
+	paramType=6;
+}
+else if(busiType==4&&subType==42)
+{//rule
+	paramType=6;
+}
+else if(busiType==4&&subType==43)
+{//set
+	paramType=6;
+}
+try{
+	var store=dc.getDataStore("result");
+	if(store)
+	{
+		if(store&&store.getRowSet().getRowCount(0)>0)
+		{
+			for(var i=0;i<store.getRowSet().getRowCount(0);i++)
+			{
+				store.getRowSet().getRow(i).setItemValue("paramType",paramType);
+				store.getRowSet().getRow(i).setItemValue("refId",id);
+				var idStr=Math.uuid();
+				idStr=idStr.replace(/-/g, "");
+				store.getRowSet().getRow(i).setItemValue("id",idStr);
+				
+				var returnType=store.getRowSet().getRow(i).getItemValue("returnType");
+				var returnTypeId=store.getRowSet().getRow(i).getItemValue("returnTypeId");
+				var property=store.getRowSet().getRow(i).getItemValue("property");
+				var name=store.getRowSet().getRow(i).getItemValue("name");
+				if(returnTypeId)
+				{
+					returnType=returnTypeId;
+				}
+				var ruleContext=rule_edit_template.ruleContext; 
+				var param=ruleContext.getParamByReturnAndType(property,returnType);
+				if(param)
+				{//找到同property同类型的参数，自动赋值
+					store.getRowSet().getRow(i).setItemValue("refValue","${#"+param.returnKey+"}");
+				}
+				else
+				{
+					if(name)
+					{
+						param=ruleContext.getParamByNameAndType(name,returnType);
+						if(param)
+						{//找到同名同类型的参数，自动赋值
+							store.getRowSet().getRow(i).setItemValue("refValue","${#"+param.returnKey+"}");
+						}
+					}
+					
+				}
+			}
+		}
+	}
+	unieap.byId("grid1").getBinding().setDataStore(store);
+}catch(e){
+}]]>
+	</script>
+</function><function name="formDisabledTrue" arguments="">
+	<script><![CDATA[
+unieap.byId("returnKey").setDisabled(false);
+unieap.byId("returnType").setDisabled(false);]]>
+	</script>
+</function><function name="getTreeNodeY" arguments="totalLevel,currentLevel">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var y=Math.pow(2,totalLevel)/Math.pow(2,currentLevel);
+return y;]]>
+	</script>
+</function><function name="reBuildRuleContext" arguments="">
+	<script><![CDATA[var nodeContext=rule_edit_template.nodeContext;
+var ruleContext=rule_edit_template.ruleContext;
+//1.删除已有结点
+ruleContext.removeAll();
+//2.添加dataStructe的结点
+var previousGridDs = rule_edit_template.gridDs;
+if (previousGridDs != null) {
+	var rowSet = previousGridDs.getRowSet();
+	var count = previousGridDs.getRowSet().getRowCount(0);
+	for ( var i = 0; i < count; i++) {
+		var ruleContext = rule_edit_template.ruleContext;
+		var returnKey =previousGridDs.getRowSet().getRow(i).getItemValue("returnKey");
+		var property = previousGridDs.getRowSet().getRow(i).getItemValue("property");
+		var returnType = previousGridDs.getRowSet().getRow(i).getItemValue("returnType");
+		var returnTypeId = previousGridDs.getRowSet().getRow(i).getItemValue("returnTypeId");
+		var name=previousGridDs.getRowSet().getRow(i).getItemValue("name");
+		var key = null;
+		var type = null;
+		if (returnKey) {
+			key = returnKey;
+		} else {
+			key = property;
+		}
+		if (returnTypeId) {
+			type = returnTypeId;
+		} else {
+			type = returnType;
+		}
+		ruleContext.addParam({returnKey:key,name:name,returnType:type});
+	}
+}
+
+//3.循环node新增结点
+var nodeList=nodeContext.getNodeList();
+if(nodeList&&nodeList.size()>0)
+{
+	for(var i=0,n=nodeList.size();i<n;i++)
+	{
+		var node=nodeList.get(i);
+		if(node)
+		{
+			var nodeDC=node.dataCenter;
+			if(nodeDC)
+			{
+				var formStore=nodeDC.getDataStore("formStore");
+				var busiType = formStore.getRowSet().getRow(0).getItemValue("busiType");
+				if(busiType!=1&&busiType!=2&&busiType!=3)
+				{//IF,TRUE,FALSE不加ruleContext
+					var ruleContext=rule_edit_template.ruleContext; 
+					var returnKey=formStore.getRowSet().getRow(0).getItemValue("returnKey"); 
+					var property=formStore.getRowSet().getRow(0).getItemValue("property"); 
+					var returnType=formStore.getRowSet().getRow(0).getItemValue("returnType"); 
+					var returnTypeId=formStore.getRowSet().getRow(0).getItemValue("returnTypeId"); 
+					var name=formStore.getRowSet().getRow(0).getItemValue("name"); 
+					var key=null; 
+					var type=null; 
+					if(returnKey) 
+					{ 
+						key=returnKey; 
+					} 
+					else 
+					{ 
+						key=property; 
+					} 
+					if(returnTypeId) 
+					{ 
+						type=returnTypeId; 
+					} 
+					else 
+					{ 
+						type=returnType; 
+					} 	
+					ruleContext.addParam({returnKey:key,name:name,returnType:type});
+				}
+			}
+		}
+	}
+}]]>
+	</script>
+</function><function
+	name="getEvent" arguments="">
+	<script><![CDATA[if(document.all)  return window.event;   
+func=getEvent.caller;       
+while(func!=null){ 
+    var arg0=func.arguments[0];
+    if(arg0)
+    {
+      if((arg0.constructor==Event || arg0.constructor ==MouseEvent) || (typeof(arg0)=="object" && arg0.preventDefault && arg0.stopPropagation))
+      { 
+      return arg0;
+      }
+    }
+    func=func.caller;
+}
+return null; ]]>
+	</script>
+</function><function name="hideBottomDiv" arguments="">
+	<script><![CDATA[unieap.byId("adaptivePane4").hide();
+
+unieap.getElementById("img3").style.display="";
+unieap.getElementById("img5").style.display="none";
+
+
+//dojo.query("#_topFrame").style({display:"none"});
+//dojo.query("#_leftTop").style({display:"none"});
+//dojo.query("#frameMenuContainer").style({display:"none"});]]>
+	</script>
+</function><function name="showBottomDiv" arguments="">
+	<script><![CDATA[unieap.byId("adaptivePane4").show();
+
+unieap.getElementById("img3").style.display="none";
+unieap.getElementById("img5").style.display="";
+
+
+//dojo.query("#_topFrame").style({display:""});
+//dojo.query("#_leftTop").style({display:""});
+//dojo.query("#frameMenuContainer").style({display:""});]]></script>
+</function><function name="drawDots" arguments="">
+	<script><![CDATA[var lineMap=rule_edit_template.lineMap;
+var nodeContext=rule_edit_template.nodeContext;
+
+for ( var lineKey in lineMap) {
+	var tempArr=lineKey.split("_");
+	var frontNodeId=tempArr[0];
+	var endNodeId=tempArr[1];
+	var currentLine=lineMap[lineKey];
+	var frontNode=nodeContext.getNode(frontNodeId);
+	var endNode=nodeContext.getNode(endNodeId);
+	if(frontNode&&frontNode.children&&frontNode.children.length>0&&endNode)
+	{//找到IF结点
+		var ifGraphic=rule_edit_template.flow.getObjectById(frontNode.id);
+		var trueOrFalseGrahpic=rule_edit_template.flow.getObjectById(endNodeId);
+		if(ifGraphic&&trueOrFalseGrahpic)
+		{
+			var dot_x=ifGraphic.getData().attr.x+ifGraphic.getData().attr.width/2;
+			var dot_y=trueOrFalseGrahpic.getData().attr.y+trueOrFalseGrahpic.getData().attr.height/2;
+			var currentLineData=currentLine.getData();
+			var drawFlag=false;
+			if(currentLineData.dots&&currentLineData.length>0)
+			{
+				if(currentLineData.dots[0].x!=dot_x||currentLineData.dots[0].y!=dot_y)
+				{
+					drawFlag=true
+				}
+			}
+			else
+			{
+				drawFlag=true
+			}
+			if(drawFlag)
+			{
+				var lineObject=rule_edit_template.flow.getObjectById(currentLine.getId());
+				if(lineObject)
+				{//线还存在
+					rule_edit_template.flow.removeNode(currentLine.getId());//删除旧线
+					currentLineData.dots=[{x:dot_x,y:dot_y}];
+					var line=rule_edit_template.flow.addPath(currentLineData);
+					lineMap[currentLineData.from+"_"+currentLineData.to]=line;
+				}
+			}
+		}
+	}
+	else if(frontNode&&endNode&&endNode.ifId)
+	{//找到Join结点
+		
+		var normalGraphic=rule_edit_template.flow.getObjectById(frontNode.id);
+		var joinGrahpic=rule_edit_template.flow.getObjectById(endNodeId);
+		if(normalGraphic&&joinGrahpic)
+		{
+			var dot_x=joinGrahpic.getData().attr.x+joinGrahpic.getData().attr.width/2;
+			var dot_y=normalGraphic.getData().attr.y+normalGraphic.getData().attr.height/2;
+			var currentLineData=currentLine.getData();
+			var drawFlag=false;
+			if(currentLineData.dots&&currentLineData.length>0)
+			{
+				if(currentLineData.dots[0].x!=dot_x||currentLineData.dots[0].y!=dot_y)
+				{
+					drawFlag=true
+				}
+			}
+			else
+			{
+				drawFlag=true
+			}
+			if(drawFlag)
+			{
+				var lineObject=rule_edit_template.flow.getObjectById(currentLine.getId());
+				if(lineObject)
+				{//线还存在
+					rule_edit_template.flow.removeNode(currentLine.getId());//删除旧线
+					currentLineData.dots=[{x:dot_x,y:dot_y}];
+					var line=rule_edit_template.flow.addPath(currentLineData);
+					lineMap[currentLineData.from+"_"+currentLineData.to]=line;
+				}
+			}
+		}
+	}
+	
+}]]></script>
+</function><variable name="dataMap"><script><![CDATA[{}]]></script><comment><![CDATA[]]></comment></variable><variable name="RECT_WIDTH"><script><![CDATA[100]]></script><comment><![CDATA[]]></comment></variable><variable name="RECT_HEIGHT"><script><![CDATA[50]]></script><comment><![CDATA[]]></comment></variable><variable name="RECT_WIDTH_MIN"><script><![CDATA[25]]></script><comment><![CDATA[]]></comment></variable><variable name="CANVAS_WIDTH"><script><![CDATA[20480]]></script><comment><![CDATA[]]></comment></variable><variable name="CANVAS_HEIGHT"><script><![CDATA[10240]]></script><comment><![CDATA[]]></comment></variable><variable name="ZOOM_LEVEL"><script><![CDATA[1.2]]></script><comment><![CDATA[]]></comment></variable><variable name="gridDs"><script><![CDATA[]]></script><comment><![CDATA[]]></comment></variable><variable name="previousGridDs"><script><![CDATA[]]></script><comment><![CDATA[]]></comment></variable><variable name="previousFormDs"><script><![CDATA[]]></script><comment><![CDATA[]]></comment></variable><variable name="versionId"><script><![CDATA[]]></script><comment><![CDATA[]]></comment></variable><function
+	name="getObjById" arguments="objId">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(objId){
+	return dojo.query("#"+unieap.getElementById(objId).id);
+}]]>
+	</script>
+</function><function name="getReturnTypeName" arguments="id">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var ds=dataCenter.getDataStore("returnTypeStore");
+if(ds&&ds.getRowSet().getRowCount(0)>0)
+{
+	for(var i=0,n=ds.getRowSet().getRowCount(0);i<n;i++)
+	{
+		var realId = ds.getRowSet().getRow(i).getItemValue("id");
+		var name = ds.getRowSet().getRow(i).getItemValue("name");
+		if(realId==id)
+		{
+			return name; 
+		}
+	}
+}
+return "";]]>
+	</script>
+</function></scripts>
+      <templateInstances>
+	<templateInstance target="template3"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>false</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>uiParameterRef</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>id</name>
+            <label>id</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>id</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>paramType</name>
+            <label>paramType</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>paramType</name>
+              <label>paramType</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name</name>
+            <label>名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_name</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>name</name>
+              <label>名称</label>
+              <width>20%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_name_textBox</id>
+                <properties>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>tabIndex</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>password</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>inputFilter_filterRule</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>value</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>private_widget</string>
+                    <string>unieap.form.TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>required</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_prompts</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>width</string>
+                    <string>200px</string>
+                  </entry>
+                  <entry>
+                    <string>binding_markDirty</string>
+                    <string>true</string>
+                  </entry>
+                  <entry>
+                    <string>validator_realTime</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>binding_dataType</string>
+                    <string>string</string>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorCode</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_regExp</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>textBox</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>nextFocusId</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>maxLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>minLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validatorClass</string>
+                    <string>unieap.form.FormWidgetValidator</string>
+                  </entry>
+                  <entry>
+                    <string>globalEnabled</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>trim</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>binding_name</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>prompt_promptMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_duration</string>
+                    <string>1000</string>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>readOnly</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>disabled</string>
+                    <string>false</string>
+                  </entry>
+                </properties>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>refId</name>
+            <label>refId</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>refId</name>
+              <label>refId</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>property</name>
+            <label>标识</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_property</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>property</name>
+              <label>标识</label>
+              <width>20%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>true</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_property_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>orderNum</name>
+            <label>orderNum</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>orderNum</name>
+              <label>orderNum</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>kindId</name>
+            <label>kindId</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>kindId</name>
+              <label>kindId</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>parameterKind</name>
+            <label>parameterKind</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>parameterKind</name>
+              <label>parameterKind</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>isRequired</name>
+            <label>isRequired</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>isRequired</name>
+              <label>isRequired</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>returnType</name>
+            <label>返回值类型</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_returnType</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>returnType</name>
+              <label>返回值类型</label>
+              <decoder__store>returnTypeStore1</decoder__store>
+              <width>20%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>comboBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>auto</popup__height>
+                <id>cell_returnType_comboBox</id>
+                <properties>
+                  <entry>
+                    <string>popup_width</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>strictFilter</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>tabIndex</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>dataProvider_customItem</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>autoCompleter_queryName</string>
+                    <string>query</string>
+                  </entry>
+                  <entry>
+                    <string>dataFilter_spellAttr</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>autoCompleter_minQueryLength</string>
+                    <string>1</string>
+                  </entry>
+                  <entry>
+                    <string>popup_duration</string>
+                    <string>300</string>
+                  </entry>
+                  <entry>
+                    <string>dataFilter_ignoreCase</string>
+                    <string>true</string>
+                  </entry>
+                  <entry>
+                    <string>popup_animate</string>
+                    <string>true</string>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>dataFilter_filterMode</string>
+                    <string>include</string>
+                  </entry>
+                  <entry>
+                    <string>value</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>private_widget</string>
+                    <string>unieap.form.ComboBox</string>
+                  </entry>
+                  <entry>
+                    <string>required</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>cascade_defaultSelect</string>
+                    <string>true</string>
+                  </entry>
+                  <entry>
+                    <string>autoCompleter_alwaysSendRequest</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>hasDefault</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>validator_prompts</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>autoCompleter_url</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>width</string>
+                    <string>200px</string>
+                  </entry>
+                  <entry>
+                    <string>popup_displayStyle</string>
+                    <string>list</string>
+                  </entry>
+                  <entry>
+                    <string>focusShift</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>binding_markDirty</string>
+                    <string>true</string>
+                  </entry>
+                  <entry>
+                    <string>validator_realTime</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>dataFilter_relation</string>
+                    <string>||</string>
+                  </entry>
+                  <entry>
+                    <string>binding_dataType</string>
+                    <string>string</string>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorCode</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>showIcon</string>
+                    <string>true</string>
+                  </entry>
+                  <entry>
+                    <string>validator_regExp</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>decoder_valueAttr</string>
+                    <string>CODEVALUE</string>
+                  </entry>
+                  <entry>
+                    <string>comboShowSelect</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>popup_structure</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>separator</string>
+                    <string>,</string>
+                  </entry>
+                  <entry>
+                    <string>dataFilter_searchAttr</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>comboBox</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>iconClass</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>cascade_filterAttr</string>
+                    <string>FILTER</string>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>ComboBox</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>maxLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>minLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>decoder_displayAttr</string>
+                    <string>CODENAME</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>trim</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>binding_name</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>cascade_filterNull</string>
+                    <string>all</string>
+                  </entry>
+                  <entry>
+                    <string>textValidate</string>
+                    <string>true</string>
+                  </entry>
+                  <entry>
+                    <string>popup_pageSize</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>comboShowSelectText</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>autoCompleter_onBeforeSendQuery</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_promptMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_duration</string>
+                    <string>1000</string>
+                  </entry>
+                  <entry>
+                    <string>autoCompleter_onAfterSendQuery</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>dataType</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>readOnly</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>cascade_primary</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>dataFilter_filter</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>disabled</string>
+                    <string>true</string>
+                  </entry>
+                </properties>
+                <controlType>comboBox</controlType>
+                <dataProvider__store>returnTypeStore1</dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>returnTypeId</name>
+            <label>returnTypeId</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_returnTypeId</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>returnTypeId</name>
+              <label>returnTypeId</label>
+              <width>0px</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_returnTypeId_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>argType</name>
+            <label>argType</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>argType</name>
+              <label>argType</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>ref</name>
+            <label>ref</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>ref</name>
+              <label>ref</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>refValue</name>
+            <label>返回值</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_refValue</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>refValue</name>
+              <label>返回值</label>
+              <width>30%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_refValue_textBox</id>
+                <properties>
+                  <entry>
+                    <string>marginLeft</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>tabIndex</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>password</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>tip</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>height</string>
+                    <string>21px</string>
+                  </entry>
+                  <entry>
+                    <string>inputFilter_filterRule</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>value</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>overflowX</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>overflowY</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>private_widget</string>
+                    <string>unieap.form.TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>required</string>
+                    <string>true</string>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_dataFormat</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_prompts</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>marginTop</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>width</string>
+                    <string>200px</string>
+                  </entry>
+                  <entry>
+                    <string>binding_markDirty</string>
+                    <string>true</string>
+                  </entry>
+                  <entry>
+                    <string>validator_realTime</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>class</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>display</string>
+                    <string>block</string>
+                  </entry>
+                  <entry>
+                    <string>binding_dataType</string>
+                    <string>string</string>
+                  </entry>
+                  <entry>
+                    <string>overflow</string>
+                    <string>auto</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorCode</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>validator_regExp</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>position</string>
+                    <string>static</string>
+                  </entry>
+                  <entry>
+                    <string>private_tag</string>
+                    <string>textBox</string>
+                  </entry>
+                  <entry>
+                    <string>events</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>displayFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>editFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>private_label</string>
+                    <string>TextBox</string>
+                  </entry>
+                  <entry>
+                    <string>parentId</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>style</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>nextFocusId</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>maxLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validator_errorMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>minLength</string>
+                    <string>-1</string>
+                  </entry>
+                  <entry>
+                    <string>validatorClass</string>
+                    <string>unieap.form.FormWidgetValidator</string>
+                  </entry>
+                  <entry>
+                    <string>globalEnabled</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>left</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>textAlign</string>
+                    <string>left</string>
+                  </entry>
+                  <entry>
+                    <string>trim</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>binding_name</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>top</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>marginRight</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>prompt_promptMsg</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>prompt_duration</string>
+                    <string>1000</string>
+                  </entry>
+                  <entry>
+                    <string>marginBottom</string>
+                    <string>0</string>
+                  </entry>
+                  <entry>
+                    <string>readOnly</string>
+                    <string>false</string>
+                  </entry>
+                  <entry>
+                    <string>valueFormatter_declaredClass</string>
+                    <null/>
+                  </entry>
+                  <entry>
+                    <string>disabled</string>
+                    <string>true</string>
+                  </entry>
+                </properties>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>createDate</name>
+            <label>createDate</label>
+            <type>date</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>date</dataType>
+              <name>createDate</name>
+              <label>createDate</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>dateTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>dateTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>modifyDate</name>
+            <label>modifyDate</label>
+            <type>date</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>date</dataType>
+              <name>modifyDate</name>
+              <label>modifyDate</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>dateTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>dateTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>operation</name>
+            <label>操作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_operation</id>
+              <properties/>
+              <name>operation</name>
+              <label>操作</label>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+              <enable>false</enable>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>uiParameterRef</binding__store>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid1</id>
+        <lastId>grid1</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiRuleBusiness</name>
+            <entityClass>UiRuleBusiness</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiRuleBusiness</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiParameterRef</name>
+            <entityClass>UiParameterRef</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiParameterRef</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiRule</name>
+            <entityClass>UiRule</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiRule</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid1_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <id>grid1_ToolBar</id>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>grid1_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid1_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>cellEdit</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>25</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX></ID__PREFIX>
+        <showToolBar>false</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid1</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance>
+<templateInstance target="template2"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Toolbar</functionName>
+  <description>该向导用于快速生成工具栏控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.toolbar_1.0.0</templateId>
+    <label>Toolbar</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成工具栏控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>ToolBar1</string>
+    </entry>
+    <entry>
+      <string>toolBarHeight</string>
+      <string>30px</string>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>ToolBar</string>
+      <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarInfo>
+        <WIDTH>width</WIDTH>
+        <COLWIDTH>colwidth</COLWIDTH>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <id>button11</id>
+            <name>button11</name>
+            <label>保存</label>
+            <type>button</type>
+            <width>140px</width>
+            <colWidth>145px</colWidth>
+            <widthType>px</widthType>
+            <iconClass></iconClass>
+            <alignType>右对齐</alignType>
+            <value>保存</value>
+            <properties/>
+          </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+        </propertyList>
+        <alignType>1</alignType>
+        <height>30px</height>
+        <id>ToolBar1</id>
+        <colNum>6</colNum>
+        <noNeedNewAlign>false</noNeedNewAlign>
+        <tableInfo>
+          <id>ToolBar1</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <controlIDPre></controlIDPre>
+        <tableLayout>fixed</tableLayout>
+        <width>100%</width>
+        <properties/>
+        <trHeight>30px</trHeight>
+        <colCount>0</colCount>
+      </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance><templateInstance target="template4"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList/>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid1</id>
+        <lastId></lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiRuleBusiness</name>
+            <entityClass>UiRuleBusiness</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiRuleBusiness</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiParameterRef</name>
+            <entityClass>UiParameterRef</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiParameterRef</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiRule</name>
+            <entityClass>UiRule</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiRule</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid1_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <id>grid1_ToolBar</id>
+          <properties/>
+        </toolBar>
+        <isMerge>false</isMerge>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid1_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX></ID__PREFIX>
+        <showToolBar>true</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid1</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+	<resource type="jsp" src="/arithengine/jsp/svg.jsp" />
+	<resource type="jsp" src="/arithengine/jsp/util.jsp" />
+</resources>
+   </dc:view>
+</dc:dc>
+

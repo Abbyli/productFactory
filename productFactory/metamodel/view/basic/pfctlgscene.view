@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="think" />
+         <creationTime value="2015-12-28 16:16:54" />
+         <modificationTime value="2016-03-08 16:57:36" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<dependence name="pfctlgscene.business.xml"
+		ref="pfctlgscene.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="getPfCtlgBizs" onSuccess="getPfCtlgBizsSuccess"
+		sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfctlgscene.business.xml" method="pfctlgscene.getPfCtlgBizs"></bo>
+	</pMethod>
+	<pMethod name="getPfCtlgScenes" onSuccess="getPfCtlgScenesSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfctlgscene.business.xml" method="pfctlgscene.getPfCtlgScenes"></bo>
+		
+		<context>
+			<string name="pageNumber" />
+			<string name="pageSize" />
+		</context>
+		<arguments>
+			<argument name="pageNumber" type="string"></argument>
+			<argument name="pageSize" type="string"></argument>
+		</arguments>
+	<pagingQuery pageNumber="1" pageSize="10" calcRecordCount="true"></pagingQuery></pMethod>
+	<pMethod name="delPfCtlgScene" onSuccess="delPfCtlgSceneSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfctlgscene.business.xml" method="pfctlgscene.delPfCtlgScene"></bo>
+<context><pojo name="pfCtlgScene" dataStoreName="pfCtlgScene_grid" /></context><arguments><argument name="pfCtlgScene" type="dataStore"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfCtlgBiz_decode" dependence="pfCtlgBiz" dc="factory"
+		path="pfCtlgBiz.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="pid" label="父节点ID" type="string" length="32" />
+			<column name="name" label="业务分类名称" type="string" length="300" />
+			<column name="description" label="业务分类描述" type="string"
+				length="3000" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+	<dataStore name="pfCtlgScene_grid" dependence="pfCtlgScene"
+		dc="factory" path="pfCtlgScene.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="name" label="名称" type="string" length="300" />
+			<column name="code" label="场景编码" type="string" length="64" />
+			<column name="description" label="场景描述" type="string" length="3000" />
+			<column name="ctlgBizId" label="所属业务分类ID" type="string"
+				length="32" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><xdialog id="xdialog_modify_pfctlgscene" title="场景分类信息"
+	height="230px" width="500px" view-ref="factory/basic/pfctlgsceneDialog">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog_modify_pfctlgscene_onComplete">
+			<function name="xdialog_modify_pfctlgscene_onComplete"
+				arguments="returnObj">
+				<script><![CDATA[view.processor.getPfCtlgScenes(1, 10);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><titlePane id="titlePane_pfctlgscene" title="场景分类列表" width="100%" height="100%" flexible="false"><div id="div_pfctlgscene" height="30px" type="buttons"><button
+	id="addBtn_pfctlgscene" label="新 增" class="titlePane-button" width="100px" iconClass="common_base_btn common_new_btn">
+	<events>
+		<event name="onClick" handlerFunction="addBtn_pfctlgscene_onClick">
+			<function name="addBtn_pfctlgscene_onClick" arguments="event">
+				<script><![CDATA[var xdialog = unieap.byId("xdialog_modify_pfctlgscene");
+xdialog.dialogData = ["add", ds_pfCtlgBizs];
+xdialog.show();]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="updateBtn_pfctlgscene" label="修 改(不使用)"
+	class="titlePane-button" width="100px" style="display:none">
+	<events>
+		<event name="onClick" handlerFunction="updateBtn_pfctlgscene_onClick">
+			<function name="updateBtn_pfctlgscene_onClick" arguments="event">
+				<script><![CDATA[//var selectRow = view.grid.getRow("grid_pfctlgscene");
+//if(selectRow){
+//	var xdialog = unieap.byId("xdialog_modify_pfctlgscene");
+//	xdialog.dialogData = ["update", ds_pfCtlgBizs, selectRow];
+//	xdialog.show();
+//
+//}
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="delBtn_pfctlgscene" label="删 除(不使用)" class="titlePane-button"
+	width="100px" style="display:none">
+	<events>
+		<event name="onClick" handlerFunction="delBtn_pfctlgscene_onClick">
+			<function name="delBtn_pfctlgscene_onClick" arguments="event">
+				<script><![CDATA[//var selectRow = view.grid.getRow("grid_pfctlgscene");
+//if(selectRow){
+//	MessageBox.confirm({
+//	    message: "是否删除？",
+//	    yesStr: "是",
+//	    noStr: "否",
+//	    //关闭右上角的"X"按钮时执行onComplete函数
+//	    iconCloseComplete:false,
+//	    onComplete: function(value) {
+//	        if (value) {
+//		    	view.processor.delPfCtlgScene(selectRow);
+//		    }
+//	    }
+//	}, dojo.byId("confirm"));
+//
+//}]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template1" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <xgrid binding-store="pfCtlgScene_grid" detail-expandAll="false" edit-editType="readonly" 
+  edit-focusShift="true" edit-singleClickEdit="false" group-groupBar="false" height="100%" 
+  id="grid_pfctlgscene" rows-rowsPerPage="10" tree-collapse="true" 
+  tree-collapseAll="true" tree-expand="true" tree-expandAll="true" views-rowBar="true" 
+  views-rowNumber="true">
+    <toolbar paging-userPageSize="false"></toolbar>
+    <header>
+      <row>
+        <xcell dataType="string" enable="false" height="25px" id="cell_name__pfctlgscene" label="名称" name="name" width="30%"></xcell>
+        <xcell dataType="string" enable="false" height="25px" id="cell_code__pfctlgscene" label="场景编码" name="code" width="30%"></xcell>
+        <xcell dataType="string" enable="false" height="25px" id="cell_ctlgBizId__pfctlgscene" label="所属业务分类" name="ctlgBizId" width="30%"></xcell>
+        <xcell enable="false" id="cell_control__pfctlgscene"
+	label="操作" name="control" width="10%" styles="text-align:center">
+	<events>
+		<event name="formatter" handlerFunction="cell_control__pfctlgscene_formatter">
+			<function name="cell_control__pfctlgscene_formatter"
+				arguments="inValue,inRowIndex">
+				<script><![CDATA[var editImg=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_edit.png";
+var editImg_h=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_edit_h.png";
+var delImg=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_o.png";
+var delImg_h=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_h.png";
+
+var editHTML="<img src='"+editImg+"' style='cursor:pointer;' title='修改' onclick='pfctlgscene.edit("+inRowIndex+");' onmouseover='this.src=\""+editImg_h+"\"' onmouseout='this.src=\""+editImg+"\"'></img>";
+var delHTML="<img src='"+delImg+"' style='cursor:pointer;' title='删除' onclick='pfctlgscene.del("+inRowIndex+");' onmouseover='this.src=\""+delImg_h+"\"' onmouseout='this.src=\""+delImg+"\"'></img>";
+return editHTML+"&nbsp;&nbsp;"+delHTML;]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+      </row>
+    </header>
+    <events>
+      <event handlerFunction="grid_pfctlgscene_binding_rpc" name="binding-rpc">
+        <function arguments="store,load" name="grid_pfctlgscene_binding_rpc">
+          <script><![CDATA[view.processor.getPfCtlgScenes(store.getPageNumber(), store.getPageSize());]]></script>
+        </function>
+      </event>
+    </events>
+  </xgrid></template></titlePane><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[view.processor.getPfCtlgScenes(1, 10);]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[view.processor.getPfCtlgBizs();]]></script></function></event></events><dependence name="factory/basic/pfctlgsceneDialog" type="view" sc="ProductFactory" dc="factory" ref="basic/pfctlgsceneDialog" /></controls>
+      <scripts ><function name="getPfCtlgScenesSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfCtlgScenes方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//grid转码
+var new_ds_pfCtlgBizs = ds_pfCtlgBizs.clone("ds_pfCtlgBizs"+new Date().getTime());
+//unieap.byId("grid_pfctlgscene").getCell("ctlgBizId").decoder 
+unieap.byId("grid_pfctlgscene").getLayoutManager().getCell("ctlgBizId").decoder 
+	= {displayAttr:"label", valueAttr:"id", store:new_ds_pfCtlgBizs};
+//grid赋值
+var ds_rtnPfCtlgScenes = dc.getDataStore("rtnPfCtlgScenes");
+view.grid.setDataStore("grid_pfctlgscene", ds_rtnPfCtlgScenes);]]></script>
+</function><function name="getPfCtlgBizsSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfCtlgBizs方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[ds_pfCtlgBizs = dc.getDataStore("rtnPfCtlgBizs");]]></script>
+</function><variable name="ds_pfCtlgBizs"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><function
+	name="delPfCtlgSceneSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:delPfCtlgScene方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var rtnMessage = dc.getParameter("rtnMessage");
+if(rtnMessage == ""){
+	view.processor.getPfCtlgScenes(1, 10);
+	
+}else{
+	MessageBox.alert({
+		title:'提示',
+		message:rtnMessage
+	});
+	
+}]]></script>
+</function><function name="edit" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var selectRow = view.grid.getRow("grid_pfctlgscene", inRowIndex);
+if(selectRow){
+	var xdialog = unieap.byId("xdialog_modify_pfctlgscene");
+	xdialog.dialogData = ["update", ds_pfCtlgBizs, selectRow];
+	xdialog.show();
+
+}
+]]>
+	</script>
+</function><function name="del" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var selectRow = view.grid.getRow("grid_pfctlgscene", inRowIndex);
+if(selectRow){
+	MessageBox.confirm({
+	    message: "是否删除？",
+	    yesStr: "是",
+	    noStr: "否",
+	    //关闭右上角的"X"按钮时执行onComplete函数
+	    iconCloseComplete:false,
+	    onComplete: function(value) {
+	        if (value) {
+		    	view.processor.delPfCtlgScene(selectRow);
+		    }
+	    }
+	}, dojo.byId("confirm"));
+
+}]]>
+	</script>
+</function></scripts>
+      <templateInstances ><templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>pfCtlgScene_grid</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>id</name>
+            <label>id</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_id</id>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>headerStyles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>canSort</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>styles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>noresize</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>tip</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>cascade_getCascadeStore</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>cascade_primary</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>decoder_displayAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>left</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>private_widget</string>
+                  <string>unieap.grid.Cell</string>
+                </entry>
+                <entry>
+                  <string>decoder_valueAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>top</string>
+                  <string>0</string>
+                </entry>
+              </properties>
+              <dataType>string</dataType>
+              <name>id</name>
+              <label>id</label>
+              <width>100px</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>id__pfctlgscene_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name</name>
+            <label>名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_name__pfctlgscene</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>name</name>
+              <label>名称</label>
+              <width>30%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>name__pfctlgscene_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>240</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>code</name>
+            <label>场景编码</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_code__pfctlgscene</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>code</name>
+              <label>场景编码</label>
+              <width>30%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>code__pfctlgscene_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>64</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>description</name>
+            <label>场景描述</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_description</id>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>headerStyles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>canSort</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>styles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>noresize</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>tip</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>cascade_getCascadeStore</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>cascade_primary</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>valueFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>decoder_displayAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>private_widget</string>
+                  <string>unieap.grid.Cell</string>
+                </entry>
+                <entry>
+                  <string>left</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>decoder_valueAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>top</string>
+                  <string>0</string>
+                </entry>
+              </properties>
+              <dataType>string</dataType>
+              <name>description</name>
+              <label>场景描述</label>
+              <width>25%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>description__pfctlgscene_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>1500</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>ctlgBizId</name>
+            <label>所属业务分类</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_ctlgBizId__pfctlgscene</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>ctlgBizId</name>
+              <label>所属业务分类</label>
+              <width>30%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>ctlgBizId__pfctlgscene_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>control</name>
+            <label>操作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_control__pfctlgscene</id>
+              <properties/>
+              <dataType></dataType>
+              <name>control</name>
+              <label>操作</label>
+              <width>10%</width>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>pfCtlgScene_grid</binding__store>
+        <views__rowBar>true</views__rowBar>
+        <selection__selectType>single</selection__selectType>
+        <id>grid_pfctlgscene</id>
+        <lastId>grid_pfctlgscene</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfCtlgScene_grid</name>
+            <entityClass>PfCtlgScene</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfCtlgScene</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfCtlgBiz_decode</name>
+            <entityClass>PfCtlgBiz</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfCtlgBiz</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid_pfctlgscene_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <paging__userPageSize>false</paging__userPageSize>
+          <id>grid_pfctlgscene_ToolBar</id>
+          <export__options></export__options>
+          <innerButtons></innerButtons>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>grid_pfctlgscene_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid_pfctlgscene_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX>_pfctlgscene</ID__PREFIX>
+        <showToolBar>true</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string>_pfctlgscene</string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid_pfctlgscene</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

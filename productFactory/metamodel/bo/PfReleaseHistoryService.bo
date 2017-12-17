@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.fdframework.productfactory.blo.PfReleaseHistoryServiceImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <import value="java.io.BufferedOutputStream" />
+      <import value="java.io.File" />
+      <import value="java.io.FileOutputStream" />
+      <import value="java.io.IOException" />
+      <import value="java.math.BigDecimal" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.Date" />
+      <import value="java.util.HashMap" />
+      <import value="java.util.Iterator" />
+      <import value="java.util.List" />
+      <import value="java.util.Map" />
+      <import value="javax.annotation.Resource" />
+      <import value="javax.xml.parsers.DocumentBuilder" />
+      <import value="javax.xml.parsers.DocumentBuilderFactory" />
+      <import value="javax.xml.parsers.ParserConfigurationException" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="org.w3c.dom.Document" />
+      <import value="org.w3c.dom.Element" />
+      <import value="org.xml.sax.SAXException" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfEntityPropertyDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfEntityDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfParamDefDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfPrdtElementDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfPrdtExtpointDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfPrdtSceneDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfProduct2ModelDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfReleaseHistoryDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.UploadFileDao" />
+      <import value="com.neusoft.fdframework.productfactory.dto.AvalueAlogrithmParamDto" />
+      <import value="com.neusoft.fdframework.productfactory.dto.EntityPropAndPropShowDto" />
+      <import value="com.neusoft.fdframework.productfactory.dto.ObjHookCtlgHookParamDto" />
+      <import value="com.neusoft.fdframework.productfactory.dto.ObjSKElementPfPropShowDto" />
+      <import value="com.neusoft.fdframework.productfactory.dto.PrdtSceneDto" />
+      <import value="com.neusoft.fdframework.productfactory.dto.ProductVerRiskVerDTO" />
+      <import value="com.neusoft.fdframework.productfactory.dto.RvalueRuleParamDto" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjAttach" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjEntity" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfOpPubHis" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfParamDef" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+      <import value="com.neusoft.fdframework.security.common.base.BaseService" />
+      <import value="com.neusoft.fdframework.util.XMLUtil" />
+      <import value="com.neusoft.pf.proxy.FileManager" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="AvalueAlogrithmParamDto" type="dto" dc="factory" ref="AvalueAlogrithmParam" />
+      <dependence name="EntityPropAndPropShowDto" type="dto" dc="factory" ref="EntityPropAndPropShow" />
+      <dependence name="ObjHookCtlgHookParamDto" type="dto" dc="factory" ref="ObjHookCtlgHookParam" />
+      <dependence name="ObjSKElementPfPropShowDto" type="dto" dc="factory" ref="ObjSKElementPfPropShow" />
+      <dependence name="PrdtSceneDto" type="dto" dc="factory" ref="PrdtScene" />
+      <dependence name="ProductVerRiskVerDTO" type="dto" dc="factory" ref="ProductVerRiskVerDTO" />
+      <dependence name="RvalueRuleParamDto" type="dto" dc="factory" ref="RvalueRuleParam" />
+      <dependence name="PfMEntity" type="entity" dc="factory" ref="pfMEntity" />
+      <dependence name="PfObjAttach" type="entity" dc="factory" ref="pfObjAttach" />
+      <dependence name="PfObjEntity" type="entity" dc="factory" ref="pfObjEntity" />
+      <dependence name="PfObjRisk" type="entity" dc="factory" ref="pfObjRisk" />
+      <dependence name="PfOpPubHis" type="entity" dc="factory" ref="pfOpPubHis" />
+      <dependence name="PfOpPubObj" type="entity" dc="factory" ref="pfOpPubObj" />
+      <dependence name="PfParamDef" type="entity" dc="factory" ref="pfParamDef" />
+      <dependence name="PfPropEventDef" type="entity" dc="factory" ref="pfPropEventDef" />
+      <method name="PfReleaseHistoryServiceImpl" returnType="" accessStrategy="public" />
+      <method name="getReleaseTime" returnType="long" accessStrategy="public">
+         <comment><![CDATA[发布时间
+@return]]></comment>
+      </method>
+      <method name="getPubObjsByCondition" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[查询发布状态的对象]]></comment>
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+         <parameter name="pfObjRisk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+      </method>
+      <method name="initXmlLog" returnType="void" accessStrategy="public">
+         <comment><![CDATA[初始化发布记录]]></comment>
+         <parameter name="xmlPath" type="String" />
+         <parameter name="type" type="String" />
+      </method>
+      <method name="updateXMLRiskVersinTime" returnType="void" accessStrategy="public">
+         <comment><![CDATA[更新险种发布记录xml文件]]></comment>
+         <parameter name="xmlPath" type="String" />
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+         <parameter name="publishTime" type="long" />
+      </method>
+      <method name="getEntityXml" returnType="String" accessStrategy="private">
+         <comment><![CDATA[entity.xml]]></comment>
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+         <parameter name="currentTime" type="long" />
+         <parameter name="type" type="int" />
+      </method>
+      <method name="getAlgoXml" returnType="String" accessStrategy="public">
+         <comment><![CDATA[algo.xml]]></comment>
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+         <parameter name="currentTime" type="Long" />
+      </method>
+      <method name="getRuleXml" returnType="String" accessStrategy="public">
+         <comment><![CDATA[rule.xml]]></comment>
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+         <parameter name="currentTime" type="Long" />
+      </method>
+      <method name="getHookXmlAndJS" returnType="String" accessStrategy="public">
+         <comment><![CDATA[接触点js]]></comment>
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+         <parameter name="currentTime" type="Long" />
+         <parameter name="riskVerPath" type="String" />
+      </method>
+      <method name="getAttachXmlAndFile" returnType="String" accessStrategy="public">
+         <comment><![CDATA[attach.xml,复制文件
+type = 1 险种, type = 2产品]]></comment>
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+         <parameter name="currentTime" type="Long" />
+         <parameter name="riskVerPath" type="String" />
+         <parameter name="type" type="int" />
+      </method>
+      <method name="downLoad" returnType="java.io.File" accessStrategy="public">
+         <comment><![CDATA[zip下载
+@param formId4Download
+@return]]></comment>
+         <parameter name="formId4Download" type="String" />
+      </method>
+      <method name="exportRisk" returnType="String" accessStrategy="public">
+         <comment><![CDATA[发布险种]]></comment>
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+      </method>
+      <method name="exportProduct" returnType="String" accessStrategy="public">
+         <comment><![CDATA[发布产品]]></comment>
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+      </method>
+      <method name="getProductRelatedRiskXml" returnType="String" accessStrategy="public">
+         <comment><![CDATA[产品关联险种xml]]></comment>
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+         <parameter name="currentTime" type="Long" />
+      </method>
+      <method name="getSceneElementXml" returnType="String" accessStrategy="public">
+         <comment><![CDATA[场景要素]]></comment>
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+         <parameter name="currentTime" type="Long" />
+      </method>
+      <method name="updateXMLProductVersinTime" returnType="void" accessStrategy="public">
+         <comment><![CDATA[更新险种发布记录xml文件]]></comment>
+         <parameter name="xmlPath" type="String" />
+         <parameter name="pfOpPubObj" type="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+         <parameter name="currentTime" type="long" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

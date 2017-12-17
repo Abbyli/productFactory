@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+  <dc:entity class="com.neusoft.fdframework.productfactory.entity.PfOpPubHis" table="PF_OP_PUB_HIS" extends="com.neusoft.unieap.core.di.DomainObject">
+    <id name="id" type="string" getStrategy="public" setStrategy="public">
+      <column name="ID" length="32" />
+      <generator class="uuid" />
+    </id>
+    <property name="publishTime" label="发布时间" type="date" getStrategy="public" setStrategy="public">
+      <column name="PUBLISH_TIME" not-null="true" />
+    </property>
+    <property name="publisher" label="发布人" type="string" getStrategy="public" setStrategy="public">
+      <column name="PUBLISHER" not-null="true" length="32" />
+    </property>
+    <property name="publisherName" label="发布人姓名" type="string" getStrategy="public" setStrategy="public">
+      <column name="PUBLISHER_NAME" not-null="true" length="128" />
+    </property>
+    <property name="publishContent" label="发布内容" type="org.springframework.orm.hibernate3.support.ClobStringType" getStrategy="public" setStrategy="public">
+      <column name="PUBLISH_CONTENT" not-null="true" />
+    </property>
+    <property name="description" label="发布备注" type="string" getStrategy="public" setStrategy="public">
+      <column name="DESCRIPTION" not-null="false" length="3000" />
+    </property>
+    <property name="successFlag" label="0:发布异常 1:发布成功" type="big_decimal" getStrategy="public" setStrategy="public">
+      <column name="SUCCESS_FLAG" not-null="true" length="22" />
+    </property>
+    <import value="java.io.Serializable" />
+    <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+    <import value="com.neusoft.fdframework.core.annotation.Column" />
+    <import value="com.neusoft.fdframework.core.annotation.Entity" />
+    <import value="com.neusoft.fdframework.core.annotation.ID" />
+    <import value="com.neusoft.fdframework.core.annotation.Transient" />
+    <import value="com.neusoft.unieap.core.di.DomainObject" />
+  </dc:entity>
+</dc:dc>
+

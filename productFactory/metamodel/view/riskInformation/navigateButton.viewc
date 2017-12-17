@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="liu.w" />
+         <creationTime value="2016-01-22 08:48:26" />
+         <modificationTime value="2017-02-21 10:21:46"/>
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor />
+      <message>
+         <triggers />
+         <listeners />
+      </message>
+      <dataCenter />
+      <controls ><html id="html1"><![CDATA[<!--<style>
+.navBtn_back {
+	margin-bottom:5px;
+	border-left-width: 0px !important;
+    	border-right-width: 0px !important;
+}
+.navBtn_back button{
+	background-color:#ebf3fb !important;
+}
+.navBtn {
+	margin-bottom:5px;
+	border:0px !important;
+}
+.navBtn button{
+	background-color:#ebf3fb !important;
+}
+.navBtn-icon{
+	margin-right:8px;
+	margin-bottom:0px;
+	display:inline-block;
+	width:24px;
+	height:24px;
+	background:url("../../ProductFactory/factory/navigateButton/icon.png") no-repeat;
+}
+.navBtn_back{
+	background:url("../../ProductFactory/factory/navigateButton/icon_back.png") no-repeat;
+}
+.unieap .navBtn-active .u-form-btn-txt{
+	color:#1e81d4;
+	font-weight: bold;
+}
+.navBtn_active{
+	background:url("../../ProductFactory/factory/navigateButton/icon_active.png") no-repeat;
+}
+</style>-->]]></html><div id="div1" height="100%" style="background-color:#ebf3fb;height:100%"><button
+	id="button_back" label="返&amp;nbsp;&amp;nbsp;&amp;nbsp;回" toolTip="返回"
+	width="100px" class="navBtn_back" iconClass="navBtn-icon navBtn_back"
+	height="28px">
+	<events>
+		<event name="onClick" handlerFunction="button_back_onClick">
+			<function name="button_back_onClick" arguments="event">
+				<script><![CDATA[var rtnDc = new unieap.ds.DataStore();
+view.navigator.prePage("返回", rtnDc);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="base" label="基本信息" width="100px" class="navBtn"
+	height="27px" iconClass="navBtn-icon">
+	<events>
+		<event name="onClick" handlerFunction="base_onClick">
+			<function name="base_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "审核险种信息"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfRiskInfDetail","审核险种信息",newDC);
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="param" label="参数定义" height="27px" class="navBtn" iconClass="navBtn-icon" width="100px">
+	<events>
+		<event name="onClick" handlerFunction="param_onClick">
+			<function name="param_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "险种参数信息"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfRiskParamTabInf","险种参数信息",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="duty" label="定价责任" iconClass="navBtn-icon"
+	width="100px" height="27px" class="navBtn">
+	<events>
+		<event name="onClick" handlerFunction="duty_onClick">
+			<function name="duty_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "险种定价责任"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfRiskPricingInf","险种定价责任",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="get" label="保障责任" height="27px" class="navBtn"
+	iconClass="navBtn-icon" width="100px">
+	<events>
+		<event name="onClick" handlerFunction="get_onClick">
+			<function name="get_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "保障责任信息"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfRiskProtectInf","保障责任信息",newDC);
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="liablimit" label="责任限额" class="navBtn" height="27px" width="100px" iconClass="navBtn-icon">
+	<events>
+		<event name="onClick" handlerFunction="liablimit_onClick">
+			<function name="liablimit_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "险种责任限额信息"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfRiskLiabLimitInf","险种责任限额信息",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="account" label="账户定义" width="100px" height="27px" iconClass="navBtn-icon" class="navBtn">
+	<events>
+		<event name="onClick" handlerFunction="account_onClick">
+			<function name="account_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "险种账户信息"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfRiskAccInf","险种账户信息",newDC);
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="feemanage" label="费用管理" height="27px" class="navBtn" iconClass="navBtn-icon" width="100px">
+	<events>
+		<event name="onClick" handlerFunction="feemanage_onClick">
+			<function name="feemanage_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "险种费用管理信息"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfFeeManageinf","险种费用管理信息",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="Attrib" label="保全属性" width="100px" height="27px" iconClass="navBtn-icon" class="navBtn">
+	<events>
+		<event name="onClick" handlerFunction="Attrib_onClick">
+			<function name="Attrib_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "保全属性信息"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfRiskAttribInf","保全属性信息",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="item" label="保全定义" width="100px" height="27px" class="navBtn" iconClass="navBtn-icon">
+	<events>
+		<event name="onClick" handlerFunction="item_onClick">
+			<function name="item_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "险种保全项信息"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfRiskItemInf","险种保全项信息",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="itemProperty" label="保全算法" width="100px" iconClass="navBtn-icon" height="27px" class="navBtn" style="display:none">
+	<events>
+		<event name="onClick" handlerFunction="itemProperty_onClick">
+			<function name="itemProperty_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "险种保全属性定义"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","risk/pfRiskItemProperty","险种保全属性定义",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="ratemanage" label="精算数据" class="navBtn"
+	iconClass="navBtn-icon" height="27px" width="100px" style="display:none">
+	<events>
+		<event name="onClick" handlerFunction="ratemanage_onClick">
+			<function name="ratemanage_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "险种精算数据"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","risk/pfRiskRateManage","险种精算数据",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="riskamnt" label="风险保额" width="100px" class="navBtn"
+	height="27px" iconClass="navBtn-icon">
+	<events>
+		<event name="onClick" handlerFunction="riskamnt_onClick">
+			<function name="riskamnt_onClick" arguments="event">
+				<script><![CDATA[var navigatorContainer = view.navigator._getNavigatorContainer();
+if(navigatorContainer.title == "险种风险保额信息"){
+	return;
+}
+var newDC = view.prepareDCParameter();
+view.backToRiskConfig(navigatorContainer);
+view.navigator.forward("ProductFactory","factoryabclife","riskInformation/pfRiskAmntInf","险种风险保额信息",newDC);]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><events></events></controls>
+      <scripts ><function name="backToRiskConfig" arguments="navigatorContainer">
+	<script><![CDATA[//navigatorContainer.tablistContainer.style.display="none";
+var navigatorList = navigatorContainer.navigatorList;
+var page = null;
+for(var i = 0;i<navigatorList.length;i++){
+	if(navigatorList[i].title == "产品审核"){
+		page =	navigatorList[i];
+		break;
+	}
+}
+if(page){
+	navigatorContainer.tablist.onButtonClick(page);
+}
+]]>
+	</script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function name="prepareDCParameter" arguments="">
+	<script><![CDATA[var newDC = new unieap.ds.DataCenter();
+newDC.addDataStore("tInsurtypeBasicInf", dataCenter.getDataStore("tInsurtypeBasicInf"));
+return newDC;]]>
+	</script>
+</function><function name="activeNavigateButton" arguments="id">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var navbtn = unieap.byId(id);
+navbtn.setIconClass("navBtn-icon navBtn_active");
+dojo.addClass(navbtn.domNode,"navBtn-active")]]>
+	</script>
+</function><function name="showBtn" arguments="ds">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(ds.rowSet.primary[0].designType == "03"){
+	unieap.byId("account").setDisplay("block");
+	unieap.byId("feemanage").setDisplay("block");
+	}else{
+	unieap.byId("account").setDisplay("none");
+	unieap.byId("feemanage").setDisplay("none");
+	}]]></script>
+</function></scripts>
+      <templateInstances />
+      <resources>
+	<resource type="style"
+		src="/ProductFactory/factoryabclife/navigateButton/navigateButton.css" />
+</resources>
+   </dc:view>
+</dc:dc>
+

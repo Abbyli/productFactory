@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="dong-yw" />
+         <creationTime value="2014-06-30 10:34:06" />
+         <modificationTime value="2014-12-11 15:53:08" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getSysSecUserPage" onSuccess="getSysSecUserPageSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<context>
+		
+		<pojo name="user" dataStoreName="sysSecUser1" /><string name="pageNumber" />
+		<string name="pageSize" />
+	</context>
+	<arguments>
+		
+		
+		
+	<argument name="user" type="dataStore"></argument><argument name="pageNumber" type="string"></argument><argument name="pageSize" type="string"></argument></arguments>
+	<pagingQuery pageNumber="1" pageSize="10" calcRecordCount="true"></pagingQuery>
+	<bo name="userManager.business.xml" method="security.user.getUserPageForUnieap"></bo>
+</pMethod>
+	<dependence name="userManager.business.xml"
+		ref="userManager.business.xml | com.neusoft.business" dc="security" />
+	<pMethod name="updateLockedStatus" onSuccess="updateLockedStatusSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			
+			<pojoList name="userList" dataStoreName="sysSecUser" /><string name="accountLocked" />
+			<string name="accountLockedReason" />
+		</context>
+		<arguments>
+			
+			
+			
+		<argument name="userList" type="dataStore"></argument><argument name="accountLocked" type="string"></argument><argument name="accountLockedReason" type="string"></argument></arguments>
+		<bo name="userManager.business.xml" method="security.user.updateLockedStatusForUnieap"></bo>
+	</pMethod>
+	<pMethod name="updateEnableStatus" onSuccess="updateEnableStatusSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<context>
+		
+		<pojoList name="userList" dataStoreName="sysSecUser" /><string name="accountEnabled" />
+	</context>
+	<arguments>
+		
+		
+	<argument name="userList" type="dataStore"></argument><argument name="accountEnabled" type="string"></argument></arguments>
+	<bo name="userManager.business.xml" method="security.user.updateEnabledStatusForUnieap"></bo>
+</pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="sysSecUser" dependence="sysSecUser"
+		path="com.neusoft.fdframework.security.entity.SysSecUser" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="account" label="account" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="code" label="code" type="string" />
+			<column name="type" label="type" type="string" />
+			<column name="passwo" label="passwo" type="string" />
+			<column name="description" label="description" type="string" />
+			<column name="passwordChangeDate" label="passwordChangeDate"
+				type="date" />
+			<column name="accountEnabled" label="accountEnabled" type="string" />
+			<column name="accountLocked" label="accountLocked" type="string" />
+			<column name="accountLockedReason" label="accountLockedReason"
+				type="string" />
+			<column name="sex" label="sex" type="string" />
+			<column name="birthdate" label="birthdate" type="date" />
+			<column name="nationality" label="nationality" type="string" />
+			<column name="credentialsType" label="credentialsType" type="string" />
+			<column name="credentialsNumber" label="credentialsNumber"
+				type="string" />
+			<column name="email" label="email" type="string" />
+			<column name="mobileTelephone" label="mobileTelephone" type="string" />
+			<column name="homeTelephone" label="homeTelephone" type="string" />
+			<column name="officeTelephone" label="officeTelephone" type="string" />
+			<column name="fax" label="fax" type="string" />
+			<column name="homeAddress" label="homeAddress" type="string" />
+			<column name="creator" label="creator" type="string" />
+			<column name="creationDate" label="creationDate" type="date" />
+			<column name="lastUpdator" label="lastUpdator" type="string" />
+			<column name="lastUpdateDate" label="lastUpdateDate" type="date" />
+			<column name="loginTime" label="loginTime" type="date" />
+			<column name="loginErrorPasswoNum" label="loginErrorPasswoNum"
+				type="integer" />
+			<column name="loginErrorPasswoTime" label="loginErrorPasswoTime"
+				type="date" />
+		</columns>
+	</dataStore>
+	<dataStore name="sysSecUser1" dependence="sysSecUser" dc="security"
+		path="com.neusoft.fdframework.security.entity.SysSecUser" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="account" label="account" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="code" label="code" type="string" />
+			<column name="type" label="type" type="string" />
+			<column name="passwo" label="passwo" type="string" />
+			<column name="description" label="description" type="string" />
+			<column name="passwordChangeDate" label="passwordChangeDate"
+				type="date" />
+			<column name="accountEnabled" label="accountEnabled" type="string" />
+			<column name="accountLocked" label="accountLocked" type="string" />
+			<column name="accountLockedReason" label="accountLockedReason"
+				type="string" />
+			<column name="sex" label="sex" type="string" />
+			<column name="birthdate" label="birthdate" type="date" />
+			<column name="nationality" label="nationality" type="string" />
+			<column name="credentialsType" label="credentialsType" type="string" />
+			<column name="credentialsNumber" label="credentialsNumber"
+				type="string" />
+			<column name="email" label="email" type="string" />
+			<column name="mobileTelephone" label="mobileTelephone" type="string" />
+			<column name="homeTelephone" label="homeTelephone" type="string" />
+			<column name="officeTelephone" label="officeTelephone" type="string" />
+			<column name="fax" label="fax" type="string" />
+			<column name="homeAddress" label="homeAddress" type="string" />
+			<column name="creator" label="creator" type="string" />
+			<column name="creationDate" label="creationDate" type="date" />
+			<column name="lastUpdator" label="lastUpdator" type="string" />
+			<column name="lastUpdateDate" label="lastUpdateDate" type="date" />
+			<column name="loginTime" label="loginTime" type="date" />
+			<column name="loginErrorPasswoNum" label="loginErrorPasswoNum"
+				type="integer" />
+			<column name="loginErrorPasswoTime" label="loginErrorPasswoTime"
+				type="date" />
+			<column name="defPassUpd" label="defPassUpd" type="string" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><borderLayout id="borderLayout1" showTitleBar="false" design="headline"><borderPane id="borderPane0" showTitleBar="false" splitLine="false" region="top" height="40px"><template id="template2" instance="true" type="com.neusoft.unieap.toolbar_1.0.0">
+    <tableLayout id="ToolBar1" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="" />
+        <col width="" />
+        <col width="97px" />
+        <col width="97px" />
+        <col width="97px" />
+        <col width="97px" />
+        <col width="97px" />
+        <col width="97px" />
+        <col width="97px" />
+        <col width="97px" />
+      </colgroup>
+      <tbody>
+        <tr height="30px">
+        <td>
+        </td>        
+        <td>
+        </td>
+          <td align="right">
+            <button id="btnAdd" label="新增" width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnAdd_onClick">
+			<function name="btnAdd_onClick" arguments="event">
+				<script><![CDATA[var addDialog = unieap.byId("addXdialog");
+addDialog.show();]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td align="right">
+            <button id="btnEdit" label="修改" width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnEdit_onClick">
+			<function name="btnEdit_onClick" arguments="event">
+				<script><![CDATA[var grid = unieap.byId("grid1");
+var rows = grid.getManager('SelectionManager').getSelectedRows();
+if(rows.length == 1)
+{
+	var data = view.grid.getRow("grid1");
+	var dialog = unieap.byId("editXDialog");
+	dialog.dialogData = data;
+	dialog.show();
+}
+else
+{
+	MessageBox.alert({title:'提示信息',message: '请选择一条记录！'});
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td align="right">
+            <button id="btnLoc" label="锁定" width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnLoc_onClick">
+			<function name="btnLoc_onClick" arguments="event">
+				<script><![CDATA[changeLockedStatus('1');
+]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td align="right">
+            <button id="btnUnLoc" label="解锁" width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnUnLoc_onClick">
+			<function name="btnUnLoc_onClick" arguments="event">
+				<script><![CDATA[changeLockedStatus('0');]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td align="right">
+            <button id="btnEnab" label="设置可用" width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnEnab_onClick">
+			<function name="btnEnab_onClick" arguments="event">
+				<script><![CDATA[changeEnabledStatus('1');]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td align="right">
+            <button id="btnUnEnab" label="设置不可用" width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnUnEnab_onClick">
+			<function name="btnUnEnab_onClick" arguments="event">
+				<script><![CDATA[changeEnabledStatus('0');]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td align="right">
+            <button id="btnImp" label="导入" width="90px" height="25px"></button>
+          </td>
+          <td align="right">
+            <button id="btnDownTempl" label="模板下载" width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnDownTempl_onClick">
+			<function name="btnDownTempl_onClick" arguments="event">
+				<script><![CDATA[window.location.href=unieap.WEB_APP_NAME+'/fdframework/common/pages/downLoad.jsp?url=/fdframework/security/user/template/userInfoTemplate.xls&type=export';
+return ;]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+        </tr>
+      </tbody>
+    </tableLayout>
+  </template></borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><template id="template1" instance="true" type="com.neusoft.unieap.queryGrid_1.0.0">
+    
+      <form binding-store="sysSecUser1" id="form1">
+        <tableLayout id="form1_tableLayout" tableLayout="fixed" width="100%">
+          <colgroup>
+            <col width="14%" />
+            <col width="15%" />
+            <col width="10%" />
+            <col width="15%" />
+            <col width="7%" />
+            <col width="15%" />
+            <col width="" />
+          </colgroup>
+          <tbody>
+            <tr id="form1_2_tr" height="40px">
+              <td id="searchName_label_td" rowSpan="1" align="right">
+                <label id="searchName_label" value="人员姓名（全模糊）：" />
+              </td>
+              <td colSpan="1" id="searchName_td" rowSpan="1">
+                <textBox binding-markDirty="false" binding-name="name" id="name" width="100%"></textBox>
+              </td>
+              <td id="searchAccount_label_td" rowSpan="1" align="right">
+                <label id="searchAccount_label" value="账号（全模糊）：" />
+              </td>
+              <td colSpan="1" id="searchAccount_td" rowSpan="1">
+                <textBox binding-markDirty="false" binding-name="account" id="account" width="100%"></textBox>
+              </td>
+              <td id="searchAccountEnabled_label_td" rowSpan="1" align="right">
+                <label id="searchAccountEnabled_label" value="是否可用：" />
+              </td>
+              <td colSpan="1" id="searchAccountEnabled_td" rowSpan="1">
+                <comboBox id="accountEnabled" width="100%" binding-name="accountEnabled" dataProvider-store="accountEnableDs"></comboBox>
+              </td>
+            </tr>
+          </tbody>
+        </tableLayout>
+      </form>
+   <inlineEditBox id="inlineEditBox1" width="98%" disabled="true" style="margin-left :1%;margin-right:1%;" height="5px"></inlineEditBox>
+    <tableLayout id="grid1_ToolBarInfo" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="97px" />
+        <col width="97px" />
+      </colgroup>
+      <tbody>
+        <tr height="40px">
+          <td></td>
+          <td></td>          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td align="right">
+            <button id="grid1_queryButton" label="查询" width="90px" height="25px">
+	<events>
+		<event handlerFunction="grid1_queryButton_onClick" name="onClick">
+			<function arguments="event" name="grid1_queryButton_onClick">
+				<script><![CDATA[var form = unieap.byId('form1');
+if(form==null){
+	return;
+}
+var conditionDS = view.form.getDataStore('form1');
+dataCenter.addHeaderAttribute('getSysSecUserPage', 'serverExport');
+//发送请求
+view.processor.getSysSecUserPage(conditionDS,1,10);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td align="right">
+            <button id="grid1_resetButton" label="重置" width="90px" height="25px">
+              <events>
+                <event handlerFunction="grid1_resetButton_onClick" name="onClick">
+                  <function arguments="event" name="grid1_resetButton_onClick">
+                    <script><![CDATA[unieap.byId('form1').clear();]]></script>
+                  </function>
+                </event>
+              </events>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </tableLayout>
+    <titlePane flexible="false" id="grid1_titlePane_qResult" title="用户列表" private_displayOpen="true">
+      <xgrid binding-store="sysSecUser" edit-editType="readonly"
+	height="337px" id="grid1" rows-rowsPerPage="10" selection-selectType="multiple"
+	views-rowBar="true" views-rowNumber="true">
+	<toolbar paging-userPageSize="false"></toolbar>
+	<header>
+		<row>
+			<xcell dataType="string" enable="false" id="cell_id" label="id"
+				name="id" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_name" label="人员姓名"
+	name="name" width="20%">
+	<events>
+		<event name="formatter" handlerFunction="cell_name_formatter">
+			<function name="cell_name_formatter" arguments="inValue,inRowIndex">
+				<script><![CDATA[return "<a href='#' onClick = 'sysSecUser.linkAction("+inRowIndex+")' >"+inValue+"</a>";]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+			<xcell dataType="string" enable="false" id="cell_account"
+				label="账号" name="account" width="20%"></xcell>
+			<xcell dataType="string" enable="false" id="cell_code" label="编码"
+				name="code" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_type" label="type"
+				name="type" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_passwo" label="passwo"
+				name="passwo" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_description"
+				label="描述" name="description" width="40%"></xcell>
+			<xcell dataType="date" enable="false" id="cell_passwordChangeDate"
+				label="passwordChangeDate" name="passwordChangeDate" width="100px"
+				hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_accountEnabled"
+				label="是否可用" name="accountEnabled" width="10%" decoder-store="accountEnableDs"></xcell>
+			<xcell dataType="string" enable="false" id="cell_accountLocked"
+				label="是否锁定" name="accountLocked" width="10%" decoder-store="accountLockDs"></xcell>
+			<xcell dataType="string" enable="false" id="cell_accountLockedReason"
+				label="accountLockedReason" name="accountLockedReason" width="100px"
+				hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_sex" label="sex"
+				name="sex" width="100px" hidden="true"></xcell>
+			<xcell dataType="date" enable="false" id="cell_birthdate"
+				label="birthdate" name="birthdate" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_nationality"
+				label="nationality" name="nationality" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_credentialsType"
+				label="credentialsType" name="credentialsType" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_credentialsNumber"
+				label="credentialsNumber" name="credentialsNumber" width="100px"
+				hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_email" label="email"
+				name="email" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_mobileTelephone"
+				label="mobileTelephone" name="mobileTelephone" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_homeTelephone"
+				label="homeTelephone" name="homeTelephone" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_officeTelephone"
+				label="officeTelephone" name="officeTelephone" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_fax" label="fax"
+				name="fax" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_homeAddress"
+				label="homeAddress" name="homeAddress" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_creator"
+				label="creator" name="creator" width="100px" hidden="true"></xcell>
+			<xcell dataType="date" enable="false" id="cell_creationDate"
+				label="creationDate" name="creationDate" width="100px" hidden="true"></xcell>
+			<xcell dataType="string" enable="false" id="cell_lastUpdator"
+				label="lastUpdator" name="lastUpdator" width="100px" hidden="true"></xcell>
+			<xcell dataType="date" enable="false" id="cell_lastUpdateDate"
+				label="lastUpdateDate" name="lastUpdateDate" width="100px" hidden="true"></xcell>
+			<xcell dataType="date" enable="false" id="cell_loginTime"
+				label="loginTime" name="loginTime" width="100px" hidden="true"></xcell>
+			<xcell dataType="number" enable="false" id="cell_loginErrorPasswoNum"
+				label="loginErrorPasswoNum" name="loginErrorPasswoNum" width="100px"
+				hidden="true"></xcell>
+			<xcell dataType="date" enable="false" id="cell_loginErrorPasswoTime"
+				label="loginErrorPasswoTime" name="loginErrorPasswoTime" width="100px"
+				hidden="true"></xcell>
+		</row>
+	</header>
+	<events>
+		<event name="binding-rpc" handlerFunction="grid1_binding_rpc">
+			<function name="grid1_binding_rpc" arguments="store,load">
+				<script><![CDATA[var conditionDS = view.form.getDataStore('form1');
+view.processor.getSysSecUserPage(conditionDS,store.getPageNumber(),store.getPageSize());
+]]></script>
+			</function>
+		</event>
+	</events>
+</xgrid>
+    </titlePane>
+  </template></borderPane></borderLayout><xdialog id="addXdialog" title="新增人员" width="600px"
+	height="500px" view-ref="security/user/sysSecUserAdd">
+	<events>
+		<event name="onComplete" handlerFunction="addXdialog_onComplete">
+			<function name="addXdialog_onComplete" arguments="returnObj">
+				<script><![CDATA[var conditionDS = view.form.getDataStore('form1');
+view.processor.getSysSecUserPage(conditionDS,1,10);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="editXDialog" title="修改人员" width="600px"
+	height="500px" view-ref="security/user/sysSecUserEdit">
+	<events>
+		<event name="onComplete" handlerFunction="editXDialog_onComplete">
+			<function name="editXDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[var conditionDS = view.form.getDataStore('form1');
+view.processor.getSysSecUserPage(conditionDS,1,10);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="dtlXDialog" title="详细信息" width="600px" height="500px" view-ref="security/user/sysSecUserDtl"></xdialog><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[var conditionDS = view.form.getDataStore('form1');
+view.processor.getSysSecUserPage(conditionDS,1,10);
+]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[var accountEnableDs = new unieap.ds.DataStore("accountEnableDs",[
+	{CODEVALUE:"",CODENAME:""},
+	{CODEVALUE:"1",CODENAME:"是"},
+	{CODEVALUE:"0",CODENAME:"否"}]);
+
+dataCenter.addDataStore("accountEnableDs", accountEnableDs);
+
+var accountLockDs = new unieap.ds.DataStore("accountLockDs",[
+	{CODEVALUE:"",CODENAME:""},
+	{CODEVALUE:"1",CODENAME:"是"},
+	{CODEVALUE:"0",CODENAME:"否"}]);
+
+dataCenter.addDataStore("accountLockDs", accountLockDs);]]></script></function></event></events><dependence name="security/user/sysSecUserAdd" type="view" sc="fdframework" dc="security" ref="user/sysSecUserAdd" /><dependence name="security/user/sysSecUserEdit" type="view" sc="fdframework" dc="security" ref="user/sysSecUserEdit" /><dependence name="security/user/sysSecUserDtl" type="view" sc="fdframework" dc="security" ref="user/sysSecUserDtl" /></controls>
+      <scripts ><function name="getSysSecUserPageSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getSysSecUserPage方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result = dc.getDataStore('user');
+
+view.grid.setDataStore('grid1', result);]]></script>
+</function><function name="changeLockedStatus" arguments="isLock">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+ * @param: {参数类型} isLock 参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var grid = unieap.byId("grid1");
+var rows = grid.getManager("SelectionManager").getSelectedDataSet();
+var sltNum = rows.getRowCount();
+
+var sltDs = view.grid.getRows("grid1");
+//var newRowSet =new unieap.ds.RowSet(); 
+
+if( sltNum == 0) {
+	alert("请选择记录");
+	return;
+}
+//判断选择记录是否为已经是要置成状态的记录
+if(sltNum == 1) {
+	if(rows.getItemValue(0, "accountLocked")  == isLock){
+		alert("该记录已经是"+ (isLock == 1 ? "锁定" : "解锁") + "状态");
+		return ;
+	}
+//	newRowSet.setItemValue(0, "id", rows.getItemValue(0, "id"));
+}
+else {
+	for(var i=0;i<sltNum;i++)
+	{
+		if(rows.getItemValue(i, "accountLocked") == isLock){
+			alert("记录中已经存在"+ (isLock == 1 ? "锁定" : "解锁") + "状态的记录");
+			return ;
+		}
+//		newRowSet.setItemValue(i, "id", rows.getItemValue(i, "id"));
+	}
+}
+
+//sltDs.setRowSet(newRowSet);
+view.processor.updateLockedStatus(sltDs, isLock, "");]]>
+	</script>
+</function><function name="updateLockedStatusSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:updateLockedStatus方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[MessageBox.alert({
+	title:"提示信息",
+	message:"操作成功",
+	onComplete:function(){
+		var conditionDs = view.form.getDataStore("form1");
+		view.processor.getSysSecUserPage(conditionDs, 1, 10);
+	}
+});]]></script>
+</function><function name="changeEnabledStatus" arguments="isEnable">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+ * @param: {参数类型} isEnable 参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var grid = unieap.byId("grid1");
+var rows = grid.getManager("SelectionManager").getSelectedDataSet();
+var sltNum = rows.getRowCount();
+
+var sltDs = view.grid.getRows("grid1");
+
+if( sltNum == 0) {
+	alert("请选择记录");
+	return;
+}
+//判断选择记录是否为已经是要置成状态的记录
+if(sltNum == 1) {
+	if(rows.getItemValue(0, "accountEnabled")  == isEnable){
+		alert("该记录已经是"+ (isEnable == 1 ? "可用" : "不可用") + "状态");
+		return ;
+	}
+}
+else {
+	for(var i=0;i<sltNum;i++)
+	{
+		if(rows.getItemValue(i, "accountEnabled") == isEnable){
+			alert("记录中已经存在"+ (isEnable == 1 ? "可用" : "不可用") + "状态的记录");
+			return ;
+		}
+	}
+}
+view.processor.updateEnableStatus(sltDs, isEnable);]]></script>
+</function><function name="updateEnableStatusSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:updateEnableStatus方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[MessageBox.alert({
+	title:"提示信息",
+	message:"操作成功",
+	onComplete:function(){
+		var conditionDs = view.form.getDataStore("form1");
+		view.processor.getSysSecUserPage(conditionDs, 1, 10);
+	}
+});]]></script>
+</function><function name="linkAction" arguments="parameter">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+ * @param: {参数类型} parameter 参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var dialog = unieap.byId("dtlXDialog");
+//dataDs.setParameter("flag", "detail"); 可以设置参数
+var dataDs = view.grid.getRow("grid1",parameter);
+dialog.dialogData = dataDs;
+dialog.show();]]>
+	</script>
+</function></scripts>
+      <templateInstances>
+</templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+  <dc:entity class="com.neusoft.abclife.productfactory.entity.TSuminsurIncrem" table="T_SUMINSUR_INCREM" extends="com.neusoft.unieap.core.di.DomainObject">
+    <id name="id" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="ID" length="16" />
+      <generator class="sequence">
+        <param name="sequence" value="SEQ_SUMINSUR_INCREM" />
+      </generator>
+    </id>
+    <property name="insurtypeId" label="险种主键" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="INSURTYPE_ID" not-null="false" length="16" />
+    </property>
+    <property name="insurtypeCode" label="险种代码" type="string" getStrategy="public" setStrategy="public">
+      <column name="INSURTYPE_CODE" not-null="false" length="6" />
+    </property>
+    <property name="liabCode" label="责任代码" type="string" getStrategy="public" setStrategy="public">
+      <column name="LIAB_CODE" not-null="false" length="6" />
+    </property>
+    <property name="incremWay" label="递增方式 1-期间内 2-续期" type="string" getStrategy="public" setStrategy="public">
+      <column name="INCREM_WAY" not-null="false" length="2" />
+    </property>
+    <property name="incremFreq" label="递增频率 （几年一增）" type="string" getStrategy="public" setStrategy="public">
+      <column name="INCREM_FREQ" not-null="false" length="2" />
+    </property>
+    <property name="incremPropor" label="递增比例" type="big_decimal" getStrategy="public" setStrategy="public">
+      <column name="INCREM_PROPOR" not-null="false" length="10" />
+    </property>
+    <import value="java.io.Serializable" />
+    <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+    <import value="com.neusoft.fdframework.core.annotation.Column" />
+    <import value="com.neusoft.fdframework.core.annotation.Entity" />
+    <import value="com.neusoft.fdframework.core.annotation.ID" />
+    <import value="com.neusoft.fdframework.core.annotation.Transient" />
+    <import value="com.neusoft.unieap.core.di.DomainObject" />
+  </dc:entity>
+</dc:dc>
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.abclife.productfactory.dao.PfInsurtypeAccDefImpl" interface="">
+      <baseInfo>
+         <author value="shi.chl对于账户业务" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="org.apache.commons.lang3.StringUtils" />
+      <import value="org.springframework.jdbc.support.rowset.SqlRowSet" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeRelToAcc" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TInsurtypeAccDef" type="entity" dc="factoryabclife" ref="tInsurtypeAccDef" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TInsurtypeRelToAcc" type="entity" dc="factoryabclife" ref="tInsurtypeRelToAcc" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfInsurtypeAccDefImpl" returnType="" accessStrategy="public" />
+      <method name="getPfInsurtypeAccDefs" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[通过传入险种基本信息查询账户
+@param insurtypebasicinfid
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="insurtypebasicinf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="addPfInsurtypeAccDef" returnType="void" accessStrategy="public">
+         <comment><![CDATA[通过哦险种信息和账户信息添加账户以及中间表
+@param basic
+@param insurtypeAccDef]]></comment>
+         <parameter name="basic" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="insurtypeAccDef" type="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef" />
+      </method>
+      <method name="delPfInsurtypeAccDef" returnType="void" accessStrategy="public">
+         <comment><![CDATA[通过账户和险种信息 删除中间表与账户表中数据
+@param basic
+@param insurtypeAccDef]]></comment>
+         <parameter name="basic" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="insurtypeAccDef" type="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef" />
+      </method>
+      <method name="updatePfInsurtypeAccDef" returnType="void" accessStrategy="public">
+         <comment><![CDATA[修改账户
+@param insurtypeAccDef]]></comment>
+         <parameter name="insurtypeAccDef" type="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef" />
+      </method>
+      <method name="checkCodeAndName" returnType="boolean" accessStrategy="public">
+         <comment><![CDATA[检查修改账户编码或者账户名称重复
+@param insurtypeAccDef
+@return]]></comment>
+         <parameter name="insurtypeAccDef" type="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef" />
+         <parameter name="basic" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="checkCodeAndName_add" returnType="boolean" accessStrategy="public">
+         <comment><![CDATA[检查添加账户编码或者账户名称重复
+@param insurtypeAccDef
+@return]]></comment>
+         <parameter name="insurtypeAccDef" type="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef" />
+         <parameter name="basic" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="queryTInsurtypeAccDefByType" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypeAccDef" accessStrategy="public">
+         <parameter name="type" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

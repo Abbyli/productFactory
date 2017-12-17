@@ -1,0 +1,182 @@
+
+	var widgetContext = {
+		_subscribe : [],
+
+		_events : [],
+
+		/**
+		 * 获取widget
+		 * @returns
+		 */
+		getWidget : function() {
+			return dijit.byId(rootId.substring(0,rootId.lastIndexOf("_root")));
+		},
+
+		/**
+		 * 获取widget的跟节点
+		 */
+		getRoot : function() {
+			return rootNode;
+		},
+
+		/**
+		 * 发布特定主题的消息
+		 * 
+		 * @param topic 主题
+		 * @param args 发布的内容 数组
+		 */
+		publish : function(/*String*/topic, /*Array*/args) {
+			dojo.publish(topic, args);
+		},
+
+		/**
+		 * 订阅特定主题的消息
+		 * 
+		 * @param topic 主题
+		 * @param context
+		 * @param method 方法
+		 * @returns
+		 */
+		subscribe : function(/*String*/topic, /*Object|null*/context, /*String|Function*/
+				method) {
+			var handle = dojo.subscribe(topic, context, method);
+			this._subscribe.push(handle);
+			return handle;
+		},
+
+		/**
+		 * 取消订阅
+		 * 
+		 * @param handle
+		 */
+		unsubscribe : function(/*Handle*/handle) {
+			dojo.unsubscribe(handle);
+		},
+
+		startup : function() {
+			var self = this;
+			this.getWidget().addWidgetContext(this);
+			//监听放大事件
+			this.subscribe("widget-after-max", null, function(widget) {
+				if (widget != self.getWidget()) {
+					onMax();
+					return;
+				}
+			});
+			//监听恢复事件
+			this.subscribe("widget-after-normal", null, function(widget) {
+				if (widget != self.getWidget()) {
+					onNormal();
+					return;
+				}
+			});
+			//监听缩小事件
+			this.subscribe("widget-after-min", null, function(widget) {
+				if (widget != self.getWidget()) {
+					onMin();
+					return;
+				}
+			});
+
+			this._events.push(this.getWidget().addEvent('iconMenuEvent', null,
+				function(eventName) {
+					if (eventName == 'config') {
+						self.openSetting();
+					}
+					try {
+						(eval(eventName))();
+					} catch (e) {
+						console && console.info(e);
+					}
+			}));
+				
+			this._events.push(this.getWidget().addEvent('customButtonEvent', null,
+				function(eventName) {
+					try {
+						(eval(eventName))();
+					} catch (e) {
+						console && console.info(e);
+					}
+			}));
+			
+			this._events.push(this.getWidget().addEvent('destroy',null,
+				function(){
+					destroy();
+				}
+			));
+			this._events.push(this.getWidget().addEvent('refresh',null,
+				function(){
+				refresh();
+				}
+			));
+			this._events.push(this.getWidget().addEvent('resize',null,
+				function(){
+					resize();
+				}
+			));
+		},
+
+		setIndividualValue : function(/*String*/key,/*Object*/value) {
+			this.getWidget().setIndividualValue(key,value);
+		},
+		getIndividualValue : function(key) {
+			return this.getWidget().getIndividualValue(key);
+		},
+		openSetting : function() {
+			var node = dojo.query(">.widget-setting", this.getRoot())[0];
+			if (node) {
+				node.style.display = "block";
+			}
+		},
+		closeSetting : function() {
+			var node = dojo.query(">.widget-setting", this.getRoot())[0];
+			if (node) {
+				node.style.display = "none";
+			}
+		},
+		destroy : function() {
+			if(this.getWidget()!=null){
+				dojo.forEach(this._events, this.getWidget().removeEvent, this
+						.getWidget());
+				dojo.forEach(this._subscribe, this.unsubscribe);
+			}
+		},
+		resizeWidgetHeight : function() {
+			//空实现
+		}
+	};
+	
+	
+	function onMax() {
+		//空实现，可被重载
+	}
+	
+	function onMin() {
+		//空实现，可被重载	
+	}
+	
+	function onNormal() {
+		//空实现，可被重载
+	}
+	
+	function config(){
+		//空实现，可被重载
+	}
+	
+	function destroy(){
+		//空实现，可被重载
+	}
+	
+	function refresh(){
+		//空实现，可被重载
+	}
+	
+	function resize(){		
+		//空实现，可被重载
+	}	
+	widgetContext.startup();
+	
+	this.destroy = function(){
+		widgetContext.destroy();
+	}
+

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="zhyu.neu" />
+         <creationTime value="2014-07-22 16:16:20" />
+         <modificationTime value="2014-07-23 17:22:29" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getAllEnableSysSecRole" onSuccess="getAllEnableSysSecRoleSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="role.business.xml" method="security.role.getAllEnableSysSecRoleForUnieap"></bo>
+</pMethod>
+<dependence name="role.business.xml" ref="role.business.xml | com.neusoft.business" dc="security" /></processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="sysSecRole" dependence="sysSecRole" dc="security"
+		path="com.neusoft.fdframework.security.entity.SysSecRole" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="code" label="code" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="status" label="status" type="string" />
+			<column name="remark" label="remark" type="string" />
+			<column name="timeBegin" label="timeBegin" type="date" />
+			<column name="timeEnd" label="timeEnd" type="date" />
+			<column name="creator" label="creator" type="string" />
+			<column name="creationDate" label="creationDate" type="date" />
+			<column name="lastUpdator" label="lastUpdator" type="string" />
+			<column name="lastUpdateDate" label="lastUpdateDate" type="date" />
+			<column name="delFlag" label="delFlag" type="string" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><template id="template1" instance="true" type="com.neusoft.unieap.tree_1.0.0">
+    
+  <tree binding-id="id" binding-label="name" binding-parent="delFlag" binding-query="{name:'delFlag',relation:'=',value:'n'}" binding-store="sysSecRole" height="429px" id="tree1" label="" width="402px" binding-rootNodeId="'n'"></tree></template><events><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[view.processor.getAllEnableSysSecRole();]]></script></function></event></events></controls>
+      <scripts ><function name="getAllEnableSysSecRoleSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getAllEnableSysSecRole方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result = dc.getDataStore('roles');
+var rowSet = new unieap.ds.RowSet();
+var rowset = result.getRowSet();
+var data = rowset.getData();
+//unieap.debug(data);
+//for(var i = 0; i < data.length; i++){
+//	
+//}
+//view.grid.setDataStore('tree1', result);]]></script>
+</function></scripts>
+      <templateInstances><templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Tree</functionName>
+  <description>该向导用于快速生成tree控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.tree_1.0.0</templateId>
+    <label>Tree</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成tree控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>tree1</string>
+    </entry>
+    <entry>
+      <string>treeDataProviderInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.tree.TreeDataProvider>
+        <id>tree1</id>
+        <checkLogic__model>空串</checkLogic__model>
+        <binding__store>sysSecRole</binding__store>
+        <binding__id>id</binding__id>
+        <binding__label>name</binding__label>
+        <binding__parent>delFlag</binding__parent>
+        <binding__leaf></binding__leaf>
+        <binding__query__name>delFlag</binding__query__name>
+        <binding__query__value>n</binding__query__value>
+        <binding__query>{name:&apos;id&apos;,relation:&apos;=&apos;,value:&apos;0&apos;}</binding__query>
+        <label></label>
+        <bo4Tree>
+          <isLazyLoad>false</isLazyLoad>
+          <bo class="com.neusoft.unieap.workshop.controlmode.model.processor.Processor">
+            <name></name>
+            <method></method>
+            <returnType></returnType>
+            <chosed>false</chosed>
+            <arguments></arguments>
+            <dc></dc>
+            <module></module>
+            <sc></sc>
+            <refName></refName>
+            <isMerge>false</isMerge>
+            <refBoID></refBoID>
+            <isProcess>false</isProcess>
+            <properties/>
+            <hasOnSuccess>false</hasOnSuccess>
+            <isChange>false</isChange>
+            <parameterNumber>3</parameterNumber>
+          </bo>
+        </bo4Tree>
+        <labelChecked>false</labelChecked>
+        <properties>
+          <entry>
+            <string>position</string>
+            <string>static</string>
+          </entry>
+          <entry>
+            <string>private_tag</string>
+            <string>tree</string>
+          </entry>
+          <entry>
+            <string>marginLeft</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>events</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>treeDnd_isSource</string>
+            <string>true</string>
+          </entry>
+          <entry>
+            <string>treeLoaderClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>binding_children</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>tip</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>parentId</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>private_label</string>
+            <string>Tree</string>
+          </entry>
+          <entry>
+            <string>loader_sync</string>
+            <string>false</string>
+          </entry>
+          <entry>
+            <string>binding_iconClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>height</string>
+            <string>429px</string>
+          </entry>
+          <entry>
+            <string>treeDnd_dragThreshold</string>
+            <string>2</string>
+          </entry>
+          <entry>
+            <string>style</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>binding_bindingClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>overflowX</string>
+            <string>auto</string>
+          </entry>
+          <entry>
+            <string>overflowY</string>
+            <string>auto</string>
+          </entry>
+          <entry>
+            <string>left</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>private_widget</string>
+            <string>unieap.tree.Tree</string>
+          </entry>
+          <entry>
+            <string>treeDnd_betweenThreshold</string>
+            <string>2</string>
+          </entry>
+          <entry>
+            <string>top</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>treeEditor_allowBlank</string>
+            <string>false</string>
+          </entry>
+          <entry>
+            <string>loader_url</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>dndSourceClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>marginTop</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>treeEditorClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>marginRight</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>width</string>
+            <string>402px</string>
+          </entry>
+          <entry>
+            <string>loader_parameters</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>class</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>display</string>
+            <string>block</string>
+          </entry>
+          <entry>
+            <string>checkLogicClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>binding_labelClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>binding_rootNodeId</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>pathSeparator</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>marginBottom</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>checkLogic_showRootCheckbox</string>
+            <string>false</string>
+          </entry>
+          <entry>
+            <string>overflow</string>
+            <string>auto</string>
+          </entry>
+          <entry>
+            <string>binding_disabled</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>binding_sort</string>
+            <null/>
+          </entry>
+        </properties>
+      </com.neusoft.unieap.workshop.controlmode.model.tree.TreeDataProvider>
+    </entry>
+    <entry>
+      <string>bo4TreeList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.tree.Bo4Tree reference="../../../entry[2]/com.neusoft.unieap.workshop.controlmode.model.tree.TreeDataProvider/bo4Tree"/>
+      </list>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

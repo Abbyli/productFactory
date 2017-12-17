@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fdframework-business xmlns="http://www.neusoft.com/fdframework/business"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<business id="pfriskfeemanage.saveRiskFeeManage" returnkey="saveRiskFeeManage" desc="添加修改费用定义表  费用信息表先删再添" name="">
+		<step id="1" bean="factoryabclife_pfRiskFeeManageBo_bo" method="saveRiskFeeManage" returnkey="saveRiskFeeManage">
+			<property refkey="tFeeRate" type="pojoList(com.neusoft.abclife.productfactory.entity.TFeeRate)"></property>
+			<property refkey="tInsurtypeFeeDef" type="pojo(com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef)"></property>
+			<property refkey="tInsurtypeBasicinf" type="pojo(com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf)"></property>
+		</step>
+	</business>
+	
+	<business id="pfriskfeemanage.queryTInsurtypeFeeDef" returnkey="queryTInsurtypeFeeDef" desc="查询费用定义数据">
+		<step id="1" bean="factoryabclife_pfRiskFeeManageBo_bo" method="queryTInsurtypeFeeDef" returnkey="queryTInsurtypeFeeDef">
+			<property refkey="feeType" type="string"></property>
+			<property refkey="insurtypeId" type="long"></property>
+		</step>
+	</business>
+	
+	<business id="pfriskfeemanage.queryTFeeRate" returnkey="queryTFeeRate" desc="查询费率表">
+		<step id="1" bean="factoryabclife_pfRiskFeeManageBo_bo" method="queryTFeeRate" returnkey="queryTFeeRate">
+			<property refkey="feeType" type="string"></property>
+			<property refkey="insurtypeId" type="long"></property>
+		</step>
+	</business>
+	
+	<business id="pfriskfeemanage.deleteTFeeRate" desc="删除费率信息">
+		<step id="1" bean="factoryabclife_pfRiskFeeManageBo_bo" method="deleteTFeeRate">
+			<property refkey="tFeeRate" type="pojo(pojoList(com.neusoft.abclife.productfactory.entity.TFeeRate))"></property>
+		</step>
+	</business>
+	
+	<business id="pfriskfeemanage.clear" desc="清空某个费用信息">
+		<step id="1" bean="factoryabclife_pfRiskFeeManageBo_bo" method="clear">
+			<property refkey="tInsurtypeFeeDef" type="pojo(com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef)"></property>
+		</step>
+	</business>
+	
+</fdframework-business>

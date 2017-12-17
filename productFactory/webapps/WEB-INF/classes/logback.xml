@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user -->
+<!-- -->
+<!-- For professional support please see -->
+<!-- http://www.qos.ch/shop/products/professionalSupport -->
+<!-- -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<contextName>framework</contextName>
+	<property name="period" value="5" scope="context"/>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="monitorfile"	class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="com.neusoft.fdframework.web.tradlog.PeriodRollingPolicy">
+			<FileNamePattern>/Users/Ruin/tomcat_pub/factory/logs/business.%d{yyyy-MM-dd_HH-mm}.log</FileNamePattern>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%msg%n</pattern>
+		</encoder>
+	</appender> 
+    <appender name="logFile"   class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">    
+           <fileNamePattern>/Users/Ruin/tomcat_pub/factory/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>    
+           <maxHistory>30</maxHistory>     
+        </rollingPolicy>   
+        <encoder>
+            <pattern>%d [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>                                                                                                                                                        
+	<logger name="FDFRAMEWORK_MONITOR_LOGFILE" additivity="false" system="true" level="info">
+		<appender-ref ref="monitorfile"/>
+	</logger>
+	<root level="INFO">
+		<appender-ref ref="console" />
+	</root>
+</configuration>

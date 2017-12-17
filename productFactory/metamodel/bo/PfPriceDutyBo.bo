@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.abclife.productfactory.blo.PfPriceDutyBoImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="shi.chl" />
+      </baseInfo>
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.abclife.productfactory.dao.PfPriceDutyDaoImpl" />
+      <import value="com.neusoft.abclife.productfactory.dto.MapDto" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TLiabFeeDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjEntrance" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjFormula" />
+      <import value="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TSuminsurIncrem" />
+      <import value="com.neusoft.abclife.productfactory.entity.TWaiveLiab" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="MapDto" type="dto" dc="factoryabclife" ref="mapDto" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TInsurtypeFeeDef" type="entity" dc="factoryabclife" ref="tInsurtypeFeeDef" />
+      <dependence name="TLiabFeeDef" type="entity" dc="factoryabclife" ref="tLiabFeeDef" />
+      <dependence name="TObjEntrance" type="entity" dc="factoryabclife" ref="tObjEntrance" />
+      <dependence name="TObjFormula" type="entity" dc="factoryabclife" ref="tObjFormula" />
+      <dependence name="TPricingLiabDef" type="entity" dc="factoryabclife" ref="tPricingLiabDef" />
+      <dependence name="TSuminsurIncrem" type="entity" dc="factoryabclife" ref="tSuminsurIncrem" />
+      <dependence name="TWaiveLiab" type="entity" dc="factoryabclife" ref="tWaiveLiab" />
+      <method name="PfPriceDutyBoImpl" returnType="" accessStrategy="public" />
+      <method name="addAndUpdateThree" returnType="String" accessStrategy="public">
+         <comment><![CDATA[根据传入的值进行多种判定删除 添加
+@param feedef
+@param liabFeeDef
+@param liabDef
+@param map
+@return]]></comment>
+         <parameter name="feedef" type="com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef" />
+         <parameter name="liabFeeDef" type="java.util.List" />
+         <parameter name="liabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+         <parameter name="map" type="com.neusoft.abclife.productfactory.dto.MapDto" />
+         <parameter name="insurtypeinfo" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="tWaiveLiab" type="com.neusoft.abclife.productfactory.entity.TWaiveLiab" />
+         <parameter name="tSuminsurIncrem" type="com.neusoft.abclife.productfactory.entity.TSuminsurIncrem" />
+      </method>
+      <method name="upOrDelTwaTsum" returnType="void" accessStrategy="public">
+         <comment><![CDATA[修改豁免责任信息、保额递增信息
+@param liabDef
+@param tWaiveLiab
+@param tSuminsurIncrem]]></comment>
+         <parameter name="liabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+         <parameter name="tWaiveLiab" type="com.neusoft.abclife.productfactory.entity.TWaiveLiab" />
+         <parameter name="tSuminsurIncrem" type="com.neusoft.abclife.productfactory.entity.TSuminsurIncrem" />
+      </method>
+      <method name="add" returnType="void" accessStrategy="public">
+         <parameter name="feedef" type="com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef" />
+         <parameter name="liabFeeDef" type="java.util.List" />
+         <parameter name="liabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+         <parameter name="map" type="com.neusoft.abclife.productfactory.dto.MapDto" />
+         <parameter name="insurtypeinfo" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="newTobjFormula" returnType="com.neusoft.abclife.productfactory.entity.TObjFormula" accessStrategy="public">
+         <parameter name="algoType" type="String" />
+         <parameter name="algoId" type="Long" />
+         <parameter name="liabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="newTobjEntrance" returnType="com.neusoft.abclife.productfactory.entity.TObjEntrance" accessStrategy="public">
+         <parameter name="algoType" type="String" />
+         <parameter name="insurtypeinfo" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="objSeq" type="String" />
+         <parameter name="liabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      </method>
+      <method name="queryPricingLiabDef" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="delLiabFeeDef" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除定价责任
+@param tPricingLiabDef]]></comment>
+         <parameter name="tPricingLiabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      </method>
+      <method name="queryLiabFeeDef" returnType="java.util.List" accessStrategy="public">
+         <parameter name="tPricingLiabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      </method>
+      <method name="queryInsurtypeFeeDef" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef" accessStrategy="public">
+         <parameter name="tPricingLiabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      </method>
+      <method name="queryTWaiveLiab" returnType="com.neusoft.abclife.productfactory.entity.TWaiveLiab" accessStrategy="public">
+         <comment><![CDATA[用于修改页面加载-豁免责任表
+@param tPricingLiabDef
+@return]]></comment>
+         <parameter name="tPricingLiabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      </method>
+      <method name="queryTSuminsurIncrem" returnType="com.neusoft.abclife.productfactory.entity.TSuminsurIncrem" accessStrategy="public">
+         <comment><![CDATA[用于修改页面加载-保额递增表
+@param tPricingLiabDef
+@return]]></comment>
+         <parameter name="tPricingLiabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      </method>
+      <method name="queryOneLiabFeeDef" returnType="com.neusoft.abclife.productfactory.entity.TLiabFeeDef" accessStrategy="public">
+         <comment><![CDATA[查询唯一责任加费
+@param tPricingLiabDef
+@param type
+@return]]></comment>
+         <parameter name="tPricingLiabDef" type="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+         <parameter name="type" type="String" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

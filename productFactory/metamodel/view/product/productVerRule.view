@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="chen-gy" />
+         <creationTime value="2015-09-25 11:16:36" />
+         <modificationTime value="2016-03-07 14:35:42" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences ><dependence name="factory/risk/navigateButton" type="viewc" sc="ProductFactory" dc="factory" ref="risk/navigateButton" /><dependence name="factory/product/navigateButtonProduct" type="viewc" sc="ProductFactory" dc="factory" ref="product/navigateButtonProduct" /></dependences>
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getPfPrdtRules" onSuccess="getPfPrdtRulesSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprdtrule.business.xml" method="pfprdtrule.getPfPrdtRules"></bo>
+		<context>
+			
+			<string name="verId" /><string name="type" /><string name="pageNumber" />
+			<string name="pageSize" />
+		</context>
+		<arguments>
+			
+			
+			
+		<argument name="verId" type="string"></argument><argument name="type" type="string"></argument><argument name="pageNumber" type="string"></argument><argument name="pageSize" type="string"></argument></arguments>
+		<pagingQuery pageNumber="1" pageSize="10" calcRecordCount="true"></pagingQuery>
+	</pMethod>
+	<dependence name="pfprdtrule.business.xml"
+		ref="pfprdtrule.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="delPfPrdtRule" onSuccess="delPfPrdtRuleSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<string name="id" />
+		</context>
+		<arguments>
+			<argument name="id" type="string"></argument>
+		</arguments>
+		<bo name="pfprdtrule.business.xml" method="pfprdtrule.delPfPrdtRule"></bo>
+	</pMethod>
+	<pMethod name="getPfRulesNoPage" onSuccess="getPfRulesNoPageSuccess" sync="true">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfctlgrule.business.xml" method="pfctlgrule.getPfCtlgRuleNoPage"></bo>
+</pMethod>
+<dependence name="pfctlgrule.business.xml" ref="pfctlgrule.business.xml | com.neusoft.fdframework.productfactory.business" dc="factory" /></processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfObjRule_grid" dependence="pfObjRule" dc="factory"
+		path="pfObjRule.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="code" label="规则编码" type="string" length="128" />
+			<column name="description" label="备注" type="string" length="3000" />
+			<column name="ctlgRuleId" label="关联的规则分类ID" type="string"
+				length="32" />
+			<column name="ownerType" label="0:实体对象 1:险种版本对象 2:产品版本对象"
+				type="number" length="22" />
+			<column name="ownerObjId" label="关联的主对象ID" type="string"
+				length="32" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><xdialog id="addDialog" title="添加规则" width="500px"
+	height="280px" view-ref="factory/product/productVerRuleDialog" open="false"
+	isExpand="false">
+	<events>
+		<event name="onComplete" handlerFunction="addDialog_onComplete">
+			<function name="addDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[view.processor.getPfPrdtRules(view.thisProductVersionId, "2", "1", "10");]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="updDialog" title="修改规则" width="500px"
+	height="280px" view-ref="factory/product/productVerRuleDialog"
+	isExpand="false">
+	<events>
+		<event name="onComplete" handlerFunction="updDialog_onComplete">
+			<function name="updDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[view.processor.getPfPrdtRules(view.thisProductVersionId, "2", "1", "10");]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><borderLayout id="borderLayout1" showTitleBar="false" design="headline"><borderPane id="borderPane0" showTitleBar="false" splitLine="false" region="left" maxSize="100px" minSize="100px"><component id="component1" label="Component" comp-ref="factory/product/navigateButtonProduct" /></borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><titlePane height="100%" title="规则列表" flexible="false" width="100%"><div id="div1" type="buttons" height="30px"><button
+	id="btn_riskVerRuleAdd" label="新 增" width="100px" class="titlePane-button" iconClass="common_base_btn common_new_btn">
+	<events>
+		<event name="onClick" handlerFunction="btn_riskVerRuleAdd_onClick">
+			<function name="btn_riskVerRuleAdd_onClick" arguments="event">
+				<script><![CDATA[var xdialog = unieap.byId("addDialog");
+xdialog.dialogData = {
+    type: "add",
+    productVersionId: view.thisProductVersionId
+};
+xdialog.show();
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="btn_riskVerRuleUpt" label="修 改 no" width="100px"
+	class="titlePane-button" style="display:none">
+	<events>
+		<event name="onClick" handlerFunction="btn_riskVerRuleUpt_onClick">
+			<function name="btn_riskVerRuleUpt_onClick" arguments="event">
+				<script><![CDATA[//var row = view.grid.getRows("grid_riskVerRule");
+//
+//if (row 
+//    && row.rowSet 
+//    && row.rowSet.primary 
+//    && row.rowSet.primary.length == 1) {
+//    
+//    var xdialog = unieap.byId("updDialog");   
+//    xdialog.dialogData = {
+//        type: "upd",
+//        pfprdtrule: row,
+//        productVersionId: view.thisProductVersionId,
+//        commonDecoder: commonDecoder_rule
+//    };
+//    xdialog.show();
+//}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="btn_riskVerRuleDel" label="删 除 no" width="100px" class="titlePane-button" style="display:none">
+	<events>
+		<event name="onClick" handlerFunction="btn_riskVerRuleDel_onClick">
+			<function name="btn_riskVerRuleDel_onClick" arguments="event">
+				<script><![CDATA[var data = view.grid.getRows("grid_riskVerRule");
+if (data 
+    && data.rowSet 
+    && data.rowSet.primary 
+    && data.rowSet.primary.length == 1) {
+    
+    MessageBox.confirm({
+        message: "是否删除？",
+        yesStr: "是",
+        noStr: "否",
+        //关闭右上角的"X"按钮时执行onComplete函数
+        iconCloseComplete:false,
+        onComplete: function(value) {
+            if (value) {
+                var delId = data.rowSet.primary[0].id;
+                view.processor.delPfPrdtRule(delId);
+            }
+        }
+    }, dojo.byId("confirm"));
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template2" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <xgrid binding-store="pfObjRule_grid" edit-editType="readonly" height="100%" id="grid_riskVerRule" rows-rowsPerPage="10" selection-selectType="none" views-rowBar="false" views-rowNumber="true">
+    <toolbar paging-userPageSize="false"></toolbar>
+    <header>
+      <row>
+        <xcell dataType="string" enable="false" height="25px" id="cell_code__riskVerRule" label="规则编码" name="code" width="20%"></xcell>
+        <xcell dataType="string" enable="false" height="25px" id="cell_description__riskVerRule" label="备注" name="description" width="40%"></xcell>
+        <xcell dataType="string" enable="false" height="25px" id="cell_ctlgRuleId__riskVerRule" label="规则分类" name="ctlgRuleId" width="30%"></xcell>
+        <xcell enable="false" id="cell_control__riskVerRule"
+	label="操作" name="control" width="10%" styles="text-align:center">
+	<events>
+		<event name="formatter" handlerFunction="cell_control__riskVerRule_formatter">
+			<function name="cell_control__riskVerRule_formatter"
+				arguments="inValue,inRowIndex">
+				<script><![CDATA[var editImg=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_edit.png";
+var editImg_h=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_edit_h.png";
+var delImg=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_o.png";
+var delImg_h=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_h.png";
+
+var editHTML="<img src='"+editImg+"' style='cursor:pointer;' title='修改' onclick='productVerRule.edit("+inRowIndex+");' onmouseover='this.src=\""+editImg_h+"\"' onmouseout='this.src=\""+editImg+"\"'></img>";
+var delHTML="<img src='"+delImg+"' style='cursor:pointer;' title='删除' onclick='productVerRule.del("+inRowIndex+");' onmouseover='this.src=\""+delImg_h+"\"' onmouseout='this.src=\""+delImg+"\"'></img>";
+return editHTML+"&nbsp;&nbsp;"+delHTML;]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+      </row>
+    </header>
+    <events>
+      <event handlerFunction="pfprdtrule_grid_binding_rpc" name="binding-rpc">
+        <function arguments="store,load" name="pfprdtrule_grid_binding_rpc">
+          <script><![CDATA[view.processor.getPfPrdtRules(view.thisProductVersionId, "2", store.getPageNumber(), store.getPageSize());]]></script>
+        </function>
+      </event>
+    </events>
+  </xgrid></template></titlePane></borderPane></borderLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[navigateButtonProduct.activeNavigateButton("productRisk_copy1");
+
+view.navigator.receiveData("规则列表",function(dc) {
+	//grid清空
+	unieap.byId("grid_riskVerRule").getBinding().getRowSet().deleteAllRows();
+	if (dc != null) {
+		view.thisProductVersionId = dc.getParameter("thisProductVersionId");
+		navigateButtonProduct.receiveDCParameter(dc);
+	}
+	if (view.thisProductVersionId == undefined) {
+		view.thisProductVersionId = "";
+	}
+	//查询规则分类转码
+	view.processor.getPfRulesNoPage();
+	//查询产品版本关联的规则
+	view.processor.getPfPrdtRules(view.thisProductVersionId, "2", "1", "10");
+	
+});
+
+]]></script></function></event></events><dependence name="factory/pfprdtruleDialog" type="view" sc="ProductFactory" dc="factory" ref="pfprdtruleDialog" /><dependence name="factory/risk/riskVerRuleDialog" type="view" sc="ProductFactory" dc="factory" ref="risk/riskVerRuleDialog" /><dependence name="factory/product/productVerRuleDialog" type="view" sc="ProductFactory" dc="factory" ref="product/productVerRuleDialog" /></controls>
+      <scripts ><function name="getPfPrdtRulesSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfPrdtRules方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result = dc.getDataStore("pfPrdtRules");
+//unieap.debug(result);
+view.grid.setDataStore("grid_riskVerRule", result);]]></script>
+</function><function name="delPfPrdtRuleSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:delPfPrdtRule方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[view.processor.getPfPrdtRules(view.thisProductVersionId, "2", "1", "10");]]></script>
+</function><function name="getPfRulesNoPageSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfRulesNoPage方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[commonDecoder_rule = dc.getDataStore("pfRulesNoPage")
+		.clone("commonDecoder_rule"+new Date().getTime());
+unieap.byId("grid_riskVerRule").getLayoutManager().getCell("ctlgRuleId").decoder 
+		= {store:commonDecoder_rule, valueAttr:'id', displayAttr:'name'};]]></script>
+</function><variable name="thisProductVersionId"><script><![CDATA[""]]></script><comment><![CDATA[产品版本id
+]]></comment></variable><variable name="commonDecoder_rule"><script><![CDATA[""]]></script><comment><![CDATA[grid转码
+]]></comment></variable><function name="edit" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var row = view.grid.getRow("grid_riskVerRule", inRowIndex);
+
+if (row 
+    && row.rowSet 
+    && row.rowSet.primary 
+    && row.rowSet.primary.length == 1) {
+    
+    var xdialog = unieap.byId("updDialog");   
+    xdialog.dialogData = {
+        type: "upd",
+        pfprdtrule: row,
+        productVersionId: view.thisProductVersionId,
+        commonDecoder: commonDecoder_rule
+    };
+    xdialog.show();
+}
+
+]]>
+	</script>
+</function><function name="del" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var data = view.grid.getRow("grid_riskVerRule", inRowIndex);
+if (data 
+    && data.rowSet 
+    && data.rowSet.primary 
+    && data.rowSet.primary.length == 1) {
+    
+    MessageBox.confirm({
+        message: "是否删除？",
+        yesStr: "是",
+        noStr: "否",
+        //关闭右上角的"X"按钮时执行onComplete函数
+        iconCloseComplete:false,
+        onComplete: function(value) {
+            if (value) {
+                var delId = data.rowSet.primary[0].id;
+                view.processor.delPfPrdtRule(delId);
+            }
+        }
+    }, dojo.byId("confirm"));
+}]]></script>
+</function></scripts>
+      <templateInstances>
+	<templateInstance target="template2"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>pfPrdtRule_grid</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>id</name>
+            <label>id</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>id</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>code</name>
+            <label>规则编码</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_code__riskVerRule</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>code</name>
+              <label>规则编码</label>
+              <width>20%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>code__riskVerRule_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>128</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>description</name>
+            <label>备注</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_description__riskVerRule</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>description</name>
+              <label>备注</label>
+              <width>40%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>description__riskVerRule_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>3000</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>ctlgRuleId</name>
+            <label>规则分类</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_ctlgRuleId__riskVerRule</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>ctlgRuleId</name>
+              <label>规则分类</label>
+              <width>30%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>ctlgRuleId__riskVerRule_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>ownerType</name>
+            <label>0:实体对象 1:险种版本对象 2:产品版本对象</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>ownerType</name>
+              <label>0:实体对象 1:险种版本对象 2:产品版本对象</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>22</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>ownerObjId</name>
+            <label>关联的主对象ID</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>ownerObjId</name>
+              <label>关联的主对象ID</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>control</name>
+            <label>操作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_control__riskVerRule</id>
+              <properties/>
+              <dataType></dataType>
+              <name>control</name>
+              <label>操作</label>
+              <width>10%</width>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>pfObjRule_grid</binding__store>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid_riskVerRule</id>
+        <lastId>grid_riskVerRule</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfPrdtRule_grid</name>
+            <entityClass>PfPrdtRule</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfPrdtRule</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfPrdtRule_form</name>
+            <entityClass>PfPrdtRule</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfPrdtRule</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid_riskVerRule_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <paging__userPageSize>false</paging__userPageSize>
+          <id>grid_riskVerRule_ToolBar</id>
+          <export__options></export__options>
+          <innerButtons></innerButtons>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>pfprdtrule_grid_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid_riskVerRule_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX>_riskVerRule</ID__PREFIX>
+        <showToolBar>true</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string>_riskVerRule</string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid_riskVerRule</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance>
+</templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

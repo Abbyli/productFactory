@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title></title>
+	<style>
+	    @import "../../../../themes/base/css/unieap.css";
+		@import "../../../../themes/blue/css/unieap.css";
+		.iconThumb{
+			width:14px;
+			height:15px;
+			background:url("./images/thumb.png") no-repeat;
+		}
+	</style>
+	<script type="text/javascript" src="../../../../../dojo/dojo.js"></script>
+	
+</head>
+<body class="unieap" >
+</body>
+
+	<script>
+	
+		dojo.require("dojo.parser");
+		dojo.require("unieap.form.Slider");
+		dojo.require("unieap.form.TextBox");
+		
+		dojo.addOnLoad(function(){
+			
+			dojo.parser.parse();
+
+			
+		});
+		
+		dojo.ready(function() {
+			var slider=new unieap.form.Slider();
+			dojo.body().appendChild(slider.domNode);
+			slider.startup();
+			
+			
+		});
+		
+		function onBeforeSlide(value){
+			
+			return true;
+		}
+		
+		function onSlideStart(value){
+			
+			console.log("Start Value: " + value);
+		}
+		
+		function onChange(value){
+			console.log("Value: " + value);
+			document.getElementById("horiz_value").value=value;
+		}
+		
+		function onSlideEnd(value){
+			
+			console.log("End Value: " + value);
+		}
+
+		function doend(end){
+			
+			
+			var value=unieap.byId('xyz').getValue();
+			
+			value=parseInt(value,10);
+			
+			console.log(end);
+		}
+		
+		function onInputValue() {
+			var slider = unieap.byId("sliderx");
+			slider.setValue(document.getElementById("horiz_value").value);
+		}
+		
+		
+	</script>
+	<br/>
+	<div style="margin: 20px;">
+		<input id="horiz_value" style="width:50px" value="100" onchange="onInputValue()"></input>
+		<div dojoType="unieap.form.Slider" id="sliderx" min=100 max=200 length=200 value=150 step=1 axis="x"
+		onBeforeSlide="onBeforeSlide" onSlideStart="onSlideStart" onChange="onChange" onSlideEnd="onSlideEnd">
+		</div>
+	</div>
+	<input type="button" onmouseover='alert("over!")' value="Button"></input>
+	<div id="slider2" dojoType="unieap.form.Slider" axis="x" iconClass="iconThumb"></div>
+	<div dojoType="unieap.form.Slider" axis="y"></div>
+	
+	
+
+</html>

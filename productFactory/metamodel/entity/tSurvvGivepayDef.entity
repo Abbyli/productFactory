@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+   <dc:entity class="com.neusoft.abclife.productfactory.entity.TSurvvGivepayDef" table="T_SURVV_GIVEPAY_DEF" extends="com.neusoft.unieap.core.di.DomainObject">
+      <id name="survvGivepayId" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="SURVV_GIVEPAY_ID" length="16" />
+         <generator class="sequence">
+            <param name="sequence" value="SEQ_SURVV_GIVEPAY_DEF" />
+         </generator>
+      </id>
+      <property name="protecLiabId" label="保障责任ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="PROTEC_LIAB_ID" not-null="false" length="16" />
+      </property>
+      <property name="pricingLiabCode" label="定价责任代码" type="string" getStrategy="public" setStrategy="public">
+         <column name="PRICING_LIAB_CODE" not-null="false" length="32" />
+      </property>
+      <property name="protecLiabCode" label="保障责任代码" type="string" getStrategy="public" setStrategy="public">
+         <column name="PROTEC_LIAB_CODE" not-null="false" length="10" />
+      </property>
+      <property name="survvGivepayCode" label="生存给付代码" type="string" getStrategy="public" setStrategy="public">
+         <column name="SURVV_GIVEPAY_CODE" not-null="false" length="30" />
+      </property>
+      <property name="survvGivepayName" label="生存给付名称" type="string" getStrategy="public" setStrategy="public">
+         <column name="SURVV_GIVEPAY_NAME" not-null="false" length="120" />
+      </property>
+      <property name="survvGivepayType" label="01-生存金 02-满期金 03-年金 " type="string" getStrategy="public" setStrategy="public">
+         <column name="SURVV_GIVEPAY_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="bnfcryType" label="'I-受益人是被保险人 A-是投保人 N-无限制' " type="string" getStrategy="public" setStrategy="public">
+         <column name="BNFCRY_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="givepayIntv" label="给付间隔" type="big_decimal" getStrategy="public" setStrategy="public">
+         <column name="GIVEPAY_INTV" not-null="false" length="22" />
+      </property>
+      <property name="startDrawDate" label="起领期间" type="java.lang.Integer" getStrategy="public" setStrategy="public">
+         <column name="START_DRAW_DATE" not-null="false" length="6" />
+      </property>
+      <property name="startDrawDateUnit" label="起领期间单位 Y-年  M—月 D-天 A-岁" type="string" getStrategy="public" setStrategy="public">
+         <column name="START_DRAW_DATE_UNIT" not-null="false" length="2" />
+      </property>
+      <property name="stopDrawDate" label="止领期间" type="java.lang.Integer" getStrategy="public" setStrategy="public">
+         <column name="STOP_DRAW_DATE" not-null="false" length="6" />
+      </property>
+      <property name="stopDrawDateUnit" label="起领期间单位 Y-年  M—月 D-天 A-岁" type="string" getStrategy="public" setStrategy="public">
+         <column name="STOP_DRAW_DATE_UNIT" not-null="false" length="2" />
+      </property>
+      <property name="givepayIntvUnit" label="'一次发放 年 月 日'  " type="string" getStrategy="public" setStrategy="public">
+         <column name="GIVEPAY_INTV_UNIT" not-null="false" length="10" />
+      </property>
+      <property name="startDrawDateCalcRef" label="01 保单生效日" type="string" getStrategy="public" setStrategy="public">
+         <column name="START_DRAW_DATE_CALC_REF" not-null="false" length="2" />
+      </property>
+      <property name="startDrawDateCalcWay" label="0-以计算为准 1-取计算后当月一号 2-取计算后当年一号 3-取缴费终止日期 " type="string" getStrategy="public" setStrategy="public">
+         <column name="START_DRAW_DATE_CALC_WAY" not-null="false" length="2" />
+      </property>
+      <property name="stopDrawDateCalcRef" label="'S-起保日期对应日 B-出生日期对应日 C-参考保单选择' " type="string" getStrategy="public" setStrategy="public">
+         <column name="STOP_DRAW_DATE_CALC_REF" not-null="false" length="2" />
+      </property>
+      <property name="stopDrawDateCalcWay" label="0-以计算为准 1-取计算后当月一号 2-取计算后当年一号 3-取缴费终止日期 " type="string" getStrategy="public" setStrategy="public">
+         <column name="STOP_DRAW_DATE_CALC_WAY" not-null="false" length="2" />
+      </property>
+      <property name="urgPayId" label="Y--发催收 N--不发催收 相当于是否提醒" type="string" getStrategy="public" setStrategy="public">
+         <column name="URG_PAY_ID" not-null="false" length="2" />
+      </property>
+      <property name="givepayMaxTimes" label="给付最大次数" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="GIVEPAY_MAX_TIMES" not-null="false" length="10" />
+      </property>
+      <property name="guarantGivepayId" label="Y-是 N-否 " type="string" getStrategy="public" setStrategy="public">
+         <column name="GUARANT_GIVEPAY_ID" not-null="false" length="2" />
+      </property>
+      <property name="guarantGivepayPeriod" label="保证给付期间" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="GUARANT_GIVEPAY_PERIOD" not-null="false" length="10" />
+      </property>
+      <property name="guarantGivepayPeriodUnit" label="'年 月 日 年龄' " type="string" getStrategy="public" setStrategy="public">
+         <column name="GUARANT_GIVEPAY_PERIOD_UNIT" not-null="false" length="5" />
+      </property>
+      <import value="java.io.Serializable" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.fdframework.core.annotation.Column" />
+      <import value="com.neusoft.fdframework.core.annotation.Entity" />
+      <import value="com.neusoft.fdframework.core.annotation.ID" />
+      <import value="com.neusoft.fdframework.core.annotation.Transient" />
+      <import value="com.neusoft.unieap.core.di.DomainObject" />
+   </dc:entity>
+</dc:dc>
+

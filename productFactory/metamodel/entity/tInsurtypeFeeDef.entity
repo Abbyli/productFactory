@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+   <dc:entity class="com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef" table="T_INSURTYPE_FEE_DEF" extends="com.neusoft.unieap.core.di.DomainObject">
+      <id name="insurtypeFeeId" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_FEE_ID" length="16" />
+         <generator class="sequence">
+            <param name="sequence" value="SEQ_INSURTYPE_FEE_DEF" />
+         </generator>
+      </id>
+      <property name="insurtypeId" label="险种ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="INSURTYPE_ID" not-null="false" length="16" />
+      </property>
+      <property name="pricingLiabId" label="险种费用定价责任代码为：000000" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="PRICING_LIAB_ID" not-null="false" length="16" />
+      </property>
+      <property name="feeCode" label="费用代码" type="string" getStrategy="public" setStrategy="public">
+         <column name="FEE_CODE" not-null="false" length="10" />
+      </property>
+      <property name="feeType" label="01-保单管理费 02-风险保费 03-风险加费 04-初始费用 05-持续奖励 06-账户管理费 " type="string" getStrategy="public" setStrategy="public">
+         <column name="FEE_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="feeSrc" label="险种 保单" type="string" getStrategy="public" setStrategy="public">
+         <column name="FEE_SRC" not-null="false" length="8" />
+      </property>
+      <property name="feeCalcFormulaId" label="费用计算公式ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="FEE_CALC_FORMULA_ID" not-null="false" length="16" />
+      </property>
+      <property name="feeOccurCyc" label="Y-年 M-月 D-日  费用周期由产品定义负责定义，不需要由业务部门选择" type="string" getStrategy="public" setStrategy="public">
+         <column name="FEE_OCCUR_CYC" not-null="false" length="2" />
+      </property>
+      <property name="feeStartDateType" label="签单日 犹豫期次日 签单日次月1日 其他" type="string" getStrategy="public" setStrategy="public">
+         <column name="FEE_START_DATE_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="feeStartDateOtherAlgo" label="费用起始日期其他算法" type="string" getStrategy="public" setStrategy="public">
+         <column name="FEE_START_DATE_OTHER_ALGO" not-null="false" length="500" />
+      </property>
+      <property name="isCorrelToAcc" label="Y-是 N-否  否：账户编码为000000 默认为Y" type="string" getStrategy="public" setStrategy="public">
+         <column name="IS_CORREL_TO_ACC" not-null="false" length="2" />
+      </property>
+      <property name="feeDeductMaxTimes" label="默认9999" type="java.lang.Integer" getStrategy="public" setStrategy="public">
+         <column name="FEE_DEDUCT_MAX_TIMES" not-null="false" length="4" />
+      </property>
+      <import value="java.io.Serializable" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.fdframework.core.annotation.Column" />
+      <import value="com.neusoft.fdframework.core.annotation.Entity" />
+      <import value="com.neusoft.fdframework.core.annotation.ID" />
+      <import value="com.neusoft.fdframework.core.annotation.Transient" />
+      <import value="com.neusoft.unieap.core.di.DomainObject" />
+   </dc:entity>
+</dc:dc>
+

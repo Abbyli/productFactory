@@ -1,0 +1,47 @@
+-- Create table
+create table T_WAIVE_LIAB
+(
+  ID           NUMBER(16) not null,
+  INSURTYPE_ID NUMBER(16),
+  INSURTYPE_CODE VARCHAR2(6),
+  LIAB_CODE    VARCHAR2(6),
+  WAIVE_OBJ    VARCHAR2(20),
+  WAIVE_TYPE   VARCHAR2(2)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255;
+-- Add comments to the table 
+comment on table T_WAIVE_LIAB
+  is '豁免责任表';
+-- Add comments to the columns 
+comment on column T_WAIVE_LIAB.ID
+  is '主键';
+comment on column T_WAIVE_LIAB.INSURTYPE_ID
+  is '险种主键';
+comment on column T_WAIVE_LIAB.INSURTYPE_CODE
+  is '险种代码';
+comment on column T_WAIVE_LIAB.LIAB_CODE
+  is '责任代码';
+comment on column T_WAIVE_LIAB.WAIVE_OBJ
+  is '豁免对象';
+comment on column T_WAIVE_LIAB.WAIVE_TYPE
+  is '豁免类型 1-豁免主险合同 2-豁免保单合同 3-豁免长期主附险合同';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_WAIVE_LIAB
+  add primary key (ID)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+
+
+-- Create sequence 
+create sequence SEQ_waive_liab
+minvalue 1
+maxvalue 99999999999999
+start with 1
+increment by 1
+cache 20;

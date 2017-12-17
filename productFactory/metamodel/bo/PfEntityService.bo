@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.fdframework.productfactory.blo.PfEntityServiceImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="liu.w" />
+      </baseInfo>
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfEntityDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfEntityPropertyDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfEntityPropertyShowDao" />
+      <import value="com.neusoft.fdframework.productfactory.dto.TreeDTO" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfPropShowDef" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TreeDTO" type="dto" dc="factory" ref="treeDTO" />
+      <dependence name="PfMEntity" type="entity" dc="factory" ref="pfMEntity" />
+      <dependence name="PfMProperty" type="entity" dc="factory" ref="pfMProperty" />
+      <dependence name="PfPropEventDef" type="entity" dc="factory" ref="pfPropEventDef" />
+      <dependence name="PfPropShowDef" type="entity" dc="factory" ref="pfPropShowDef" />
+      <method name="PfEntityServiceImpl" returnType="" accessStrategy="public" />
+      <method name="addPfEntityTree" returnType="com.neusoft.fdframework.productfactory.entity.PfMEntity" accessStrategy="public">
+         <comment><![CDATA[实体树增加节点]]></comment>
+         <parameter name="pfMEntity" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      </method>
+      <method name="updPfEntityTree" returnType="com.neusoft.fdframework.productfactory.entity.PfMEntity" accessStrategy="public">
+         <comment><![CDATA[实体树修改节点]]></comment>
+         <parameter name="pfMEntity" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      </method>
+      <method name="updPfEntity" returnType="int" accessStrategy="public">
+         <comment><![CDATA[修改实体]]></comment>
+         <parameter name="pfMEntity" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      </method>
+      <method name="delPfEntity" returnType="String" accessStrategy="public">
+         <comment><![CDATA[删除实体]]></comment>
+         <parameter name="id" type="String" />
+         <parameter name="childIds" type="String" />
+      </method>
+      <method name="delPfEntityQuery" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除实体, 包括(实体, 实体属性, 属性展示值, 属性事件定义)]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="getPfEntityRiskTree" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[险种定义页面,查询实体树]]></comment>
+         <parameter name="treeRootName" type="String" />
+         <parameter name="modelVersionId" type="String" />
+      </method>
+      <method name="getParentPfMEntity" returnType="com.neusoft.fdframework.productfactory.entity.PfMEntity" accessStrategy="public">
+         <comment><![CDATA[获取实体树当前节点的父节点]]></comment>
+         <parameter name="rtnPfMEntity_T" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

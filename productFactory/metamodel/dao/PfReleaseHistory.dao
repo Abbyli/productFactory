@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.fdframework.productfactory.dao.PfReleaseHistoryDao" interface="">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjProduct" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfOpPubHis" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfOpPubObj" />
+      <import value="com.neusoft.fdframework.util.StringUtil" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="PfObjProduct" type="entity" dc="factory" ref="pfObjProduct" />
+      <dependence name="PfObjRisk" type="entity" dc="factory" ref="pfObjRisk" />
+      <dependence name="PfOpPubHis" type="entity" dc="factory" ref="pfOpPubHis" />
+      <dependence name="PfOpPubObj" type="entity" dc="factory" ref="pfOpPubObj" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfReleaseHistoryDao" returnType="" accessStrategy="public" />
+      <method name="addPfReleaseHistory" returnType="int" accessStrategy="public">
+         <parameter name="pubHis" type="com.neusoft.fdframework.productfactory.entity.PfOpPubHis" />
+      </method>
+      <method name="getPubObjsByCondition" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[查询发布状态的对象  险种和产品]]></comment>
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+         <parameter name="pfObjRisk" type="com.neusoft.fdframework.productfactory.entity.PfObjRisk" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

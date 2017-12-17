@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.neusoft.unieap.core.exception.entity">
+	<class name="TraceMessageBrief" table="UP_TRACE_MESSAGE" polymorphism="explicit">
+		<id name="id" type="string">
+			<column name="ID" length="32" >
+				<comment><![CDATA[
+						异常信息的唯一主键
+				]]></comment>
+			</column>
+			 <generator class="uuid.hex" />
+		</id>
+		<property name="code" type="string">
+			<column name="CODE" length="64">
+				<comment><![CDATA[
+						异常的编码
+				]]></comment>
+			</column>
+		</property>
+		<property name="message" type="string">
+			<column name="MESSAGE" length="512">
+				<comment><![CDATA[
+						异常信息
+				]]></comment>
+			</column>
+		</property>	
+		<property name="creatorId" type="string">
+			<column name="CREATOR_ID"  length="64">
+				<comment><![CDATA[
+						操作者ID
+				]]></comment>
+			</column>
+		</property>
+		<property name="creatorName" type="string">
+			<column name="CREATOR_NAME"  length="32">
+				<comment><![CDATA[
+						操作者名字
+				]]></comment>
+			</column>
+		</property>
+		<property name="createdTime" type="java.sql.Timestamp">
+			<column name="CREATION_TIME"    not-null="true" >
+				<comment><![CDATA[
+						异常发生时间
+				]]></comment>
+			</column>
+		</property>
+	</class>
+	<class name="TraceMessage" table="UP_TRACE_MESSAGE">
+		<id name="id" type="string">
+			<column name="ID" length="32" >
+				<comment><![CDATA[
+						异常信息的唯一主键
+				]]></comment>
+			</column>
+			 <generator class="uuid.hex" />
+		</id>
+		<property name="code" type="string">
+			<column name="CODE" length="64">
+				<comment><![CDATA[
+						异常的编码
+				]]></comment>
+			</column>
+		</property>
+		<property name="message" type="string">
+			<column name="MESSAGE" length="512">
+				<comment><![CDATA[
+						异常信息
+				]]></comment>
+			</column>
+		</property>	
+		<property name="stackMessage" type="string">
+			<column name="STACK_MESSAGE"  length="2048">
+				<comment><![CDATA[
+						异常的堆栈信息
+				]]></comment>
+			</column>
+		</property>
+		<property name="creatorId" type="string">
+			<column name="CREATOR_ID"  length="64">
+				<comment><![CDATA[
+						操作者ID
+				]]></comment>
+			</column>
+		</property>
+		<property name="creatorName" type="string">
+			<column name="CREATOR_NAME"  length="32">
+				<comment><![CDATA[
+						操作者名字
+				]]></comment>
+			</column>
+		</property>
+		<property name="createdTime" type="java.sql.Timestamp">
+			<column name="CREATION_TIME"    not-null="true" >
+				<comment><![CDATA[
+						异常发生时间
+				]]></comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="Administrator" />
+         <creationTime value="2015-07-22 15:59:44" />
+         <modificationTime value="2015-07-28 15:21:10" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor />
+      <messageWires />
+      <dataCenter />
+      <controls ><template id="template1" instance="false" type="com.neusoft.unieap.tableLayout_1.0.0">
+    <tableLayout height="100%" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="200px" />
+        <col  />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td valign="top"><titlePane id="titlePane1" title="工具箱" height="339px"><tableLayout id="tableLayout1" style=" background-color:#99BBE8"><colgroup><col width="150px" /><col width="150px" /></colgroup>
+          <tbody>
+          	<tr height="25px">
+	          	<td><img id="img1" width="64px" height="64px"
+	src="arithengine/images/parameter.png" style="cursor:hand;" title="参数">
+	<events>
+		<event name="onclick" handlerFunction="img1_onclick">
+			<function name="img1_onclick" arguments="">
+				<script><![CDATA[var rect1=rule_edit.flow.addRect({type:'task',text:{text:'任务XX'}, attr:{ x:0, y:0, width:101, height:50}, props:{text:{value:'新增任务'},temp1:{value:''},temp2:{value:''}}});
+]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+	          	<td><img id="img2" width="64px" height="64px"
+	src="arithengine/images/indicator.png" style="cursor:hand;" title="指标">
+	<events>
+		<event name="onclick" handlerFunction="img2_onclick">
+			<function name="img2_onclick" arguments="">
+				<script><![CDATA[if(rule_edit.flow.getCruuentNode())
+{
+	alert(rule_edit.flow.getCruuentNode().getId());
+	alert(rule_edit.flow.getCruuentNode().toJson());
+}
+else
+{
+	alert("请先选择节点");
+}]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+	        </tr>
+	        <tr height="25px">
+	          	<td><img id="img3" width="64px" height="64px"
+	src="arithengine/images/formula.png" style="cursor:hand;" title="公式">
+	<events>
+		<event name="onclick" handlerFunction="img3_onclick">
+			<function name="img3_onclick" arguments="">
+				<script><![CDATA[rule_edit.flow.fireClick("rect3");
+alert("选中矩形");
+rule_edit.flow.fireClick("path10");
+alert("选中线");]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+	          	<td><img id="img1" width="64px" height="64px" src="arithengine/images/step.png" style="cursor:hand;" title="步骤"></img></td>
+	        </tr>
+<!--	        <tr height="25px">-->
+<!--	          	<td><img id="img1" width="64px" height="64px" src="arithengine/images/rule.png" style="cursor:hand;" title="规则"></img></td>-->
+<!--	          	<td><img id="img1" width="64px" height="64px" src="arithengine/images/rule.png" style="cursor:hand;" title="规则"></img></td>-->
+<!--	        </tr>-->
+<!--	        	<tr height="25px">-->
+<!--	          	<td><img id="img1" width="64px" height="64px" src="arithengine/images/rule.png" style="cursor:hand;" title="规则"></img></td>-->
+<!--	          	<td><img id="img1" width="64px" height="64px" src="arithengine/images/rule.png" style="cursor:hand;" title="规则"></img></td>-->
+<!--	        </tr>-->
+	       </tbody>
+	       </tableLayout></titlePane></td>
+          <td valign="top"><template id="template2" instance="false" type="com.neusoft.unieap.adaptiveLayout_1.0.0">
+    <adaptiveContainer id="adaptiveContainer1">
+      <adaptivePane adaptiveHeight="100%" autoHeight="true" height="120px" width="auto"><div id="holder" style="height:300px;border:1px solid #F00;overflow:auto;position:relative;background:#fff url(../../arithengine/images/backimg.png)"></div></adaptivePane>
+      <adaptivePane height="120px" width="auto"><titlePane id="titlePane2" title="控件信息"></titlePane></adaptivePane>
+    </adaptiveContainer>
+  </template></td>
+        </tr>
+      </tbody>
+    </tableLayout>
+  </template><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[initFlow();
+]]></script></function></event></events></controls>
+      <scripts ><function name="initFlow" arguments="">
+	<script><![CDATA[/**
+var flow=getInstance();
+	flow.config.tools.states={
+	start : {
+				type : 'start',
+				name : {text:'<<start>>'},
+				text : {text:'开始'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/start_event_empty.png',width : 16, height:16},
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'开始'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			end : {type : 'end',
+				name : {text:'<<end>>'},
+				text : {text:'结束'},
+				img : {src :  unieap.WEB_APP_NAME+'/arithengine/images/16/end_event_terminate.png',width : 16, height:16},
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'结束'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			'end-cancel' : {type : 'end-cancel',
+				name : {text:'<<end-cancel>>'},
+				text : {text:'取消'},
+				img : {src :  unieap.WEB_APP_NAME+'/arithengine/images/16/end_event_cancel.png',width : 16, height:16},
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'取消'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			'end-error' : {type : 'end-error',
+				name : {text:'<<end-error>>'},
+				text : {text:'错误'},
+				img : {src :  unieap.WEB_APP_NAME+'/arithengine/images/16/end_event_error.png',width : 16, height:16},
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'错误'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			state : {type : 'state',
+				name : {text:'<<state>>'},
+				text : {text:'状态'},
+				img : {src :  unieap.WEB_APP_NAME+'/arithengine/images/16/task_empty.png',width : 16, height:16},
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'状态'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			fork : {type : 'fork',
+				name : {text:'<<fork>>'},
+				text : {text:'分支'},
+				img : {src :  unieap.WEB_APP_NAME+'/arithengine/images/16/gateway_parallel.png',width :16, height:16},
+				props : {
+					text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'分支'},
+					temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor('select.json');}}
+				}},
+			join : {type : 'join',
+				name : {text:'<<join>>'},
+				text : {text:'合并'},
+				img : {src :  unieap.WEB_APP_NAME+'/arithengine/images/16/gateway_parallel.png',width :16, height:16},
+				props : {
+					text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'合并'},
+					temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor('select.json');}}
+				}},
+			task : {type : 'task',
+				name : {text:'<<task>>'},
+				text : {text:'任务'},
+				img : {src :  unieap.WEB_APP_NAME+'/arithengine/images/16/task_empty.png',width :16, height:16},
+				props : {
+					text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'任务'},
+					temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor('select.json');}}
+				}}
+};
+*/
+
+var flow=getInstance();
+flow.config.tools.states={
+	start : {
+				showType: 'image',
+				type : 'start',
+				name : {text:'<<start>>'},
+				text : {text:'开始'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/start.jpg',width : 48, height:48},
+				attr : {width:50 ,heigth:50 },
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'开始'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			end : {showType: 'image',type : 'end',
+				name : {text:'<<end>>'},
+				text : {text:'结束'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/end.jpg',width : 48, height:48},
+				attr : {width:50 ,heigth:50 },
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'结束'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			'end-cancel' : {showType: 'image',type : 'end-cancel',
+				name : {text:'<<end-cancel>>'},
+				text : {text:'取消'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/cancel.jpg',width : 48, height:48},
+				attr : {width:50 ,heigth:50 },
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'取消'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			'end-error' : {showType: 'image',type : 'end-error',
+				name : {text:'<<end-error>>'},
+				text : {text:'错误'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/error.jpg',width : 48, height:48},
+				attr : {width:50 ,heigth:50 },
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'错误'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			state : {showType: 'text',type : 'state',
+				name : {text:'<<state>>'},
+				text : {text:'状态'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/state.jpg',width : 48, height:48},
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'状态'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			fork : {showType: 'image',type : 'fork',
+				name : {text:'<<fork>>'},
+				text : {text:'分支'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/branch.jpg',width :48, height:48},
+				attr : {width:50 ,heigth:50 },
+				props : {
+					text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'分支'},
+					temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					//temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor('select.json');}}
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			join : {showType: 'image',type : 'join',
+				name : {text:'<<join>>'},
+				text : {text:'合并'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/compact.jpg',width :48, height:48},
+				attr : {width:50 ,heigth:50 },
+				props : {
+					text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'合并'},
+					temp1: {name:'temp1', label: '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					//temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor('select.json');}}
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}}
+				}},
+			task : {showType: 'text',type : 'task',
+				name : {text:'<<task>>'},
+				text : {text:'任务'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/task.jpg',width :48, height:48},
+				props : {
+					text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'任务'},
+					assignee: {name:'assignee', label: '用户', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					form: {name:'form', label : '表单', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					desc: {name:'desc', label : '描述', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					ps: {name:'form', label : '备注', value:'', editor: function(){return new myflow.editors.inputEditor();}}
+				}},
+			'button1' : {showType: 'image',type : 'button1',
+				name : {text:'<<并发>>'},
+				text : {text:'并发'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/erupt.jpg',width : 48, height:48},
+				attr : {width:50 ,heigth:50 },
+				props : {
+					text: {name:'text',label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'错误'},
+					temp1: {name:'temp1', label : '文本', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp2: {name:'temp2', label : '选择', value:'', editor: function(){return new myflow.editors.selectEditor([{name:'aaa',value:1},{name:'bbb',value:2}]);}},
+					temp3: {name:'temp3', label : '备注1', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp4: {name:'temp4', label : '备注2', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					temp5: {name:'temp5', label : '备注3', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					}},
+			button2 : {showType: 'text',type : 'button2',
+				name : {text:'<<处理>>'},
+				text : {text:'处理'},
+				img : {src : unieap.WEB_APP_NAME+'/arithengine/images/16/solve.jpg',width :48, height:48},
+				props : {
+					text: {name:'text', label: '显示', value:'', editor: function(){return new myflow.editors.textEditor();}, value:'任务'},
+					assignee: {name:'assignee', label: '用户', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					form: {name:'form', label : '表单', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					desc: {name:'desc', label : '描述', value:'', editor: function(){return new myflow.editors.inputEditor();}},
+					ps: {name:'form', label : '备注', value:'', editor: function(){return new myflow.editors.inputEditor();}}
+				}}
+};
+	var data={
+		size:{width:1024,height:1024},
+		basePath : "",
+		restore : eval("({states:{rect1:{type:'start',text:{text:'开始'}, attr:{ x:384, y:10, width:101, height:50}, props:{text:{value:'开始'},temp1:{value:''},temp2:{value:''}}},rect2:{type:'task',text:{text:'任务1'}, attr:{ x:386, y:116, width:100, height:50}, props:{text:{value:'任务1'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}},rect3:{type:'fork',text:{text:'分支'}, attr:{ x:384, y:209, width:103, height:50}, props:{text:{value:'分支'},temp1:{value:''},temp2:{value:''}}},rect4:{type:'task',text:{text:'任务2'}, attr:{ x:192, y:317, width:100, height:50}, props:{text:{value:'任务2'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}},rect5:{type:'task',text:{text:'任务3'}, attr:{ x:385, y:317, width:100, height:50}, props:{text:{value:'任务3'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}},rect6:{type:'task',text:{text:'任务4'}, attr:{ x:556, y:320, width:100, height:50}, props:{text:{value:'任务4'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}},rect7:{type:'join',text:{text:'合并'}, attr:{ x:386, y:416, width:103, height:50}, props:{text:{value:'合并'},temp1:{value:''},temp2:{value:''}}},rect8:{type:'end',text:{text:'结束'}, attr:{ x:382, y:632, width:107, height:50}, props:{text:{value:'结束'},temp1:{value:''},temp2:{value:''}}},rect9:{type:'task',text:{text:'任务5'}, attr:{ x:384, y:528, width:100, height:50}, props:{text:{value:'任务5'},temp1:{value:''},temp2:{value:''},assignee:{value:''},form:{value:''},desc:{value:''}}}},paths:{path10:{from:'rect1',to:'rect2', dots:[],text:{text:'TO 任务1'},textPos:{x:37,y:-4}, props:{text:{value:''}}},path11:{from:'rect2',to:'rect3', dots:[],text:{text:'TO 分支'},textPos:{x:56,y:-1}, props:{text:{value:''}}},path12:{from:'rect3',to:'rect5', dots:[],text:{text:'TO 任务3'},textPos:{x:24,y:-5}, props:{text:{value:''}}},path13:{from:'rect5',to:'rect7', dots:[],text:{text:'TO 合并'},textPos:{x:41,y:8}, props:{text:{value:''}}},path14:{from:'rect7',to:'rect9', dots:[],text:{text:'TO 任务5'},textPos:{x:36,y:-5}, props:{text:{value:''}}},path15:{from:'rect9',to:'rect8', dots:[],text:{text:'TO 结束'},textPos:{x:32,y:0}, props:{text:{value:''}}},path16:{from:'rect3',to:'rect4', dots:[{x:244,y:232}],text:{text:'TO 任务2'},textPos:{x:0,y:-10}, props:{text:{value:'TO 任务2'}}},path17:{from:'rect4',to:'rect7', dots:[{x:242,y:435}],text:{text:'TO 合并'},textPos:{x:-3,y:17}, props:{text:{value:'TO 合并'}}},path18:{from:'rect3',to:'rect6', dots:[{x:607,y:234}],text:{text:'TO 任务4'},textPos:{x:0,y:-10}, props:{text:{value:'TO 任务4'}}},path19:{from:'rect6',to:'rect7', dots:[{x:607,y:439}],text:{text:'TO 合并'},textPos:{x:-8,y:16}, props:{text:{value:'TO 合并'}}}},props:{props:{name:{value:'新建流程'},key:{value:''},desc:{value:''}}}})"),
+		tools : {
+			save : {
+				onclick : function(data) {
+					alert('save:\n' + data);
+				}
+			}
+		}
+	};
+	flow.init(document.getElementById("unieapx_layout_NavigatorPane_0holder"),data);
+	rule_edit.flow=flow;
+	alert(flow.toJson());
+	
+	var rect1=flow.addRect({type:'task',text:{text:'任务1'}, attr:{ x:200, y:10, width:101, height:50}, props:{text:{value:'新增任务'},temp1:{value:''},temp2:{value:''}}});
+	var rect2=flow.addRect({type:'task',text:{text:'任务2'}, attr:{ x:200, y:100, width:101, height:50}, props:{text:{value:'新增任务'},temp1:{value:''},temp2:{value:''}}}); 
+
+	var line=flow.addPath({from:rect1.getId(),to:rect2.getId(), dots:[],text:{text:'TO 任务2'},textPos:{x:37,y:-4}, props:{text:{value:''}}});
+	flow.changeRectText(rect1.getId(),"我变了");
+	flow.changePathText(line.getId(),"我也变了");
+	rect1.attr({stroke:"#ff0000","stroke-width":2});
+	alert(rect1.getData());
+	alert(line.getData());
+	flow.bindNodeBlur(function(currentNode){
+		if(currentNode)
+		{
+			alert(currentNode.getId());
+		}
+		else
+		{
+			alert("无节点失焦");
+		}
+	});
+
+]]>
+	</script>
+</function></scripts>
+      <templateInstances />
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+	<resource type="jsp" src="/arithengine/jsp/svg.jsp" />
+</resources>
+   </dc:view>
+</dc:dc>
+

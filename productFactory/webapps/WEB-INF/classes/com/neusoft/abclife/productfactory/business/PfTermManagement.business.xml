@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fdframework-business xmlns="http://www.neusoft.com/fdframework/business"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+	<business id="PfTermManagement.queryTInsurtypeBasicInf" returnkey="queryTInsurtype"
+		name="" desc="查询险种">
+		<step id="1" bean="factoryabclife_PfTermManagementBo_bo" method="queryTInsurtypeBasicInf"
+			returnkey="queryTInsurtype">
+			<property refkey="tInsurtypeBasicInf"
+				type="pojo(com.neusoft.abclife.productfactoty.entity.TInsurtypeBasicInf)"></property>
+			<property refkey="pageNumber" type="int"></property>
+			<property refkey="pageSize" type="int"></property>
+		</step>
+	</business>
+	
+	<business id="PfTermManagement.getTRuleManageDef" returnkey="reTRuleManageDef"
+		name="" desc="查询条案详情">
+		<step id="1" bean="factoryabclife_PfTermManagementBo_bo" method="getTRuleManageDef"
+			returnkey="reTRuleManageDef">
+			<property refkey="tInsurtypeBasicInf"
+				type="pojo(com.neusoft.abclife.productfactoty.entity.TInsurtypeBasicInf)"></property>
+			<property refkey="pageNumber" type="int"></property>
+			<property refkey="pageSize" type="int"></property>
+		</step>
+	</business>
+	
+	<business id="PfTermManagement.uploadInfo" name="" desc="文件上传" returnkey="uploadInfo" >
+	    <step id="1" bean="factoryabclife_PfTermManagementBo_bo"  method="saveUploadInfo" returnkey="uploadInfo" >
+	            <property refkey="formId4Upload"  type="pojo(com.neusoft.unieap.core.common.form.Form)"></property>
+	            <property refkey="tInsurtypeBasicInf"  type="pojo(com.neusoft.abclife.productfactoty.entity.TInsurtypeBasicInf)"></property>
+	    </step>
+	</business>
+	
+	<business id="PfTermManagement.downloadInfo" name="" desc="文件下载" returnkey="downloadInfo" >
+	    <step id="1" bean="factoryabclife_PfTermManagementBo_bo"  method="downLoad" returnkey="downloadInfo" >
+	    	<property refkey="formId4Download"  type="String"></property>
+	    	<property refkey="tRuleManageDef"  type="pojo(com.neusoft.abclife.productfactoty.entity.TRuleManageDef)"></property>
+	    </step>
+	</business>
+	
+	<business id="PfTermManagement.delTRuleManageDef" name="" desc="条案删除" returnkey="redel" >
+	    <step id="1" bean="factoryabclife_PfTermManagementBo_bo"  method="delTRuleManageDef" returnkey="redel" >
+	    	<property refkey="tRuleManageDef" type="pojo(com.neusoft.abclife.productfactoty.entity.TRuleManageDef)"></property>
+	    </step>
+	</business>
+</fdframework-business>

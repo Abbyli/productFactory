@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="think" />
+         <creationTime value="2016-07-12 14:52:29" />
+         <modificationTime value="2017-03-10 11:04:02" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="queryRelationDef" onSuccess="queryRelationDefSuccess">
+		<comment><![CDATA[相关性定义查询]]></comment>
+		<pagingQuery pageNumber="1" pageSize="20" calcRecordCount="true"></pagingQuery>
+		<bo name="pfrelation_def.business.xml" method="pfriskparam.queryRelationDef"></bo>
+		<context>
+			<string name="pageNumber" />
+			<string name="pageSize" />
+		</context>
+		<arguments>
+			<argument name="pageNumber" type="string"></argument>
+			<argument name="pageSize" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<dependence name="pfrelation_def.business.xml"
+		ref="pfrelation_def.business.xml | com.neusoft.abclife.productfactory.business"
+		dc="factoryabclife" />
+	<pMethod name="delRelationDef" onSuccess="delRelationDefSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfrelation_def.business.xml" method="pfriskparam.delRelationDef"></bo>
+<context><pojo name="relationDef" dataStoreName="tRelationDef_grid" /></context><arguments><argument name="relationDef" type="dataStore"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="tRelationDef_grid" dependence="tRelationDef"
+		dc="factoryabclife" path="tRelationDef.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="bigint" length="16" />
+			<column name="name" label="相关性名称" type="string" length="20" />
+			<column name="property" label="相关性属性" type="string" length="20" />
+			<column name="relationType" label="相关性类型(2引用BOM的属性,3引用属性)"
+				type="string" length="2" />
+			<column name="returnType" label="相关性类型string,number,date"
+				type="string" length="20" />
+			<column name="refValue" label="引用值" type="string" length="255" />
+			<column name="busiType" label="业务分类" type="string" length="2" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><xdialog id="add_relationDef" title="相关性定义新增"
+	view-ref="factoryabclife/basic/pfRelationDialog" width="680px" height="182px">
+	<events>
+		<event name="onComplete" handlerFunction="add_relationDef_onComplete">
+			<function name="add_relationDef_onComplete" arguments="returnObj">
+				<script><![CDATA[view.processor.queryRelationDef(1, 20);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="update_relation" title="相关性定义修改" width="680px"
+	view-ref="factoryabclife/basic/pfRelationDialog" height="182px">
+	<events>
+		<event name="onComplete" handlerFunction="update_relation_onComplete">
+			<function name="update_relation_onComplete" arguments="returnObj">
+				<script><![CDATA[view.processor.queryRelationDef(1, 20);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><titlePane id="titlePane1" title="相关性定义" width="100%" height="100%" flexible="false"><div id="div1" height="32px" type="buttons"><button
+	id="button_relation" label="新&amp;nbsp增" width="100px" class="titlePane-button">
+	<events>
+		<event name="onClick" handlerFunction="button_relation_onClick">
+			<function name="button_relation_onClick" arguments="event">
+				<script><![CDATA[var dialog = unieap.byId("add_relationDef");
+dialog.dialogData={"opt":"add"};
+dialog.show();]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template1" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <xgrid binding-store="tRelationDef_grid" edit-editType="readonly"
+	height="100%" id="grid_relation" rows-rowsPerPage="10"
+	selection-selectType="none" views-rowBar="false" views-rowNumber="true">
+	<toolbar paging-userPageSize="false"></toolbar>
+	<header>
+		<row>
+			<xcell dataType="string" enable="false" height="25px"
+				id="cell_name__relation" label="相关性名称" name="name" width="15%"></xcell>
+			<xcell dataType="string" enable="false" height="25px"
+				id="cell_property__relation" label="相关性属性" name="property" width="15%"></xcell>
+			<xcell dataType="string" enable="false" height="25px"
+				id="cell_relationType__relation" label="相关性类型" name="relationType"
+				width="15%" decoder-store="ds_relationType"></xcell>
+			<xcell dataType="string" enable="false" height="25px"
+				id="cell_returnType__relation" label="返回类型" name="returnType" width="15%"
+				decoder-store="ds_returnType"></xcell>
+			<xcell dataType="string" enable="false" height="25px"
+				id="cell_refValue__relation" label="引用值" name="refValue" width="15%"></xcell>
+			<xcell dataType="string" enable="false" height="25px"
+				id="cell_busiType__relation" label="业务分类" name="busiType" width="15%"></xcell>
+			<xcell enable="false" height="25px" id="cell_name1__relation"
+	label="操作" name="name1" width="10%">
+	<events>
+		<event name="formatter" handlerFunction="cell_name1__relation_formatter">
+			<function name="cell_name1__relation_formatter" arguments="inValue,inRowIndex">
+				<script><![CDATA[var editImg=unieap.WEB_APP_NAME +"/ProductFactory/factoryabclife/gridBtn/ui/btn_edit.png";
+var delImg=unieap.WEB_APP_NAME +"/ProductFactory/factoryabclife/gridBtn/ui/btn_delete.png";
+
+
+
+var updateBtn = "<img src='"+editImg+"' "+
+		"style=\"margin-right:10px; cursor:pointer\" title=\"修改\" "+
+		"onclick=\"pfRelation.update_relation('"+inRowIndex+"')\" />";
+		
+var delBtn = "<img src='"+delImg+"'"+
+		"style=\"cursor:pointer\" title=\"删除\" "+
+		"onclick=\"pfRelation.del_relation('"+inRowIndex+"')\" />";
+
+return updateBtn+delBtn;]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+		</row>
+	</header>
+	<events>
+		<event name="binding-onAfterSave" handlerFunction="grid_relation_binding_onAfterSave">
+			<function name="grid_relation_binding_onAfterSave"
+				arguments="">
+				<script><![CDATA[view.processor.queryRelationDef(store.getPageNumber(), store.getPageSize());]]></script>
+			</function>
+		</event>
+		<event name="binding-rpc" handlerFunction="grid_relation_binding_rpc">
+			<function name="grid_relation_binding_rpc" arguments="store,load">
+				<script><![CDATA[view.processor.queryRelationDef(store.getPageNumber(), store.getPageSize());]]></script>
+			</function>
+		</event>
+	</events>
+</xgrid></template></titlePane><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[view.processor.queryRelationDef(1,20);]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[var ds= new unieap.ds.DataStore("ds_returnType",[
+{CODEVALUE:"string",CODENAME:"string"},
+{CODEVALUE:"number",CODENAME:"number"}
+]);
+var ds1= new unieap.ds.DataStore("ds_relationType",[
+{CODEVALUE:"2",CODENAME:"引用BOM属性"},
+{CODEVALUE:"3",CODENAME:"引用属性"}
+]);
+dataCenter.addDataStore(ds);
+dataCenter.addDataStore(ds1);]]></script></function></event></events><dependence name="factoryabclife/basic/pfRelationDialog" type="view" sc="ProductFactory" dc="factoryabclife" ref="basic/pfRelationDialog" /></controls>
+      <scripts ><function name="queryRelationDefSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:queryRelationDef方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result = dc.getDataStore("queryRelationDefResult");
+view.grid.setDataStore("grid_relation", result);]]></script>
+</function><function name="update_relation" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var selectrow = view.grid.getRow("grid_relation", inRowIndex);
+if(selectrow){
+	var xdialog = unieap.byId("update_relation");
+	xdialog.dialogData = {
+		opt:"update",
+		row:selectrow
+	};	
+	xdialog.show();
+ds
+}
+]]>
+	</script>
+</function><function name="delRelationDefSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:delRelationDef方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[view.processor.queryRelationDef(1,20);
+]]></script>
+</function><function name="del_relation" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var data = view.grid.getRow("grid_relation", inRowIndex);
+if (data 
+    && data.rowSet 
+    && data.rowSet.primary 
+    && data.rowSet.primary.length == 1) {
+    
+    MessageBox.confirm({
+        message: "是否删除？",
+        yesStr: "是",
+        noStr: "否",
+        //关闭右上角的"X"按钮时执行onComplete函数
+        iconCloseComplete:false,
+        onComplete: function(value) {
+            if (value) {
+               view.processor.delRelationDef(data);
+            }
+        }
+    }, dojo.byId("confirm"));
+}
+]]></script>
+</function></scripts>
+      <templateInstances ><templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>tRelationDef_grid</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>id</name>
+            <label>id</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>id</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>16</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name</name>
+            <label>相关性名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_name__relation</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>name</name>
+              <label>相关性名称</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>name__relation_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>20</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>property</name>
+            <label>相关性属性</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_property__relation</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>property</name>
+              <label>相关性属性</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>property__relation_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>20</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>relationType</name>
+            <label>相关性类型</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_relationType__relation</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>relationType</name>
+              <label>相关性类型</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>relationType__relation_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>returnType</name>
+            <label>返回类型</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_returnType__relation</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>returnType</name>
+              <label>返回类型</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>returnType__relation_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>20</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>refValue</name>
+            <label>引用值</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_refValue__relation</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>refValue</name>
+              <label>引用值</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>refValue__relation_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>255</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>busiType</name>
+            <label>业务分类</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_busiType__relation</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>busiType</name>
+              <label>业务分类</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>busiType__relation_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name1</name>
+            <label>操作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_name1__relation</id>
+              <properties/>
+              <name>name1</name>
+              <label>操作</label>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+              <enable>false</enable>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>tRelationDef_grid</binding__store>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid_relation</id>
+        <lastId>grid_relation</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>tRelationDef_grid</name>
+            <entityClass>TRelationDef</entityClass>
+            <dc>factoryabclife</dc>
+            <type>entity</type>
+            <dependence>tRelationDef</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid_relation_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <paging__userPageSize>true</paging__userPageSize>
+          <id>grid_relation_ToolBar</id>
+          <export__options></export__options>
+          <innerButtons></innerButtons>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>grid_relation_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid_relation_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX>_relation</ID__PREFIX>
+        <showToolBar>true</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string>_relation</string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid_relation</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

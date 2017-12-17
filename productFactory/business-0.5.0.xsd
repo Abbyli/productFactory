@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.neusoft.com/fdframework/business" elementFormDefault="qualified"
+	attributeFormDefault="unqualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.neusoft.com/fdframework/business">
+
+	<element name="fdframework-business">
+		<complexType>
+			<sequence>
+				<element ref="tns:business" maxOccurs="unbounded" minOccurs="0"></element>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="business" type="tns:business">
+		<annotation>
+			<documentation><![CDATA[业务服务定义的起始标签，只有定义文件的root设定为business才认为是业务服务]]></documentation>
+		</annotation>
+	</element>
+
+	<element name="step" type="tns:step"></element>
+
+	<element name="if" type="tns:if">
+		<annotation>
+			<documentation>条件判断步骤</documentation>
+		</annotation></element>
+
+	<complexType name="business">
+		<sequence>
+			<element ref="tns:annotation" maxOccurs="1" minOccurs="0"></element>
+			<group ref="tns:stepGroup" maxOccurs="unbounded"
+				minOccurs="1">
+			</group>
+		</sequence>
+		<attribute name="id" type="string" use="required">
+			<annotation>
+				<documentation><![CDATA[业务服务的ID，系统依靠此ID来查找业务服务]]></documentation>
+			</annotation>
+		</attribute>
+		<attribute name="name" type="string"></attribute>
+		<attribute name="desc" type="string" use="required">
+			<annotation>
+				<documentation><![CDATA[业务服务的描述，需描述清楚所完成的业务是什么，需要的入参是什么，返回的参数是什么，里面值得含义以及所需要依赖的相关信息]]></documentation>
+			</annotation>
+		</attribute>
+		<attribute name="returnkey" type="string" use="required">
+			<annotation>
+				<documentation><![CDATA[业务服务返回的参数名，系统将利用此Key从RuntimeContext中获取具体值格式化后返回给调用]]></documentation>
+			</annotation>
+		</attribute>
+		<attribute name="version" type="string">
+			<annotation>
+				<documentation><![CDATA[业务服务版本号，在有修改此业务服务时应该更新]]></documentation>
+			</annotation>
+		</attribute>
+		<attribute name="support-webservice" type="boolean"
+			default="false">
+			<annotation>
+				<documentation><![CDATA[是否支持通过WebService方式调用]]></documentation>
+			</annotation>
+		</attribute>
+		<attribute name="needtrans" type="boolean" default="true">
+			<annotation>
+				<documentation><![CDATA[是否需要开启事务，默认是需要]]></documentation>
+			</annotation>
+		</attribute>
+		<attribute name="datasource" type="string"></attribute>
+		<attribute name="interface" type="boolean"></attribute>
+		<attribute name="needvalidate" type="boolean" default="false"></attribute>
+		<attribute name="async" type="boolean" default="false"></attribute>
+		<attribute name="threadhold" type="int"></attribute>
+		<attribute name="asyncstrategy" type="tns:asyncType" default="ACCEPT"></attribute>
+	</complexType>
+    <simpleType name="asyncType">
+            <restriction base="string">
+                <enumeration value="ACCEPT"></enumeration>
+                <enumeration value="REFUSE"></enumeration>
+            </restriction>
+    </simpleType>
+
+    <complexType name="if">
+    	<annotation>
+    		<documentation>
+    			condition基于Spring EL表达式来判断，判断变量的来源于系统运行的上下文。 基本的使用方法如下：
+    			上下文中有个user对象，需要看其name属性是否为shixx,则表达式为#user['name']=='shixx'
+    			上下文中有个简单对象为age，要看其是否大于10,则表达式为#age>10 逻辑操作符支持and,or,not,
+    		</documentation>
+    	</annotation>
+    	<complexContent>
+    		<extension base="tns:abstractStepType">
+
+    			<sequence>
+    				<element name="true" type="tns:stepsType"
+    					maxOccurs="1" minOccurs="1">
+    					<annotation>
+    						<documentation>
+    							判断条件为真时，需要调度的steps
+    						</documentation>
+    					</annotation>
+    				</element>
+    				<element name="false" type="tns:stepsType"
+    					maxOccurs="1" minOccurs="0">
+    					<annotation>
+    						<documentation>
+    							条件为假时，需要调度的steps
+    						</documentation>
+    					</annotation>
+    				</element>
+    			</sequence>
+                <attribute name="id" type="string" use="required"></attribute>
+                <attribute name="condition" type="string"
+    				use="required">
+    				<annotation>
+    					<documentation>
+    						condition基于Spring EL表达式来判断，判断变量的来源于系统运行的上下文。
+    						基本的使用方法如下：
+    						上下文中有个user对象，需要看其name属性是否为shixx,则表达式为#user['name']=='shixx'
+    						上下文中有个简单对象为age，要看其是否大于10,则表达式为#age>10
+    						逻辑操作符支持and,or,not
+    					</documentation>
+    				</annotation>
+    			</attribute>
+
+
+
+
+
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="step">
+    	<complexContent>
+    		<extension base="tns:abstractStepType">
+    			<sequence>
+    				<element ref="tns:property" maxOccurs="unbounded"
+    					minOccurs="0">
+    				</element>
+    			</sequence>
+                <attribute name="id" type="string" use="required"></attribute>
+                <attribute name="bean" type="string" use="required">
+    				<annotation>
+    					<documentation><![CDATA[组件所申明的名称，具体见spring中@service中所设定的名称]]></documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="method" type="string" use="required">
+    				<annotation>
+    					<documentation><![CDATA[需要执行的方法，即Bean中所对应的方法]]></documentation>
+    				</annotation>
+    			</attribute>
+    			<attribute name="returnkey" type="string">
+    				<annotation>
+    					<documentation><![CDATA[返回值存储到runtimecontext中的key名称]]></documentation>
+    				</annotation>
+    			</attribute>
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+    <complexType name="propertyType">
+    	<attribute name="type" use="optional" default="prototype">
+    		<simpleType>
+    			<restriction base="string">
+    				<enumeration value="double"></enumeration>
+    				<enumeration value="java.lang.Double"></enumeration>
+    				<enumeration value="long"></enumeration>
+    				<enumeration value="java.lang.Long"></enumeration>
+    				<enumeration value="float"></enumeration>
+    				<enumeration value="java.lang.Float"></enumeration>
+    				<enumeration value="int"></enumeration>
+    				<enumeration value="java.lang.Integer"></enumeration>
+    				<enumeration value="short"></enumeration>
+    				<enumeration value="java.lang.Short"></enumeration>
+    				<enumeration value="string"></enumeration>
+    				<enumeration value="java.lang.String"></enumeration>
+    				<enumeration value="boolean"></enumeration>
+    				<enumeration value="java.lang.Boolean"></enumeration>
+    				<enumeration value="date"></enumeration>
+    				<enumeration value="java.util.Date"></enumeration>
+    				<enumeration value="decimal"></enumeration>
+    				<enumeration value="java.math.BigDecimal"></enumeration>
+    				<enumeration value="list"></enumeration>
+    				<enumeration value="java.util.List"></enumeration>
+    				<enumeration value="map"></enumeration>
+    				<enumeration value="java.util.Map"></enumeration>
+    				<enumeration value="prototype"></enumeration>
+    				<pattern value="Pojo\(.*\)"></pattern>
+    				<pattern value="List\(.*\)"></pattern>
+    				<pattern value=".*"></pattern>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="value" type="string" use="optional"></attribute>
+    	<attribute name="refkey" type="string" use="required"></attribute>
+    	<attribute name="expr" type="string">
+    		<annotation>
+    			<documentation>支持Spring EL表达式来给属性赋值</documentation>
+    		</annotation></attribute>
+    </complexType>
+
+    <simpleType name="comparetypeType">
+		<restriction base="string">
+			<enumeration value="equal"></enumeration>
+			<enumeration value="greater"></enumeration>
+			<enumeration value="greater-equal"></enumeration>
+			<enumeration value="less"></enumeration>
+			<enumeration value="less-equal"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<element name="annotation" type="string">
+		<annotation>
+			<documentation><![CDATA[描述业务或步骤的具体功能以及入参及返还结果信息]]></documentation>
+		</annotation>
+	</element>
+
+	<element name="property" type="tns:propertyType">
+		<annotation>
+			<documentation><![CDATA[调用bean方法所需的入参设定]]></documentation>
+		</annotation>
+	</element>
+
+	<group name="stepGroup">
+		<sequence>
+			<element ref="tns:step" maxOccurs="unbounded" minOccurs="0"></element>
+			<element ref="tns:if" maxOccurs="unbounded" minOccurs="0"></element>
+			<element ref="tns:distep" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</group>
+
+	<complexType name="abstractStepType" abstract="true">
+		<attribute name="id" type="string"></attribute>
+		<attribute name="desc" type="string">
+			<annotation>
+				<documentation>步骤描述信息</documentation></annotation></attribute>
+	</complexType>
+
+
+	<complexType name="stepsType">
+		<sequence>
+			<group ref="tns:stepGroup" maxOccurs="unbounded" minOccurs="1"></group>
+		</sequence>
+	</complexType>
+<element name="distep" type="tns:distep"></element>
+
+	<complexType name="distep">
+	     	<complexContent>
+    			<extension base="tns:abstractStepType">
+				<sequence>
+					<element ref="tns:parameter" maxOccurs="unbounded"
+						minOccurs="1">
+					</element>
+				</sequence>
+				<attribute name="bean" type="string"></attribute>
+				<attribute name="datasource" type="string"></attribute>
+				<attribute name="method" type="string" use="required"></attribute>
+				<attribute name="returnkey" type="string"></attribute>
+				<attribute name="nextstep" type="string"></attribute>
+			</extension>
+    	</complexContent>	
+	</complexType>
+
+	<element name="map" type="tns:map"></element>
+	
+
+    <element name="entry" type="tns:entry"></element>
+    
+    <complexType name="entry">
+    	<attribute name="key" type="string" use="required"></attribute>
+    	<attribute name="refkey" type="string" use="optional"></attribute>
+    	<attribute name="value" type="string" use="optional"></attribute>
+    	<attribute name="type" use="optional" default="prototype">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="double"></enumeration>
+					<enumeration value="java.lang.Double"></enumeration>
+					<enumeration value="long"></enumeration>
+					<enumeration value="java.lang.Long"></enumeration>
+					<enumeration value="float"></enumeration>
+					<enumeration value="java.lang.Float"></enumeration>
+					<enumeration value="int"></enumeration>
+					<enumeration value="java.lang.Integer"></enumeration>
+					<enumeration value="short"></enumeration>
+					<enumeration value="java.lang.Short"></enumeration>
+					<enumeration value="string"></enumeration>
+					<enumeration value="java.lang.String"></enumeration>
+					<enumeration value="boolean"></enumeration>
+					<enumeration value="java.lang.Boolean"></enumeration>
+					<enumeration value="date"></enumeration>
+					<enumeration value="java.util.Date"></enumeration>
+					<enumeration value="decimal"></enumeration>
+					<enumeration value="java.math.BigDecimal"></enumeration>
+					<enumeration value="list"></enumeration>
+					<enumeration value="java.util.List"></enumeration>
+					<enumeration value="map"></enumeration>
+					<enumeration value="java.util.Map"></enumeration>
+					<enumeration value="prototype"></enumeration>
+					<pattern value="Pojo\(.*\)"></pattern>
+					<pattern value="List\(.*\)"></pattern>
+					<pattern value=".*"></pattern>
+				</restriction>
+			</simpleType>
+		</attribute>
+    </complexType>
+
+    <element name="parameter" type="tns:parameter"></element>
+    
+    <complexType name="parameter">
+    	<sequence>
+    		<element ref="tns:map" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="refkey" type="string" use="optional"></attribute>
+    	<attribute name="value" type="string" use="optional"></attribute>
+    	<attribute name="type" use="optional" default="prototype">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="double"></enumeration>
+					<enumeration value="java.lang.Double"></enumeration>
+					<enumeration value="long"></enumeration>
+					<enumeration value="java.lang.Long"></enumeration>
+					<enumeration value="float"></enumeration>
+					<enumeration value="java.lang.Float"></enumeration>
+					<enumeration value="int"></enumeration>
+					<enumeration value="java.lang.Integer"></enumeration>
+					<enumeration value="short"></enumeration>
+					<enumeration value="java.lang.Short"></enumeration>
+					<enumeration value="string"></enumeration>
+					<enumeration value="java.lang.String"></enumeration>
+					<enumeration value="boolean"></enumeration>
+					<enumeration value="java.lang.Boolean"></enumeration>
+					<enumeration value="date"></enumeration>
+					<enumeration value="java.util.Date"></enumeration>
+					<enumeration value="decimal"></enumeration>
+					<enumeration value="java.math.BigDecimal"></enumeration>
+					<enumeration value="list"></enumeration>
+					<enumeration value="java.util.List"></enumeration>
+					<enumeration value="map"></enumeration>
+					<enumeration value="java.util.Map"></enumeration>
+					<enumeration value="prototype"></enumeration>
+					<pattern value="Pojo\(.*\)"></pattern>
+					<pattern value="List\(.*\)"></pattern>
+					<pattern value=".*"></pattern>
+				</restriction>
+			</simpleType>
+		</attribute>
+    </complexType>
+
+    <complexType name="map">
+    	<sequence>
+    		<element ref="tns:entry" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+</schema>

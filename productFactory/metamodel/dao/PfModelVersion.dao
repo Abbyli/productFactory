@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.fdframework.productfactory.dao.PfModelVersionDao" interface="">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.HashMap" />
+      <import value="java.util.List" />
+      <import value="java.util.Map" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.dto.EntityPropAndPropEventDto" />
+      <import value="com.neusoft.fdframework.productfactory.dto.EntityPropAndPropShowDto" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfPropShowDef" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMVersion" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="EntityPropAndPropEventDto" type="dto" dc="factory" ref="EntityPropAndPropEvent" />
+      <dependence name="EntityPropAndPropShowDto" type="dto" dc="factory" ref="EntityPropAndPropShow" />
+      <dependence name="PfMEntity" type="entity" dc="factory" ref="pfMEntity" />
+      <dependence name="PfMProperty" type="entity" dc="factory" ref="pfMProperty" />
+      <dependence name="PfPropEventDef" type="entity" dc="factory" ref="pfPropEventDef" />
+      <dependence name="PfPropShowDef" type="entity" dc="factory" ref="pfPropShowDef" />
+      <dependence name="PfMVersion" type="entity" dc="factory" ref="pfMVersion" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfModelVersionDao" returnType="" accessStrategy="public" />
+      <method name="getPfModelVersionsNoPage" returnType="java.util.List" accessStrategy="public">
+         <parameter name="modelId" type="String" />
+      </method>
+      <method name="getPfModelVersions" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+         <parameter name="modelId" type="String" />
+      </method>
+      <method name="getStatusPfModelVersions" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+         <parameter name="modelId" type="String" />
+      </method>
+      <method name="getPfModelVersionById" returnType="com.neusoft.fdframework.productfactory.entity.PfMVersion" accessStrategy="public">
+         <parameter name="modelVersionId" type="String" />
+      </method>
+      <method name="savePfModelVersion" returnType="com.neusoft.fdframework.productfactory.entity.PfMVersion" accessStrategy="public">
+         <parameter name="pfMVersion" type="com.neusoft.fdframework.productfactory.entity.PfMVersion" />
+      </method>
+      <method name="addPfModelVersion" returnType="int" accessStrategy="public">
+         <parameter name="pfMVersion" type="com.neusoft.fdframework.productfactory.entity.PfMVersion" />
+      </method>
+      <method name="updPfModelVersion" returnType="int" accessStrategy="public">
+         <parameter name="pfMVersion" type="com.neusoft.fdframework.productfactory.entity.PfMVersion" />
+      </method>
+      <method name="copyPfModelVersion" returnType="int" accessStrategy="public">
+         <parameter name="pfMVersion" type="com.neusoft.fdframework.productfactory.entity.PfMVersion" />
+         <parameter name="pfMEntitys" type="java.util.List" />
+         <parameter name="entityPropAndPropShowDtos" type="java.util.List" />
+         <parameter name="entityPropAndPropEventDtos" type="java.util.List" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

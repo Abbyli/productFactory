@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.abclife.productfactory.blo.PfTermManagementBoImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="Neusoft" />
+      </baseInfo>
+      <import value="java.io.File" />
+      <import value="java.io.FileInputStream" />
+      <import value="java.io.FileOutputStream" />
+      <import value="java.io.IOException" />
+      <import value="java.io.InputStream" />
+      <import value="java.io.OutputStream" />
+      <import value="java.net.URL" />
+      <import value="java.util.HashMap" />
+      <import value="java.util.List" />
+      <import value="java.util.Map" />
+      <import value="java.util.Properties" />
+      <import value="javax.annotation.Resource" />
+      <import value="javax.servlet.ServletContext" />
+      <import value="org.dom4j.DocumentException" />
+      <import value="org.dom4j.DocumentHelper" />
+      <import value="org.dom4j.Element" />
+      <import value="org.slf4j.Logger" />
+      <import value="org.slf4j.LoggerFactory" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="org.springframework.web.context.ServletContextAware" />
+      <import value="com.neusoft.abclife.productfactory.dao.PfTermManagementDaoImpl" />
+      <import value="com.neusoft.abclife.productfactory.dto.PfWebServiceECM" />
+      <import value="com.neusoft.abclife.productfactory.dto.PfWebServiceESB" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TRuleManageDef" />
+      <import value="com.neusoft.abclife.util.FtpUpfile" />
+      <import value="com.neusoft.abclife.util.PfWebServiceParameter" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.unieap.core.common.form.Form" />
+      <import value="com.neusoft.unieap.core.fileupload.FileAttachment" />
+      <dependence name="PfWebServiceECM" type="dto" dc="factoryabclife" ref="PfWebServiceECM" />
+      <dependence name="PfWebServiceESB" type="dto" dc="factoryabclife" ref="pfWebServiceESB" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TRuleManageDef" type="entity" dc="factoryabclife" ref="tRuleManageDef" />
+      <method name="PfTermManagementBoImpl" returnType="" accessStrategy="public" />
+      <method name="queryTInsurtypeBasicInf" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[险种查询
+@param tInsurtypeBasicInf
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="getTRuleManageDef" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[条款详情
+@param tInsurtypeBasicInf
+@return]]></comment>
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="saveTRuleManageDef" returnType="int" accessStrategy="private">
+         <comment><![CDATA[条款储存
+@param tInsurtypeBasicInf
+ 
+@param tInsurtypeBasicInf
+@return]]></comment>
+         <parameter name="fileName" type="String" />
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="saveUploadInfo" returnType="String" accessStrategy="public">
+         <comment><![CDATA[文件上传
+@param formId
+@return]]></comment>
+         <parameter name="formId4Upload" type="com.neusoft.unieap.core.common.form.Form" />
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="upload" returnType="boolean" accessStrategy="private">
+         <comment><![CDATA[文件上传_ftp
+@return@throws IOException]]></comment>
+         <parameter name="insurtypeCode" type="String" />
+         <parameter name="filePath" type="String" />
+         <parameter name="newName" type="String" />
+         <exception type="java.io.IOException" />
+      </method>
+      <method name="downLoad" returnType="java.io.File" accessStrategy="public">
+         <comment><![CDATA[文件下载
+@param formId
+@return@throws DocumentException]]></comment>
+         <parameter name="formId4Download" type="String" />
+         <parameter name="tRuleManageDef" type="com.neusoft.abclife.productfactory.entity.TRuleManageDef" />
+         <exception type="Exception" />
+      </method>
+      <method name="delTRuleManageDef" returnType="String" accessStrategy="public">
+         <comment><![CDATA[条案删除
+@param dimensionDef
+@return@throws Exception]]></comment>
+         <parameter name="tRuleManageDef" type="com.neusoft.abclife.productfactory.entity.TRuleManageDef" />
+         <exception type="Exception" />
+      </method>
+      <method name="analysisReqMessage" returnType="java.util.Map" accessStrategy="public">
+         <comment><![CDATA[解析报文返回结果
+@param parameter
+ 
+@return@throws Exception]]></comment>
+         <parameter name="returncode" type="String" />
+         <parameter name="result" type="String" />
+         <parameter name="state" type="String" />
+         <exception type="Exception" />
+      </method>
+      <method name="setServletContext" returnType="void" accessStrategy="public">
+         <parameter name="sc" type="javax.servlet.ServletContext" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

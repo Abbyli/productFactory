@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="user" />
+         <creationTime value="2014-05-06 16:22:48" />
+         <modificationTime value="2017-01-13 10:52:25" />
+         <version value="1.0.0" />
+         <comment ><![CDATA[新影像扫描页面, view页面集成activeX组件]]></comment>
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<dependence name="imageInput.business.xml"
+		ref="imageInput.business.xml | com.neusoft.life.imagescan.bussiness"
+		dc="newbussiness" />
+	<pMethod name="saveJson" onSuccess="saveJsonSuccess" onError="saveJsonError">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="imageInput.business.xml" method="ii.saveJson"></bo>
+		<context>
+			<string name="imginfo" />
+		</context>
+		<arguments>
+			<argument name="imginfo" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="getBillCardType" onSuccess="getBillCardTypeSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<context>
+		<string name="info" />
+	</context>
+	<arguments>
+		<argument name="info" type="string"></argument>
+	</arguments>
+	<bo name="imageInput.business.xml" method="ii.getBillCardType"></bo>
+</pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+</dataCenter>
+      <controls ><div id="divVerticalAlign" class="verticalAlignqyt"></div><div id="divAll" height="294px" width="100%" class="allqyt"><html id="html1" width="100%" height="100%"><![CDATA[<object id="webScan" classid="clsid:53E28E6F-52EC-4B51-804D-514DFD6B177F" width="803px" height="603px" codebase="../../lifeCommon/imageUpload/install/WebScannerX.CAB#version=1,0,5,0">
+      <param name="NotifyScanedScript" value="onScaned" />
+      <param name="NotifyScanedPageScript" value="onScanedPage" />
+	<param name="UploadImgDataJs" value="imageInputView.UploadImgData"/>
+</object>]]></html></div><events><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[//1. <!-- codebase="../../install/setup.exe#version=1,0,0,0" --> ,配访问权限 .*lifeCore/install/WebScannerSetup.msi				
+//2. <!-- codebase="../../install/WebScannerX.CAB#version=1,0,0,0"-->
+
+
+
+//var imginfo = {"imginfo":[
+//{"OrgCode":"100","MainSheetTypeId":"031","FileCode":"001","FileSeqNum":"1","ImageTypeId":"031","PolicyId":"","UploadedPath":"\\20140630\\1404111100641.jpg"},
+//{"OrgCode":"100","MainSheetTypeId":"031","FileCode":"001","FileSeqNum":"2","ImageTypeId":"031","PolicyId":"","UploadedPath":"\\20140630\\1404111101532.jpg"}]};
+//view.processor.saveJson(imginfo);
+
+
+]]></script></function></event><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[root = this._rootNodeId;
+//获取单证码表 和当前登陆人机构代码
+view.processor.getBillCardType("");
+
+]]></script></function></event></events></controls>
+      <scripts ><function name="UploadImgData" arguments="jsonObj">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+ * @param: {参数类型} jsonObj 参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[//alert(jsonObj);
+view.processor.saveJson(jsonObj);
+]]>
+	</script>
+</function><function name="saveJsonSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:saveJson方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var pid = dc.getParameter("pid");
+if(pid == -1){
+	scan.CallbackUploadImgData("false", "error");
+}else{
+	scan.CallbackUploadImgData('true', '');
+}]]>
+	</script>
+</function><function name="saveJsonError" arguments="xhr">
+	<comment><![CDATA[/**
+ * @description:saveJson方法的失败回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[scan.CallbackUploadImgData("false", "error");
+alert("业务执行失败！");]]></script>
+</function><function name="getBillCardTypeSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getBillCardType方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds_listMST = dc.getDataStore("listMST");
+var ds_listIT = dc.getDataStore("listIT");
+var ds_listMST_primary = ds_listMST.rowSet.primary;
+var ds_listIT_primary = ds_listIT.rowSet.primary;
+var Mst_json = unieap.toJson(ds_listMST_primary);
+var IT_json = unieap.toJson(ds_listIT_primary);
+var org = dc.getParameter("org");
+var orgArray = new Array(); 
+orgArray = org.split("#");
+var orgCode = orgArray[0];
+var url = dc.getParameter("rtnURL");
+//插件
+if(url == "" || url == null)
+{
+	alert("文件上传地址不能为空！");
+}
+else
+{
+	scan = document.getElementById(root+"webScan");	
+	if(scan != null)
+	{	
+		var check = scan.UploadFileService;	
+		if(check == undefined)
+		{
+//			while(check == undefined)
+//			{
+//				check = scan.UploadFileService;
+//				if(check != undefined)
+//				{
+//					scan.UploadFileService = url;
+//					scan.MainSheetType = Mst_json.substring(0,Mst_json.indexOf("]")+1)+"}";
+//					scan.ImageType = IT_json.substring(0,IT_json.indexOf("]")+1)+"}";
+//					scan.OrgCode = OrgCode;
+//					scan.SetHtml(window);
+//				}
+//			}						
+		}else{
+			scan.UploadFileService = url;
+			scan.MainSheetType = Mst_json.substring(0,Mst_json.indexOf("]")+1)+"}";
+			scan.ImageType = IT_json.substring(0,IT_json.indexOf("]")+1)+"}";
+			scan.OrgCode = orgCode;
+			scan.SetHtml(window);
+		}		
+	}
+}
+]]>
+	</script>
+</function><variable name="root"><script><![CDATA[""]]></script><comment><![CDATA[]]></comment></variable><variable name="scan"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable></scripts>
+      <templateInstances></templateInstances>
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+	<resource type="style" src="/lifeCommon/imageUpload/css/divPosition.css" />
+</resources>
+   </dc:view>
+</dc:dc>
+

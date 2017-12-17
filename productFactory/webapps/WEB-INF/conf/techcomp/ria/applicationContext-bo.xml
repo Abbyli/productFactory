@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+   <bean id="ria_CodeListBO_bo" class="com.neusoft.unieap.techcomp.ria.codelist.bo.impl.CodeListBOImpl">
+      <property name="updateTimeStamp" value="false" />
+      <property name="codeListCache" ref="ria_CodeListCache_bo" />
+      <property name="codeListDAO" ref="ria_codeListDAO_dao" />
+      <property name="cacheObjectTimestampDAO" ref="cache_cacheObjectTimestampDAO_dao" />
+   </bean>
+   <bean id="ria_CodeListCache_bo" class="com.neusoft.unieap.techcomp.ria.codelist.cache.impl.CodeListCacheImpl">
+      <property name="eapCacheManager" ref="eapCacheManager" />
+   </bean>
+   <bean id="ria_CodeListManager_bo" class="com.neusoft.unieap.techcomp.ria.codelist.bo.impl.CodeListManagerImpl">
+      <property name="codeListBO" ref="ria_CodeListBO_bo" />
+      <property name="cacheSynchronizeManager" ref="cacheSynchronizeManager" />
+   </bean>
+   <bean id="ria_ZoneCodeListBO_bo" class="com.neusoft.unieap.techcomp.ria.codelist.bo.impl.ZoneCodeListBOImpl">
+      <property name="aab301" value="core_aab301" />
+      <property name="codeListManager" ref="ria_CodeListManager_bo" />
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+   </bean>
+   <bean id="ria_autoQueryBO_bo" class="com.neusoft.unieap.techcomp.ria.common.query.bo.impl.AutoQueryBOImpl">
+      <property name="autoQueryDAO" ref="ria_autoQueryDAO_dao" />
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+   </bean>
+   <bean id="ria_extInfoBO_bo" class="com.neusoft.unieap.techcomp.ria.ext.bo.impl.ExtInfoBOImpl">
+      <property name="extInfoDAO" ref="ria_extInfoDAO_dao" />
+      <property name="eapCacheManager" ref="eapCacheManager" />
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+   </bean>
+   <bean id="ria_gridIndividualBO_bo" class="com.neusoft.unieap.techcomp.ria.individual.bo.impl.GridIndividualBOImpl">
+      <property name="dao" ref="ria_gridIndividualDAO_dao" />
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+   </bean>
+   <bean id="ria_menuAuthBO_bo" class="com.neusoft.unieap.techcomp.ria.menu.bo.impl.MenuAuthBOImpl">
+      <property name="resourceAuthorizeBO" ref="security_resourceAuthorizeBO_bo" />
+      <property name="eapCacheManager" ref="eapCacheManager" />
+      <property name="menuBO" ref="ria_menuBO_bo" />
+   </bean>
+   <bean id="ria_menuBO_bo" class="com.neusoft.unieap.techcomp.ria.menu.bo.impl.MenuBOImpl">
+      <property name="eapCacheManager" ref="eapCacheManager" />
+      <property name="menuDAO" ref="menuDAO" />
+      <property name="extInfoBO" ref="ria_extInfoBO_bo" />
+      <property name="resourceAuthorizeBO" ref="security_resourceAuthorizeBO_bo" />
+      <property name="cacheSynchronizeManager" ref="cacheSynchronizeManager" />
+   </bean>
+   <bean id="ria_pageIndividualBO_bo" class="com.neusoft.unieap.techcomp.ria.individual.bo.impl.PageIndividualBOImpl">
+      <property name="pageIndividualDAO" ref="ria_pageIndividualDAO_dao" />
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+   </bean>
+   <bean id="ria_pageQueryBO_bo" class="com.neusoft.unieap.techcomp.ria.common.query.bo.impl.PageQueryBOImpl">
+      <property name="pageQueryDAO" ref="ria_pageQueryDAO_dao" />
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+   </bean>
+   <bean id="ria_quickSearchBO_bo" class="com.neusoft.unieap.techcomp.ria.quicksearch.bo.impl.QuickSearchBOImpl">
+      <property name="quickSearchDAO" ref="ria_quickSearchDAO_dao" />
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+   </bean>
+   <bean id="ria_richeditorBO_bo" class="com.neusoft.unieap.techcomp.ria.richeditor.bo.impl.RicheditorBOImpl">
+      <property name="richeditorDao" ref="ria_RicheditorDAO_dao" />
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+   </bean>
+   <bean id="ria_unittest_testDaylightSavingTimeBO_bo" class="com.neusoft.unieap.techcomp.ria.bo.unittest.impl.TestDaylightSavingTimeBOImpl">
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+   </bean>
+</beans>
+

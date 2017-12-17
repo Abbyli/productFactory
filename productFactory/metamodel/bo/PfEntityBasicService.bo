@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.fdframework.productfactory.blo.PfEntityBasicServiceImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <import value="java.io.BufferedOutputStream" />
+      <import value="java.io.File" />
+      <import value="java.io.FileOutputStream" />
+      <import value="java.io.IOException" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="javax.servlet.ServletContext" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="org.springframework.web.context.ServletContextAware" />
+      <import value="com.neusoft.fdframework.productfactory.constant.ExcelDataConstant" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfEntityBasicDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfEntityPropertyDao" />
+      <import value="com.neusoft.fdframework.productfactory.dto.EntityPropAndPropShowDto" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+      <import value="com.neusoft.fdframework.util.ApacheCompressor" />
+      <import value="com.neusoft.fdframework.util.FileOperation" />
+      <import value="com.neusoft.fdframework.util.StringUtil" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="EntityPropAndPropShowDto" type="dto" dc="factory" ref="EntityPropAndPropShow" />
+      <dependence name="PfMEntity" type="entity" dc="factory" ref="pfMEntity" />
+      <dependence name="PfMProperty" type="entity" dc="factory" ref="pfMProperty" />
+      <method name="PfEntityBasicServiceImpl" returnType="" accessStrategy="public" />
+      <method name="setServletContext" returnType="void" accessStrategy="public">
+         <parameter name="sc" type="javax.servlet.ServletContext" />
+      </method>
+      <method name="getPfEntityModelTree" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[模型定义页面，查询实体树]]></comment>
+         <parameter name="modelVersionId" type="String" />
+      </method>
+      <method name="getPfEntityBasicTree" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[基础模型定义页面，查询实体树]]></comment>
+      </method>
+      <method name="checkBusinessPrimaryKey" returnType="int" accessStrategy="public">
+         <comment><![CDATA[基础模型定义页面，校验业务主键]]></comment>
+         <parameter name="entityId" type="String" />
+         <parameter name="businessPrimaryKey" type="String" />
+         <parameter name="businessForeignKey" type="String" />
+      </method>
+      <method name="checkBusinessForeignKey" returnType="int" accessStrategy="public">
+         <comment><![CDATA[基础模型定义页面，校验业务外键]]></comment>
+         <parameter name="entityId" type="String" />
+         <parameter name="businessForeignKey" type="String" />
+      </method>
+      <method name="export" returnType="String" accessStrategy="public">
+         <comment><![CDATA[基础模型导出]]></comment>
+         <parameter name="pfMEntitys" type="java.util.List" />
+         <parameter name="packages" type="String" />
+      </method>
+      <method name="parse" returnType="String" accessStrategy="private">
+         <comment><![CDATA[生成类]]></comment>
+         <parameter name="packages" type="String" />
+         <parameter name="pfMEntity_curr" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+         <parameter name="pfMEntitys_subs" type="java.util.List" />
+         <parameter name="dtos" type="java.util.List" />
+         <parameter name="f_util" type="Boolean" />
+         <parameter name="f_sql" type="Boolean" />
+         <parameter name="f_math" type="Boolean" />
+      </method>
+      <method name="initcap" returnType="String" accessStrategy="private">
+         <comment><![CDATA[将输入字符串的首字母改成大写或小写,去掉下划线
+type = up/low]]></comment>
+         <parameter name="tableName" type="String" />
+         <parameter name="type" type="String" />
+      </method>
+      <method name="processAllAttrs" returnType="void" accessStrategy="private">
+         <comment><![CDATA[属性]]></comment>
+         <parameter name="sb" type="StringBuffer" />
+         <parameter name="pfMEntitys_subs" type="java.util.List" />
+         <parameter name="dtos" type="java.util.List" />
+      </method>
+      <method name="processConstructor" returnType="void" accessStrategy="private">
+         <comment><![CDATA[构造器]]></comment>
+         <parameter name="sb" type="StringBuffer" />
+         <parameter name="pfMEntity_curr" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+         <parameter name="pfMEntitys_subs" type="java.util.List" />
+      </method>
+      <method name="processAllMethod" returnType="void" accessStrategy="private">
+         <comment><![CDATA[get set]]></comment>
+         <parameter name="sb" type="StringBuffer" />
+         <parameter name="pfMEntitys_subs" type="java.util.List" />
+         <parameter name="dtos" type="java.util.List" />
+      </method>
+      <method name="downLoad" returnType="java.io.File" accessStrategy="public">
+         <comment><![CDATA[zip下载
+@param formId4Download
+@return]]></comment>
+         <parameter name="formId4Download" type="String" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

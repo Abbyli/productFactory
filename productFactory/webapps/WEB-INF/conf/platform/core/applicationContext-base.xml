@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+	<bean id="baseDAO" class="com.neusoft.unieap.core.base.dao.BaseHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="globalDAO" class="com.neusoft.unieap.core.i18n.dao.GlobalDAO"
+		parent="baseDAO" />
+
+	<bean id="traceMessageDAO"
+		class="com.neusoft.unieap.core.exception.dao.impl.TraceMessageHibernateDAOImpl"
+		parent="baseDAO" />
+
+	<bean id="commonDAO" class="com.neusoft.unieap.core.common.dao.impl.CommonDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- 定义通用的业务处理对象 -->
+	<bean id="baseBO" class="com.neusoft.unieap.core.base.bo.impl.BaseBOImpl">
+		<property name="dao" ref="baseDAO" />
+		<property name="transactionTemplate" ref="transactionTemplate" />
+	</bean>
+	<bean id="globalBO" class="com.neusoft.unieap.core.i18n.GlobalInnerManager">
+		<property name="globalDAO" ref="globalDAO" />
+	</bean>
+
+	<!-- 异常信息审计 -->
+	<bean id="traceMessageBO"
+		class="com.neusoft.unieap.core.exception.bo.impl.TraceMessageBOImpl">
+		<property name="traceMessageDAO" ref="traceMessageDAO" />
+	</bean>
+
+	<bean id="traceMessageBOFactory"
+		class="com.neusoft.unieap.core.exception.bo.TraceMessageBOFactory">
+		<property name="traceMessageBo" ref="traceMessageBO" />
+	</bean>
+
+	<!-- 加密算法，加密key字节数必须是8的倍数 -->
+	<bean id="desEncrypt" class="com.neusoft.unieap.core.util.encrypt.impl.DESEncrypt">
+	</bean>
+
+	<!-- UniEAP V4 提供的自动代理 -->
+	<bean id="unieapAutoProxy"
+		class="com.neusoft.unieap.core.autoproxy.UniEAPAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*_bo</value>
+				<value>eventPublisher</value>
+				<value>securityContextLogoutHandler</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>baseTxAdvisor</value>
+				<value>jtaTxAdvisor</value>
+				<value>auditAdvisor</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 事务时间上下文 -->
+	<bean id="dateContext" class="com.neusoft.unieap.core.transaction.DateContext">
+		<property name="generator" ref="dateGenerator"></property>
+	</bean>
+	<!-- 事务时间生成器 -->
+	<bean id="dateGenerator" class="com.neusoft.unieap.core.transaction.DateGenerator"></bean>
+	<!-- 事件发布者 -->
+	<bean id="eventPublisher" class="com.neusoft.unieap.core.event.impl.UniEAPEventPublisherImpl"></bean>
+</beans>

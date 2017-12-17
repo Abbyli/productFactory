@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.fdframework.productfactory.dao.PfPrdtAlgorithmDao" interface="">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjAlgo" />
+      <import value="com.neusoft.fdframework.util.StringUtil" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="PfObjAlgo" type="entity" dc="factory" ref="pfObjAlgo" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfPrdtAlgorithmDao" returnType="" accessStrategy="public" />
+      <method name="getPfPrdtAlgorithms" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[获取版本关联的算法
+type = 1 险种版本， type = 2 产品版本]]></comment>
+         <parameter name="verId" type="String" />
+         <parameter name="type" type="int" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="savePfPrdtAlgorithm" returnType="int" accessStrategy="public">
+         <comment><![CDATA[新增险种版本关联的算法]]></comment>
+         <parameter name="pfObjAlgo" type="com.neusoft.fdframework.productfactory.entity.PfObjAlgo" />
+      </method>
+      <method name="delPfPrdtAlgorithm" returnType="int" accessStrategy="public">
+         <comment><![CDATA[删除险种版本关联的算法]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="updPfPrdtAlgorithm" returnType="int" accessStrategy="public">
+         <comment><![CDATA[修改险种版本关联的算法]]></comment>
+         <parameter name="pfObjAlgo" type="com.neusoft.fdframework.productfactory.entity.PfObjAlgo" />
+      </method>
+      <method name="getDataListByRiskVerId" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获得险种版本关联的算法,险种版本复制功能使用]]></comment>
+         <parameter name="riskVerId" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

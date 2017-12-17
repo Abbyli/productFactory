@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+  <dc:entity class="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer" table="PF_OBJ_RISK_VER" extends="com.neusoft.unieap.core.di.DomainObject">
+    <id name="id" type="string" getStrategy="public" setStrategy="public">
+      <column name="ID" length="32" />
+      <generator class="uuid" />
+    </id>
+    <property name="verCode" label="版本号" type="string" getStrategy="public" setStrategy="public">
+      <column name="VER_CODE" not-null="true" length="16" />
+    </property>
+    <property name="description" label="备注" type="string" getStrategy="public" setStrategy="public">
+      <column name="DESCRIPTION" not-null="false" length="3000" />
+    </property>
+    <property name="status" label="1:编辑中 2:待审核 3:待发布 4:已发布 0:激活 " type="big_decimal" getStrategy="public" setStrategy="public">
+      <column name="STATUS" not-null="true" length="22" />
+    </property>
+    <property name="riskObjId" label="关联的险种ID" type="string" getStrategy="public" setStrategy="public">
+      <column name="RISK_OBJ_ID" not-null="true" length="32" />
+    </property>
+    <property name="modelVerId" label="关联的模型版本ID" type="string" getStrategy="public" setStrategy="public">
+      <column name="MODEL_VER_ID" not-null="true" length="32" />
+    </property>
+    <import value="java.io.Serializable" />
+    <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+    <import value="com.neusoft.fdframework.core.annotation.Column" />
+    <import value="com.neusoft.fdframework.core.annotation.Entity" />
+    <import value="com.neusoft.fdframework.core.annotation.ID" />
+    <import value="com.neusoft.fdframework.core.annotation.Transient" />
+    <import value="com.neusoft.unieap.core.di.DomainObject" />
+  </dc:entity>
+</dc:dc>
+

@@ -1,0 +1,10 @@
+1.产品工厂首先在ProductService类中调用addVer2Arith方法向产品工厂添加版本信息
+
+2.附件上传view页面调用ParseExcelService类中saveUploadInfo方法的excelService.transExcelData2Rate部分解析excel数据。
+      解析完的费率数据，持久化到数据库中。其中RateServie的insertRate方法与算法引擎中不同，同时修改UiRateDataDao类
+	
+3.导出险种时，在PfReleaseHistoryServiceImpl类中通过exportRate2XML方法，调用exportService.exportRate把费率数据导出到xml中
+
+4.加载险种时，通过代理类ParseXMLService调用ParseXMLService的transXMLData2Rate方法，把xml数据导入到数据库中
+
+5.执行规则，在PFProxyServiceImpl类calc方法中，调用engineService.executeRule执行

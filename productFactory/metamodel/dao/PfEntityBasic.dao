@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.fdframework.productfactory.dao.PfEntityBasicDao" interface="">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="PfMEntity" type="entity" dc="factory" ref="pfMEntity" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfEntityBasicDao" returnType="" accessStrategy="public" />
+      <method name="getPfEntityModelTree" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[模型定义页面，根据模型版本，查询实体树]]></comment>
+         <parameter name="modelVersionId" type="String" />
+      </method>
+      <method name="getPfEntityBasicTree" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[基础模型定义页面，查询实体树]]></comment>
+      </method>
+      <method name="queryBaseEntityList" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[基础模型复制 
+查询基础模型实体 modelVerId = 1]]></comment>
+         <parameter name="modelVerId" type="String" />
+      </method>
+      <method name="queryOtherEntityList" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[其他模型复制
+根据模型版本id,查询模型实体]]></comment>
+         <parameter name="fromModelVerId" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

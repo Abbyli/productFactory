@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<!-- 核心组件参数配置实体类 -->
+	<bean id="coreVariabilityEntity"
+		class="com.neusoft.unieap.core.variability.context.CoreVariabilityEntity">
+		<!-- Grid页面大小值 -->
+		<property name="gridPageSize" value="18" />
+		<!-- 校验框架是否可用 -->
+		<property name="validationEnabled" value="false" />
+		<!-- 是否显示堆栈信息 -->
+		<property name="showStack" value="true" />
+		<!-- 上传文件存放临时路径位置 -->
+		<property name="uploadFilepath" value="\WEB-INF\\conf\\platform\\core\\upload_dir\\" />
+		<!-- 是否从数据库获取时间 -->
+		<property name="readTimeFromDB" value="true" />
+		<!-- 默认时间显示模式。1表示 “上午/下午 hh时mm分ss秒” 2表示“hh:mm:ss” -->
+		<property name="defaultTimeStyle" value="2" />
+		<!-- 默认日期显示模式。1表示“yyyy年mm月dd日” 2表示“yyyy-mm-dd” -->
+		<property name="defaultDateStyle" value="2" />
+		<!-- 默认时区 。Asia/ShangHai表示中国时区 -->
+		<property name="defaultTimeZone" value="GMT+8" />
+		<!-- 默认语言 。zh_CN表示“中文” en_US表示“英文” -->
+		<!--  <property name="defaultLocaleLanguage" value="zh_CN" />  -->
+		<property name="defaultLocaleLanguage" value="zh_CN" /> 
+		<!-- 国际化是否开启，默认为开启 -->
+		<property name="globalEnabled" value="true" />
+		<!-- lincense文件路径 -->
+		<property name="licensePath" value="\WEB-INF\\conf\\platform\\core\\license\\" />
+		<!-- 默认语言环境 -->
+		<!-- DELETE BY TENGYF START
+		<property name="defaultLocale" ref="defaultLocal" />
+			 DELETE BY TENGYF END. -->
+		<!-- 是否启用检查交互编号预处理  -->
+		<property name="precheckForInteraction" value="false" />
+		<!-- 查询最大返回记录数  -->
+		<property name="maxPageSize" value="-1" />
+		<!-- 系统支持语言 。zh_CN表示“中文” en_US表示“英文” 多个语言请以逗号分隔-->
+		<property name="supportLocaleLanguage" value="zh_CN,ja_JP,en_US" /> 
+		<!-- 用于url请求中带有用户名和密码的情况 -->
+		<property name="urlPasswordEncrypt" value="false" /> 
+		<!-- 数据库的字符集，可设置为GBK或UTF-8 -->
+		<property name="databaseCharset" value="UTF-8" /> 
+	</bean>
+
+<!-- DELETE BY TENGYF START
+	<bean id="defaultLocal" class="java.util.Locale">
+		<constructor-arg>
+			<value>zh</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>CN</value>
+		</constructor-arg>
+	</bean>
+	 
+	<bean id="defaultLocal" class="java.util.Locale">
+		<constructor-arg>
+			<value>ja</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>JP</value>
+		</constructor-arg>
+	</bean>
+    DELETE BY TENGYF END. -->
+</beans>

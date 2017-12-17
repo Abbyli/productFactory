@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fdframework-business xmlns="http://www.neusoft.com/fdframework/business"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<business id="pfriskratemanage.queryRiskRateById" name="" desc="查询对象费率表" returnkey="rtnRiskRates">
+		<step id="1" bean="factoryabclife_pfRiskRateManageBo_bo" method="queryRiskRateById" returnkey="rtnRiskRates" desc="查询对象费率表">			
+			<property refkey="insurtypeCode" type="string"></property>
+			<property refkey="verNo" type="string"></property>
+			<property refkey="pricingLiabCode" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="pfriskratemanage.queryTDimensionDefs" name="" desc="查询维度表" returnkey="rtnTDimensionDefs1,rtnTDimensionDefs2">
+		<step id="1" bean="factoryabclife_pfRiskRateManageBo_bo" method="queryTDimensionDefs1" returnkey="rtnTDimensionDefs1" desc="查询维度表 精确">	
+			<property refkey="rateType" type="string"></property>	
+		</step>
+		<step id="2" bean="factoryabclife_pfRiskRateManageBo_bo" method="queryTDimensionDefs2" returnkey="rtnTDimensionDefs2" desc="查询维度表 范围">		
+			<property refkey="rateType" type="string"></property>
+		</step>
+	</business>
+	
+    <business id="pfriskratemanage.saveRiskRate" name="" desc="保存对象费率表" returnkey="rtnMessage">
+		<step id="1" bean="factoryabclife_pfRiskRateManageBo_bo" method="saveRiskRate" returnkey="rtnMessage" desc="保存对象费率表">			
+			<property refkey="insurtypeCode" type="string"></property>
+			<property refkey="verNo" type="string"></property>
+			<property refkey="pricingLiabCode" type="string"></property>
+			<property refkey="rateType" type="string"></property>
+			<property refkey="conditionCol" type="pojoList(com.neusoft.abclife.productfactory.entity.TObjRateDimenRef)"></property>	
+			<property refkey="opt" type="string"></property>	
+		</step>
+	</business>
+	
+	<business id="pfriskratemanage.delRiskRate" name="" desc="删除对象费率表" returnkey="">
+		<step id="1" bean="factoryabclife_pfRiskRateManageBo_bo" method="delRiskRate" returnkey="" desc="删除对象费率表">			
+			<property refkey="tObjRate" type="pojo(com.neusoft.abclife.productfactory.entity.TObjRate)"></property>	
+		</step>
+	</business>
+	
+	<business id="pfriskratemanage.exportModel" name="" desc="费率表模板导出" returnkey="modelexcel">
+		<step id="1" bean="factoryabclife_pfRiskRateManageBo_bo" method="exportModel" returnkey="modelexcel" desc="费率表模板导出">			
+			<property refkey="formId4Download"  type="pojo(com.neusoft.abclife.productfactory.entity.TObjRate)"></property>
+		</step>
+	</business>
+	
+	<business id="pfriskratemanage.saveUploadInfo" name="" desc="上传文件" returnkey="rtnMessage" async="true" threadhold="0" asyncstrategy="ACCEPT">
+		<step id="1" bean="factoryabclife_pfRiskRateManageBo_bo" method="saveFileUpload" returnkey="rtnMessage" desc="上传文件">
+	    	<property refkey="formId4Upload"  type="pojo(com.neusoft.unieap.core.common.form.Form)"></property>
+	    	<property refkey="tObjRate" type="pojo(com.neusoft.abclife.productfactory.entity.TObjRate)"></property>
+		</step>
+	</business>
+	
+	<business id="pfriskratemanage.exportRateTable" desc="精算数据导出" returnkey="exportRateTable" name="">
+		<step id="1" bean="factoryabclife_pfRiskRateManageBo_bo" method="exportRateTable" returnkey="exportRateTable" desc="费率表模板导出">			
+			<property refkey="formId4Download"  type="pojo(com.neusoft.abclife.productfactory.entity.TObjRate)"></property>
+		</step>
+	</business>
+	
+</fdframework-business>

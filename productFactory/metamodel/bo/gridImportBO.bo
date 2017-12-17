@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.unieap.techcomp.ria.gridimport.bo.impl.GridImportBOImpl" interface="com.neusoft.unieap.techcomp.ria.gridimport.bo.GridImportBO">
+      <baseInfo>
+         <author value="wu.zb" />
+      </baseInfo>
+      <meta key="includeTxInterceptor" value="baseTxAdvisor" />
+      <import value="java.io.IOException" />
+      <import value="java.io.InputStream" />
+      <import value="java.lang.reflect.InvocationTargetException" />
+      <import value="java.math.BigDecimal" />
+      <import value="java.text.Format" />
+      <import value="java.text.ParseException" />
+      <import value="java.text.SimpleDateFormat" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.Date" />
+      <import value="java.util.HashMap" />
+      <import value="java.util.Iterator" />
+      <import value="java.util.List" />
+      <import value="java.util.Map" />
+      <import value="java.util.Set" />
+      <import value="net.sf.json.JSONArray" />
+      <import value="net.sf.json.JSONObject" />
+      <import value="net.sf.json.JsonConfig" />
+      <import value="org.apache.commons.beanutils.PropertyUtils" />
+      <import value="org.apache.poi.hssf.usermodel.HSSFCell" />
+      <import value="org.apache.poi.hssf.usermodel.HSSFRow" />
+      <import value="org.apache.poi.hssf.usermodel.HSSFSheet" />
+      <import value="org.apache.poi.hssf.usermodel.HSSFWorkbook" />
+      <import value="org.apache.poi.ss.usermodel.Cell" />
+      <import value="org.apache.poi.ss.usermodel.CreationHelper" />
+      <import value="org.apache.poi.ss.usermodel.DateUtil" />
+      <import value="org.apache.poi.ss.usermodel.FormulaEvaluator" />
+      <import value="org.apache.poi.ss.usermodel.Workbook" />
+      <import value="org.apache.poi.ss.util.NumberToTextConverter" />
+      <import value="org.hibernate.validator.engine.ConstraintViolationImpl" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.unieap.core.common.bo.context.BOContext" />
+      <import value="com.neusoft.unieap.core.common.bo.context.impl.BOContextImpl" />
+      <import value="com.neusoft.unieap.core.common.form.Form" />
+      <import value="com.neusoft.unieap.core.exception.UniEAPBusinessException" />
+      <import value="com.neusoft.unieap.core.fileupload.FileAttachment" />
+      <import value="com.neusoft.unieap.core.util.BeanUtil" />
+      <import value="com.neusoft.unieap.core.validation.BeanValidatorFactory" />
+      <import value="com.neusoft.unieap.techcomp.ria.gridimport.ErrorMessage" />
+      <import value="com.neusoft.unieap.techcomp.ria.gridimport.ImportData" />
+      <import value="com.neusoft.unieap.techcomp.ria.gridimport.bo.GridImportBO" />
+      <import value="com.neusoft.unieap.techcomp.ria.gridimport.util.JsonDateValueProcessor" />
+      <import value="com.neusoft.unieap.techcomp.ria.gridimport.util.MessagesUtil" />
+      <import value="com.neusoft.unieap.techcomp.ria.gridimport.validation.GridImportValidation" />
+      <import value="com.neusoft.unieap.techcomp.ria.util.GMT" />
+      <method name="getFormFileInputStream" returnType="java.io.InputStream" accessStrategy="public">
+         <parameter name="form" type="com.neusoft.unieap.core.common.form.Form" />
+      </method>
+      <method name="getImportMessage" returnType="com.neusoft.unieap.core.common.bo.context.BOContext" accessStrategy="public">
+         <comment><![CDATA[获取标题信息]]></comment>
+         <parameter name="form" type="com.neusoft.unieap.core.common.form.Form" />
+         <parameter name="dataTypeCells" type="String" />
+         <parameter name="sheetId" type="String" />
+         <parameter name="configImformation" type="String" />
+      </method>
+      <method name="getSheets" returnType="java.util.Map" accessStrategy="public">
+         <comment><![CDATA[获取sheet页]]></comment>
+         <parameter name="form" type="com.neusoft.unieap.core.common.form.Form" />
+      </method>
+      <method name="getDataByFileUrl" returnType="com.neusoft.unieap.core.common.bo.context.BOContext" accessStrategy="public">
+         <comment><![CDATA[获取EXCEL信息]]></comment>
+         <parameter name="form" type="com.neusoft.unieap.core.common.form.Form" />
+         <parameter name="data" type="String" />
+      </method>
+      <method name="validationModifed" returnType="com.neusoft.unieap.core.common.bo.context.BOContext" accessStrategy="public">
+         <comment><![CDATA[二次校验]]></comment>
+         <parameter name="data" type="String" />
+      </method>
+      <method name="validation" returnType="com.neusoft.unieap.techcomp.ria.gridimport.ImportData" accessStrategy="public">
+         <parameter name="importData" type="com.neusoft.unieap.techcomp.ria.gridimport.ImportData" />
+      </method>
+      <method name="uniqueValidate" returnType="int" accessStrategy="public">
+         <parameter name="uniCells" type="String[]" />
+         <parameter name="obj" type="Object" />
+         <parameter name="rowSetJSON" type="net.sf.json.JSONArray" />
+      </method>
+      <method name="doSetProperty" returnType="void" accessStrategy="public">
+         <parameter name="obj" type="Object" />
+         <parameter name="value" type="String" />
+         <parameter name="propertyName" type="String" />
+         <exception type="Exception" />
+      </method>
+      <method name="getCellValue" returnType="java.util.List" accessStrategy="public">
+         <parameter name="cell" type="org.apache.poi.ss.usermodel.Cell" />
+         <parameter name="label" type="String" />
+      </method>
+      <method name="getValueFormMap" returnType="String" accessStrategy="public">
+         <parameter name="m" type="java.util.Map" />
+         <parameter name="value" type="String" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.abclife.productfactory.blo.PfRiskFeeManageBoImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="shi.chl" />
+      </baseInfo>
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.abclife.productfactory.dao.PfRiskFeeManageDaoImpl" />
+      <import value="com.neusoft.abclife.productfactory.entity.TFeeRate" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjEntrance" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjFormula" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TFeeRate" type="entity" dc="factoryabclife" ref="tFeeRate" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TInsurtypeFeeDef" type="entity" dc="factoryabclife" ref="tInsurtypeFeeDef" />
+      <dependence name="TObjEntrance" type="entity" dc="factoryabclife" ref="tObjEntrance" />
+      <dependence name="TObjFormula" type="entity" dc="factoryabclife" ref="tObjFormula" />
+      <method name="PfRiskFeeManageBoImpl" returnType="" accessStrategy="public" />
+      <method name="saveRiskFeeManage" returnType="String" accessStrategy="public">
+         <comment><![CDATA[保存费用管理数据的方法 每次均是删除所有再添加
+@param tFeeRate
+@param tInsurtypeFeeDef
+@return]]></comment>
+         <parameter name="tFeeRate" type="java.util.List" />
+         <parameter name="tInsurtypeFeeDef" type="com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef" />
+         <parameter name="tInsurtypeBasicinf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="newTobjFormula" returnType="com.neusoft.abclife.productfactory.entity.TObjFormula" accessStrategy="public">
+         <parameter name="algoType" type="String" />
+         <parameter name="algoId" type="Long" />
+         <parameter name="tInsurtypeBasicinf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="newTobjEntrance" returnType="com.neusoft.abclife.productfactory.entity.TObjEntrance" accessStrategy="public">
+         <parameter name="algoType" type="String" />
+         <parameter name="tInsurtypeBasicinf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="queryTInsurtypeFeeDef" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef" accessStrategy="public">
+         <comment><![CDATA[根据险种和费用类型来查询费用定义表唯一数据
+@param feeType
+@param insurtypeId
+@return]]></comment>
+         <parameter name="feeType" type="String" />
+         <parameter name="insurtypeId" type="Long" />
+      </method>
+      <method name="queryTFeeRate" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[根据险种和费用类型来查询费率信息
+@param feeType
+@param insurtypeId
+@return]]></comment>
+         <parameter name="feeType" type="String" />
+         <parameter name="insurtypeId" type="Long" />
+      </method>
+      <method name="deleteTFeeRate" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除费率信息
+@param tFeeRate]]></comment>
+         <parameter name="tFeeRate" type="com.neusoft.abclife.productfactory.entity.TFeeRate" />
+      </method>
+      <method name="clear" returnType="void" accessStrategy="public">
+         <comment><![CDATA[清空费用
+@param tInsurtypeFeeDef]]></comment>
+         <parameter name="tInsurtypeFeeDef" type="com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

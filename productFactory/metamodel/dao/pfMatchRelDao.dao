@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.abclife.productfactory.dao.PfMatchRelDaoImpl" interface="">
+      <baseInfo>
+         <author value="neusoft" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.abclife.productfactory.dto.ProMatchDto" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductInsurtypeMatchRel" />
+      <import value="com.neusoft.abclife.util.StringUtil" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="ProMatchDto" type="dto" dc="factoryabclife" ref="proMatchDto" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TProductInsurtypeMatchRel" type="entity" dc="factoryabclife" ref="tProductInsurtypeMatchRel" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfMatchRelDaoImpl" returnType="" accessStrategy="public" />
+      <method name="queryProMatch" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[分页查询产品搭配列表
+@param dto
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="dto" type="com.neusoft.abclife.productfactory.dto.ProMatchDto" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="queryMatchRel" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[有效险种查询
+@param tInsurtypeBasicInf
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="queryAddition" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[主附险查询
+@param tInsurtypeBasicInf
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.dto.ProMatchDto" />
+         <parameter name="matchRel" type="String" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="queryMatchRow" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[搭配表查一条
+@param basic
+@param addition
+@return]]></comment>
+         <parameter name="basic" type="String" />
+         <parameter name="addition" type="String" />
+      </method>
+      <method name="queryRiskName" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[险种名称查询
+@param riskcode
+@return]]></comment>
+         <parameter name="riskcode" type="String" />
+      </method>
+      <method name="addAddition" returnType="void" accessStrategy="public">
+         <comment><![CDATA[搭配信息添加
+@param pfMatchRel
+@param basic]]></comment>
+         <parameter name="pfMatchRel" type="com.neusoft.abclife.productfactory.entity.TProductInsurtypeMatchRel" />
+         <parameter name="basic" type="String" />
+      </method>
+      <method name="updateAddition" returnType="void" accessStrategy="public">
+         <comment><![CDATA[搭配信息修改
+@param pfMatchRel
+@param basic]]></comment>
+         <parameter name="pfMatchRel" type="com.neusoft.abclife.productfactory.entity.TProductInsurtypeMatchRel" />
+         <parameter name="basic" type="String" />
+      </method>
+      <method name="delAddition" returnType="void" accessStrategy="public">
+         <comment><![CDATA[搭配信息删除
+@param basic
+@param addition]]></comment>
+         <parameter name="basic" type="String" />
+         <parameter name="addition" type="String" />
+      </method>
+      <method name="checkValue" returnType="String" accessStrategy="public">
+         <comment><![CDATA[数据校验
+@param pfMatchRel
+@param basic
+@return]]></comment>
+         <parameter name="pfMatchRel" type="com.neusoft.abclife.productfactory.entity.TProductInsurtypeMatchRel" />
+         <parameter name="basic" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

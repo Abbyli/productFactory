@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fdframework-business xmlns="http://www.neusoft.com/fdframework/business"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<business id="pfpriceduty.addAndUpdateThree" returnkey="addAndUpdateThree" desc="三表的添加和修改">
+		<step id="1" bean="factoryabclife_PfPriceDutyBo_bo" method="addAndUpdateThree" returnkey="addAndUpdateThree">
+			<property refkey="feedef" type="pojo(com.neusoft.abclife.productfactory.entity.TInsurtypeFeeDef)"></property>
+			<property refkey="liabFeeDef" type="pojoList(com.neusoft.abclife.productfactory.entity.TLiabFeeDef)"></property>
+			<property refkey="liabDef" type="pojo(com.neusoft.abclife.productfactory.entity.TPricingLiabDef)"></property>
+			<property refkey="map" type="pojo(com.neusoft.abclife.productfactory.dto.MapDto)"></property>
+			<property refkey="insurtypeinfo" type="pojo(com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf)"></property>
+			<property refkey="tWaiveLiab" type="pojo(com.neusoft.abclife.productfactory.entity.TWaiveLiab)"></property>
+			<property refkey="tSuminsurIncrem" type="pojo(com.neusoft.abclife.productfactory.entity.TSuminsurIncrem)"></property>
+		</step>
+	</business>
+	
+	<business id="pfpriceduty.queryPricingLiabDef" returnkey="queryPricingLiabDef" name="" desc="包含翻页的查询您定价">
+		<step id="1" bean="factoryabclife_PfPriceDutyBo_bo" method="queryPricingLiabDef" returnkey="queryPricingLiabDef">
+			<property refkey="tInsurtypeBasicInf" type="pojo(com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf)"></property>
+			<property refkey="pageNumber" type="int"></property>
+			<property refkey="pageSize" type="int"></property>
+		</step>
+	</business>
+	
+	<business id="pfpriceduty.delLiabFeeDef" returnkey="delLiabFeeDef" desc="删除与定价有关的表">
+		<step id="1" bean="factoryabclife_PfPriceDutyBo_bo" method="delLiabFeeDef" returnkey="delLiabFeeDef">
+			<property refkey="tPricingLiabDef" type="pojo(com.neusoft.abclife.productfactory.entity.TPricingLiabDef)"></property>
+		</step>
+	</business>
+	
+	<business id="pfpriceduty.queryLiabFeeDef" returnkey="queryLiabFeeDef" desc="用于修改页面加载">
+		<step id="1" bean="factoryabclife_PfPriceDutyBo_bo" method="queryLiabFeeDef" returnkey="queryLiabFeeDef">
+			<property refkey="tPricingLiabDef" type="pojo(com.neusoft.abclife.productfactory.entity.TPricingLiabDef)"></property>
+		</step>
+	</business>
+	
+	<business id="pfpriceduty.queryInsurtypeFeeDef" returnkey="queryInsurtypeFeeDef" desc="用于修改页面加载">
+		<step id="1" bean = "factoryabclife_PfPriceDutyBo_bo" method="queryInsurtypeFeeDef" returnkey="queryInsurtypeFeeDef">
+			<property refkey="tPricingLiabDef" type="pojo(com.neusoft.abclife.productfactory.entity.TPricingLiabDef)"></property>
+		</step>
+	</business>
+	
+	<business id="pfpriceduty.queryOneLiabFeeDef" returnkey="queryOneLiabFeeDef" desc="用于修改页面加载">
+		<step id="1" bean="factoryabclife_PfPriceDutyBo_bo" method="queryOneLiabFeeDef" returnkey="queryOneLiabFeeDef">
+			<property refkey="tPricingLiabDef" type="pojo(com.neusoft.abclife.productfactory.entity.TPricingLiabDef)"></property>
+			<property refkey="type" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="pfpriceduty.queryTWaiveLiab" returnkey="reqQueryTWaiveLiab" desc="用于修改页面加载-豁免责任表">
+		<step id="1" bean="factoryabclife_PfPriceDutyBo_bo" method="queryTWaiveLiab" returnkey="reqQueryTWaiveLiab">
+			<property refkey="tPricingLiabDef" type="pojo(com.neusoft.abclife.productfactory.entity.TPricingLiabDef)"></property>
+		</step>
+	</business>
+	
+	<business id="pfpriceduty.queryTSuminsurIncrem" returnkey="reqQueryTSuminsurIncrem" desc="用于修改页面加载-保额递增表">
+		<step id="1" bean="factoryabclife_PfPriceDutyBo_bo" method="queryTSuminsurIncrem" returnkey="reqQueryTSuminsurIncrem">
+			<property refkey="tPricingLiabDef" type="pojo(com.neusoft.abclife.productfactory.entity.TPricingLiabDef)"></property>
+		</step>
+	</business>
+	
+</fdframework-business>

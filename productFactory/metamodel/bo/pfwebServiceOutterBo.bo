@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.abclife.productfactory.blo.PfwebServiceOutterBoImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="Administrator" />
+      </baseInfo>
+      <import value="java.beans.PropertyDescriptor" />
+      <import value="java.lang.reflect.Field" />
+      <import value="java.lang.reflect.Method" />
+      <import value="java.math.BigDecimal" />
+      <import value="java.util.HashMap" />
+      <import value="java.util.List" />
+      <import value="java.util.Map" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.slf4j.Logger" />
+      <import value="org.slf4j.LoggerFactory" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.abclife.productfactory.dao.WebServiceCoreDaoImpl" />
+      <import value="com.neusoft.abclife.productfactory.dto.PolicyDTO" />
+      <import value="com.neusoft.abclife.productfactory.entity.TComboInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TComboInsurtypeElemRel" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjSkelement" />
+      <import value="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="PolicyDTO" type="dto" dc="factoryabclife" ref="policyDTO" />
+      <dependence name="TComboInf" type="entity" dc="factoryabclife" ref="tComboInf" />
+      <dependence name="TComboInsurtypeElemRel" type="entity" dc="factoryabclife" ref="tComboInsurtypeElemRel" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TObjRate" type="entity" dc="factoryabclife" ref="tObjRate" />
+      <dependence name="TObjSkelement" type="entity" dc="factoryabclife" ref="tObjSkelement" />
+      <dependence name="TPricingLiabDef" type="entity" dc="factoryabclife" ref="tPricingLiabDef" />
+      <dependence name="webServiceCoreDaoImpl" type="dao" dc="factoryabclife" ref="webServiceCoreDao" />
+      <method name="PfwebServiceOutterBoImpl" returnType="" accessStrategy="public" />
+      <method name="limit" returnType="Object" accessStrategy="public">
+         <comment><![CDATA[执行限额接口]]></comment>
+         <parameter name="riskCode" type="String" />
+         <parameter name="riskVer" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="protecLiabCode" type="String" />
+         <parameter name="algoType" type="String" />
+         <parameter name="subType1" type="String" />
+         <parameter name="subType2" type="String" />
+         <parameter name="paramObj" type="Object" />
+         <exception type="Exception" />
+      </method>
+      <method name="calExportRate" returnType="java.util.Map" accessStrategy="public">
+         <comment><![CDATA[表外费率接口
+@throws Exception]]></comment>
+         <parameter name="insurtypeId" type="Long" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="appAge" type="int" />
+         <parameter name="newAppAge" type="int" />
+         <parameter name="appSex" type="String" />
+         <parameter name="newAppSex" type="String" />
+         <parameter name="paramObj" type="java.util.Map" />
+         <exception type="Exception" />
+      </method>
+      <method name="calPremAmnt" returnType="java.util.Map" accessStrategy="public">
+         <comment><![CDATA[提供给新契约
+@param insurtypeId
+@param paramObj
+@return@throws Exception]]></comment>
+         <parameter name="insurtypeId" type="Long" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="paramObj" type="java.util.Map" />
+         <exception type="Exception" />
+      </method>
+      <method name="premiumRate" returnType="java.util.Map" accessStrategy="public">
+         <comment><![CDATA[投保费率测试
+@param insurtypeId
+@param paramObj
+@return@throws Exception]]></comment>
+         <parameter name="insurtypeCode" type="String" />
+         <parameter name="verNo" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="paramObj" type="com.neusoft.abclife.productfactory.dto.PolicyDTO" />
+         <exception type="Exception" />
+      </method>
+      <method name="calTest" returnType="java.math.BigDecimal" accessStrategy="public">
+         <parameter name="riskCode" type="String" />
+         <parameter name="riskVer" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="protecLiabCode" type="String" />
+         <parameter name="algoType" type="String" />
+         <parameter name="subType1" type="String" />
+         <parameter name="subType2" type="String" />
+         <parameter name="subGetdutyCode" type="String" />
+         <parameter name="paramObj" type="com.neusoft.abclife.productfactory.dto.PolicyDTO" />
+         <exception type="Exception" />
+      </method>
+      <method name="comboCal" returnType="java.util.Map" accessStrategy="public">
+         <parameter name="comboId" type="String" />
+         <parameter name="paramObj" type="java.util.Map" />
+         <exception type="Exception" />
+      </method>
+      <method name="splitElemValue" returnType="java.util.Map" accessStrategy="public">
+         <parameter name="comboId" type="String" />
+         <exception type="Exception" />
+      </method>
+      <method name="invokeKey" returnType="void" accessStrategy="private">
+         <comment><![CDATA[Object 转  Map
+@param paramMap
+@param paramObj
+@throws Exception]]></comment>
+         <parameter name="paramMap" type="java.util.Map" />
+         <parameter name="paramObj" type="Object" />
+         <exception type="Exception" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

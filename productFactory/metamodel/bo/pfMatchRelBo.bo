@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.abclife.productfactory.blo.PfMatchRelBoImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="neusoft" />
+      </baseInfo>
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.abclife.productfactory.dao.PfMatchRelDaoImpl" />
+      <import value="com.neusoft.abclife.productfactory.dto.ProMatchDto" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductInsurtypeMatchRel" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="ProMatchDto" type="dto" dc="factoryabclife" ref="proMatchDto" />
+      <dependence name="TProductInsurtypeMatchRel" type="entity" dc="factoryabclife" ref="tProductInsurtypeMatchRel" />
+      <method name="PfMatchRelBoImpl" returnType="" accessStrategy="public" />
+      <method name="queryMatchRel" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[有效险种查询
+@param tInsurtypeBasicInf
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="dto" type="com.neusoft.abclife.productfactory.dto.ProMatchDto" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="queryAddition" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[主附险查询
+@param tInsurtypeBasicInf
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.dto.ProMatchDto" />
+         <parameter name="matchRel" type="String" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="queryMatchRow" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[搭配表查一条
+@param basic
+@param addition
+@return]]></comment>
+         <parameter name="basic" type="String" />
+         <parameter name="addition" type="String" />
+      </method>
+      <method name="queryRiskName" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[险种名称查询
+@param riskcode
+@return]]></comment>
+         <parameter name="riskcode" type="String" />
+      </method>
+      <method name="savaAddition" returnType="String" accessStrategy="public">
+         <comment><![CDATA[搭配信息保存
+@param pfMatchRel
+@param basic
+@param opt
+@return]]></comment>
+         <parameter name="pfMatchRel" type="com.neusoft.abclife.productfactory.entity.TProductInsurtypeMatchRel" />
+         <parameter name="basic" type="String" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="delAddition" returnType="String" accessStrategy="public">
+         <comment><![CDATA[搭配信息删除
+@param basic
+@param addition
+@return]]></comment>
+         <parameter name="basic" type="String" />
+         <parameter name="addition" type="String" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

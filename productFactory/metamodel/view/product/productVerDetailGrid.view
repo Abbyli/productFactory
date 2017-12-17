@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="liu.w" />
+         <creationTime value="2015-09-25 09:27:03" />
+         <modificationTime value="2016-03-10 13:32:43" />
+         <version value="1.0.0" />
+         <comment ><![CDATA[险种版本暂不做场景定义]]></comment>
+      </baseInfo>
+      <dependences ><dependence name="factory/risk/navigateButton" type="viewc" sc="ProductFactory" dc="factory" ref="risk/navigateButton" /><dependence name="factory/product/navigateButtonProduct" type="viewc" sc="ProductFactory" dc="factory" ref="product/navigateButtonProduct" /></dependences>
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	
+	<dependence name="pfentity.business.xml"
+		ref="pfentity.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="getEntitiesInfoForTree" onSuccess="getEntitiesInfoForTreeSuccess">
+	<comment><![CDATA[查询产品对应模型下的实体信息,生成树结构]]></comment>
+	<context>
+		<string name="treeRootName" />
+		<string name="modelVersionId" />
+	</context>
+	<arguments>
+		<argument name="treeRootName" type="string"></argument>
+		<argument name="modelVersionId" type="string"></argument>
+	</arguments>
+	<bo name="pfentity.business.xml" method="pfentity.risk.getPfEntityRiskTree"></bo>
+</pMethod>
+	<pMethod name="queryEntityProp" onSuccess="queryEntityPropSuccess">
+	<comment><![CDATA[查询实体属性和属性值]]></comment>
+	<context>
+		<string name="riskVerId" />
+		<string name="entityId" />
+		<string name="type" />
+	</context>
+	<arguments>
+
+
+
+		<argument name="riskVerId" type="string"></argument>
+		<argument name="entityId" type="string"></argument>
+		<argument name="type" type="string"></argument>
+	</arguments>
+	<bo name="pfentityproperty.business.xml" method="pfentityproperty.getEntityPropertyAndValueForRisk"></bo>
+</pMethod>
+	<pMethod name="queryEntityPropValue" onSuccess="queryEntityPropValueSuccess">
+	<comment><![CDATA[查询实体值]]></comment>
+	<context>
+		
+		<string name="riskVerId" /><string name="entityId" /><string name="type" />
+		
+	</context>
+	<arguments>
+		
+		
+		
+	<argument name="riskVerId" type="string"></argument><argument name="entityId" type="string"></argument><argument name="type" type="string"></argument></arguments>
+	<bo name="pfentityproperty.business.xml" method="pfentityproperty.getEntityPropertyValueForRisk"></bo>
+</pMethod>
+	<dependence name="pfentityproperty.business.xml"
+		ref="pfentityproperty.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="deleteEntityPropertyValue" onSuccess="deleteEntityPropertyValueSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfentityproperty.business.xml" method="pfentityproperty.deleteEntityPropertyValue"></bo>
+		<context>
+			
+			
+			<string name="riskVerId" /><string name="entityId" />
+			<string name="objSeq" />
+		</context>
+		<arguments>
+			
+			
+			
+			
+		<argument name="riskVerId" type="string"></argument><argument name="entityId" type="string"></argument><argument name="objSeq" type="string"></argument></arguments>
+	</pMethod>
+	<pMethod name="pfEntityPropertyValueCheck" onSuccess="pfEntityPropertyValueCheckSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			
+			
+			<string name="riskVerId" /><pojo name="currentNode" dataStoreName="treeDTO" />
+			<pojo name="parentNode" dataStoreName="treeDTO" />
+			<pojoList name="list" dataStoreName="tempDTO" />
+		</context>
+		<arguments>
+
+
+			
+			
+			
+			
+			
+		<argument name="riskVerId" type="string"></argument><argument name="currentNode" type="dataStore"></argument><argument name="parentNode" type="dataStore"></argument><argument name="list" type="dataStore"></argument></arguments>
+		<bo name="pfentityproperty.business.xml" method="pfentityproperty.pfEntityPropertyValueCheck"></bo>
+	</pMethod>
+	<pMethod name="pfEntityPropertyValueCheckAll" onSuccess="pfEntityPropertyValueCheckAllSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfentityproperty.business.xml" method="pfentityproperty.pfEntityPropertyValueCheckAll"></bo>
+<context><string name="riskVerId" /><pojoList name="dsTreeDTO" dataStoreName="treeDTO" /></context><arguments><argument name="riskVerId" type="string"></argument><argument name="dsTreeDTO" type="dataStore"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="treeDTO" dependence="treeDTO" dc="factory"
+		path="treeDTO.dto" type="dto">
+		<columns>
+			<column name="id" label="节点ID" type="string" />
+			<column name="label" label="标题" type="string" />
+			<column name="type" label="节点类型" type="string" />
+			<column name="parentid" label="父节点ID" type="string" />
+			<column name="state" label="是否已保存" type="boolean" />
+			<column name="isopen" label="是否 展开" type="integer" />
+			<column name="isLeaf" label="是否叶子" type="boolean" />
+			<column name="entityid" label="实体ID" type="string" />
+			<column name="relation" label="与上层实体对应关系（1：1对1，0：1对n）" type="integer" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+	<dataStore name="tempDTO" dependence="tempDTO" dc="factory"
+		path="tempDTO.dto" type="dto">
+		<columns>
+			<column name="id" label="ID" type="string" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><xdialog id="xdialog1" title="产品新增"
+	view-ref="factory/detailHTML" width="500px" height="550px" isExpand="false">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog1_onComplete">
+			<function name="xdialog1_onComplete" arguments="returnObj">
+				<script><![CDATA[//var currentNode = unieap.byId("tree_entity").getCurrentNode();
+//var data = currentNode.item.data;
+//var entityId = data['entityid'];
+//view.processor.queryEntityPropValue(
+//	dataCenter.getParameter("productId"),
+//	dataCenter.getParameter("productVersionId"),
+//	entityId);
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><borderLayout id="borderLayout1" showTitleBar="false" design="headline"><borderPane id="borderPane0" showTitleBar="false" splitLine="false" region="left" maxSize="100px" minSize="100px"><component id="component1" label="Component" comp-ref="factory/product/navigateButtonProduct" /></borderPane><borderPane id="borderPane1" showTitleBar="false" region="right" minSize="600px" width="70%"><titlePane id="titlePane_entityGrid" width="100%" flexible="false" title="实体属性配置" height="100%" style="display:none"><div id="div_button" height="30px" width="100%" type="buttons"><button id="button_check" label="校 验 no" class="titlePane-button" width="100px" style="display:none" disabled="true">
+	<events>
+		<event name="onClick" handlerFunction="button_check_onClick">
+			<function name="button_check_onClick" arguments="event">
+				<script><![CDATA[//当前树选中节点
+var currentNode = unieap.byId("tree_entity").getCurrentNode();
+var currentNode_data = currentNode.item.data;
+//unieap.debug(currentNode);
+var parentid = currentNode_data.parentid;
+if(parentid == '-1'){
+//	MessageBox.alert({
+//		title:'提示',
+//		message:'无上层节点！'
+//	});
+}else{
+	var parentNode = currentNode.getParent();
+	var parentNode_data = parentNode.item.data;
+	var grid_ds = view.grid.getDataStore("dynamicGrid");
+	//unieap.debug(grid_ds);
+	var count = grid_ds.getRowSet().getRowCount();
+	if(count > 0){
+		var riskVerId = dataCenter.getParameter("riskVerId");		
+		var currentNode_ds = new unieap.ds.DataStore();
+		currentNode_ds.getRowSet().addRow(currentNode_data);
+		currentNode_ds.rowSetName = "com.neusoft.fdframework.productfactory.dto.TreeDTO";
+		var parentNode_ds = new unieap.ds.DataStore();
+		parentNode_ds.getRowSet().addRow(parentNode_data);
+		parentNode_ds.rowSetName = "com.neusoft.fdframework.productfactory.dto.TreeDTO";
+		view.processor.pfEntityPropertyValueCheck(riskVerId, currentNode_ds, parentNode_ds, grid_ds);	
+	}
+}
+
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="button_addEntity" label="新 增" class="titlePane-button" width="100px" iconClass="common_base_btn common_new_btn">
+	<events>
+		<event name="onClick" handlerFunction="button_addEntity_onClick">
+			<function name="button_addEntity_onClick" arguments="event">
+				<script><![CDATA[var currentNode = unieap.byId("tree_entity").getCurrentNode();
+var data = currentNode.item.data;
+var relation = data['relation'];
+var entityId = data['entityid']; //改表后,id和entityid一致
+var label = data['label'];
+//判断relation属性值(与上层实体对应关系('1':'1对1'; '0':'1对n'))
+if(relation == 0){
+	//1对n
+	var newDC = navigateButtonProduct.prepareDCParameter();
+	newDC.setParameter("entityId", entityId);
+//	newDC.setParameter("riskVerId", dataCenter.getParameter("riskVerId"));
+	newDC.setParameter("label", label);
+	newDC.setParameter("opt", "add");
+	view.navigator.forward("ProductFactory","factory","product/productVerDetailForm","属性新增",newDC);
+}else{
+	//默认1对1
+	var gridDs = view.grid.getDataStore("dynamicGrid");
+	var count = gridDs.getRowSet().getRowCount();
+	if(count == 0){
+		var newDC = navigateButtonProduct.prepareDCParameter();
+		newDC.setParameter("entityId", entityId);
+//		newDC.setParameter("riskVerId", dataCenter.getParameter("riskVerId"));
+		newDC.setParameter("label", label);
+		newDC.setParameter("opt", "add");
+		view.navigator.forward("ProductFactory","factory","product/productVerDetailForm","属性新增",newDC);
+	}else{
+		MessageBox.alert({
+			title:'提示',
+			message:'与上层实体1对1关系！'
+		});
+	}
+}
+
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="button_updateEntity" label="修 改" width="100px"
+	class="titlePane-button" iconClass="common_base_btn common_modify_btn">
+	<events>
+		<event name="onClick" handlerFunction="button1_onClick">
+			<function name="button1_onClick" arguments="event">
+				<script><![CDATA[var currentNode = unieap.byId("tree_entity").getCurrentNode();
+var data = currentNode.item.data;
+var entityId = data['entityid'];
+var label = data['label'];
+var selectRow = view.grid.getRow("dynamicGrid");
+if(selectRow){
+	//unieap.debug(selectRow);
+	var newDC = navigateButtonProduct.prepareDCParameter();
+		newDC.setParameter("entityId", entityId);
+//		newDC.setParameter("riskVerId", dataCenter.getParameter("riskVerId"));
+		newDC.setParameter("label", label);
+		newDC.setParameter("opt", "update");
+		newDC.addDataStore("selectRow", selectRow);
+		view.navigator.forward("ProductFactory","factory","product/productVerDetailForm","属性修改", newDC);
+
+}else{
+	MessageBox.alert({
+		title:'提示',
+		message:'请选择一条数据！'
+	})
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="button_delEntity" label="删 除" width="100px"
+	class="titlePane-button" iconClass="common_base_btn common_del_btn">
+	<events>
+		<event name="onClick" handlerFunction="button_delEntity_onClick">
+			<function name="button_delEntity_onClick" arguments="event">
+				<script><![CDATA[var currentNode = unieap.byId("tree_entity").getCurrentNode();
+var data = currentNode.item.data;
+var entityId = data['entityid'];
+var selectRow = view.grid.getRow("dynamicGrid");
+if(selectRow){
+//	var objSeq = selectRow.getRowSet().getRow(0).getItemValue("objSeq");
+	var objSeq = selectRow.getRowSet().getRow(0).getItemValue("entityObjId");
+//	var riskVerId = dataCenter.getParameter("riskVerId");
+	var thisProductVersionId = dataCenter.getParameter("thisProductVersionId");
+	view.processor.deleteEntityPropertyValue(thisProductVersionId, entityId, objSeq);
+}else{
+	MessageBox.alert({
+		title:'提示',
+		message:'请选择一条数据！'
+	})
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><div id="div_grid" height="100%" width="100%" style="height:100%"></div></titlePane><titlePane id="titlePane_init" height="100%" width="100%" flexible="false" title="实体属性配置"></titlePane></borderPane><borderPane id="borderPane2" showTitleBar="false" splitLine="false" region="center"><titlePane id="titlePane_entityTree" width="100%" height="100%" flexible="false" title="实体层次"><template id="template3" instance="true" type="com.neusoft.unieap.tree_1.0.0">
+    
+  <div id="div_checkTree" height="30px" type="buttons" width="100%"><button
+	id="button_checkAll" label="校 验" width="100px" class="titlePane-button" iconClass="common_base_btn common_check_btn">
+	<events>
+		<event name="onClick" handlerFunction="button_checkAll_onClick">
+			<function name="button_checkAll_onClick" arguments="event">
+				<script><![CDATA[//unieap.debug(treeDs);
+//var productId = dataCenter.getParameter("productId");
+//var productVersionId = dataCenter.getParameter("productVersionId");
+
+//var riskVerId = dataCenter.getParameter("riskVerId");
+
+var thisProductVersionId = dataCenter.getParameter("thisProductVersionId");
+view.processor.pfEntityPropertyValueCheckAll(thisProductVersionId, treeDs);
+]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><tree binding-id="id" binding-label="label"
+	binding-leaf="isLeaf" binding-parent="parentid"
+	binding-query="{name:'parentid',relation:'=',value:'-2'}"
+	binding-store="treeDTO" height="auto" id="tree_entity" label="" width="100%">
+	<events>
+		<event name="onClick" handlerFunction="tree_entity_onClick">
+			<function name="tree_entity_onClick" arguments="node">
+				<script><![CDATA[var data = node.item.data;
+var type = data['type'];
+if(type != '0'){
+	unieap.hideWidget(unieap.byId("titlePane_init"));
+	unieap.showWidget(unieap.byId("titlePane_entityGrid"));
+	//非根节点
+	var entityId = data['entityid'];
+	unieap.destroyWidgets(unieap.getElementById("div_grid"));
+	//type = 2,产品版本对象
+	view.processor.queryEntityProp(
+		dataCenter.getParameter('thisProductVersionId'), entityId, '2');
+}else{
+	unieap.showWidget(unieap.byId("titlePane_init"));
+	unieap.hideWidget(unieap.byId("titlePane_entityGrid"));
+
+}
+]]></script>
+			</function>
+		</event>
+	</events>
+</tree></template></titlePane></borderPane></borderLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[view.navigator.receiveData("属性",loadData);
+view.navigator.onComplete("返回", loadDataBack);
+navigateButtonProduct.activeNavigateButton("productPropertyValue_copy1");
+
+function loadData(dc){
+	unieap.destroyWidgets(unieap.getElementById("div_grid"));
+	unieap.showWidget(unieap.byId("titlePane_init"));
+	unieap.hideWidget(unieap.byId("titlePane_entityGrid"));
+	//产品id,
+	dataCenter.setParameter("thisProductId", dc.getParameter('thisProductId'));
+	//产品版本id,
+	dataCenter.setParameter("thisProductVersionId", dc.getParameter("thisProductVersionId"));
+	//产品版本关联模型版本id, 
+	dataCenter.setParameter("thisModelVersionId", dc.getParameter("thisModelVersionId"));	
+	//算法引擎版本ID,
+	dataCenter.setParameter("thisArithVerId", dc.getParameter("thisArithVerId"));
+	//树根节点名称
+	dataCenter.setParameter("treeRootName", dc.getParameter("treeRootName"));	
+	dataCenter.addDataStore("pfObjProductVer", dc.getDataStore("pfObjProductVer"));
+    dataCenter.addDataStore("pfObjProduct", dc.getDataStore("pfObjProduct"));
+	view.processor.getEntitiesInfoForTree(dc.getParameter("treeRootName"), dc.getParameter("thisModelVersionId"));
+};
+
+function loadDataBack(dc){
+	var currentNode = unieap.byId("tree_entity").getCurrentNode();
+	var data = currentNode.item.data;
+	var entityId = data['entityid'];
+	//type = 2,产品版本对象
+	view.processor.queryEntityPropValue(
+		dataCenter.getParameter("thisProductVersionId"), entityId, '2');
+
+};
+
+]]></script></function></event></events><dependence name="factory/detailHTML" type="view" sc="ProductFactory" dc="factory" ref="detailHTML" /></controls>
+      <scripts ><function name="entityButtonClick" arguments="id">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[//var newDC = new unieap.ds.DataCenter();
+//newDC.setParameter("entityId", id);
+//newDC.setParameter("productId", dataCenter.getParameter("productId"));
+//newDC.setParameter("productVersionId", dataCenter.getParameter("productVersionId"));
+////view.navigator.forward("ProductFactory","factory","test/detailHTML","详细内容",newDC);
+//view.navigator.forward("ProductFactory","factory","detailQuery","产品实体查询",newDC);]]>
+	</script>
+</function><function name="getEntitiesInfoForTreeSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getEntitiesInfoForTree方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[treeDs = dc.getDataStore("rtnListTreeDto");
+view.tree.setDataStore("tree_entity", treeDs);
+unieap.byId("tree_entity").expandAllNodes();]]></script>
+</function><function name="queryEntityPropSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:queryEntityProp方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//生成xgrid	
+var entityProp_Ds = dc.getDataStore("rtnListDTO");
+var count_prop = entityProp_Ds.getRowSet().getRowCount();
+if(count_prop != 0){
+	var dynamicLayout = new Array(1);
+	var dynamicGrid = new Array(1);
+	var dynamicGridjson = new Array(1);
+	var mainTitleColumns = [];
+	for(var i = 0; i < count_prop; i++ ){
+		var item_row = entityProp_Ds.getRowSet().getRow(i);
+		var tempObject = new Object();
+//		tempObject.label = item_row.getItemValue("nameCn");
+		tempObject.label = item_row.getItemValue("name");
+		tempObject.name = item_row.getItemValue("id");
+		tempObject.width = "120px";
+//		var editType = item_row.getItemValue("pepsEditType");
+		var editType = item_row.getItemValue("pfpsdEditorType");
+		if(editType == "DateTextBox"){
+			tempObject.displayFormatter = {declaredClass:'unieap.form.DateDisplayFormatter',dataFormat:'yyyy-MM-dd'};
+		}		
+		if(editType == "MutipleComboBox"){	//多选下拉框暂不转码
+			//|| editType == "CheckBoxGroup" || editType == "RadioButtonGroup"		
+//			var datajson = item_row.data.pepsDatasource;		
+//			if(datajson){
+//				var rows = datajson.split('\n');
+//				var data = [];
+//				for(var m = 0; m < rows.length; m++){
+//					var d = rows[m].split("=");
+//					var t = {"CODENAME":d[1],"CODEVALUE":d[0]};
+//					data[m] = t;
+//				}
+//				var ds = new unieap.ds.DataStore(item_row.getItemValue("id"), data);		
+//				tempObject.decoder = {store:ds,valueAttr:'CODEVALUE',displayAttr:'CODENAME'};
+//			}				
+		}
+		if(editType == "SingleComboBox"){
+//			var datajson = item_row.data.pepsDatasource;	
+			var datajson = item_row.data.pfpsdDictionary;				
+			if(datajson){
+				var rows = datajson.split('\n');
+				var data = [];
+				for(var m = 0; m < rows.length; m++){
+					var d = rows[m].split("=");
+					var t = {"CODENAME":d[1],"CODEVALUE":d[0]};
+					data[m] = t;
+				}
+				var ds = new unieap.ds.DataStore(item_row.getItemValue("id"), data);		
+				tempObject.decoder = {store:ds,valueAttr:'CODEVALUE',displayAttr:'CODENAME'};
+			}				
+		}	
+		mainTitleColumns.push(tempObject);
+	}
+	//增加1个对象seq_obj对象
+	var tempObject_objSeq = new Object();
+	tempObject_objSeq.label = "属性值归属";
+//	tempObject_objSeq.name = "objSeq";
+	tempObject_objSeq.name = "entityObjId";
+	tempObject_objSeq.width = "120px";
+	tempObject_objSeq.hidden = "true";
+	mainTitleColumns.push(tempObject_objSeq);
+	//生成xgrid
+	dynamicLayout[0] = [{rows:[mainTitleColumns]}];		
+	dynamicGrid[0] = new unieap.xgrid.Grid({
+		id: "dynamicGrid", //xGrid的Id
+		dataCenter: dataCenter, //dataCenter和_rootID这两项用于处理单帧下ID
+		_rootID: view._rootNodeId, //比较重要，请保留
+		//views: {rowNumber: true, rowBar:true}, //xGrid的显示
+		layout: {structure:dynamicLayout[0]}, //xGrid的结构
+		selection: {selectType:'single'}, //xGrid的选择模式
+		width: "99.8%",
+		height: "99.8%"
+	});	
+	unieap.getElementById("div_grid").appendChild(dynamicGrid[0].domNode);
+	unieap.byId("dynamicGrid").refresh();	
+	//校验,新增 修改 删除 按扭启用
+	unieap.byId("button_check").setDisabled(false);
+	unieap.byId("button_addEntity").setDisabled(false);
+	unieap.byId("button_updateEntity").setDisabled(false);
+	unieap.byId("button_delEntity").setDisabled(false);
+}else{
+	//实体没有属性, 校验 新增 修改 删除 按扭禁用
+	unieap.byId("button_check").setDisabled(true);
+	unieap.byId("button_addEntity").setDisabled(true);
+	unieap.byId("button_updateEntity").setDisabled(true);
+	unieap.byId("button_delEntity").setDisabled(true);	
+}
+//------------------------------------------------------------------------------------
+//生成xgrid数据ds
+var entityPropValue_Ds = dc.getDataStore("rtnListPFEntityPV");
+var count_propvalue = entityPropValue_Ds.getRowSet().getRowCount();
+if(count_propvalue != 0){
+	var arrayObjSeq = new Array(); 
+	for(var j = 0; j < count_propvalue; j++ ){
+		var item_row = entityPropValue_Ds.getRowSet().getRow(j);
+//		var item_obj_seq = item_row.getItemValue("objSeq");
+		var item_obj_seq = item_row.getItemValue("entityObjId");
+		var result = arrayIsExist(arrayObjSeq, item_obj_seq);
+		if(result == -1){
+			arrayObjSeq.push(item_obj_seq);
+		}
+	}
+	var arrayRowSet = new Array();
+	for(var k = 0; k < arrayObjSeq.length; k++){
+		var objseq = arrayObjSeq[k];
+		var rowSetObject = new Object();
+		for(var l = 0; l < count_propvalue; l++){
+			var item_row = entityPropValue_Ds.getRowSet().getRow(l);
+//			var item_obj_seq = item_row.getItemValue("objSeq");
+			var item_obj_seq = item_row.getItemValue("entityObjId");
+			if(objseq == item_obj_seq){
+//				var item_propId = item_row.getItemValue("entityPropertyId");
+//				var item_propValue = item_row.getItemValue("entityPropertyValue");
+				var item_propId = item_row.getItemValue("modelPropId");
+				var item_propValue = item_row.getItemValue("propVal");
+				rowSetObject[item_propId] = item_propValue;
+			}			
+		}
+		//为每行增加objSeq属性
+//		rowSetObject.objSeq = objseq;
+		rowSetObject.entityObjId = objseq;
+		arrayRowSet.push(rowSetObject);
+	}
+	//unieap.debug(arrayRowSet);
+	var ds = new unieap.ds.DataStore("dynamicGridDs",arrayRowSet);
+	unieap.byId("dynamicGrid").getBinding().setDataStore(ds);
+	//校验  按扭启用
+	unieap.byId("button_check").setDisabled(false);
+}else{
+	//实体没有值, 校验 按扭禁用
+	unieap.byId("button_check").setDisabled(true);
+}
+
+]]></script>
+</function><function name="queryEntityPropValueSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:queryEntityPropValue方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//生成xgrid数据ds
+var entityPropValue_Ds = dc.getDataStore("rtnListPFEntityPV");
+var count_propvalue = entityPropValue_Ds.getRowSet().getRowCount();
+if(count_propvalue != 0){
+	var arrayObjSeq = new Array(); 
+	for(var j = 0; j < count_propvalue; j++ ){
+		var item_row = entityPropValue_Ds.getRowSet().getRow(j);
+//		var item_obj_seq = item_row.getItemValue("objSeq");
+		var item_obj_seq = item_row.getItemValue("entityObjId");
+		var result = arrayIsExist(arrayObjSeq, item_obj_seq);
+		if(result == -1){
+			arrayObjSeq.push(item_obj_seq);
+		}
+	}
+	var arrayRowSet = new Array();
+	for(var k = 0; k < arrayObjSeq.length; k++){
+		var objseq = arrayObjSeq[k];
+		var rowSetObject = new Object();
+		for(var l = 0; l < count_propvalue; l++){
+			var item_row = entityPropValue_Ds.getRowSet().getRow(l);
+//			var item_obj_seq = item_row.getItemValue("objSeq");
+			var item_obj_seq = item_row.getItemValue("entityObjId");
+			if(objseq == item_obj_seq){
+//				var item_propId = item_row.getItemValue("entityPropertyId");
+//				var item_propValue = item_row.getItemValue("entityPropertyValue");
+				var item_propId = item_row.getItemValue("modelPropId");
+				var item_propValue = item_row.getItemValue("propVal");
+				rowSetObject[item_propId] = item_propValue;
+			}
+		}
+//		rowSetObject.objSeq = objseq;
+		rowSetObject.entityObjId = objseq;
+		arrayRowSet.push(rowSetObject);
+	}
+	//unieap.debug(arrayRowSet);
+	var ds = new unieap.ds.DataStore("dynamicGridDs",arrayRowSet);
+	unieap.byId("dynamicGrid").getBinding().setDataStore(ds);
+}else{
+	var arrayRowSet = new Array();
+	var ds = new unieap.ds.DataStore("dynamicGridDs",arrayRowSet);
+	unieap.byId("dynamicGrid").getBinding().setDataStore(ds);
+}]]></script>
+</function><function name="arrayIsExist" arguments="array,value">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(array.length ==0){
+  return -1;
+}
+for(var i=0; i<array.length; i++){
+  if(value == array[i]){
+  	 return i;
+  }
+}
+return -1;]]></script>
+</function><function name="deleteEntityPropertyValueSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:deleteEntityPropertyValue方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[//MessageBox.customerButtonConfirm({
+MessageBox.autoCloseAlert({
+	title:'提示',
+	message:'删除成功！',
+	type:'info',
+//	durationTime:"3000",
+	onComplete:function(){
+		var currentNode = unieap.byId("tree_entity").getCurrentNode();
+		var data = currentNode.item.data;
+		var entityId = data['entityid'];
+		view.processor.queryEntityPropValue(
+			dataCenter.getParameter("thisProductVersionId"), entityId, '2');	
+	}
+//	onComplete:customerButtonConfirmReturn,
+//	customerButtons:[{label:"确定",returnValue:"true"}]
+});]]></script>
+</function><function name="customerButtonConfirmReturn"
+	arguments="value">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[//if(value == "true"){
+//	var currentNode = unieap.byId("tree_entity").getCurrentNode();
+//	var data = currentNode.item.data;
+//	var entityId = data['entityid'];
+//	view.processor.queryEntityPropValue(
+//		dataCenter.getParameter("thisProductVersionId"), entityId, '2');
+//}]]>
+	</script>
+</function><function name="pfEntityPropertyValueCheckSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:pfEntityPropertyValueCheck方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var messageCheck = dc.getParameter("rtnMessageCheck");
+if(messageCheck == ""){
+//	MessageBox.alert({
+	MessageBox.autoCloseAlert({
+		title:'提示',
+		message:'校验成功！',
+		type:"info"
+//		durationTime:"3000"
+	})
+}else{
+	MessageBox.alert({
+		title:'提示',
+		message:messageCheck
+	})
+}]]>
+	</script>
+</function><variable name="treeDs"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><function
+	name="pfEntityPropertyValueCheckAllSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:pfEntityPropertyValueCheckAll方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var messageCheckAll = dc.getParameter("rtnMessageCheckAll");
+if(messageCheckAll == ""){
+//	MessageBox.alert({
+	MessageBox.autoCloseAlert({
+		title:'提示',
+		message:'校验成功！',
+		type:"info"
+//		durationTime:"3000"
+	})
+}else{
+	MessageBox.alert({
+		title:'提示',
+		message:messageCheckAll
+	})
+}]]></script>
+</function></scripts>
+      <templateInstances>
+	<templateInstance target="template3"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Tree</functionName>
+  <description>该向导用于快速生成tree控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.tree_1.0.0</templateId>
+    <label>Tree</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成tree控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>tree_entity</string>
+    </entry>
+    <entry>
+      <string>treeDataProviderInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.tree.TreeDataProvider>
+        <id>tree_entity</id>
+        <checkLogic__model>空串</checkLogic__model>
+        <binding__store>treeDTO</binding__store>
+        <binding__id>id</binding__id>
+        <binding__label>label</binding__label>
+        <binding__parent>parentid</binding__parent>
+        <binding__leaf>isLeaf</binding__leaf>
+        <binding__query__name>parentid</binding__query__name>
+        <binding__query__value>-2</binding__query__value>
+        <binding__query>{name:&apos;parentid&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}</binding__query>
+        <label></label>
+        <bo4Tree>
+          <isLazyLoad>false</isLazyLoad>
+          <bo class="com.neusoft.unieap.workshop.controlmode.model.processor.Processor">
+            <name></name>
+            <method></method>
+            <returnType></returnType>
+            <chosed>false</chosed>
+            <arguments></arguments>
+            <dc></dc>
+            <module></module>
+            <sc></sc>
+            <refName></refName>
+            <isMerge>false</isMerge>
+            <refBoID></refBoID>
+            <isProcess>false</isProcess>
+            <properties/>
+            <hasOnSuccess>false</hasOnSuccess>
+            <isChange>false</isChange>
+            <parameterNumber>3</parameterNumber>
+          </bo>
+        </bo4Tree>
+        <labelChecked>false</labelChecked>
+        <properties>
+          <entry>
+            <string>position</string>
+            <string>static</string>
+          </entry>
+          <entry>
+            <string>private_tag</string>
+            <string>tree</string>
+          </entry>
+          <entry>
+            <string>marginLeft</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>events</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>treeDnd_isSource</string>
+            <string>true</string>
+          </entry>
+          <entry>
+            <string>treeLoaderClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>binding_children</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>tip</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>parentId</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>private_label</string>
+            <string>Tree</string>
+          </entry>
+          <entry>
+            <string>loader_sync</string>
+            <string>false</string>
+          </entry>
+          <entry>
+            <string>binding_iconClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>height</string>
+            <string>auto</string>
+          </entry>
+          <entry>
+            <string>treeDnd_dragThreshold</string>
+            <string>2</string>
+          </entry>
+          <entry>
+            <string>style</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>binding_bindingClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>overflowX</string>
+            <string>auto</string>
+          </entry>
+          <entry>
+            <string>overflowY</string>
+            <string>auto</string>
+          </entry>
+          <entry>
+            <string>left</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>private_widget</string>
+            <string>unieap.tree.Tree</string>
+          </entry>
+          <entry>
+            <string>treeDnd_betweenThreshold</string>
+            <string>2</string>
+          </entry>
+          <entry>
+            <string>top</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>treeEditor_allowBlank</string>
+            <string>false</string>
+          </entry>
+          <entry>
+            <string>loader_url</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>dndSourceClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>marginTop</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>treeEditorClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>marginRight</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>width</string>
+            <string>100%</string>
+          </entry>
+          <entry>
+            <string>loader_parameters</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>class</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>display</string>
+            <string>block</string>
+          </entry>
+          <entry>
+            <string>checkLogicClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>binding_labelClass</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>binding_rootNodeId</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>pathSeparator</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>marginBottom</string>
+            <string>0</string>
+          </entry>
+          <entry>
+            <string>checkLogic_showRootCheckbox</string>
+            <string>false</string>
+          </entry>
+          <entry>
+            <string>overflow</string>
+            <string>auto</string>
+          </entry>
+          <entry>
+            <string>binding_disabled</string>
+            <null/>
+          </entry>
+          <entry>
+            <string>binding_sort</string>
+            <null/>
+          </entry>
+        </properties>
+      </com.neusoft.unieap.workshop.controlmode.model.tree.TreeDataProvider>
+    </entry>
+    <entry>
+      <string>bo4TreeList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.tree.Bo4Tree reference="../../../entry[2]/com.neusoft.unieap.workshop.controlmode.model.tree.TreeDataProvider/bo4Tree"/>
+      </list>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance>
+</templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="think" />
+         <creationTime value="2016-01-26 13:40:56" />
+         <modificationTime value="2016-05-27 11:11:41" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences ><dependence name="factory/product/navigateButtonProduct" type="viewc" sc="ProductFactory" dc="factory" ref="product/navigateButtonProduct" /></dependences>
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getPfPrdtSceneList" onSuccess="getPfPrdtSceneListSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprdtscene.business.xml" method="pfprdtscene.getPfPrdtSceneList"></bo>
+		<context>
+			<string name="productVerId" />
+		</context>
+		<arguments>
+			<argument name="productVerId" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<dependence name="pfprdtscene.business.xml"
+		ref="pfprdtscene.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="getPfPrdtElements" onSuccess="getPfPrdtElementsSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprdtelement.business.xml" method="pfprdtelement.getPfPrdtElements"></bo>
+		<context>
+			<string name="objSceneId" />
+			
+			
+		</context>
+		<arguments>
+			
+			
+			
+		<argument name="objSceneId" type="string"></argument></arguments>
+		
+	</pMethod>
+	<dependence name="pfprdtelement.business.xml"
+		ref="pfprdtelement.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="delElement" onSuccess="delElementSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprdtelement.business.xml" method="pfprdtelement.delPfPrdtElements"></bo>
+		<context>
+			<pojo name="pfObjSkelement" dataStoreName="pfObjSkelement_grid" />
+		</context>
+		<arguments>
+			<argument name="pfObjSkelement" type="dataStore"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="saveOrder" onSuccess="saveOrderSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfprdtelement.business.xml" method="pfprdtelement.saveOrder"></bo>
+<context><pojo name="selectRow" dataStoreName="pfObjSkelement_grid" /><pojo name="destRow" dataStoreName="pfObjSkelement_grid" /><string name="type" /></context><arguments><argument name="selectRow" type="dataStore"></argument><argument name="destRow" type="dataStore"></argument><argument name="type" type="string"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfObjSkelement_grid" dependence="pfObjSkelement"
+		dc="factory" path="pfObjSkelement.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="name" label="要素名称" type="string" length="300" />
+			<column name="keyWord" label="关键字" type="string" length="64" />
+			<column name="objSceneId" label="关联的对象场景ID" type="string"
+				length="32" />
+			<column name="code" label="算法分类编码/接触点分类编码" type="string"
+				length="128" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><xdialog id="xdialog_addScene" title="新增场景"
+	width="500px" height="155px" view-ref="factory/product/productVerSceneDialog"
+	isExpand="false">
+	<events>
+		<event name="onComplete" handlerFunction="xdialog_addScene_onComplete">
+			<function name="xdialog_addScene_onComplete" arguments="returnObj">
+				<script><![CDATA[view.processor.getPfPrdtSceneList(view.thisProductVersionId);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><borderLayout id="borderLayout1" showTitleBar="false" design="headline"><borderPane id="borderPane0" showTitleBar="false" splitLine="false" region="left" minSize="100px"><component id="component1" label="Component" comp-ref="factory/product/navigateButtonProduct"/></borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><titlePane id="titlePane1" height="100%" width="100%" title="要素列表" flexible="false"><div id="div1" height="30px" type="buttons"><button id="btn_addScene" label="新增场景" class="titlePane-button" width="100px" iconClass="common_base_btn common_new1_btn">
+	<events>
+		<event name="onClick" handlerFunction="btn_addScene_onClick">
+			<function name="btn_addScene_onClick" arguments="event">
+				<script><![CDATA[var xdialog_addScene = unieap.byId("xdialog_addScene");
+xdialog_addScene.dialogData = {
+	productVersionId: view.thisProductVersionId,
+	type: "add"
+};
+xdialog_addScene.show();]]></script>
+			</function>
+		</event>
+	</events>
+</button><comboBox id="comboBox_scene" popup-height="150px"
+	decoder-displayAttr="ctlgName" decoder-valueAttr="id">
+	<events>
+		<event name="onChange" handlerFunction="comboBox_scene_onChange">
+			<function name="comboBox_scene_onChange" arguments="value">
+				<script><![CDATA[//view.processor.getPfPrdtElements(value, "1", "10");
+view.processor.getPfPrdtElements(value);]]></script>
+			</function>
+		</event>
+	</events>
+</comboBox><button id="up" label="上 移" width="100px" class="titlePane-button" iconClass="common_base_btn common_moveup_btn">
+	<events>
+		<event name="onClick" handlerFunction="up_onClick">
+			<function name="up_onClick" arguments="event">
+				<script><![CDATA[var selectRow = view.grid.getRow("grid_pfObjSkElem");
+if(selectRow){
+	//如果是第1行,不处理
+	var rowIndex = unieap.byId("grid_pfObjSkElem").getManager("SelectionManager").getSelectedRowIndexs();
+	destIndex = parseInt(rowIndex) - 1;
+	orderFlag = true;
+	if(rowIndex != 0){		
+		var previousRow = view.grid.getRow("grid_pfObjSkElem", parseInt(rowIndex) - 1);
+		view.processor.saveOrder(selectRow, previousRow, "up");
+	}	
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="down" label="下 移" width="100px" class="titlePane-button" iconClass="common_base_btn common_movedown_btn">
+	<events>
+		<event name="onClick" handlerFunction="down_onClick">
+			<function name="down_onClick" arguments="event">
+				<script><![CDATA[var selectRow = view.grid.getRow("grid_pfObjSkElem");
+var allcount = view.grid.getDataStore("grid_pfObjSkElem").getRowSet().getRowCount();
+if(selectRow){
+	//如果是最后1行,不处理
+	var rowIndex = unieap.byId("grid_pfObjSkElem").getManager("SelectionManager").getSelectedRowIndexs();
+	destIndex = parseInt(rowIndex) + 1;
+	orderFlag = true;
+	if(rowIndex != allcount - 1){
+		var nextRow = view.grid.getRow("grid_pfObjSkElem", destIndex);
+		view.processor.saveOrder(selectRow, nextRow, "down");	
+	}
+	
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="btn_addElement" label="新增要素" width="100px"
+	class="titlePane-button" iconClass="common_base_btn common_new_btn">
+	<events>
+		<event name="onClick" handlerFunction="btn_addElement_onClick">
+			<function name="btn_addElement_onClick" arguments="event">
+				<script><![CDATA[var select_scene = unieap.byId("comboBox_scene").getValue();
+if(!select_scene){
+	MessageBox.alert({
+		title:'提示',
+		message:'请选择场景！'
+	});
+	
+}else{
+	var sceneDTOs_ds = unieap.byId("comboBox_scene").getDataProvider().getDataStore();
+	var newDC = navigateButtonProduct.prepareDCParameter();
+	newDC.setParameter("type","add");
+//	newDC.addDataStore("sceneDTOs",sceneDTOs_ds);
+	newDC.setParameter("select_scene",select_scene);
+	view.navigator.forward("ProductFactory","factory","product/productVerElementShow", "要素属性", newDC);
+	
+}
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="btn_delElement" label="删 除 no" width="100px"
+	class="titlePane-button" style="display:none">
+	<events>
+		<event name="onClick" handlerFunction="btn_delElement_onClick">
+			<function name="btn_delElement_onClick" arguments="event">
+				<script><![CDATA[//var selectRow = view.grid.getRow("grid_pfObjSkElem");
+//if(selectRow){
+//	MessageBox.confirm({
+//        message: "是否删除？",
+//        yesStr: "是",
+//        noStr: "否",
+//        //关闭右上角的"X"按钮时执行onComplete函数
+//        iconCloseComplete:false,
+//        onComplete: function(value) {
+//            if (value) {
+//                view.processor.delElement(selectRow);
+//            }
+//        }
+//    }, dojo.byId("confirm"));
+//}]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template1" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <xgrid binding-store="pfObjSkelement_grid" edit-editType="readonly" height="100%" id="grid_pfObjSkElem" rows-rowsPerPage="10" selection-selectType="single" views-rowBar="true" views-rowNumber="true">
+    <header>
+      <row>
+        <xcell dataType="string" enable="false" height="25px" id="cell_name__pfObjSkElem" label="要素名称" name="name" width="45%">
+          <events>
+            <event handlerFunction="cell_name__pfObjSkElem_formatter" name="formatter">
+              <function arguments="inValue,inRowIndex" name="cell_name__pfObjSkElem_formatter">
+                <script><![CDATA[return "<a href=\"javascript:;\" onclick=\"productVerElement.goElemShow('"+inValue+"','"+inRowIndex+"')\">"+inValue+"</a>";]]></script>
+              </function>
+            </event>
+          </events>
+        </xcell>
+        <xcell dataType="string" enable="false" height="25px" id="cell_keyWord__pfObjSkElem" label="关键字" name="keyWord" width="45%"></xcell>
+        <xcell enable="false" height="25px" id="cell_control__pfObjSkElem" label="操作" name="control" styles="text-align:center" width="10%">
+          <events>
+            <event handlerFunction="cell_control__pfObjSkElem_formatter" name="formatter">
+              <function arguments="inValue,inRowIndex" name="cell_control__pfObjSkElem_formatter">
+                <script><![CDATA[var delImg=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_o.png";
+var delImg_h=unieap.WEB_APP_NAME +"/ProductFactory/factory/gridBtn/ui/btn_delete_h.png";
+
+var delHTML="<img src='"+delImg+"' style='cursor:pointer;' title='删除' onclick='productVerElement.del("+inRowIndex+");' onmouseover='this.src=\""+delImg_h+"\"' onmouseout='this.src=\""+delImg+"\"'></img>";
+return delHTML;]]></script>
+              </function>
+            </event>
+          </events>
+        </xcell>
+      </row>
+    </header>
+    <events>
+      <event handlerFunction="grid_pfObjSkElem_binding_rpc" name="binding-rpc">
+        <function arguments="store,load" name="grid_pfObjSkElem_binding_rpc">
+          <script><![CDATA[var value = unieap.byId("comboBox_scene").getValue();
+if(value){
+	//view.processor.getPfPrdtElements(value, store.getPageNumber(), store.getPageSize());
+	view.processor.getPfPrdtElements(value);
+}]]></script>
+        </function>
+      </event>
+    </events>
+  </xgrid></template></titlePane></borderPane></borderLayout><dependence name="factory/product/productVerSceneDialog" type="view" sc="ProductFactory" dc="factory" ref="product/productVerSceneDialog" /><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[navigateButtonProduct.activeNavigateButton("element_copy1");
+
+view.navigator.receiveData("要素列表",function(dc) {
+	//grid清空
+	unieap.byId("grid_pfObjSkElem").getBinding().getRowSet().deleteAllRows();
+	//场景下拉框清空
+	unieap.byId("comboBox_scene").setValue(null);
+	if (dc != null) {
+		view.thisProductVersionId = dc.getParameter("thisProductVersionId");
+		navigateButtonProduct.receiveDCParameter(dc);
+	}
+	if (view.thisProductVersionId == undefined) {
+		view.thisProductVersionId = "";
+	}
+	//查询产品版本下的场景
+	view.processor.getPfPrdtSceneList(view.thisProductVersionId);
+	
+});
+
+view.navigator.onComplete("elementShowBack", function(dc) {
+    if (dc == "ok") {
+	    var value = unieap.byId("comboBox_scene").getValue();
+		if(value){
+			//view.processor.getPfPrdtElements(value, "1", "10");
+			view.processor.getPfPrdtElements(value);
+		}
+    }
+});
+
+]]></script></function></event></events><dependence name="factory/product/productVerElementDialog" type="view" sc="ProductFactory" dc="factory" ref="product/productVerElementDialog" /></controls>
+      <scripts ><function name="getPfPrdtSceneListSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfPrdtSceneList方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var rtnSceneDtos = dc.getDataStore("rtnSceneDtos");
+unieap.byId("comboBox_scene").getDataProvider().setDataStore(rtnSceneDtos);
+//grid转码 20160222改 已隐藏
+//unieap.byId("grid_pfObjSkElem").getLayoutManager().getCell("objSceneId").decoder 
+//	= {displayAttr:"ctlgName",valueAttr:"id",store:rtnSceneDtos};]]></script>
+</function><function name="getPfPrdtElementsSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfPrdtElements方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore("rtnElemlist");
+view.grid.setDataStore("grid_pfObjSkElem", ds);
+//判断排序
+if(orderFlag){
+	unieap.byId("grid_pfObjSkElem").getManager("SelectionManager").setSelect(destIndex,true);
+	orderFlag = false;
+}]]>
+	</script>
+</function><function name="delElementSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:delElement方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var value = unieap.byId("comboBox_scene").getValue();
+if(value){
+	//view.processor.getPfPrdtElements(value, "1", "10");
+	view.processor.getPfPrdtElements(value);
+}]]></script>
+</function><function name="goElemShow" arguments="inValue,inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg1参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[//var selectRow = view.grid.getRow("grid_pfObjSkElem");
+var selectRow = view.grid.getRow("grid_pfObjSkElem", inRowIndex)
+if(selectRow){
+	var sceneDTOs_ds = unieap.byId("comboBox_scene").getDataProvider().getDataStore();
+	var newDC = navigateButtonProduct.prepareDCParameter();
+	newDC.setParameter("type","upd");
+	newDC.addDataStore("sceneDTOs",sceneDTOs_ds);
+	newDC.addDataStore("row",selectRow);
+	view.navigator.forward("ProductFactory","factory","product/productVerElementShow", "要素属性", newDC);
+}
+
+]]>
+	</script>
+</function><variable name="thisProductVersionId"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><variable name="destIndex"><script><![CDATA[null]]></script><comment><![CDATA[目标位置
+]]></comment></variable><variable name="orderFlag"><script><![CDATA[false]]></script><comment><![CDATA[]]></comment></variable><function
+	name="saveOrderSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:saveOrder方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var message = dc.getParameter("rtnOrderMessage");
+if(message == ""){
+	//排序成功
+	var value = unieap.byId("comboBox_scene").getValue();
+	if(value){
+//		view.processor.getPfPrdtElements(value, "1", "10");
+		view.processor.getPfPrdtElements(value);
+	}
+}]]></script>
+</function><function name="del" arguments="inRowIndex">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var selectRow = view.grid.getRow("grid_pfObjSkElem", inRowIndex);
+if(selectRow){
+	MessageBox.confirm({
+        message: "是否删除？",
+        yesStr: "是",
+        noStr: "否",
+        //关闭右上角的"X"按钮时执行onComplete函数
+        iconCloseComplete:false,
+        onComplete: function(value) {
+            if (value) {
+                view.processor.delElement(selectRow);
+            }
+        }
+    }, dojo.byId("confirm"));
+}]]>
+	</script>
+</function></scripts>
+      <templateInstances ><templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>false</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>pfObjSkelement_grid</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>id</name>
+            <label>id</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>id</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name</name>
+            <label>要素名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_name__pfObjSkElem</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>name</name>
+              <label>要素名称</label>
+              <width>45%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>name__pfObjSkElem_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>300</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>keyWord</name>
+            <label>关键字</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_keyWord__pfObjSkElem</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>keyWord</name>
+              <label>关键字</label>
+              <width>45%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>keyWord__pfObjSkElem_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>64</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>objSceneId</name>
+            <label>关联对象场景</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_objSceneId</id>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>headerStyles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>canSort</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>styles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>noresize</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>tip</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>cascade_getCascadeStore</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>cascade_primary</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>asc</string>
+                  <string>1</string>
+                </entry>
+                <entry>
+                  <string>headerClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>hidden</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>decoder_displayAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>private_widget</string>
+                  <string>unieap.grid.Cell</string>
+                </entry>
+                <entry>
+                  <string>left</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>decoder_valueAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>draggable</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>top</string>
+                  <string>0</string>
+                </entry>
+              </properties>
+              <dataType>string</dataType>
+              <name>objSceneId</name>
+              <label>关联对象场景</label>
+              <width>34%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>objSceneId__pfObjSkElem_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>control</name>
+            <label>操作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_control__pfObjSkElem</id>
+              <properties/>
+              <name>control</name>
+              <label>操作</label>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+              <enable>false</enable>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>pfObjSkelement_grid</binding__store>
+        <views__rowBar>true</views__rowBar>
+        <selection__selectType>single</selection__selectType>
+        <id>grid_pfObjSkElem</id>
+        <lastId>grid_pfObjSkElem</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>pfObjSkelement_grid</name>
+            <entityClass>PfObjSkelement</entityClass>
+            <dc>factory</dc>
+            <type>entity</type>
+            <dependence>pfObjSkelement</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid_pfObjSkElem_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <paging__userPageSize>false</paging__userPageSize>
+          <id>grid_pfObjSkElem_ToolBar</id>
+          <export__options></export__options>
+          <innerButtons></innerButtons>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>grid_pfObjSkElem_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid_pfObjSkElem_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX>_pfObjSkElem</ID__PREFIX>
+        <showToolBar>false</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string>_pfObjSkElem</string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid_pfObjSkElem</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+   <dc:entity class="com.neusoft.abclife.productfactory.entity.TLiabLimit" table="T_LIAB_LIMIT" extends="com.neusoft.unieap.core.di.DomainObject">
+      <id name="id" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="ID" length="16" />
+         <generator class="sequence">
+            <param name="sequence" value="SEQ_LIAB_LIMIT" />
+         </generator>
+      </id>
+      <property name="limitType" label="01-限额 02-限天 03-限次" type="string" getStrategy="public" setStrategy="public">
+         <column name="LIMIT_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="limitValue" label="值" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="LIMIT_VALUE" not-null="false" length="16" />
+      </property>
+      <property name="riskCode" label="险种编码" type="string" getStrategy="public" setStrategy="public">
+         <column name="RISK_CODE" not-null="false" length="6" />
+      </property>
+      <property name="limitTimeType" label="01-保单年度内 02-保险期间内" type="string" getStrategy="public" setStrategy="public">
+         <column name="LIMIT_TIME_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="riskVer" label="险种版本" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="RISK_VER" not-null="false" length="16" />
+      </property>
+      <property name="pricingLiabCode" label="定价责任编码" type="string" getStrategy="public" setStrategy="public">
+         <column name="PRICING_LIAB_CODE" not-null="false" length="32" />
+      </property>
+      <property name="protecLiabCode" label="保障责任编码" type="string" getStrategy="public" setStrategy="public">
+         <column name="PROTEC_LIAB_CODE" not-null="false" length="10" />
+      </property>
+      <property name="refProtecLiabCode" label="相关保障责任编码 多个用 ，隔开" type="string" getStrategy="public" setStrategy="public">
+         <column name="REF_PROTEC_LIAB_CODE" not-null="false" length="120" />
+      </property>
+      <import value="java.io.Serializable" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.fdframework.core.annotation.Column" />
+      <import value="com.neusoft.fdframework.core.annotation.Entity" />
+      <import value="com.neusoft.fdframework.core.annotation.ID" />
+      <import value="com.neusoft.fdframework.core.annotation.Transient" />
+      <import value="com.neusoft.unieap.core.di.DomainObject" />
+   </dc:entity>
+</dc:dc>
+

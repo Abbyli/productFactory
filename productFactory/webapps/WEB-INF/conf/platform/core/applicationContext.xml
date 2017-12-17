@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+   <import resource="applicationContext-variability.xml" />
+   <!-- 定义UI RIA通用技术组件的启动类 -->
+   <bean id="core" class="com.neusoft.unieap.core.bootstrap.CoreActivator">
+      <property name="id" value="core" />
+      <property name="title" value="核心组件" />
+      <property name="enabled" value="true" />
+      <property name="sc" ref="platform" />
+      <property name="version" value="1.0.0" />
+   </bean>
+   <!--<import resource="applicationContext-bo.xml"/>
+	<import resource="applicationContext-base.xml"/>
+	<import resource="applicationContext-dao.xml"/>
+	<import resource="applicationContext-ws.xml"/>
+-->
+   <!-- 事务时间上下文 -->
+   <bean id="dateContext" class="com.neusoft.unieap.core.transaction.DateContext">
+      <property name="generator" ref="dateGenerator" />
+   </bean>
+   <!-- 事务时间生成器 -->
+   <bean id="dateGenerator" class="com.neusoft.unieap.core.transaction.DateGenerator" />
+   <!-- 事件发布者 -->
+   <bean id="eventPublisher" class="com.neusoft.unieap.core.event.impl.UniEAPEventPublisherImpl" />
+</beans>
+

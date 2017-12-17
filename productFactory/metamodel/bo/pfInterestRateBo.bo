@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.abclife.productfactory.blo.PfInterestRateBoImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="Neusoft" />
+      </baseInfo>
+      <import value="java.io.BufferedReader" />
+      <import value="java.io.File" />
+      <import value="java.io.FileNotFoundException" />
+      <import value="java.io.FileOutputStream" />
+      <import value="java.io.IOException" />
+      <import value="java.io.InputStream" />
+      <import value="java.io.InputStreamReader" />
+      <import value="java.io.PrintWriter" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="javax.servlet.ServletContext" />
+      <import value="org.slf4j.Logger" />
+      <import value="org.slf4j.LoggerFactory" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="org.springframework.web.context.ServletContextAware" />
+      <import value="com.neusoft.abclife.productfactory.dao.PfInterestRateDaoImpl" />
+      <import value="com.neusoft.abclife.productfactory.entity.TAssessNetPrem" />
+      <import value="com.neusoft.abclife.productfactory.entity.TCurrPriceIntrate" />
+      <import value="com.neusoft.abclife.productfactory.entity.TDividParam" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TLoanAutoPayIntrate" />
+      <import value="com.neusoft.abclife.productfactory.entity.TReserveFundFactor" />
+      <import value="com.neusoft.abclife.productfactory.entity.TSurvvBeneAccumIntbeIntra" />
+      <import value="com.neusoft.abclife.productfactory.entity.TUnivrslSettlIntrate" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.unieap.core.common.form.Form" />
+      <import value="com.neusoft.unieap.core.fileupload.FileAttachment" />
+      <dependence name="TAssessNetPrem" type="entity" dc="factoryabclife" ref="tAssessNetPrem" />
+      <dependence name="TCurrPriceIntrate" type="entity" dc="factoryabclife" ref="tCurrPriceIntrate" />
+      <dependence name="TDividParam" type="entity" dc="factoryabclife" ref="tDividParam" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TLoanAutoPayIntrate" type="entity" dc="factoryabclife" ref="tLoanAutoPayIntrate" />
+      <dependence name="TReserveFundFactor" type="entity" dc="factoryabclife" ref="tReserveFundFactor" />
+      <dependence name="TSurvvBeneAccumIntbeIntra" type="entity" dc="factoryabclife" ref="tSurvvBeneAccumIntbeIntra" />
+      <dependence name="TUnivrslSettlIntrate" type="entity" dc="factoryabclife" ref="tUnivrslSettlIntrate" />
+      <method name="PfInterestRateBoImpl" returnType="" accessStrategy="public" />
+      <method name="getTUnivrslShare" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[利率险种查询
+@return]]></comment>
+      </method>
+      <method name="queryTUnivrslSettlIntrate" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[万能结算利率
+@param tInsurtypeBasicInf
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tUnivrslSettlIntrate" type="com.neusoft.abclife.productfactory.entity.TUnivrslSettlIntrate" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="addUpTUnivrslShare" returnType="String" accessStrategy="public">
+         <comment><![CDATA[万能结算利率新增或修改
+@return]]></comment>
+         <parameter name="tUnivrslSettlIntrate" type="com.neusoft.abclife.productfactory.entity.TUnivrslSettlIntrate" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="delTUnivrslSettlIntrate" returnType="String" accessStrategy="public">
+         <comment><![CDATA[万能结算利率删除
+@return]]></comment>
+         <parameter name="tUnivrslSettlIntrate" type="com.neusoft.abclife.productfactory.entity.TUnivrslSettlIntrate" />
+      </method>
+      <method name="queryTSurvvBeneAccumIntbeIntra" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[生存金累计生息利率
+@param tSurvvBeneAccumIntbeIntra
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tSurvvBeneAccumIntbeIntra" type="com.neusoft.abclife.productfactory.entity.TSurvvBeneAccumIntbeIntra" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="addUpTSurvvShare" returnType="String" accessStrategy="public">
+         <comment><![CDATA[生存金累计生息利率新增或修改
+@return]]></comment>
+         <parameter name="tSurvvBeneAccumIntbeIntra" type="com.neusoft.abclife.productfactory.entity.TSurvvBeneAccumIntbeIntra" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="delTSurvvBeneAccumIntbeIntra" returnType="String" accessStrategy="public">
+         <comment><![CDATA[生存金累计生息利率删除
+@return]]></comment>
+         <parameter name="tSurvvBeneAccumIntbeIntra" type="com.neusoft.abclife.productfactory.entity.TSurvvBeneAccumIntbeIntra" />
+      </method>
+      <method name="queryTLoanPayIntrate" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[贷款 自垫利率
+@param tLoanAutoPayIntrate
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tLoanAutoPayIntrate" type="com.neusoft.abclife.productfactory.entity.TLoanAutoPayIntrate" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="addUpTLoanShare" returnType="String" accessStrategy="public">
+         <comment><![CDATA[贷款 自垫 利率新增或修改
+@return]]></comment>
+         <parameter name="tLoanAutoPayIntrate" type="com.neusoft.abclife.productfactory.entity.TLoanAutoPayIntrate" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="delTLoanPayIntrate" returnType="String" accessStrategy="public">
+         <comment><![CDATA[贷款 自垫 利率删除
+@return]]></comment>
+         <parameter name="tLoanAutoPayIntrate" type="com.neusoft.abclife.productfactory.entity.TLoanAutoPayIntrate" />
+      </method>
+      <method name="queryTDividParam" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[红利参数
+@param TDividParam
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tDividParam" type="com.neusoft.abclife.productfactory.entity.TDividParam" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="addUpTDividShare" returnType="String" accessStrategy="public">
+         <comment><![CDATA[红利参数新增或修改
+@return]]></comment>
+         <parameter name="tDividParam" type="com.neusoft.abclife.productfactory.entity.TDividParam" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="delTDividShare" returnType="String" accessStrategy="public">
+         <comment><![CDATA[红利参数删除
+@return]]></comment>
+         <parameter name="tDividParam" type="com.neusoft.abclife.productfactory.entity.TDividParam" />
+      </method>
+      <method name="queryTCurrPriceIntrate" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[现价利率
+@param tLoanAutoPayIntrate
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tCurrPriceIntrate" type="com.neusoft.abclife.productfactory.entity.TCurrPriceIntrate" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="addUpTCurrShare" returnType="String" accessStrategy="public">
+         <comment><![CDATA[现价利率新增或修改
+@return]]></comment>
+         <parameter name="tCurrPriceIntrate" type="com.neusoft.abclife.productfactory.entity.TCurrPriceIntrate" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="delTCurrPriceIntrate" returnType="String" accessStrategy="public">
+         <comment><![CDATA[现价利率 删除
+@return]]></comment>
+         <parameter name="tCurrPriceIntrate" type="com.neusoft.abclife.productfactory.entity.TCurrPriceIntrate" />
+      </method>
+      <method name="saveUploadInfo" returnType="String" accessStrategy="public">
+         <comment><![CDATA[准备金因子/评估净保费——导入数据
+@return@throws IOException]]></comment>
+         <parameter name="formId4Upload" type="com.neusoft.unieap.core.common.form.Form" />
+         <parameter name="obj" type="String" />
+         <exception type="java.io.IOException" />
+      </method>
+      <method name="readXlsx" returnType="String" accessStrategy="private">
+         <comment><![CDATA[导入数据_储存
+@param obj
+ 
+@return@throws IOException
+ 
+@throws IOException]]></comment>
+         <parameter name="fileAttachment" type="com.neusoft.unieap.core.fileupload.FileAttachment" />
+         <parameter name="obj" type="String" />
+         <exception type="java.io.IOException" />
+      </method>
+      <method name="queryTReserveFundFactor" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[准备金因子_查询
+@param TReserveFundFactor
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tReserveFundFactor" type="com.neusoft.abclife.productfactory.entity.TReserveFundFactor" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="delTReserveFundFactor" returnType="int" accessStrategy="public">
+         <comment><![CDATA[准备金因子_删除
+@param TReserveFundFactor
+@return]]></comment>
+         <parameter name="tReserveFundFactor" type="com.neusoft.abclife.productfactory.entity.TReserveFundFactor" />
+      </method>
+      <method name="queryTAssessNetPrem" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[评估净保费因子_查询
+@param TAssessNetPrem
+@param pageNumber
+@param pageSize
+@return]]></comment>
+         <parameter name="tAssessNetPrem" type="com.neusoft.abclife.productfactory.entity.TAssessNetPrem" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="delTAssessNetPrem" returnType="int" accessStrategy="public">
+         <comment><![CDATA[评估净保费因子_删除
+@param TAssessNetPrem
+@return]]></comment>
+         <parameter name="tAssessNetPrem" type="com.neusoft.abclife.productfactory.entity.TAssessNetPrem" />
+      </method>
+      <method name="exportModel" returnType="java.io.File" accessStrategy="public">
+         <comment><![CDATA[模板导出]]></comment>
+         <parameter name="formId4Download" type="String" />
+      </method>
+      <method name="setServletContext" returnType="void" accessStrategy="public">
+         <parameter name="sc" type="javax.servlet.ServletContext" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+   <dc:entity class="com.neusoft.abclife.productfactory.entity.TProductParamDef" table="T_PRODUCT_PARAM_DEF" extends="com.neusoft.unieap.core.di.DomainObject">
+      <id name="productParamId" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="PRODUCT_PARAM_ID" length="16" />
+         <generator class="sequence">
+            <param name="sequence" value="SEQ_PRODUCT_PARAM_DEF" />
+         </generator>
+      </id>
+      <property name="entityId" label="实体ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="ENTITY_ID" not-null="false" length="16" />
+      </property>
+      <property name="ascribHierar" label="00-系统层 01-定价层 02-险种层 03-产品层" type="string" getStrategy="public" setStrategy="public">
+         <column name="ASCRIB_HIERAR" not-null="false" length="2" />
+      </property>
+      <property name="paramType" label="01：交费期间 02：保险期间 03：领取期间 04：交费频率" type="string" getStrategy="public" setStrategy="public">
+         <column name="PARAM_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="paramVal" label="参数值" type="java.lang.Integer" getStrategy="public" setStrategy="public">
+         <column name="PARAM_VAL" not-null="false" length="6" />
+      </property>
+      <property name="paramUnit" label="年 月 日" type="string" getStrategy="public" setStrategy="public">
+         <column name="PARAM_UNIT" not-null="false" length="6" />
+      </property>
+      <property name="isDefault" label="是否默认" type="string" getStrategy="public" setStrategy="public">
+         <column name="IS_DEFAULT" not-null="false" length="2" />
+      </property>
+      <property name="paramDesc" label="参数描述" type="string" getStrategy="public" setStrategy="public">
+         <column name="PARAM_DESC" not-null="false" length="500" />
+      </property>
+      <import value="java.io.Serializable" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.fdframework.core.annotation.Column" />
+      <import value="com.neusoft.fdframework.core.annotation.Entity" />
+      <import value="com.neusoft.fdframework.core.annotation.ID" />
+      <import value="com.neusoft.fdframework.core.annotation.Transient" />
+      <import value="com.neusoft.unieap.core.di.DomainObject" />
+   </dc:entity>
+</dc:dc>
+

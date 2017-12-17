@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="shify" />
+         <creationTime value="2014-07-03 16:07:56" />
+         <modificationTime value="2014-12-31 16:45:56" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getAllEnabledRoles" onSuccess="getAllEnabledRolesSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="role.business.xml" method="security.role.getAllEnableSysSecRoleForUnieap"></bo>
+</pMethod>
+	<dependence name="role.business.xml" ref="role.business.xml | com.neusoft.business"
+		dc="security" />
+	<pMethod name="getAllApps" onSuccess="">
+	<comment><![CDATA[]]>
+	</comment>
+	<pagingQuery pageNumber="1" pageSize="10" calcRecordCount="true"></pagingQuery>
+	<bo name="application.business.xml" method="security.application.getAllApplicationsForUniEAP"></bo>
+</pMethod>
+	<dependence name="application.business.xml"
+		ref="application.business.xml | com.neusoft.business" dc="security" />
+	<pMethod name="getAllPages" onSuccess="getAllPagesSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<pagingQuery pageNumber="1" pageSize="10" calcRecordCount="true"></pagingQuery>
+	<bo name="page.business.xml" method="security.page.getAllPageListForUniEAP"></bo>
+</pMethod>
+	<dependence name="page.business.xml" ref="page.business.xml | com.neusoft.business"
+		dc="security" />
+	<pMethod name="getAuthorizedPages" onSuccess="getAuthorizedPagesSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<pagingQuery pageNumber="1" pageSize="10" calcRecordCount="true"></pagingQuery>
+	<context>
+		<string name="id" />
+		<string name="principal" />
+	</context>
+	<arguments>
+		<argument name="id" type="string"></argument>
+		<argument name="principal" type="string"></argument>
+	</arguments>
+	<bo name="page.business.xml" method="security.page.getAuthorityPagesForUniEAP"></bo>
+</pMethod>
+	<pMethod name="saveAuthority" onSuccess="saveAuthoritySuccess" onError="saveAuthorityError">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="authority.business.xml" method="security.authority.inserRoleAuthorityForUnieap"></bo>
+<context><string name="sid" /><string name="principal" /><string name="classPath" /><pojoList name="commonList" dataStoreName="sysSecPage1" /></context><arguments><argument name="sid" type="string"></argument><argument name="principal" type="string"></argument><argument name="classPath" type="string"></argument><argument name="commonList" type="dataStore"></argument></arguments></pMethod>
+<dependence name="authority.business.xml" ref="authority.business.xml | com.neusoft.business" dc="security" /></processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="sysSecPage" dependence="sysSecPage" dc="security"
+		path="com.neusoft.fdframework.security.entity.SysSecPage" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="url" label="url" type="string" />
+			<column name="description" label="description" type="string" />
+			<column name="creationDate" label="creationDate" type="date" />
+			<column name="creator" label="creator" type="string" />
+			<column name="lastUpdateDate" label="lastUpdateDate" type="date" />
+			<column name="lastUpdator" label="lastUpdator" type="string" />
+			<column name="appId" label="appId" type="string" />
+		</columns>
+	</dataStore>
+	<dataStore name="sysSecPage1" dependence="sysSecPage" dc="security"
+		path="com.neusoft.fdframework.security.entity.SysSecPage" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="url" label="url" type="string" />
+			<column name="description" label="description" type="string" />
+			<column name="creationDate" label="creationDate" type="date" />
+			<column name="creator" label="creator" type="string" />
+			<column name="lastUpdateDate" label="lastUpdateDate" type="date" />
+			<column name="lastUpdator" label="lastUpdator" type="string" />
+			<column name="appId" label="appId" type="string" />
+		</columns>
+	</dataStore>
+	<dataStore name="sysSecRole" dependence="sysSecRole" dc="security"
+		path="com.neusoft.fdframework.security.entity.SysSecRole" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="code" label="code" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="status" label="status" type="string" />
+			<column name="remark" label="remark" type="string" />
+			<column name="timeBegin" label="timeBegin" type="date" />
+			<column name="timeEnd" label="timeEnd" type="date" />
+			<column name="creator" label="creator" type="string" />
+			<column name="creationDate" label="creationDate" type="date" />
+			<column name="lastUpdator" label="lastUpdator" type="string" />
+			<column name="lastUpdateDate" label="lastUpdateDate" type="date" />
+			<column name="delFlag" label="delFlag" type="string" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><borderLayout id="borderLayout2" showTitleBar="false" design="sidebar" height="99%"><borderPane id="borderPane2" showTitleBar="false" splitLine="false" region="top" height="30px"><button id="button1" label="保存" width="50px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="button1_onClick">
+			<function name="button1_onClick" arguments="event">
+				<script><![CDATA[var roleId = view.grid.getPropertyValue("grid1", "id");
+if(roleId != null){
+	var pageTree = unieap.byId("tree1");
+	pageTree.getCheckLogic().getSelectedItems(function(items){saveSelectedPagesForAuthority(items)});
+}
+else{
+	alert("请选择一个角色");
+}
+]]></script>
+			</function>
+		</event>
+	</events>
+</button></borderPane><borderPane id="borderPane3" showTitleBar="false" splitLine="false" region="left" width="25%"><xgrid
+	binding-store="sysSecRole" edit-editType="readonly" height="100%" id="grid1"
+	rows-rowsPerPage="10" selection-selectType="single" views-rowBar="true"
+	views-rowNumber="false" rows-defaultHeaderHeight="28"
+	rows-defaultRowHeight="28">
+	<header>
+		<row>
+			<xcell dataType="string" enable="false" id="cell_name" label="角色信息"
+				name="name" width="100%"></xcell>
+		</row>
+	</header>
+	<events>
+		<event handlerFunction="grid1_selection_onAfterSelect" name="selection-onAfterSelect">
+			<function arguments="inRowIndex" name="grid1_selection_onAfterSelect">
+				<script><![CDATA[var roleId = view.grid.getPropertyValue("grid1", "id", inRowIndex);
+//alert(roleId)
+view.processor.getAuthorizedPages(roleId, "0");]]></script>
+			</function>
+		</event>
+		<event name="views-onRowClick" handlerFunction="grid1_views_onRowClick">
+			<function name="grid1_views_onRowClick" arguments="event">
+				<script><![CDATA[var grid1 = unieap.byId("grid1");
+var inRowIndex = grid1.getRowManager().getCurrentRowIndex();
+grid1.getManager("SelectionManager").setSelect(inRowIndex, true);
+var roleId = view.grid.getPropertyValue("grid1", "id", inRowIndex);
+//alert(roleId)
+view.processor.getAuthorizedPages(roleId, "0");]]></script>
+			</function>
+		</event>
+	</events>
+</xgrid></borderPane><borderPane id="borderPane4" showTitleBar="false" splitLine="false" region="center"><tree binding-id="id" binding-label="name" binding-parent="appId" binding-query="{name:'appId',relation:'=',value:null}" binding-store="sysSecPage" checkLogic-model="cascade" id="tree1" label="" width="152px" height="199px"></tree></borderPane></borderLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[view.processor.getAllEnabledRoles();
+view.processor.getAllApps();
+view.processor.getAllPages();]]></script></function></event></events></controls>
+      <scripts ><function name="getAllEnabledRolesSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getAllEnabledRoles方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore('roles');
+//unieap.byId("grid1").getBinding().setDataStore(ds);
+view.grid.setDataStore("grid1", ds);
+]]>
+	</script>
+</function><function name="getAllPagesSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getAllPages方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dataCenter.getDataStore("page");
+var rs = ds.getRowSet();
+var sz = rs.getRowCount();
+var underApp = new Array();
+for(var i=0; i<sz; i++){
+	var data = rs.getRowData(i);
+	underApp.push(data["appId"]);
+}
+// 假装app也是page，作为parent使用:将app与page合并
+var appDs = dataCenter.getDataStore("application");
+var appRs = appDs.getRowSet();
+// 查询包含page的app，在filter缓存区中，只显示包含page的app
+if(underApp.length != 0){
+	for(var i=0; i<underApp.length;i++){
+		// 应该为‘=’，unieap的bug
+		appRs.doFilter('id','!=',underApp[i],true);
+	}
+}
+//合并pageResource与app
+var appSz = appRs.getRowCount(unieap.ds.Buffer.FILTER);
+var appArray = new Array();
+for(var i = 0; i < appSz; i++){
+	var data = appRs.getRowData(i, unieap.ds.Buffer.FILTER);
+	appArray.push(data);
+}
+rs.addRows(appArray);
+
+//ds.append(appDs,"append");
+view.tree.setDataStore("tree1", ds);
+unieap.byId("tree1").expandAllNodes();]]></script>
+</function><function name="getAuthorizedPagesSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getAuthorizedPages方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var authPagesDs = dc.getDataStore("page");
+dataCenter.addDataStore("authorizedPages", authPagesDs);
+//unieap.debug(authPagesDs)
+
+var pageTree = unieap.byId("tree1");
+// 首先清除之前所有的勾选
+pageTree.selectAll(false);
+
+// 设置page树的勾选状态
+var rs = authPagesDs.getRowSet();  
+var sz = rs.getRowCount("primary");
+for(var i = 0; i < sz; i++){
+	var id = rs.getItemValue(i,"id","primary");
+//	alert(id)
+	var node = pageTree.getNodeById(id);
+	pageTree.setChecked(node, true, true);
+}]]></script>
+</function><function name="saveSelectedPagesForAuthority"
+	arguments="items">
+	<script><![CDATA[var roleId = view.grid.getPropertyValue("grid1", "id");
+var classPath = "com.neusoft.fdframeowrk.security.page.entity.SysSecPage";
+
+var pageDs = dataCenter.getDataStore("sysSecPage1");
+var pageRs = new unieap.ds.RowSet();
+if(items != null){
+	var sz = items.length;
+	for(var i = 0; i< sz; i++){
+		//判断是否是page而不是app
+		var key = items[i].data;
+		if(key.appId != null){
+			pageRs.addRow(key, false, false);
+		}
+	}
+}
+
+pageDs.setRowSet(pageRs);
+//unieap.debug(pageDs)
+view.processor.saveAuthority(roleId, "0", classPath,pageDs);]]>
+	</script>
+	<comment><![CDATA[/**
+ * @description:
+ * 
+ * @param: {参数类型} items 参数描述 
+ * @return:
+ * 
+ */]]></comment>
+</function><function name="saveAuthoritySuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:saveAuthority方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[alert("保存成功")]]></script>
+</function><function name="saveAuthorityError" arguments="xhr">
+	<comment><![CDATA[/**
+ * @description:saveAuthority方法的失败回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[alert("保存失败");]]></script>
+</function></scripts>
+      <templateInstances>
+</templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

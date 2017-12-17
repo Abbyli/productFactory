@@ -1,0 +1,1471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="think" />
+         <creationTime value="2016-06-07 10:29:58" />
+         <modificationTime value="2016-06-07 17:39:57" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences ><dependence name="factory/risk/newNavigateButton" type="viewc" sc="ProductFactory" dc="factory" ref="risk/newNavigateButton" /></dependences>
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="addRiskBaseInfo" onSuccess="addRiskBaseInfoSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfriskdetail.business.xml" method="pfriskdetail.addRiskBaseInfo"></bo>
+		<context>
+			<pojo name="pfRiskBaseInfo" dataStoreName="pfRiskBaseinfo_form" />
+		</context>
+		<arguments>
+			<argument name="pfRiskBaseInfo" type="dataStore"></argument>
+		</arguments>
+	</pMethod>
+	<dependence name="pfriskdetail.business.xml"
+		ref="pfriskdetail.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="getRiskBaseInfoByRiskVerId" onSuccess="getRiskBaseInfoByRiskVerIdSuccess" sync="true">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfriskdetail.business.xml" method="pfriskdetail.getRiskBaseInfoByRiskVerId"></bo>
+<context><string name="riskVerId" /></context><arguments><argument name="riskVerId" type="string"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfRiskBaseinfo_form" dependence="pfRiskBaseinfo"
+		dc="factory" path="pfRiskBaseinfo.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="riskVerId" label="险种版本ID" type="string" length="32" />
+			<column name="riskCode" label="险种编码" type="string" length="32" />
+			<column name="riskName" label="险种名称" type="string" length="300" />
+			<column name="riskType" label="险种分类(01-人寿保险,02-意外险,03-健康险)"
+				type="string" length="2" />
+			<column name="designType" label="险种设计类型(01-普通,02-分红,03-万能,04-投连)"
+				type="string" length="2" />
+			<column name="accFlag" label="是否账户类型(Y-是,N-否)" type="string"
+				length="1" />
+			<column name="yearGetFlag" label="是否年金类型(Y-是,N-否)" type="string"
+				length="1" />
+			<column name="subRiskFlag" label="主附险标记(M-主险,S-附险)" type="string"
+				length="1" />
+			<column name="riskPeriod" label="期限类型(L-长期,M-短期,S-极短期)" type="string"
+				length="1" />
+			<column name="renewFlag" label="是否有续保(Y-是,N-否)" type="string"
+				length="1" />
+			<column name="expireFlag" label="是否有满期(Y-是,N-否)" type="string"
+				length="1" />
+			<column name="singleFlag" label="是否单独销售(Y-是,N-否)" type="string"
+				length="1" />
+			<column name="dutySelectFlag" label="是否允许可选责任(Y-是,N-否)" type="string"
+				length="1" />
+			<column name="evaluateFlag" label="是否通过重大风险评测(Y-是,N-否)" type="string"
+				length="1" />
+			<column name="taxFlag" label="是否应税(Y-是,N-否)" type="string"
+				length="1" />
+			<column name="riskDescription" label="险种描述" type="string"
+				length="3000" />
+			<column name="memo" label="备注" type="string" length="3000" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><borderLayout id="borderLayout1" showTitleBar="false" design="headline" splitLine="false"><borderPane id="borderPane0" showTitleBar="false" region="left" splitLine="false"><component id="component2" label="Component" comp-ref="factory/risk/newNavigateButton"/></borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><titlePane id="titlePane1" width="100%" height="100%" flexible="false" title="基本属性"><div id="div1" height="30px" type="buttons"><button
+	id="btnSave" label="保存" width="100px" class="titlePane-button">
+	<events>
+		<event name="onClick" handlerFunction="btnSave_onClick">
+			<function name="btnSave_onClick" arguments="event">
+				<script><![CDATA[if(!unieap.byId("form_baseInfo").validate(false)){
+	return;
+}
+var baseInfo = view.form.getDataStore("form_baseInfo");
+//设置 关联险种id
+baseInfo.rowSet.primary[0]["riskVerId"] = dataCenter.getParameter("riskVerId");;
+var id = baseInfo.rowSet.primary[0]["id"];
+if (id == null || id == "") {
+	view.processor.addRiskBaseInfo(baseInfo);
+	
+} else {
+	
+}
+]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><template id="template1" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    
+    
+  <form binding-store="pfRiskBaseinfo_form" id="form_baseInfo">
+    <tableLayout id="form_baseInfo_tableLayout" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="15%" />
+        <col width="30%" />
+        <col width="15%" />
+        <col width="30%" />
+        <col width="10%" />
+      </colgroup>
+      <tbody>
+        <tr id="form_baseInfo_1_tr">
+          <td align="right" id="riskCode__baseInfo_label_td" rowSpan="1">
+            <label id="riskCode__baseInfo_label" value="险种编码：" />
+          </td>
+          <td colSpan="1" id="riskCode__baseInfo_td" rowSpan="1">
+            <textBox binding-name="riskCode" id="riskCode__baseInfo" maxLength="32" readOnly="true" width="100%"></textBox>
+          </td>
+          <td align="right" id="riskName__baseInfo_label_td" rowSpan="1">
+            <label id="riskName__baseInfo_label" value="险种名称：" />
+          </td>
+          <td colSpan="1" id="riskName__baseInfo_td" rowSpan="1">
+            <textBox binding-name="riskName" id="riskName__baseInfo" maxLength="300" readOnly="true" width="100%"></textBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_baseInfo_3_tr">
+          <td align="right" id="riskType__baseInfo_label_td" rowSpan="1">
+            <label id="riskType__baseInfo_label" value="险种分类：" />
+          </td>
+          <td colSpan="1" id="riskType__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="riskType" dataProvider-store="ds_riskType" id="riskType__baseInfo" maxLength="2" popup-height="150px" required="true" width="100%"></comboBox>
+          </td>
+          <td align="right" id="designType__baseInfo_label_td" rowSpan="1">
+            <label id="designType__baseInfo_label" value="险种设计类型：" />
+          </td>
+          <td colSpan="1" id="designType__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="designType" dataProvider-store="ds_designType" id="designType__baseInfo" maxLength="2" popup-height="150px" required="true" width="100%"></comboBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_baseInfo_5_tr">
+          <td align="right" id="accFlag__baseInfo_label_td" rowSpan="1">
+            <label id="accFlag__baseInfo_label" value="是否账户类型：" />
+          </td>
+          <td colSpan="1" id="accFlag__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="accFlag" dataProvider-store="ds_yesNo" id="accFlag__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td align="right" id="yearGetFlag__baseInfo_label_td" rowSpan="1">
+            <label id="yearGetFlag__baseInfo_label" value="是否年金类型：" />
+          </td>
+          <td colSpan="1" id="yearGetFlag__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="yearGetFlag" dataProvider-store="ds_yesNo" id="yearGetFlag__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_baseInfo_7_tr">
+          <td align="right" id="subRiskFlag__baseInfo_label_td" rowSpan="1">
+            <label id="subRiskFlag__baseInfo_label" value="主附险标记：" />
+          </td>
+          <td colSpan="1" id="subRiskFlag__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="subRiskFlag" dataProvider-store="ds_subRiskFlag" id="subRiskFlag__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td align="right" id="riskPeriod__baseInfo_label_td" rowSpan="1">
+            <label id="riskPeriod__baseInfo_label" value="期限类型：" />
+          </td>
+          <td colSpan="1" id="riskPeriod__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="riskPeriod" dataProvider-store="ds_riskPeriod" id="riskPeriod__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_baseInfo_9_tr">
+          <td align="right" id="renewFlag__baseInfo_label_td" rowSpan="1">
+            <label id="renewFlag__baseInfo_label" value="是否有续保：" />
+          </td>
+          <td colSpan="1" id="renewFlag__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="renewFlag" dataProvider-store="ds_yesNo" id="renewFlag__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td align="right" id="expireFlag__baseInfo_label_td" rowSpan="1">
+            <label id="expireFlag__baseInfo_label" value="是否有满期：" />
+          </td>
+          <td colSpan="1" id="expireFlag__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="expireFlag" dataProvider-store="ds_yesNo" id="expireFlag__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_baseInfo_11_tr">
+          <td align="right" id="singleFlag__baseInfo_label_td" rowSpan="1">
+            <label id="singleFlag__baseInfo_label" value="是否单独销售：" />
+          </td>
+          <td colSpan="1" id="singleFlag__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="singleFlag" dataProvider-store="ds_yesNo" id="singleFlag__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td align="right" id="dutySelectFlag__baseInfo_label_td" rowSpan="1">
+            <label id="dutySelectFlag__baseInfo_label" value="是否允许可选责任：" />
+          </td>
+          <td colSpan="1" id="dutySelectFlag__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="dutySelectFlag" dataProvider-store="ds_yesNo" id="dutySelectFlag__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_baseInfo_13_tr">
+          <td align="right" id="evaluateFlag__baseInfo_label_td" rowSpan="1">
+            <label id="evaluateFlag__baseInfo_label" value="是否通过重大风险评测：" />
+          </td>
+          <td colSpan="1" id="evaluateFlag__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="evaluateFlag" dataProvider-store="ds_yesNo" id="evaluateFlag__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td align="right" id="taxFlag__baseInfo_label_td" rowSpan="1">
+            <label id="taxFlag__baseInfo_label" value="是否应税：" />
+          </td>
+          <td colSpan="1" id="taxFlag__baseInfo_td" rowSpan="1">
+            <comboBox binding-name="taxFlag" dataProvider-store="ds_yesNo" id="taxFlag__baseInfo" maxLength="1" popup-height="150px" width="100%"></comboBox>
+          </td>
+          <td></td>
+        </tr>
+        <tr id="form_baseInfo_15_tr">
+          <td align="right" id="riskDescription__baseInfo_label_td" rowSpan="1">
+            <label id="riskDescription__baseInfo_label" value="险种描述：" />
+          </td>
+          <td colSpan="3" id="riskDescription__baseInfo_td" rowSpan="1">
+            
+          <textarea binding-name="riskDescription" height="100px" id="riskDescription__baseInfo" maxLength="3000" width="100%"></textarea></td>
+          
+          
+          <td></td>
+        </tr>
+      <tr height="25px"><td align="right"><label id="memo__baseInfo_label" value="备注：" /></td><td colSpan="3"><textarea binding-name="memo" height="100px" id="memo__baseInfo" maxLength="3000" width="100%"></textarea></td><td></td></tr></tbody>
+    </tableLayout>
+  </form></template></titlePane></borderPane></borderLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[view.navigator.receiveData("基本属性",loadData);
+//view.navigator.onComplete("返回", loadDataBack);
+newNavigateButton.activeNavigateButton("base");
+
+function loadData(dc){
+	//险种版本id
+	dataCenter.setParameter("riskVerId", dc.getParameter('riskVerId'));
+	//险种中文名
+	dataCenter.setParameter("riskName", dc.getParameter('riskName'));
+	//险种代码
+	dataCenter.setParameter("riskCode", dc.getParameter('riskCode'));
+	//查询险种基本属性
+	view.processor.getRiskBaseInfoByRiskVerId(dc.getParameter('riskVerId'));
+	unieap.byId("riskCode__baseInfo").setValue(dc.getParameter('riskCode'));
+	unieap.byId("riskName__baseInfo").setValue(dc.getParameter('riskName'));
+	
+};
+
+//function loadDataBack(dc){
+//	var currentNode = unieap.byId("tree_entity").getCurrentNode();
+//	var data = currentNode.item.data;
+//	var entityId = data['entityid'];
+//	//type = 1,险种版本对象
+//	view.processor.queryEntityPropValue(
+//		dataCenter.getParameter("riskVerId"), entityId, '1');
+//
+//};
+
+]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[//是否
+var ds_yesNo = new unieap.ds.DataStore("ds_yesNo",[
+{CODENAME:"是",CODEVALUE:"Y"},{CODENAME:"否",CODEVALUE:"N"}]);
+dataCenter.addDataStore(ds_yesNo);
+//险种分类
+var ds_riskType = new unieap.ds.DataStore("ds_riskType",[
+{CODENAME:"人寿保险",CODEVALUE:"01"},{CODENAME:"意外险",CODEVALUE:"02"},
+{CODENAME:"健康险",CODEVALUE:"03"}]);
+dataCenter.addDataStore(ds_riskType);
+//险种设计类型
+var ds_designType = new unieap.ds.DataStore("ds_designType",[
+{CODENAME:"普通",CODEVALUE:"01"},{CODENAME:"分红",CODEVALUE:"02"},
+{CODENAME:"万能",CODEVALUE:"03"},{CODENAME:"投连",CODEVALUE:"04"}]);
+dataCenter.addDataStore(ds_designType);
+//主附险标记
+var ds_subRiskFlag = new unieap.ds.DataStore("ds_subRiskFlag",[
+{CODENAME:"主险",CODEVALUE:"M"},{CODENAME:"附险",CODEVALUE:"S"}]);
+dataCenter.addDataStore(ds_subRiskFlag);
+//期限类型
+var ds_riskPeriod = new unieap.ds.DataStore("ds_riskPeriod",[
+{CODENAME:"长期",CODEVALUE:"L"},{CODENAME:"短期",CODEVALUE:"M"},
+{CODENAME:"极短期",CODEVALUE:"S"}]);
+dataCenter.addDataStore(ds_riskPeriod);
+]]></script></function></event></events></controls>
+      <scripts ><function name="addRiskBaseInfoSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:addRiskBaseInfo方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var rtnMessage = dc.getParameter("rtnMessage");
+if(rtnMessage == ""){
+	MessageBox.autoCloseAlert({
+	    title: "提示",
+	    message: "保存成功！",
+	    type: "info",
+	    onComplete: function(){
+	    	view.processor.getRiskBaseInfoByRiskVerId(dataCenter.getParameter('riskVerId'));
+	    }
+	});
+}else{
+	MessageBox.alert({
+	    title: "提示",
+	    message: rtnMessage,
+	    type: "info"
+	});
+}
+
+]]></script>
+</function><function name="getRiskBaseInfoByRiskVerIdSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getRiskBaseInfoByRiskVerId方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds_baseinfo = dc.getDataStore("rtnRiskBaseInfo");
+view.form.setDataStore("form_baseInfo", ds_baseinfo);]]></script>
+</function></scripts>
+      <templateInstances>
+<templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form_baseInfo</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>userdef</colType>
+        <colsPropertyList>
+          <string>15</string>
+          <string>30</string>
+          <string>15</string>
+          <string>30</string>
+          <string>10</string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string>_baseInfo</string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>id</name>
+            <label>id</label>
+            <labelTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <properties/>
+            </labelTD>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>id</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>riskVerId</name>
+            <label>险种版本ID</label>
+            <labelTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <properties/>
+            </labelTD>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>riskVerId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>riskCode</name>
+            <label>险种编码：</label>
+            <labelTD>
+              <id>riskCode__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>riskCode__baseInfo_label</id>
+                <value>险种编码：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>riskCode__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>riskCode__baseInfo</id>
+                <properties/>
+                <binding__name>riskCode</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>true</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>riskName</name>
+            <label>险种名称：</label>
+            <labelTD>
+              <id>riskName__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>riskName__baseInfo_label</id>
+                <value>险种名称：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>riskName__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>riskName__baseInfo</id>
+                <properties/>
+                <binding__name>riskName</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>true</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>300</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>300</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>riskType</name>
+            <label>险种分类：</label>
+            <labelTD>
+              <id>riskType__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>riskType__baseInfo_label</id>
+                <value>险种分类：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>riskType__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>riskType__baseInfo</id>
+                <properties/>
+                <binding__name>riskType</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_riskType</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>true</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>2</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>2</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>designType</name>
+            <label>险种设计类型：</label>
+            <labelTD>
+              <id>designType__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>designType__baseInfo_label</id>
+                <value>险种设计类型：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>designType__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>designType__baseInfo</id>
+                <properties/>
+                <binding__name>designType</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_designType</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>true</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>2</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>2</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>accFlag</name>
+            <label>是否账户类型：</label>
+            <labelTD>
+              <id>accFlag__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>accFlag__baseInfo_label</id>
+                <value>是否账户类型：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>accFlag__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>accFlag__baseInfo</id>
+                <properties/>
+                <binding__name>accFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_yesNo</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>yearGetFlag</name>
+            <label>是否年金类型：</label>
+            <labelTD>
+              <id>yearGetFlag__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>yearGetFlag__baseInfo_label</id>
+                <value>是否年金类型：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>yearGetFlag__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>yearGetFlag__baseInfo</id>
+                <properties/>
+                <binding__name>yearGetFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_yesNo</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>subRiskFlag</name>
+            <label>主附险标记：</label>
+            <labelTD>
+              <id>subRiskFlag__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>subRiskFlag__baseInfo_label</id>
+                <value>主附险标记：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>subRiskFlag__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>subRiskFlag__baseInfo</id>
+                <properties/>
+                <binding__name>subRiskFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_subRiskFlag</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>riskPeriod</name>
+            <label>期限类型：</label>
+            <labelTD>
+              <id>riskPeriod__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>riskPeriod__baseInfo_label</id>
+                <value>期限类型：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>riskPeriod__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>riskPeriod__baseInfo</id>
+                <properties/>
+                <binding__name>riskPeriod</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_riskPeriod</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>renewFlag</name>
+            <label>是否有续保：</label>
+            <labelTD>
+              <id>renewFlag__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>renewFlag__baseInfo_label</id>
+                <value>是否有续保：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>renewFlag__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>renewFlag__baseInfo</id>
+                <properties/>
+                <binding__name>renewFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_yesNo</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>expireFlag</name>
+            <label>是否有满期：</label>
+            <labelTD>
+              <id>expireFlag__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>expireFlag__baseInfo_label</id>
+                <value>是否有满期：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>expireFlag__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>expireFlag__baseInfo</id>
+                <properties/>
+                <binding__name>expireFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_yesNo</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>singleFlag</name>
+            <label>是否单独销售：</label>
+            <labelTD>
+              <id>singleFlag__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>singleFlag__baseInfo_label</id>
+                <value>是否单独销售：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>singleFlag__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>singleFlag__baseInfo</id>
+                <properties/>
+                <binding__name>singleFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_yesNo</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>dutySelectFlag</name>
+            <label>是否允许可选责任：</label>
+            <labelTD>
+              <id>dutySelectFlag__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>dutySelectFlag__baseInfo_label</id>
+                <value>是否允许可选责任：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>dutySelectFlag__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>dutySelectFlag__baseInfo</id>
+                <properties/>
+                <binding__name>dutySelectFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_yesNo</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>evaluateFlag</name>
+            <label>是否通过重大风险评测：</label>
+            <labelTD>
+              <id>evaluateFlag__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>evaluateFlag__baseInfo_label</id>
+                <value>是否通过重大风险评测：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>evaluateFlag__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>evaluateFlag__baseInfo</id>
+                <properties/>
+                <binding__name>evaluateFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_yesNo</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>taxFlag</name>
+            <label>是否应税：</label>
+            <labelTD>
+              <id>taxFlag__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>taxFlag__baseInfo_label</id>
+                <value>是否应税：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>taxFlag__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>taxFlag__baseInfo</id>
+                <properties/>
+                <binding__name>taxFlag</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>ds_yesNo</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>1</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>150px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>1</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>riskDescription</name>
+            <label>险种描述：</label>
+            <labelTD>
+              <id>riskDescription__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>riskDescription__baseInfo_label</id>
+                <value>险种描述：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textarea</controlType>
+            </labelTD>
+            <controlTD>
+              <id>riskDescription__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textarea</controlType>
+                <id>riskDescription__baseInfo</id>
+                <properties/>
+                <binding__name>riskDescription</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>3000</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textarea</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>3000</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>memo</name>
+            <label>备注：</label>
+            <labelTD>
+              <id>memo__baseInfo_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>memo__baseInfo_label</id>
+                <value>备注：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textarea</controlType>
+            </labelTD>
+            <controlTD>
+              <id>memo__baseInfo_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textarea</controlType>
+                <id>memo__baseInfo</id>
+                <properties/>
+                <binding__name>memo</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>3000</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textarea</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>3000</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_baseInfo_1_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_baseInfo_3_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_baseInfo_5_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_baseInfo_7_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_baseInfo_9_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_baseInfo_11_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_baseInfo_13_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form_baseInfo_15_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <lastStore>pfRiskBaseinfo_form</lastStore>
+        <isIdChange>true</isIdChange>
+        <lastId>form_baseInfo</lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form_baseInfo_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form_baseInfo_saveButton</id>
+              <name>form_baseInfo_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form_baseInfo_resetButton</id>
+              <name>form_baseInfo_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form_baseInfo_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form_baseInfo</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <pMethodName>form_baseInfo_save</pMethodName>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form_baseInfo</id>
+        <properties/>
+        <isMerge>true</isMerge>
+        <binding__store>pfRiskBaseinfo_form</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form_baseInfo_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>8</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+</resources>
+   </dc:view>
+</dc:dc>
+

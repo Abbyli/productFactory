@@ -1,0 +1,1 @@
+ /*** @author Administrator * @creationTime 2016-10-10 10:56:32 * @modificationTime 2016-10-11 15:48:48 * @version 1.0.0* @generated */dojo.provide("_factoryabclife.riskInformation.pfRiskInfDetail.Processor");dojo.declare("_factoryabclife.riskInformation.pfRiskInfDetail.Processor",unieap.view.Processor, {});

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context-2.0.xsd  
+        http://cxf.apache.org/jaxws   
+        http://cxf.apache.org/schemas/jaxws.xsd  
+        http://cxf.apache.org/jaxrs  
+        http://cxf.apache.org/schemas/jaxrs.xsd">
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	<bean id="commonRest" class="com.neusoft.unieap.techcomp.ria.common.rest.CommonRest" scope="prototype" parent="baseProcessor">
+		<property name="resultHandler" ref="defaultResultHandler" />
+	</bean>
+	<bean id="defaultResultHandler" class="com.neusoft.unieap.techcomp.ria.common.rest.impl.EAPResultHandler">
+	</bean>
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />	
+	
+	<jaxrs:server id="restServiceContainer" address="/rest">
+		<jaxrs:serviceBeans>
+			<ref bean="commonRest" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean="jsonProvider" />
+		</jaxrs:providers>
+	</jaxrs:server>	
+	
+</beans>

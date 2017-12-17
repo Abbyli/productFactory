@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.fdframework.productfactory.blo.UploadFileService" interface="" scope="prototype">
+      <import value="java.io.File" />
+      <import value="java.io.FileOutputStream" />
+      <import value="java.io.IOException" />
+      <import value="java.io.InputStream" />
+      <import value="java.io.PrintWriter" />
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.dao.UploadFileDao" />
+      <import value="com.neusoft.fdframework.productfactory.dto.ExcelDataDto" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjAttach" />
+      <import value="com.neusoft.pf.proxy.FileManager" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.unieap.core.common.form.Form" />
+      <import value="com.neusoft.unieap.core.fileupload.FileAttachment" />
+      <dependence name="PfObjAttach" type="entity" dc="factory" ref="pfObjAttach" />
+      <method name="UploadFileService" returnType="" accessStrategy="public" />
+      <method name="getFiles" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[获得文件
+type = 1险种版本对象, type = 2 产品版本对象]]></comment>
+         <parameter name="verId" type="String" />
+         <parameter name="type" type="int" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="saveUploadInfo" returnType="void" accessStrategy="public">
+         <comment><![CDATA[上传文件]]></comment>
+         <parameter name="formId4Upload" type="com.neusoft.unieap.core.common.form.Form" />
+         <parameter name="pfObjAttach" type="com.neusoft.fdframework.productfactory.entity.PfObjAttach" />
+         <parameter name="form_excelDataDto" type="com.neusoft.fdframework.productfactory.dto.ExcelDataDto" />
+         <parameter name="grid_excelDataDto" type="java.util.List" />
+         <parameter name="riskVerId" type="String" />
+         <parameter name="arithVerId" type="String" />
+         <parameter name="rateFlag" type="int" />
+      </method>
+      <method name="delFile" returnType="int" accessStrategy="public">
+         <comment><![CDATA[删除文件]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

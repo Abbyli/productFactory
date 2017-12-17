@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	<bean id="filterChainProxy" class="com.neusoft.fdframework.security.filter.proxy.FilterChainProxy">
+		<property name="filterConfList">
+            <map>
+            	<!-- 认证请求  ,可以根据需要选择不同的认证过滤器，例如CAS方式的casAuthenticationSuccessFilter；默认是defaultAuthenticationProcessingFilter-->
+                <entry key="*login.action">
+                    <value>defaultAuthenticationProcessingFilter,ticketManagerFilter</value>
+                </entry>
+                <entry key="*logout.action">
+                    <value>logoutFilter</value>
+                </entry>
+                <entry key="[\S]*vs.action[\S]*">
+                	<value>validationCodeFilter</value>
+                </entry>
+                <entry key="*ticketValidation.action(.*)">
+                	<value>ticketValidationFilter</value>
+                </entry>
+                <entry key="*">
+                    <value>isAuthenticatedFilter,concurrentSessionFilter</value>
+                </entry>
+            </map>
+        </property>
+	</bean> 
+	<bean id="isAuthenticatedFilter" class="com.neusoft.fdframework.security.filter.IsAuthenticatedFilter">
+		<property name="loginUrl" value="/login.action"></property>
+		<property name="exclude" value=".*\.png,.*\.jpg,.*\.js,.*\.css,.*techcomp/security/pages/index\.jsp,.*login\.jsp,.*ws/.*,.*testAction.*,.*HessianServiceServlet"></property>
+		<property name="loginAddress" value="security.user.validUser,security.menu.getMenuListByAppId"></property>
+	</bean> 
+	<bean id="concurrentSessionFilter" class="com.neusoft.fdframework.security.filter.ConcurrentSessionFilter">
+		<property name="repeatLogin" value="true"></property>
+	</bean> 
+	<bean id="logoutFilter" class="com.neusoft.fdframework.security.filter.LogoutFilter">
+		<property name="logoutSuccessUrl" value="/techcomp/security/pages/index.jsp"></property>
+	</bean> 
+	<bean id="casAuthenticationSuccessFilter" class="com.neusoft.fdframework.security.authentication.cas.CasAuthenticationSuccessFilter">
+		<property name="loginSuccessUrl" value="/techcomp/w2ui/pages/main.jsp"></property>
+	</bean> 
+	<bean id="validationCodeFilter" class="com.neusoft.fdframework.security.filter.ValidationCodeFilter">
+		<property name="contentType" value="image/png"></property>
+	</bean> 
+	<bean id="defaultAuthenticationProcessingFilter" class="com.neusoft.fdframework.security.filter.DefaultAuthenticationProcessingFilter">
+		<property name="loginPageUrl" value="/techcomp/security/pages/index.jsp"></property>
+		<!-- <property name="loginSuccessUrl" value="/techcomp/w2ui/main.jsp"></property> -->
+	</bean> 
+	<bean id="ticketManagerFilter" class="com.neusoft.fdframework.security.authentication.TicketManagerFilter">
+	</bean> 
+	<bean id="ticketValidationFilter" class="com.neusoft.fdframework.security.authentication.simple.ServerTicketValidationFilter">
+		<property name="ticketName" value="ticket"></property>
+	</bean> 
+</beans>

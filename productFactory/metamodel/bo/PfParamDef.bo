@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.fdframework.productfactory.blo.PfParamDefImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfParamDefDao" />
+      <import value="com.neusoft.fdframework.productfactory.dto.TreeDTO" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfCtlgBiz" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfCtlgScene" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfParamRef" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfParamDef" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TreeDTO" type="dto" dc="factory" ref="treeDTO" />
+      <dependence name="PfCtlgBiz" type="entity" dc="factory" ref="pfCtlgBiz" />
+      <dependence name="PfCtlgScene" type="entity" dc="factory" ref="pfCtlgScene" />
+      <dependence name="PfParamRef" type="entity" dc="factory" ref="pfParamRef" />
+      <dependence name="PfParamDef" type="entity" dc="factory" ref="pfParamDef" />
+      <method name="PfParamDefImpl" returnType="" accessStrategy="public" />
+      <method name="getPfParamDefs" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[查询参数]]></comment>
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="getPfParamDefsNoPage" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询参数无分页]]></comment>
+      </method>
+      <method name="modifyPfParamDef" returnType="String" accessStrategy="public">
+         <comment><![CDATA[保存修改]]></comment>
+         <parameter name="pfParamDef" type="com.neusoft.fdframework.productfactory.entity.PfParamDef" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="delPfParamDef" returnType="String" accessStrategy="public">
+         <comment><![CDATA[删除参数]]></comment>
+         <parameter name="pfParamDef" type="com.neusoft.fdframework.productfactory.entity.PfParamDef" />
+      </method>
+      <method name="checkForDel" returnType="String" accessStrategy="public">
+         <parameter name="pfParamDef" type="com.neusoft.fdframework.productfactory.entity.PfParamDef" />
+      </method>
+      <method name="queryPfParamRefByCtlgId" returnType="String" accessStrategy="public">
+         <comment><![CDATA[由ctlgId查询参数中间表]]></comment>
+         <parameter name="ctlgId" type="String" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

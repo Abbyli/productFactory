@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.abclife.productfactory.dao.PfRiskDAOImpl" interface="">
+      <baseInfo>
+         <author value="think" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.Date" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductDefApply" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductDefApprove" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProductStatusInf" />
+      <import value="com.neusoft.abclife.util.StringUtil" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TProductDefApply" type="entity" dc="factoryabclife" ref="tProductDefApply" />
+      <dependence name="TProductDefApprove" type="entity" dc="factoryabclife" ref="tProductDefApprove" />
+      <dependence name="TProductStatusInf" type="entity" dc="factoryabclife" ref="tProductStatusInf" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfRiskDAOImpl" returnType="" accessStrategy="public" />
+      <method name="checkRisk" returnType="java.util.List" accessStrategy="public">
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="addRisk" returnType="void" accessStrategy="public">
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="updateRisk" returnType="void" accessStrategy="public">
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="queryRisk" returnType="java.util.List" accessStrategy="public">
+         <parameter name="riskCode" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="getRisksByCondition" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="submitReview" returnType="void" accessStrategy="public">
+         <parameter name="tInsurtypeBasicInf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      </method>
+      <method name="clearAcc" returnType="void" accessStrategy="public">
+         <comment><![CDATA[清空该险种下账户定义和费用定义所有信息
+@param insurtypeId]]></comment>
+         <parameter name="insurtypeId" type="Long" />
+      </method>
+      <method name="clearFee" returnType="void" accessStrategy="public">
+         <parameter name="insurtypeId" type="Long" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

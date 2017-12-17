@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="hanyongxu" />
+         <creationTime value="2014-08-12 16:36:45" />
+         <modificationTime value="2014-09-23 09:50:42" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<dependence name="application.business.xml"
+		ref="application.business.xml | com.neusoft.business" dc="security" />
+	<pMethod name="getApplicationPage" onSuccess="getApplicationPageSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			
+			<pojo name="application" dataStoreName="sysSecApplication1" /><string name="pageNumber" />
+			<string name="pageSize" />
+		</context>
+		<arguments>
+			
+			
+			
+		<argument name="application" type="dataStore"></argument><argument name="pageNumber" type="string"></argument><argument name="pageSize" type="string"></argument></arguments>
+		<bo name="application.business.xml" method="security.application.getApplicationPageForUnieap"></bo>
+	<pagingQuery pageNumber="1" pageSize="10" calcRecordCount="true"></pagingQuery></pMethod>
+	<pMethod name="changeEnabledStatus" onSuccess="changeEnabledStatusSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="application.business.xml" method="security.application.updateEnabledApplicationForUnieap"></bo>
+<context><pojoList name="applicationList" dataStoreName="sysSecApplication" /><string name="isEnabled" /></context><arguments><argument name="applicationList" type="dataStore"></argument><argument name="isEnabled" type="string"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="sysSecApplication" dependence="sysSecApplication"
+		dc="security" path="com.neusoft.fdframework.security.entity.SysSecApplication"
+		type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="appid" label="appid" type="string" />
+			<column name="delFlag" label="delFlag" type="string" />
+			<column name="isEnabled" label="isEnabled" type="string" />
+			<column name="creator" label="creator" type="string" />
+			<column name="creationDate" label="creationDate" type="date" />
+			<column name="lastUpdator" label="lastUpdator" type="string" />
+			<column name="lastUpdateDate" label="lastUpdateDate" type="date" />
+		</columns>
+	</dataStore>
+	<dataStore name="sysSecApplication1" dependence="sysSecApplication"
+		dc="security" path="com.neusoft.fdframework.security.entity.SysSecApplication"
+		type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="appid" label="appid" type="string" />
+			<column name="delFlag" label="delFlag" type="string" />
+			<column name="isEnabled" label="isEnabled" type="string" />
+			<column name="creator" label="creator" type="string" />
+			<column name="creationDate" label="creationDate" type="date" />
+			<column name="lastUpdator" label="lastUpdator" type="string" />
+			<column name="lastUpdateDate" label="lastUpdateDate" type="date" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><xdialog id="addXDialog" title="新增" width="450px"
+	height="200px" view-ref="security/application/sysSecApplicationAdd">
+	<events>
+		<event name="onComplete" handlerFunction="addXDialog_onComplete">
+			<function name="addXDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[var conditionDS = view.form.getDataStore('form1');
+//发送请求
+view.processor.getApplicationPage(conditionDS, 1, 10);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="editXDialog" title="修改" width="450px"
+	height="200px" view-ref="security/application/sysSecApplicationEdit" iconCloseComplete="true">
+	<events>
+		<event name="onComplete" handlerFunction="editXDialog_onComplete">
+			<function name="editXDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[var conditionDS = view.form.getDataStore('form1');
+//发送请求
+view.processor.getApplicationPage(conditionDS, 1, 10);]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><borderLayout id="borderLayout1" showTitleBar="false" design="headline"><borderPane id="borderPane0" showTitleBar="false"
+					splitLine="false" region="top" height="40px">
+					<tableLayout id="ToolBar1" tableLayout="fixed" width="100%"
+						height="35px">
+						<colgroup>
+							<col width="" />
+							<col width="" />
+							<col width="97px" />
+							<col width="97px" />
+							<col width="97px" />
+							<col width="97px" />
+						</colgroup>
+						<tbody>
+							<tr height="25px">
+								<td></td>
+								<td></td>
+								<td>
+									<button iconClass="buttonSepTrue" id="btnAdd" label="新增"
+	width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnAdd_onClick">
+			<function name="btnAdd_onClick" arguments="event">
+				<script><![CDATA[unieap.byId("addXDialog").show();]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+								</td>
+								<td>
+									<button iconClass="buttonSepFalse" id="btnEdit" label="修改"
+	width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnEdit_onClick">
+			<function name="btnEdit_onClick" arguments="event">
+				<script><![CDATA[var grid = unieap.byId("grid1");
+var rows = grid.getManager('SelectionManager').getSelectedRows();
+if(rows.length == 1)
+{
+	var data = view.grid.getRow("grid1");
+	var dialog = unieap.byId("editXDialog");
+	dialog.dialogData = data;
+	dialog.show();
+}
+else
+{
+	MessageBox.alert({title:'提示信息',message: '请选择一条记录！'});
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+								</td>
+								<td>
+									<button iconClass="buttonSepAdd" id="btnEnab" label="启用"
+	width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnEnab_onClick">
+			<function name="btnEnab_onClick" arguments="event">
+				<script><![CDATA[changeEnableStatus('1');]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+								</td>
+								<td>
+									<button iconClass="buttonSepSave" id="btnUnEnab" label="停用"
+	width="90px" height="25px">
+	<events>
+		<event name="onClick" handlerFunction="btnUnEnab_onClick">
+			<function name="btnUnEnab_onClick" arguments="event">
+				<script><![CDATA[changeEnableStatus('0');]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+								</td>
+							</tr>
+						</tbody>
+					</tableLayout>
+				</borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><form binding-store="sysSecApplication1" id="form1">
+						<tableLayout id="form1_tableLayout" tableLayout="fixed"
+							width="100%">
+							<colgroup>
+								<col width="15%" />
+								<col width="20%" />
+								<col width="10%" />
+								<col width="20%" />
+								<col width="35%" />
+							</colgroup>
+							<tbody>
+								<tr id="form1_1_tr" height="40px">
+									<td id="name_label_td" rowSpan="1" align="right">
+										<label id="name_label" value="应用名称(全模糊)：" />
+									</td>
+									<td colSpan="1" id="name_td" rowSpan="1">
+										<textBox binding-markDirty="false" binding-name="name"
+											id="name" width="100%"></textBox>
+									</td>
+									<td id="code_label_td" rowSpan="1" align="right">
+										<label id="code_label" value="应用编号：" />
+									</td>
+									<td colSpan="1" id="code_td" rowSpan="1">
+										<textBox binding-markDirty="false" binding-name="appid"
+											id="appid" width="100%"></textBox>
+									</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</tableLayout>
+					</form>
+					<inlineEditBox id="inlineEditBox1" width="98%" disabled="true" style="margin-left :1%;margin-right:1%;" height="5px"></inlineEditBox><template id="template1" instance="true" type="com.neusoft.unieap.queryGrid_1.0.0">
+    
+    <tableLayout id="grid1_ToolBarInfo" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="100px" />
+        <col width="100px" />
+      </colgroup>
+      <tbody>
+        <tr height="40px">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td align="center">
+            <button id="grid1_queryButton" label="查询" width="90px"
+	height="25px">
+	<events>
+		<event name="onClick" handlerFunction="grid1_queryButton_onClick">
+			<function name="grid1_queryButton_onClick" arguments="event">
+				<script><![CDATA[var form = unieap.byId('form1');
+if(form==null){
+	return;
+}
+var conditionDS = view.form.getDataStore('form1');
+dataCenter.addHeaderAttribute('getApplicationPage', 'serverExport');
+//发送请求
+view.processor.getApplicationPage(conditionDS, 1, 10);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td align="center">
+            <button id="grid1_resetButton" label="重置" width="90px"
+	height="25px">
+	<events>
+		<event name="onClick" handlerFunction="grid1_resetButton_onClick">
+			<function name="grid1_resetButton_onClick" arguments="event">
+				<script><![CDATA[unieap.byId('form1').clear();
+var form = unieap.byId('form1');
+if(form==null){
+	return;
+}
+var conditionDS = view.form.getDataStore('form1');
+dataCenter.addHeaderAttribute('getApplicationPage', 'serverExport');
+//发送请求
+view.processor.getApplicationPage(conditionDS, 1, 10);
+
+//var rows = unieap.byId("grid1").getManager("SelectionManager").getSelectedRows();
+//unieap.debug(rows);
+
+//for (var i = 0; i < rows.length; i++){
+//	var row = rows[i];
+//	
+//	//var index = row.getData["index"];
+//	var index = i ;
+//	unieap.debug(index);
+//	//alert(index) ;
+//	//var index = unieap.byId("grid1").getManager("RowManager").getCurrentRowIndex();
+//	var Ds = view.grid.getDataStore("grid1");
+//	var rowset = Ds.getRowSet();
+//	rowset.setRowSelected(index,false);
+//}
+
+
+//var dd = document.getElementsByTagName("input") ;
+//for (var i = dd.length - 1; i >= 0; i--){
+//	if (dd[i].type == "checkbox") { 
+//		dd[i].checked=false ;
+//	}
+//}
+
+
+
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+        </tr>
+      </tbody>
+    </tableLayout>
+    <titlePane flexible="false" id="grid1_titlePane_qResult" title="应用列表">
+      <xgrid binding-store="sysSecApplication" edit-editType="readonly"
+	height="308px" id="grid1" rows-rowsPerPage="10" selection-selectType="multiple"
+	views-rowBar="true" views-rowNumber="true">
+	<toolbar paging-userPageSize="false"></toolbar>
+	<header>
+		<row>
+			<xcell dataType="string" enable="false" id="cell_name" label="应用名称"
+				name="name" width="40%"></xcell>
+			<xcell dataType="string" enable="false" id="cell_appid" label="应用编号"
+				name="appid" width="40%"></xcell>
+			<xcell dataType="string" enable="false" id="cell_isEnabled"
+				label="是否启用" name="isEnabled" width="20%" decoder-store="isEnableDs"></xcell>
+		</row>
+	</header>
+	<events>
+		<event handlerFunction="grid1_binding_rpc" name="binding-rpc">
+			<function arguments="store,load" name="grid1_binding_rpc">
+				<script><![CDATA[var conditionDS = view.form.getDataStore('form1');
+//发送请求
+view.processor.getApplicationPage(conditionDS, store.getPageNumber(), store.getPageSize());]]></script>
+			</function>
+		</event>
+	</events>
+</xgrid>
+    </titlePane>
+  </template>
+					</borderPane></borderLayout><events><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[var isEnableDs = new unieap.ds.DataStore("isEnableDs",[
+	{CODENAME:'启用',CODEVALUE:'1'},
+	{CODENAME:'停用',CODEVALUE:'0'}]);
+dataCenter.addDataStore("isEnableDs", isEnableDs);]]></script></function></event><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[var conditionDS = view.form.getDataStore('form1');
+//发送请求
+view.processor.getApplicationPage(conditionDS, 1, 10);]]></script></function></event></events><dependence name="security/application/sysSecApplicationAdd" type="view" sc="fdframework" dc="security" ref="application/sysSecApplicationAdd" /><dependence name="security/application/sysSecApplicationEdit" type="view" sc="fdframework" dc="security" ref="application/sysSecApplicationEdit" /></controls>
+      <scripts ><function name="getApplicationPageSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getApplicationPage方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var result = dc.getDataStore('application');
+view.grid.setDataStore('grid1', result);]]></script>
+</function><function name="changeEnabledStatusSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:changeEnabledStatus方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[MessageBox.alert({
+	title:"提示信息",
+	message:"操作成功",
+	onComplete:function(){
+		var conditionDs = view.form.getDataStore("form1");
+		view.processor.getApplicationPage(conditionDs, 1, 10);
+	}
+});]]></script>
+</function><function name="changeEnableStatus" arguments="isEnable">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+ * @param: {参数类型} isEnable 参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var rowSet = unieap.byId("grid1").getManager("SelectionManager").getSelectedDataSet();
+var sltNum = rowSet.getRowCount();
+
+var sltDs = view.grid.getRows("grid1");
+
+if( sltNum == 0) {
+	alert("请选择记录");
+	return;
+}
+//判断选择记录是否为已经是要置成状态的记录
+if(sltNum == 1) {
+	if(rowSet.getItemValue(0, "isEnabled")  == isEnable){
+		alert("该记录已经是"+ (isEnable == 1 ? "可用" : "不可用") + "状态");
+		return ;
+	}
+}
+else {
+	for(var i=0;i<sltNum;i++)
+	{
+		if(rowSet.getItemValue(i, "isEnabled") == isEnable){
+			alert("记录中已经存在"+ (isEnable == 1 ? "可用" : "不可用") + "状态的记录");
+			return ;
+		}
+	}
+}
+view.processor.changeEnabledStatus(sltDs, isEnable);]]>
+	</script>
+</function></scripts>
+      <templateInstances ><templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>QueryGrid</functionName>
+  <description>该向导用于快速生成QueryGrid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.queryGrid_1.0.0</templateId>
+    <label>QueryGrid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成QueryGrid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>markDirty</string>
+      <boolean>false</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList/>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>false</isDataStoreChange>
+        <isIdChange>true</isIdChange>
+        <lastId></lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form1_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form1_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form1</id>
+        <properties/>
+        <isMerge>false</isMerge>
+        <markDirty>false</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form1_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>0</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>six_1320</colType>
+        <colsPropertyList>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name1</name>
+            <label>label1</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_name1</id>
+              <properties/>
+              <dataType></dataType>
+              <name>name1</name>
+              <label>label1</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name2</name>
+            <label>label2</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_name2</id>
+              <properties/>
+              <dataType></dataType>
+              <name>name2</name>
+              <label>label2</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name3</name>
+            <label>label3</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_name3</id>
+              <properties/>
+              <dataType></dataType>
+              <name>name3</name>
+              <label>label3</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid1</id>
+        <lastId></lastId>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid1_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <paging__userPageSize>[10]</paging__userPageSize>
+          <id>grid1_ToolBar</id>
+          <properties/>
+        </toolBar>
+        <isMerge>false</isMerge>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>grid1_queryButton</id>
+              <name>grid1_queryButton</name>
+              <label>查询</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>查询</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>grid1_resetButton</id>
+              <name>grid1_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid1_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>grid1</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>250px</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX></ID__PREFIX>
+        <showToolBar>true</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridHeight</string>
+      <string>250px</string>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid1</string>
+    </entry>
+    <entry>
+      <string>formId</string>
+      <string>form1</string>
+    </entry>
+    <entry>
+      <string>exportInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.ExportInfo>
+        <isMerge>true</isMerge>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.ExportInfo>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string></string>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

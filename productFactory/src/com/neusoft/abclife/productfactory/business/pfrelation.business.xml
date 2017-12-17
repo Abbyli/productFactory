@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fdframework-business xmlns="http://www.neusoft.com/fdframework/business"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<business id="pfrelation.getTRelationDef" returnkey="getTRelationDef" desc="查询通用相关性" name="">
+		<step id="1" bean="factoryabclife_pfRelationBO_bo" method="getTRelationDef" returnkey="getTRelationDef" >
+			
+		</step>
+	</business>
+	
+	
+	
+	<business id="pfrelation.saveTObjRelation" returnkey="saveTObjRelation" desc="保存对象相关性对象公式对象参数三表数据">
+		<step id="1" bean="factoryabclife_pfRelationBO_bo" method="saveTObjRelation" returnkey="saveTObjRelation">
+			<property refkey="tObjRelation" type="pojoList(com.neusoft.abclife.productfactory.entity.TObjRelation)"></property>
+			<property refkey="tobjFormula" type="pojo(com.neusoft.abclife.productfactory.entity.TObjFormula)"></property>
+			<property refkey="tObjParam" type="pojoList(com.neusoft.abclife.productfactory.entity.TObjParam)"></property>
+			<!--  tObjEntrance  add by qyt 20160716 -->
+			<property refkey="tObjEntrance" type="pojo(com.neusoft.abclife.productfactory.entity.TObjEntrance)"></property>
+		</step>
+	</business>
+	
+	<business id="pfrelation.queryTFormulaParamRef" returnkey="queryTFormulaParamRef" desc="查询公式参数表">
+		<step id="1" bean="factoryabclife_pfRelationBO_bo" method="queryTFormulaParamRef" returnkey="queryTFormulaParamRef">
+			<property refkey="id" type="long"></property>
+		</step>
+	</business>
+	
+	<business id="pfrelation.delParamFormulaRelation" returnkey="delParamFormulaRelation" desc="删除同一对象标识下的三表">
+		<step id="1" bean="factoryabclife_pfRelationBO_bo" method="delParamFormulaRelation" returnkey="delParamFormulaRelation">
+			<property refkey="objSeq" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="pfrelation.getObjParam" returnkey="getTObjParam" desc="查询对象参数" name="">
+		<step id="1" bean="factoryabclife_pfRelationBO_bo" method="getTObjParam" returnkey="getTObjParam">
+			<property refkey="tObjFormula" type="pojo(com.neusoft.abclife.productfactory.entity.TObjFormula)"></property>
+		</step>
+		
+	</business>
+	<business id="pfrelation.getTObjRelation" returnkey="getTObjRelation" desc="查询对象相关性" name="">
+		<step id="1" bean="factoryabclife_pfRelationBO_bo" method="getTObjRelation" returnkey="getTObjRelation">
+			<property refkey="tObjFormula" type="pojo(com.neusoft.abclife.productfactory.entity.TObjFormula)"></property>
+		</step>
+	</business>
+	
+	<business id="pfrelation.delTObjRelation" returnkey="" desc="删除对象相关性">
+		<step id="1" bean="factoryabclife_pfRelationBO_bo" method="delTObjRelation" returnkey="">
+			<property refkey="tObjRelation" type="pojo(com.neusoft.abclife.productfactory.entity.TObjRelation)"></property>
+		</step>
+	</business>
+	
+</fdframework-business>

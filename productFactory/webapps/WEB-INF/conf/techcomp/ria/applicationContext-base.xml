@@ -1,0 +1,141 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="queryDAO"
+		class="com.neusoft.unieap.techcomp.ria.query.dao.impl.QueryDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="queryBO"
+		class="com.neusoft.unieap.techcomp.ria.query.bo.impl.QueryBOImpl">
+		<property name="queryDAO" ref="queryDAO"></property>
+	</bean>
+
+	<bean id="advanceQueryDAO"
+		class="com.neusoft.unieap.techcomp.ria.common.query.dao.impl.QueryDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="advanceQueryBO"
+		class="com.neusoft.unieap.techcomp.ria.common.query.bo.impl.QueryBOImpl">
+		<property name="queryDAO" ref="advanceQueryDAO"></property>
+	</bean>
+
+	<!-- 定义struts中的bean -->
+	<bean id="baseEntry" class="com.neusoft.unieap.techcomp.ria.action.BaseEntry">
+		<property name="baseBO" ref="baseBO" />
+		<property name="gridIndividualBO" ref="ria_gridIndividualBO_bo"/>
+		<property name="eapCacheManager" ref="eapCacheManager"/>
+	</bean>
+
+	<bean id="baseProcessor" class="com.neusoft.unieap.techcomp.ria.action.BaseProcessor"
+		parent="baseEntry">
+	</bean>
+
+	<bean id="queryAction"
+		class="com.neusoft.unieap.techcomp.ria.common.action.QueryAction">
+		<property name="queryBO" ref="advanceQueryBO" />
+	</bean>
+
+	<bean id="traceMessageProcessor"
+		class="com.neusoft.unieap.techcomp.ria.trace.action.TraceMessageProcessor">
+	</bean>
+
+	<bean id="commonProcessor"
+		class="com.neusoft.unieap.techcomp.ria.common.action.CommonProcessor"
+		scope="prototype" parent="baseProcessor">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="csvExportAction"
+		class="com.neusoft.unieap.techcomp.ria.export.action.CsvExportAction"
+		scope="prototype">
+		<property name="serverExportMaxCount" value="-1"></property>
+	</bean>
+	<bean id="fileDownloadAction"
+		class="com.neusoft.unieap.techcomp.ria.io.download.FileDownloadAction"
+		scope="prototype">
+		<property name="richeditorBo" ref="ria_richeditorBO_bo" />
+	</bean>
+	<bean id="richEditorAction"
+		class="com.neusoft.unieap.techcomp.ria.richeditor.action.RichEditorAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="pageQueryAction"
+		class="com.neusoft.unieap.techcomp.ria.common.action.PageQueryAction"
+		scope="prototype">
+	</bean>
+
+	<bean id="richEditorConfig"
+		class="com.neusoft.unieap.techcomp.ria.richeditor.impl.RichEditorConfigImpl">
+		<property name="baseDir">
+			<value>/UserFiles/</value>
+		</property>
+		<property name="allowedExtensionsFile">
+			<value></value>
+		</property>
+		<property name="deniedExtensionsFile">
+			<value>php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi
+			</value>
+		</property>
+		<property name="allowedExtensionsImage">
+			<value>jpg|gif|jpeg|png|bmp</value>
+		</property>
+		<property name="deniedExtensionsImage">
+			<value></value>
+		</property>
+		<property name="allowedExtensionsFlash">
+			<value>swf|fla</value>
+		</property>
+		<property name="deniedExtensionsFlash">
+			<value></value>
+		</property>
+		<property name="otherProp">
+			<map>
+			</map>
+		</property>
+	</bean>
+	<bean id="richEditorUploadToServer"
+		class="com.neusoft.unieap.techcomp.ria.richeditor.impl.RichEditorUploadImpl"
+		init-method="init">
+		<property name="config" ref="richEditorConfig" />
+	</bean>
+	<bean id="richEditorUploadToDB"
+		class="com.neusoft.unieap.techcomp.ria.richeditor.impl.RichEditorUploadToDb"
+		init-method="init">
+		<property name="config" ref="richEditorConfig" />
+		<property name="richeditorBo" ref="ria_richeditorBO_bo" />
+	</bean>
+     <bean id="helpAttachmentUpload"
+		class="com.neusoft.unieap.techcomp.ria.help.richEditorAction.HelpAttachmentUpload"
+		init-method="init">
+		<property name="config" ref="richEditorConfig" />
+		<property name="helpManagerBO" ref="ria_helpManagerBO_bo" />
+	</bean>
+	<bean id="helpAttachmentDownload"
+		class="com.neusoft.unieap.techcomp.ria.help.richEditorAction.HelpAttachmentDownload"
+		scope="prototype">
+		<property name="helpManagerBO" ref="ria_helpManagerBO_bo" />
+	</bean>
+	<bean id="helpConfig" class="com.neusoft.unieap.techcomp.ria.help.helpUtil.HelpConfig">
+		<property name="order" value="2"></property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="locations">
+			<list>
+				<value>WEB-INF/conf/techcomp/ria/helpConfig.properties
+				</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="techcomp_helptip_action_helptipImage" class="com.neusoft.unieap.techcomp.ria.help.action.HelptipImageAction">
+		<property name="dao" ref="ria_helptipDAO_dao"></property>
+	</bean>
+	<bean id="gridImportValidation"
+		class="com.neusoft.unieap.techcomp.ria.gridimport.validation.impl.DefaultImportValidationImpl">
+	</bean>
+</beans>  

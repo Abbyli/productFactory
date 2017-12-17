@@ -1,0 +1,3108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="Administrator" />
+         <creationTime value="2016-10-12 13:40:23" />
+         <modificationTime value="2016-12-27 13:43:34" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences ><dependence name="factoryabclife/riskInformation/navigateButton" type="viewc" sc="ProductFactory" dc="factoryabclife" ref="riskInformation/navigateButton" /></dependences>
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getPricingLiab" onSuccess="getPricingLiabSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprestduty.business.xml" method="pfinsurtypeaccdef.getPfInsurtypePrest"></bo>
+		<context>
+			<pojo name="insurtypebasciinf" dataStoreName="tInsurtypeBasicInf_query" />
+		</context>
+		<arguments>
+			<argument name="insurtypebasciinf" type="dataStore"></argument>
+		</arguments>
+	</pMethod>
+	<dependence name="pfprestduty.business.xml"
+		ref="pfprestduty.business.xml | com.neusoft.abclife.productfactory.business"
+		dc="factoryabclife" />
+	<pMethod name="getProtecLiab" onSuccess="getProtecLiabSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprestduty.business.xml" method="pfinsurtypeaccdef.queryPriceDutyIdNoPage"></bo>
+		<context>
+			<string name="priceDutyId" />
+		</context>
+		<arguments>
+			<argument name="priceDutyId" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="getClaim" onSuccess="getClaimSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprestduty.business.xml" method="pfinsurtypeaccdef.queryClaim"></bo>
+		<context>
+			<string name="tqueryClaim" />
+		</context>
+		<arguments>
+			<argument name="tqueryClaim" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="getSurvv" onSuccess="getSurvvSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprestduty.business.xml" method="pfinsurtypeaccdef.queryTSurvvGivepayDef"></bo>
+		<context>
+			<pojo name="tProtecLiabDef" dataStoreName="tProtecLiabDef" />
+		</context>
+		<arguments>
+			<argument name="tProtecLiabDef" type="dataStore"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="getGievpayAf" onSuccess="getGievpayAfSuccess"
+		sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprestduty.business.xml" method="pfinsurtypeaccdef.queryGivePaid"></bo>
+		<context>
+			<string name="givepatId" />
+		</context>
+		<arguments>
+			<argument name="givepatId" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="getObjFormula" sync="true" onSuccess="getObjFormulaSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfprestduty.business.xml" method="pfprestduty.getTObjFormula"></bo>
+		<context>
+			<string name="id" />
+			<string name="type" />
+		</context>
+		<arguments>
+			<argument name="id" type="string"></argument>
+			<argument name="type" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="getFormula" onSuccess="getFormulaSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfformula.business.xml" method="pfformula.getFormulaPrest"></bo>
+	</pMethod>
+	<dependence name="pfformula.business.xml"
+		ref="pfformula.business.xml | com.neusoft.abclife.productfactory.business"
+		dc="factoryabclife" />
+	<pMethod name="getAllProtec" onSuccess="getAllProtecSuccess" sync="true">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfprestduty.business.xml" method="pfprestduty.getAllProtecLiab"></bo>
+</pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="tClaimGivepayDef_grid" dependence="tClaimGivepayDef"
+		dc="factoryabclife" path="tClaimGivepayDef.entity" type="entity">
+		<columns>
+			<column name="claimGivepayId" label="id" type="bigint" length="16" />
+			<column name="pricingLiabCode" label="定价责任代码" type="string"
+				length="32" />
+			<column name="protecLiabCode" label="保障责任代码" type="string"
+				length="10" />
+			<column name="claimGivepayCode" label="理赔给付代码" type="string"
+				length="30" />
+			<column name="claimGivepayName" label="理赔给付名称" type="string"
+				length="120" />
+			<column name="claimClaimPayType"
+				label="'01-身故
+02-高残
+03-重大疾病
+04-伤残
+05-豁免
+06-医疗
+07-特种疾病
+08-护理
+09-失能'
+"
+				type="string" length="2" />
+			<column name="claimSubtype"
+				label="'01-飞机
+02-火车
+03-轮船
+04-公共交通
+05-出租车
+06-市内公交车
+07-长途汽车
+08-自驾车
+09-公务车'
+"
+				type="string" length="32" />
+			<column name="protecLiabId" label="保障责任ID" type="bigint"
+				length="16" />
+			<column name="accidOccurReason" label="1疾病 2 意外 3 无关" type="string"
+				length="2" />
+			<column name="claimLiabStartDateAlgo" label="码表" type="string"
+				length="6" />
+			<column name="claimLiabEndDateAlgo" label="码表" type="string"
+				length="6" />
+			<column name="liabExempProcessActionAlgo" label="码表 拒陪后，后续如何处理"
+				type="string" length="6" />
+			<column name="indemExemptId" label="'Y-是 N-否 标注为是，免赔信息实体需要配置' "
+				type="string" length="2" />
+			<column name="obsrvperiodDays" label="以天为单位 " type="number"
+				length="22" />
+			<column name="waitPeriodDays" label="等待期天数" type="number"
+				length="22" />
+			<column name="extPeriodDays" label="延长期天数" type="number"
+				length="22" />
+		</columns>
+	</dataStore>
+	<dataStore name="tPricingLiabDef_form" dependence="tPricingLiabDef"
+		dc="factoryabclife" path="tPricingLiabDef.entity" type="entity">
+		<columns>
+			<column name="pricingLiabId" label="id" type="bigint" length="16" />
+			<column name="insurtypeId" label="险种ID" type="bigint" length="16" />
+			<column name="pricingLiabName" label="财务缴费 账户扣费 不定期追加" type="string"
+				length="120" />
+			<column name="isOpt" label="必选 可选" type="string" length="2" />
+			<column name="pricingLiabCode" label="相当与PayPlanCode" type="string"
+				length="32" />
+			<column name="suminsurAlgoId" label="保额算法ID" type="bigint"
+				length="16" />
+			<column name="premAlgoId" label="保费算法ID" type="bigint" length="16" />
+			<column name="isWaive" label="是否可豁免" type="string" length="2" />
+			<column name="calcDirection" label="P--保费算保额 G--保额算保费 A--保费保额互算 I--录入保费保额    按份数"
+				type="string" length="2" />
+			<column name="paymntEndDateCalcWay" label="01 缴费期满对应的保单周年日  默认01"
+				type="string" length="2" />
+		</columns>
+	</dataStore>
+	<dataStore name="tInsurtypeBasicInf_query" dependence="tInsurtypeBasicInf"
+		dc="factoryabclife" path="tInsurtypeBasicInf.entity" type="entity">
+		<columns>
+			<column name="insurtypeId" label="id" type="bigint" length="16" />
+			<column name="insurtypeCode" label="险种编码" type="string"
+				length="6" />
+			<column name="insurtypeName" label="险种名称" type="string"
+				length="120" />
+			<column name="verNo" label="同一时刻只有一个版本起售" type="bigint"
+				length="16" />
+			<column name="insurtypeAbbr" label="险种简称" type="string"
+				length="90" />
+			<column name="insurtypeEngName" label="险种英文名称" type="string"
+				length="120" />
+			<column name="insurtypeEngAbbr" label="险种英文简称" type="string"
+				length="90" />
+			<column name="designType" label="普通 分红 万能 投连" type="string"
+				length="2" />
+			<column name="insurtypeStatus" label="有效 无效" type="string"
+				length="2" />
+			<column name="insurtypeLevel1Cat" label="一级分类：
+人寿保险
+年金保险
+意外险
+健康险
+委托管理业务"
+				type="string" length="2" />
+			<column name="insurtypeLevel2Cat" label="险种二级分类" type="string"
+				length="2" />
+			<column name="insurtypeLevel3Cat" label="险种三级分类" type="string"
+				length="2" />
+			<column name="insurtypeLevel4Cat" label="险种四级分类" type="string"
+				length="2" />
+			<column name="insurtypeLevel5Cat" label="险种五级分类" type="string"
+				length="2" />
+			<column name="isDividendInsur" label="同一时刻只有一个版本起售" type="string"
+				length="2" />
+			<column name="isUniversalInsur" label="是否万能险" type="string"
+				length="2" />
+			<column name="isUnitLinkedInsur" label="是否投连险" type="string"
+				length="2" />
+			<column name="isTaxable" label="是否应缴税
+" type="string" length="2" />
+			<column name="isPermitSeparateSell" label="是否允许单独销售" type="string"
+				length="2" />
+			<column name="isMatureLiab" label="是否有满期责任" type="string"
+				length="2" />
+			<column name="isAccType" label="是否账户类型" type="string" length="2" />
+			<column name="isAnnuityType" label="是否年金类型" type="string"
+				length="2" />
+			<column name="isIncludeWaiveLiab" label="是否包含豁免责任" type="string"
+				length="2" />
+			<column name="mainCovRiderFlg" label="主险 附加险" type="string"
+				length="2" />
+			<column name="termType" label="长期 短期 极短期" type="string"
+				length="2" />
+			<column name="isPermitInsurRenew" label="是否允许续保" type="string"
+				length="2" />
+			<column name="isPassMaterialRiskAssess" label="是否通过重大风险评测"
+				type="string" length="2" />
+			<column name="insurtypeDesc" label="险种描述" type="string"
+				length="500" />
+		</columns>
+	</dataStore>
+	<dataStore name="tSurvvGivepayDef_grid" dependence="tSurvvGivepayDef"
+		dc="factoryabclife" path="tSurvvGivepayDef.entity" type="entity">
+		<columns>
+			<column name="survvGivepayId" label="id" type="bigint" length="16" />
+			<column name="protecLiabId" label="保障责任ID" type="bigint"
+				length="16" />
+			<column name="pricingLiabCode" label="定价责任代码" type="string"
+				length="32" />
+			<column name="protecLiabCode" label="保障责任代码" type="string"
+				length="10" />
+			<column name="survvGivepayCode" label="生存给付代码" type="string"
+				length="30" />
+			<column name="survvGivepayName" label="生存给付名称" type="string"
+				length="120" />
+			<column name="survvGivepayType" label="01-生存金 02-满期金 03-年金 "
+				type="string" length="2" />
+			<column name="bnfcryType" label="'I-受益人是被保险人 A-是投保人 N-无限制' "
+				type="string" length="2" />
+			<column name="givepayIntv" label="给付间隔" type="number" length="22" />
+			<column name="givepayIntvUnit" label="'一次发放 年 月 日'  " type="string"
+				length="10" />
+			<column name="startDrawDateCalcRef" label="01 保单生效日" type="string"
+				length="2" />
+			<column name="startDrawDateCalcWay" label="0-以计算为准 1-取计算后当月一号 2-取计算后当年一号 3-取缴费终止日期 "
+				type="string" length="2" />
+			<column name="stopDrawDateCalcRef" label="'S-起保日期对应日 B-出生日期对应日 C-参考保单选择' "
+				type="string" length="2" />
+			<column name="stopDrawDateCalcWay" label="0-以计算为准 1-取计算后当月一号 2-取计算后当年一号 3-取缴费终止日期 "
+				type="string" length="2" />
+			<column name="urgPayId" label="Y--发催收 N--不发催收 相当于是否提醒" type="string"
+				length="2" />
+			<column name="givepayMaxTimes" label="给付最大次数" type="bigint"
+				length="10" />
+			<column name="guarantGivepayId" label="Y-是 N-否 " type="string"
+				length="2" />
+			<column name="guarantGivepayPeriod" label="保证给付期间" type="bigint"
+				length="10" />
+			<column name="guarantGivepayPeriodUnit" label="'年 月 日 年龄' "
+				type="string" length="5" />
+		</columns>
+	</dataStore>
+	<dataStore name="tProtecLiabDef" dependence="tProtecLiabDef"
+		dc="factoryabclife" path="tProtecLiabDef.entity" type="entity">
+		<columns>
+			<column name="protecLiabId" label="id" type="bigint" length="16" />
+			<column name="pricingLiabId" label="定价责任ID" type="bigint"
+				length="16" />
+			<column name="protecLiabCode" label="保障责任代码" type="string"
+				length="10" />
+			<column name="protecLiabName" label="保障责任名称" type="string"
+				length="120" />
+			<column name="pricingLiabCode" label="定价责任代码" type="string"
+				length="32" />
+			<column name="protecLiabType" label="0-生存领取 1-理赔给付 " type="string"
+				length="2" />
+			<column name="bnfcryType" label="I-被保险人 A-投保人 N-无限制 默认N" type="string"
+				length="2" />
+			<column name="startPayLimit" label="超过多少钱进行赔付，是否为该含义，待确认"
+				type="number" length="22" />
+			<column name="isCorrelToAcc" label="'Y-是 N-否' " type="string"
+				length="2" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><borderLayout id="borderLayout1" showTitleBar="false" design="headline"><borderPane id="borderPane0" showTitleBar="false" splitLine="false" region="left"><component id="component1" label="Component" comp-ref="factoryabclife/riskInformation/navigateButton"/></borderPane><borderPane id="borderPane1" showTitleBar="false" splitLine="false" region="center"><titlePane id="titlePane3" flexible="false"><template id="template2" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    <form binding-store="tPricingLiabDef_form" id="form1">
+      <tableLayout id="form1_tableLayout" tableLayout="fixed" width="100%">
+        <colgroup>
+          <col width="15%" />
+          <col width="30%" />
+          <col width="15%" />
+          <col width="30%" />
+          <col width="10%" />
+        </colgroup>
+        <tbody>
+          <tr id="form1_1_tr">
+            <td id="pricingLiabCode_label_td" rowSpan="1">
+              <label id="pricingLiabCode_label" value="定价责任代码" />
+            </td>
+            <td colSpan="1" id="pricingLiabCode_td" rowSpan="1">
+              <comboBox binding-name="pricingLiabId" id="pricingLiabId"
+	maxLength="32" width="100%" decoder-displayAttr="pricingLiabCode"
+	decoder-valueAttr="pricingLiabId">
+	<events>
+		<event name="onChange" handlerFunction="pricingLiabId_onChange">
+			<function name="pricingLiabId_onChange" arguments="value">
+				<script><![CDATA[unieap.byId("grid1").getBinding().getDataStore().getRowSet().deleteAllRows();
+unieap.byId("grid2").getBinding().getDataStore().getRowSet().deleteAllRows();
+view.processor.getProtecLiab(value);
+var dsform = unieap.byId("pricingLiabId").getDataProvider().getDataStore();
+var count = dsform.getRowSet().getRowCount();
+for(var i =0;i<count;i++){
+	if(dsform.getRowSet().getRow(i).getItemValue("pricingLiabId")==value){
+	unieap.byId("pricingLiabName").setValue(dsform.getRowSet().getRow(i).getItemValue("pricingLiabName"));
+	}
+}
+]]></script>
+			</function>
+		</event>
+	</events>
+</comboBox>
+            </td>
+            <td id="pricingLiabName_label_td" rowSpan="1">
+              <label id="pricingLiabName_label" value="定价责任名称" />
+            </td>
+            <td colSpan="1" id="pricingLiabName_td" rowSpan="1">
+              <textBox binding-name="pricingLiabName" id="pricingLiabName" maxLength="120" readOnly="true" width="100%"></textBox>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </tableLayout>
+    </form>
+    
+  </template></titlePane><titlePane id="titlePane1" height="40%" width="100%" flexible="false"><template id="template1" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <grid binding-store="tClaimGivepayDef_grid" height="100%" id="grid1"
+	individual="false" rows-rowsPerPage="10" selection-selectType="none"
+	views-rowBar="false" views-rowNumber="true" views-enableTooltip="true">
+	<header>
+		<row>
+			<cell asc="1" dataType="number" decoder-displayAttr="protecLiabName"
+				decoder-store="protec" decoder-valueAttr="protecLiabId" draggable="true"
+				enable="false" height="25px" hidden="false" id="cell_protecLiabId"
+				label="保障责任名称" name="protecLiabId" width="10%"></cell>
+			<cell asc="1" dataType="string" draggable="true" enable="false"
+				height="25px" hidden="false" id="cell_protecLiabCode" label="保障责任代码"
+				name="protecLiabCode" width="10%"></cell>
+			<cell asc="1" dataType="string" draggable="true" enable="false"
+				height="25px" hidden="false" id="cell_claimGivepayName" label="理赔给付名称"
+				name="claimGivepayName" width="10%"></cell>
+			<cell asc="1" dataType="string" decoder-store="ds_payType"
+				draggable="true" enable="false" height="25px" hidden="false"
+				id="cell_claimClaimPayType" label="理赔类型" name="claimClaimPayType"
+				width="10%"></cell>
+			<cell asc="1" dataType="string" decoder-store="ds_vechicle"
+	draggable="true" enable="false" height="25px" hidden="false"
+	id="cell_claimSubtype" label="交通方式" name="claimSubtype" width="10%">
+	<events>
+	</events>
+</cell>
+			<cell asc="1" dataType="string" decoder-store="ds_reson"
+				draggable="true" enable="false" height="25px" hidden="false"
+				id="cell_accidOccurReason" label="出险原因" name="accidOccurReason"
+				width="10%"></cell>
+			<cell asc="1" dataType="string" decoder-store="ds_action"
+				draggable="true" enable="false" height="25px" hidden="false"
+				id="cell_liabExempProcessActionAlgo" label="免责处理动作"
+				name="liabExempProcessActionAlgo" width="10%"></cell>
+			<cell asc="1" dataType="number" draggable="true" enable="false"
+				height="25px" hidden="false" id="cell_waitPeriodDays" label="等待期天数"
+				name="waitPeriodDays" width="10%"></cell>
+			<cell asc="1" draggable="true" enable="false" height="25px"
+				hidden="false" id="cell_gievpayprocess" label="给付后动作" name="gievpayprocess"
+				width="20%" decoder-store="ds_actionType">
+				<events>
+					<event handlerFunction="cell_gievpayprocess_formatter" name="formatter">
+						<function arguments="inValue,inRowIndex" name="cell_gievpayprocess_formatter">
+							<script><![CDATA[var id = view.grid.getRow("grid1", inRowIndex).getRowSet().getRow(0).getItemValue("claimGivepayId");
+view.processor.getGievpayAf(id);
+return giveValue;]]></script>
+						</function>
+					</event>
+				</events>
+			</cell>
+		</row>
+	</header>
+	<events>
+		<event name="detail-getMasterDetail" handlerFunction="grid1_detail_getMasterDetail">
+			<function name="grid1_detail_getMasterDetail" arguments="inRowIndex">
+				<script><![CDATA[var data = view.grid.getRow("grid1", inRowIndex);
+
+view.processor.getObjFormula(data.getRowSet().getRow(0).getItemValue("claimGivepayId"), "D1#1");
+return view.getHtml(tObjFormula);]]></script>
+			</function>
+		</event>
+	</events>
+</grid></template></titlePane><titlePane id="titlePane2" width="100%" height="40%" flexible="false"><template id="template3" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    
+  <grid binding-store="tSurvvGivepayDef_grid" height="100%" id="grid2"
+	individual="false" rows-rowsPerPage="10" selection-selectType="none"
+	views-rowBar="false" views-rowNumber="true">
+	<header>
+		<row>
+			<cell asc="1" dataType="number" decoder-displayAttr="protecLiabName"
+				decoder-store="protec" decoder-valueAttr="protecLiabId" draggable="true"
+				enable="false" height="25px" hidden="false" id="cell_protecLiabId"
+				label="保障责任名称" name="protecLiabId" width="20%"></cell>
+			<cell asc="1" dataType="string" draggable="true" enable="false"
+				height="25px" hidden="false" id="cell_protecLiabCode" label="保障责任代码"
+				name="protecLiabCode" width="15%"></cell>
+			<cell asc="1" dataType="string" draggable="true" enable="false"
+				height="25px" hidden="false" id="cell_survvGivepayName" label="生存给付名称"
+				name="survvGivepayName" width="20%"></cell>
+			<cell asc="1" dataType="string" decoder-store="ds_survvtype"
+				draggable="true" enable="false" height="25px" hidden="false"
+				id="cell_survvGivepayType" label="生存给付类型" name="survvGivepayType"
+				width="15%"></cell>
+			<cell asc="1" dataType="number" draggable="true" enable="false"
+				height="25px" hidden="false" id="cell_givepayIntv" label="给付间隔"
+				name="givepayIntv" width="15%"></cell>
+			<cell asc="1" dataType="string" draggable="true" enable="false"
+				height="25px" hidden="false" id="cell_givepayIntvUnit" label="给付间隔单位"
+				name="givepayIntvUnit" width="15%">
+				<events>
+					<event handlerFunction="cell_givepayIntvUnit_formatter" name="formatter">
+						<function arguments="inValue,inRowIndex" name="cell_givepayIntvUnit_formatter">
+							<script><![CDATA[return "月";]]></script>
+						</function>
+					</event>
+				</events>
+			</cell>
+		</row>
+	</header>
+	<events>
+		<event handlerFunction="grid2_detail_getMasterDetail" name="detail-getMasterDetail">
+			<function arguments="inRowIndex" name="grid2_detail_getMasterDetail">
+				<script><![CDATA[var data = view.grid.getRow("grid2", inRowIndex);
+
+
+view.processor.getObjFormula(data.getRowSet().getRow(0).getItemValue("survvGivepayId"),"D1#0");
+
+return view.getHtml(tObjFormula);]]></script>
+			</function>
+		</event>
+	</events>
+</grid></template></titlePane></borderPane></borderLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[view.navigator.receiveData("保障责任信息", function(dc){
+//获取险种基本信息
+unieap.byId("grid1").getBinding().getDataStore().getRowSet().deleteAllRows();
+unieap.byId("grid2").getBinding().getDataStore().getRowSet().deleteAllRows();
+
+var tInsurtypeBasicInf=dc.getDataStore("tInsurtypeBasicInf");
+dataCenter.addDataStore("tInsurtypeBasicInf", tInsurtypeBasicInf);
+//执行翻页方法
+view.processor.getAllProtec();
+view.processor.getPricingLiab(tInsurtypeBasicInf);
+view.processor.getFormula();
+//navigateButton.showBtn(dc.getDataStore('tInsurtypeBasicInf'));
+});
+navigateButton.activeNavigateButton("get");]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[var ds= new unieap.ds.DataStore("ds_reson",[
+{CODEVALUE:"1",CODENAME:"疾病"},
+{CODEVALUE:"2",CODENAME:"意外"},
+{CODEVALUE:"3",CODENAME:"一般"}
+]);
+var ds1= new unieap.ds.DataStore("ds_exempt",[
+{CODEVALUE:"N",CODENAME:"无"},
+{CODEVALUE:"Y",CODENAME:"有"}
+]);
+var ds2= new unieap.ds.DataStore("ds_payType",[
+{CODEVALUE:"01",CODENAME:"身故"},
+{CODEVALUE:"02",CODENAME:"高残"},
+{CODEVALUE:"03",CODENAME:"重大疾病"},
+{CODEVALUE:"04",CODENAME:"伤残"},
+{CODEVALUE:"05",CODENAME:"豁免"},
+{CODEVALUE:"06",CODENAME:"医疗"},
+{CODEVALUE:"07",CODENAME:"特种疾病"},
+{CODEVALUE:"08",CODENAME:"护理"},
+{CODEVALUE:"09",CODENAME:"失能"}
+]);
+var ds3	= new unieap.ds.DataStore("ds_action",[
+{CODEVALUE:"00",CODENAME:"退保费"},
+{CODEVALUE:"11",CODENAME:"退现价"}
+]);
+var ds4= new unieap.ds.DataStore("ds_actionType",[
+{CODEVALUE:"01",CODENAME:"本险种终止"},
+{CODEVALUE:"02",CODENAME:"本责任终止"},
+{CODEVALUE:"03",CODENAME:"削减主险合同基本保额"},
+{CODEVALUE:"04",CODENAME:"险种其他责任终止"},
+{CODEVALUE:"05",CODENAME:"保单终止"},
+{CODEVALUE:"06",CODENAME:"无条件销户"},
+{CODEVALUE:"07",CODENAME:"最后一次给付销户"},
+{CODEVALUE:"08",CODENAME:"本责任继续有效"}
+]);
+
+var ds5= new unieap.ds.DataStore("ds_beginEnd",[
+{CODEVALUE:"S",CODENAME:"起保日期对应日"},
+{CODEVALUE:"B",CODENAME:"出生日期对应日"},
+{CODEVALUE:"C",CODENAME:"参考保单选择"}
+]);
+var ds6= new unieap.ds.DataStore("ds_vechicle",[
+{CODEVALUE:"01",CODENAME:"飞机"},
+{CODEVALUE:"02",CODENAME:"火车"},
+{CODEVALUE:"03",CODENAME:"轮船"},
+{CODEVALUE:"04",CODENAME:"公共交通"},
+{CODEVALUE:"05",CODENAME:"出租车"},
+{CODEVALUE:"06",CODENAME:"市内公交车"},
+{CODEVALUE:"07",CODENAME:"长途汽车"},
+{CODEVALUE:"08",CODENAME:"自驾车"},
+{CODEVALUE:"09",CODENAME:"公务车"}
+]);
+var ds7 = new unieap.ds.DataStore("ds_survvtype",[
+{CODEVALUE:"S1",CODENAME:"生存金"},
+{CODEVALUE:"S2",CODENAME:"满期金"},
+{CODEVALUE:"S3",CODENAME:"年金"}
+]);
+
+
+dataCenter.addDataStore(ds);
+dataCenter.addDataStore(ds1);
+dataCenter.addDataStore(ds2);
+dataCenter.addDataStore(ds3);
+dataCenter.addDataStore(ds4);
+dataCenter.addDataStore(ds5);
+dataCenter.addDataStore(ds6);
+dataCenter.addDataStore(ds7);]]></script></function></event></events></controls>
+      <scripts ><function name="getPricingLiabSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPricingLiab方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[unieap.byId("pricingLiabId").getDataProvider().setDataStore(dc.getDataStore("insurtyprestduty"));
+
+view.processor.getProtecLiab(dc.getDataStore("insurtyprestduty").getRowSet().getRow(0).getItemValue("pricingLiabId"));
+
+var count = dc.getDataStore("insurtyprestduty").getRowSet().getRowCount();
+if(count>0){
+	unieap.byId("pricingLiabId").setValue(dc.getDataStore("insurtyprestduty").getRowSet().getRow(0).getItemValue("pricingLiabId"));
+	unieap.byId("pricingLiabName").setValue(dc.getDataStore("insurtyprestduty").getRowSet().getRow(0).getItemValue("pricingLiabName"));
+}]]></script>
+</function><function name="getProtecLiabSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getProtecLiab方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var protec = dc.getDataStore("queryPrestResultNoPage");
+var count = protec.getRowSet().getRowCount();
+for(var i = 0;i<count;i++){
+	var type = protec.getRowSet().getRow(i).getItemValue("protecLiabType");
+	var protecId = protec.getRowSet().getRow(i).getItemValue("protecLiabId");
+	if(type=="1"){
+		view.processor.getClaim(protecId);
+	}
+	if(type=="0"){
+		var ds_protec = new unieap.ds.DataStore("ds_protec",[{
+			"protecLiabId":protecId
+		}]);
+		ds_protec.setRowSetName("com.neusoft.abclife.productfactory.entity.TProtecLiabDef");
+		view.processor.getSurvv(ds_protec);
+	}
+}]]></script>
+</function><function name="getClaimSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getClaim方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[view.grid.setDataStore("grid1", dc.getDataStore("queryClaimResult"));]]></script>
+</function><function name="getSurvvSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getSurvv方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[view.grid.setDataStore("grid2", dc.getDataStore("queryTSurvvGivepayDef"));]]></script>
+</function><function name="getGievpayAfSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getGievpayAf方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var giveAf = dc.getDataStore("queryGivePaidResult");
+var count = giveAf.getRowSet().getRowCount();
+giveValue="";
+var data = dataCenter.getDataStore("ds_actionType");
+
+if(count>0){
+	var type = giveAf.getRowSet().getRow(0).getItemValue("givepaidActionType");
+	for(var i=0;i<data.getRowSet().getRowCount();i++){
+		if(data.getRowSet().getRow(i).getItemValue("CODEVALUE")==type){
+			giveValue = data.getRowSet().getRow(i).getItemValue("CODENAME");
+		}
+	}
+	for(var i = 1;i<count;i++){
+	var types = giveAf.getRowSet().getRow(i).getItemValue("givepaidActionType");
+		for(var j=0;j<data.getRowSet().getRowCount();j++){
+			if(data.getRowSet().getRow(j).getItemValue("CODEVALUE")==types){
+				giveValue += ","+data.getRowSet().getRow(j).getItemValue("CODENAME");
+			}
+		}
+	}
+}
+]]></script>
+</function><function
+	name="getObjFormulaSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getObjFormula方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[tObjFormula = dc.getDataStore("getTObjFormula");]]></script>
+</function><function
+	name="getFormulaSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getFormula方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[D1 = dc.getDataStore("getFormulaD1");]]>
+	</script>
+</function><function
+	name="getHtml" arguments="tObjFormula">
+	<script><![CDATA[var count = tObjFormula.getRowSet().getRowCount();
+var result="<div width='100%'>";
+result+="<table width='100%' cellspacing='0'>";
+result+="<tr>";
+result+="<td width='50%' align='center'>"
+result+="条件";
+result+="</td>";
+//result+="<td width='20%' align='center'>"
+//result+="公式";
+//result+="</td>";
+result+="<td width='50%' align='center'>"
+result+="描述";
+result+="</td>";
+result+="</tr>";
+for(var i = 0;i<count;i++){
+	result+="<tr>";
+	result+="<td width='30%' align='center'>"
+	var relationContent= tObjFormula.getRowSet().getRow(i).getItemValue("relationContent");
+	if(relationContent==null){
+		result+="";
+	}else{
+		result+=relationContent;
+	}
+	result+="</td>";
+//	result+="<td width='20%' align='center'>"
+//	var formulaId=tObjFormula.getRowSet().getRow(i).getItemValue("formulaId");
+//	if(formulaId==null){
+//		result+="";
+//	}else{
+//		result+="";
+//		for(var j = 0;j<D1.getRowSet().getRowCount();j++){
+//		if(formulaId==D1.getRowSet().getRow(j).getItemValue("id")){
+//			result+=D1.getRowSet().getRow(j).getItemValue("memo");
+//			break;
+//		}
+//		}
+//	}
+//	
+//	result+="</td>";
+	result+="<td width='50%' align='center'>"
+	var description=tObjFormula.getRowSet().getRow(i).getItemValue("description");
+	if(description==null){
+		result+="";
+	}else{
+		result+=description;
+	}
+	
+	result+="</td>";
+	result+="</tr>";
+}
+
+result+="</table>";
+result+="</div>";
+
+return result;]]>
+	</script>
+<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment></function><variable name="giveValue"><script><![CDATA[""]]></script><comment><![CDATA[]]></comment></variable><variable name="tObjFormula"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><variable name="D1"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><function
+	name="getAllProtecSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getAllProtec方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[dataCenter.addDataStore("protec", dc.getDataStore("getAllProtecLiab"));]]></script>
+</function></scripts>
+      <templateInstances ><templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>false</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>tClaimGivepayDef_grid</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>claimGivepayId</name>
+            <label>id</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>claimGivepayId</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>16</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>pricingLiabCode</name>
+            <label>定价责任代码</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_pricingLiabCode</id>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>headerStyles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>canSort</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>styles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>noresize</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>tip</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>cascade_getCascadeStore</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>cascade_primary</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>asc</string>
+                  <string>1</string>
+                </entry>
+                <entry>
+                  <string>headerClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>hidden</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>decoder_displayAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>private_widget</string>
+                  <string>unieap.grid.Cell</string>
+                </entry>
+                <entry>
+                  <string>left</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>decoder_valueAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>draggable</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>top</string>
+                  <string>0</string>
+                </entry>
+              </properties>
+              <dataType>string</dataType>
+              <name>pricingLiabCode</name>
+              <label>定价责任代码</label>
+              <width>9%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_pricingLiabCode_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>protecLiabId</name>
+            <label>保障责任名称</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_protecLiabId</id>
+              <properties/>
+              <dataType>number</dataType>
+              <name>protecLiabId</name>
+              <label>保障责任名称</label>
+              <decoder__store>protec</decoder__store>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_protecLiabId_numberTextBox</id>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>16</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>protecLiabCode</name>
+            <label>保障责任代码</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_protecLiabCode</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>protecLiabCode</name>
+              <label>保障责任代码</label>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_protecLiabCode_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>10</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>claimGivepayCode</name>
+            <label>理赔给付代码</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_claimGivepayCode</id>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>headerStyles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>canSort</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>styles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>noresize</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>tip</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>cascade_getCascadeStore</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>asc</string>
+                  <string>1</string>
+                </entry>
+                <entry>
+                  <string>cascade_primary</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>headerClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>hidden</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>valueFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>decoder_displayAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>left</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>private_widget</string>
+                  <string>unieap.grid.Cell</string>
+                </entry>
+                <entry>
+                  <string>decoder_valueAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>draggable</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>top</string>
+                  <string>0</string>
+                </entry>
+              </properties>
+              <dataType>string</dataType>
+              <name>claimGivepayCode</name>
+              <label>理赔给付代码</label>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_claimGivepayCode_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>30</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>claimGivepayName</name>
+            <label>理赔给付名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_claimGivepayName</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>claimGivepayName</name>
+              <label>理赔给付名称</label>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_claimGivepayName_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>120</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>claimClaimPayType</name>
+            <label>理赔类型</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_claimClaimPayType</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>claimClaimPayType</name>
+              <label>理赔类型</label>
+              <decoder__store>ds_payType</decoder__store>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_claimClaimPayType_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>claimSubtype</name>
+            <label>交通方式</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_claimSubtype</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>claimSubtype</name>
+              <label>交通方式</label>
+              <decoder__store>ds_vechicle</decoder__store>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_claimSubtype_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>accidOccurReason</name>
+            <label>出险原因</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_accidOccurReason</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>accidOccurReason</name>
+              <label>出险原因</label>
+              <decoder__store>ds_reson</decoder__store>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_accidOccurReason_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>claimLiabStartDateAlgo</name>
+            <label>码表</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>claimLiabStartDateAlgo</name>
+              <label>码表</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>6</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>claimLiabEndDateAlgo</name>
+            <label>码表</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>claimLiabEndDateAlgo</name>
+              <label>码表</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>6</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>liabExempProcessActionAlgo</name>
+            <label>免责处理动作</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_liabExempProcessActionAlgo</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>liabExempProcessActionAlgo</name>
+              <label>免责处理动作</label>
+              <decoder__store>ds_action</decoder__store>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_liabExempProcessActionAlgo_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>6</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>indemExemptId</name>
+            <label>&apos;Y-是 N-否 标注为是，免赔信息实体需要配置&apos; </label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>indemExemptId</name>
+              <label>&apos;Y-是 N-否 标注为是，免赔信息实体需要配置&apos; </label>
+              <decoder__store>INDEM_EXEMPT_ID</decoder__store>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>comboBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>comboBox</controlType>
+                <dataProvider__store>INDEM_EXEMPT_ID</dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>obsrvperiodDays</name>
+            <label>以天为单位 </label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>obsrvperiodDays</name>
+              <label>以天为单位 </label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>22</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>waitPeriodDays</name>
+            <label>等待期天数</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_waitPeriodDays</id>
+              <properties/>
+              <dataType>number</dataType>
+              <name>waitPeriodDays</name>
+              <label>等待期天数</label>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_waitPeriodDays_numberTextBox</id>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>22</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>gievpayprocess</name>
+            <label>给付后动作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_gievpayprocess</id>
+              <properties/>
+              <name>gievpayprocess</name>
+              <label>给付后动作</label>
+              <width>20%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+              <enable>false</enable>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>extPeriodDays</name>
+            <label>延长期天数</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>extPeriodDays</name>
+              <label>延长期天数</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>22</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>tClaimGivepayDef_grid</binding__store>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid1</id>
+        <lastId>grid1</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>tClaimGivepayDef_grid</name>
+            <entityClass>TClaimGivepayDef</entityClass>
+            <dc>factoryabclife</dc>
+            <type>entity</type>
+            <dependence>tClaimGivepayDef</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid1_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <paging__userPageSize>false</paging__userPageSize>
+          <id>grid1_ToolBar</id>
+          <export__options></export__options>
+          <innerButtons></innerButtons>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>grid1_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid1_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX></ID__PREFIX>
+        <showToolBar>false</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid1</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance><templateInstance target="template2"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form1</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>userdef</colType>
+        <colsPropertyList>
+          <string>15</string>
+          <string>30</string>
+          <string>15</string>
+          <string>30</string>
+          <string>10</string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>pricingLiabId</name>
+            <label>id</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>numberTextBox</controlType>
+                <properties/>
+                <binding__name>pricingLiabId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>16</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>bigint</type>
+            <length>16</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>insurtypeId</name>
+            <label>险种ID</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <properties/>
+                <binding__name>insurtypeId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>INSURTYPE_ID</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>16</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>bigint</type>
+            <length>16</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>pricingLiabCode</name>
+            <label>定价责任代码</label>
+            <labelTD>
+              <id>pricingLiabCode_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>pricingLiabCode_label</id>
+                <value>定价责任代码</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>pricingLiabCode_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>pricingLiabCode</id>
+                <properties/>
+                <binding__name>pricingLiabCode</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>32</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>32</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>pricingLiabName</name>
+            <label>定价责任名称</label>
+            <labelTD>
+              <id>pricingLiabName_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>pricingLiabName_label</id>
+                <value>定价责任名称</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>pricingLiabName_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>pricingLiabName</id>
+                <properties/>
+                <binding__name>pricingLiabName</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>true</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>120</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>120</length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>true</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>isOpt</name>
+            <label>必选 可选</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>isOpt</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>2</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>2</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>suminsurAlgoId</name>
+            <label>保额算法ID</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>numberTextBox</controlType>
+                <properties/>
+                <binding__name>suminsurAlgoId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>16</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>bigint</type>
+            <length>16</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>premAlgoId</name>
+            <label>保费算法ID</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>numberTextBox</controlType>
+                <properties/>
+                <binding__name>premAlgoId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>16</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>bigint</type>
+            <length>16</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>isWaive</name>
+            <label>是否可豁免</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>isWaive</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>2</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>2</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>calcDirection</name>
+            <label>P--保费算保额 G--保额算保费 A--保费保额互算 I--录入保费保额    按份数</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>calcDirection</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>2</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>2</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>paymntEndDateCalcWay</name>
+            <label>01 缴费期满对应的保单周年日  默认01</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>paymntEndDateCalcWay</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <maxLength>2</maxLength>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length>2</length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_1_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <isIdChange>true</isIdChange>
+        <lastId></lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form1_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_saveButton</id>
+              <name>form1_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_resetButton</id>
+              <name>form1_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form1_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form1</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form1</id>
+        <properties/>
+        <isMerge>false</isMerge>
+        <binding__store>tPricingLiabDef_form</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form1_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>1</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance><templateInstance target="template3"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>false</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>tSurvvGivepayDef_grid</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>survvGivepayId</name>
+            <label>id</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>survvGivepayId</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>16</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>protecLiabId</name>
+            <label>保障责任名称</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_protecLiabId</id>
+              <properties/>
+              <dataType>number</dataType>
+              <name>protecLiabId</name>
+              <label>保障责任名称</label>
+              <decoder__store>protec</decoder__store>
+              <width>20%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_protecLiabId_numberTextBox</id>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>16</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>pricingLiabCode</name>
+            <label>定价责任代码</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>pricingLiabCode</name>
+              <label>定价责任代码</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>32</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>protecLiabCode</name>
+            <label>保障责任代码</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_protecLiabCode</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>protecLiabCode</name>
+              <label>保障责任代码</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_protecLiabCode_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>10</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>survvGivepayName</name>
+            <label>生存给付名称</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_survvGivepayName</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>survvGivepayName</name>
+              <label>生存给付名称</label>
+              <width>20%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_survvGivepayName_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>120</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>survvGivepayCode</name>
+            <label>生存给付代码</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_survvGivepayCode</id>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>headerStyles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>canSort</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>styles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>noresize</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>tip</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>cascade_getCascadeStore</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>cascade_primary</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>asc</string>
+                  <string>1</string>
+                </entry>
+                <entry>
+                  <string>headerClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>hidden</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>decoder_displayAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>private_widget</string>
+                  <string>unieap.grid.Cell</string>
+                </entry>
+                <entry>
+                  <string>left</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>decoder_valueAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>draggable</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>top</string>
+                  <string>0</string>
+                </entry>
+              </properties>
+              <dataType>string</dataType>
+              <name>survvGivepayCode</name>
+              <label>生存给付代码</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_survvGivepayCode_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>30</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>survvGivepayType</name>
+            <label>生存给付类型</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_survvGivepayType</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>survvGivepayType</name>
+              <label>生存给付类型</label>
+              <decoder__store>ds_survvtype</decoder__store>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_survvGivepayType_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>bnfcryType</name>
+            <label>&apos;I-受益人是被保险人 A-是投保人 N-无限制&apos; </label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>bnfcryType</name>
+              <label>&apos;I-受益人是被保险人 A-是投保人 N-无限制&apos; </label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>givepayIntv</name>
+            <label>给付间隔</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_givepayIntv</id>
+              <properties/>
+              <dataType>number</dataType>
+              <name>givepayIntv</name>
+              <label>给付间隔</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_givepayIntv_numberTextBox</id>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>22</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>givepayIntvUnit</name>
+            <label>给付间隔单位</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_givepayIntvUnit</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>givepayIntvUnit</name>
+              <label>给付间隔单位</label>
+              <width>15%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <enable>false</enable>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_givepayIntvUnit_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>10</length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>control</name>
+            <label>操作</label>
+            <type></type>
+            <isFake>true</isFake>
+            <cell>
+              <id>cell_control</id>
+              <properties>
+                <entry>
+                  <string>private_tag</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>events</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>headerStyles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>displayFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>valueFormatter_dataFormat</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>tip</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>parentId</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>private_label</string>
+                  <string>Cell</string>
+                </entry>
+                <entry>
+                  <string>cascade_getCascadeStore</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>style</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>decoder_displayAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>left</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>private_widget</string>
+                  <string>unieap.grid.Cell</string>
+                </entry>
+                <entry>
+                  <string>top</string>
+                  <string>0</string>
+                </entry>
+                <entry>
+                  <string>styles</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>canSort</string>
+                  <string>true</string>
+                </entry>
+                <entry>
+                  <string>class</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>noresize</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>asc</string>
+                  <string>1</string>
+                </entry>
+                <entry>
+                  <string>cascade_primary</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>hidden</string>
+                  <string>false</string>
+                </entry>
+                <entry>
+                  <string>valueFormatter_declaredClass</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>decoder_valueAttr</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>draggable</string>
+                  <string>true</string>
+                </entry>
+              </properties>
+              <name>control</name>
+              <label>操作</label>
+              <width>10%</width>
+              <height>25px</height>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor></editor>
+              <enable>false</enable>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>startDrawDateCalcRef</name>
+            <label>01 保单生效日</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>startDrawDateCalcRef</name>
+              <label>01 保单生效日</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>startDrawDateCalcWay</name>
+            <label>0-以计算为准 1-取计算后当月一号 2-取计算后当年一号 3-取缴费终止日期 </label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>startDrawDateCalcWay</name>
+              <label>0-以计算为准 1-取计算后当月一号 2-取计算后当年一号 3-取缴费终止日期 </label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>stopDrawDateCalcRef</name>
+            <label>&apos;S-起保日期对应日 B-出生日期对应日 C-参考保单选择&apos; </label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>stopDrawDateCalcRef</name>
+              <label>&apos;S-起保日期对应日 B-出生日期对应日 C-参考保单选择&apos; </label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>stopDrawDateCalcWay</name>
+            <label>0-以计算为准 1-取计算后当月一号 2-取计算后当年一号 3-取缴费终止日期 </label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>stopDrawDateCalcWay</name>
+              <label>0-以计算为准 1-取计算后当月一号 2-取计算后当年一号 3-取缴费终止日期 </label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>urgPayId</name>
+            <label>Y--发催收 N--不发催收 相当于是否提醒</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>urgPayId</name>
+              <label>Y--发催收 N--不发催收 相当于是否提醒</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>givepayMaxTimes</name>
+            <label>给付最大次数</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>givepayMaxTimes</name>
+              <label>给付最大次数</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>10</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>guarantGivepayId</name>
+            <label>Y-是 N-否 </label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>guarantGivepayId</name>
+              <label>Y-是 N-否 </label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>2</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>guarantGivepayPeriod</name>
+            <label>保证给付期间</label>
+            <type>number</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>guarantGivepayPeriod</name>
+              <label>保证给付期间</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>10</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>guarantGivepayPeriodUnit</name>
+            <label>&apos;年 月 日 年龄&apos; </label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>guarantGivepayPeriodUnit</name>
+              <label>&apos;年 月 日 年龄&apos; </label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length>5</length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>tSurvvGivepayDef_grid</binding__store>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid2</id>
+        <lastId>grid2</lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>tClaimGivepayDef_grid</name>
+            <entityClass>TClaimGivepayDef</entityClass>
+            <dc>factoryabclife</dc>
+            <type>entity</type>
+            <dependence>tClaimGivepayDef</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>tPricingLiabDef_form</name>
+            <entityClass>TPricingLiabDef</entityClass>
+            <dc>factoryabclife</dc>
+            <type>entity</type>
+            <dependence>tPricingLiabDef</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>tInsurtypeBasicInf_query</name>
+            <entityClass>TInsurtypeBasicInf</entityClass>
+            <dc>factoryabclife</dc>
+            <type>entity</type>
+            <dependence>tInsurtypeBasicInf</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>tSurvvGivepayDef_grid</name>
+            <entityClass>TSurvvGivepayDef</entityClass>
+            <dc>factoryabclife</dc>
+            <type>entity</type>
+            <dependence>tSurvvGivepayDef</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid2_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <id>grid2_ToolBar</id>
+          <properties/>
+        </toolBar>
+        <isMerge>true</isMerge>
+        <pMethodName>grid1_query</pMethodName>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid2_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <scripts></scripts>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX></ID__PREFIX>
+        <showToolBar>false</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid2</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

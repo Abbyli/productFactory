@@ -1,0 +1,16 @@
+﻿insert into t_formula_param_ref (ID, FORMULA_ID, NAME, PROPERTY, PARAM_TYPE, RETURN_TYPE, RETURN_TYPE_CLASS, REF_VALUE)
+values (219, 27, '单位保额(保费)', 'amntPremUnit', '2', 'number', '', 'Bom.amntPremUnit');
+
+update t_formula_def set expression = 'mult*amntPremUnit/1000*getAmntRate(''${pricingLiabCode}'',''${riskVer}'',''${unit}'')',memo='份数*每份保费/1000*费率' 
+where id=27;
+
+delete from t_formula_param_ref where formula_id in (select a.id from t_formula_def a where algo_type is null);
+delete from t_formula_def where algo_type is null;
+
+delete from t_formula_def where id=66;
+delete from t_formula_param_ref where formula_id=66;
+
+update t_formula_def set memo='份数*每份保额/1000*费率*交费因子' where id=72;
+update t_formula_def set memo='份数*每份保额/1000*费率' where id=47;
+update t_formula_def set memo='份数*每份保费' where id=28;
+update t_formula_def set memo='份数*每份保额' where id=55;

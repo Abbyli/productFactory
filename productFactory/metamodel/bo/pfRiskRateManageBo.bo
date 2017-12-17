@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.abclife.productfactory.blo.PfRiskRateManageBoImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="think" />
+      </baseInfo>
+      <import value="java.io.File" />
+      <import value="java.io.FileNotFoundException" />
+      <import value="java.io.FileOutputStream" />
+      <import value="java.io.IOException" />
+      <import value="java.io.InputStream" />
+      <import value="java.util.List" />
+      <import value="javax.annotation.Resource" />
+      <import value="javax.servlet.ServletContext" />
+      <import value="org.apache.poi.hssf.util.HSSFColor" />
+      <import value="org.apache.poi.ss.usermodel.Cell" />
+      <import value="org.apache.poi.ss.usermodel.CellStyle" />
+      <import value="org.apache.poi.ss.usermodel.Font" />
+      <import value="org.apache.poi.ss.usermodel.Row" />
+      <import value="org.apache.poi.ss.usermodel.Sheet" />
+      <import value="org.apache.poi.ss.usermodel.Workbook" />
+      <import value="org.apache.poi.xssf.streaming.SXSSFWorkbook" />
+      <import value="org.slf4j.Logger" />
+      <import value="org.slf4j.LoggerFactory" />
+      <import value="org.springframework.jdbc.support.rowset.SqlRowSet" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="org.springframework.web.context.ServletContextAware" />
+      <import value="com.neusoft.abclife.productfactory.dao.PfRiskRateManageDaoImpl" />
+      <import value="com.neusoft.abclife.productfactory.entity.TDimensionDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjRateDimenRef" />
+      <import value="com.neusoft.abclife.util.Excel2007Reader" />
+      <import value="com.neusoft.fdframework.core.exception.CoreException" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.unieap.core.common.form.Form" />
+      <import value="com.neusoft.unieap.core.fileupload.FileAttachment" />
+      <dependence name="TDimensionDef" type="entity" dc="factoryabclife" ref="tDimensionDef" />
+      <dependence name="TObjRate" type="entity" dc="factoryabclife" ref="tObjRate" />
+      <dependence name="TObjRateDimenRef" type="entity" dc="factoryabclife" ref="tObjRateDimenRef" />
+      <dependence name="pfRiskRateManageDaoImpl" type="dao" dc="factoryabclife" ref="pfRiskRateManageDao" />
+      <method name="PfRiskRateManageBoImpl" returnType="" accessStrategy="public" />
+      <method name="queryRiskRateById" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询对象费率表]]></comment>
+         <parameter name="insurtypeCode" type="String" />
+         <parameter name="verNo" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+      </method>
+      <method name="queryTDimensionDefs1" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询维度表 精确]]></comment>
+         <parameter name="rateType" type="String" />
+      </method>
+      <method name="queryTDimensionDefs2" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询维度表 范围]]></comment>
+         <parameter name="rateType" type="String" />
+      </method>
+      <method name="saveRiskRate" returnType="String" accessStrategy="public">
+         <comment><![CDATA[保存对象费率表,对象费率表维度表]]></comment>
+         <parameter name="insurtypeCode" type="String" />
+         <parameter name="verNo" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="rateType" type="String" />
+         <parameter name="conditionCol" type="java.util.List" />
+         <parameter name="opt" type="String" />
+      </method>
+      <method name="createTableSQL" returnType="String" accessStrategy="private">
+         <comment><![CDATA[生成sql语句]]></comment>
+         <parameter name="conditionCol" type="java.util.List" />
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="checkRiskRate" returnType="String" accessStrategy="public">
+         <comment><![CDATA[校验对象费率表]]></comment>
+         <parameter name="insurtypeCode" type="String" />
+         <parameter name="verNo" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="rateType" type="String" />
+      </method>
+      <method name="delRiskRate" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除对象费率表,对象费率表维度表]]></comment>
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="exportModel" returnType="java.io.File" accessStrategy="public">
+         <comment><![CDATA[模板导出]]></comment>
+         <parameter name="formId4Download" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="getStyle" returnType="org.apache.poi.ss.usermodel.CellStyle" accessStrategy="private">
+         <comment><![CDATA[设置cell格式]]></comment>
+         <parameter name="workbook" type="org.apache.poi.ss.usermodel.Workbook" />
+      </method>
+      <method name="saveFileUpload" returnType="void" accessStrategy="public">
+         <comment><![CDATA[上传费率
+@throws InterruptedException]]></comment>
+         <parameter name="formId4Upload" type="com.neusoft.unieap.core.common.form.Form" />
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+         <exception type="Exception" />
+      </method>
+      <method name="doubleOrInt" returnType="String" accessStrategy="public">
+         <comment><![CDATA[区分 1和1.0]]></comment>
+         <parameter name="d" type="Double" />
+      </method>
+      <method name="insertTableSQL" returnType="String" accessStrategy="private">
+         <comment><![CDATA[生成sql语句]]></comment>
+         <parameter name="conditionCol" type="java.util.List" />
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="setServletContext" returnType="void" accessStrategy="public">
+         <parameter name="sc" type="javax.servlet.ServletContext" />
+      </method>
+      <method name="exportRateTable" returnType="java.io.File" accessStrategy="public">
+         <comment><![CDATA[下载精算数据
+@param formId4Download
+@return]]></comment>
+         <parameter name="formId4Download" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

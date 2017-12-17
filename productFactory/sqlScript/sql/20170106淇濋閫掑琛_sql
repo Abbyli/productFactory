@@ -1,0 +1,50 @@
+-- Create table
+create table T_SUMINSUR_INCREM
+(
+  ID             NUMBER(16) not null,
+  INSURTYPE_ID   NUMBER(16),
+  INSURTYPE_CODE VARCHAR2(6),
+  LIAB_CODE      VARCHAR2(6),
+  INCREM_WAY     VARCHAR2(2),
+  INCREM_FREQ    VARCHAR2(2),
+  INCREM_PROPOR  NUMBER(10,6)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255;
+-- Add comments to the table 
+comment on table T_SUMINSUR_INCREM
+  is '保额递增表';
+-- Add comments to the columns 
+comment on column T_SUMINSUR_INCREM.ID
+  is '主键';
+comment on column T_SUMINSUR_INCREM.INSURTYPE_ID
+  is '险种主键';
+comment on column T_SUMINSUR_INCREM.INSURTYPE_CODE
+  is '险种代码';
+comment on column T_SUMINSUR_INCREM.LIAB_CODE
+  is '责任代码';
+comment on column T_SUMINSUR_INCREM.INCREM_WAY
+  is '递增方式 1-期间内 2-续期';
+comment on column T_SUMINSUR_INCREM.INCREM_FREQ
+  is '递增频率 （几年一增）';
+comment on column T_SUMINSUR_INCREM.INCREM_PROPOR
+  is '递增比例';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_SUMINSUR_INCREM
+  add primary key (ID)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+
+
+-- Create sequence 
+create sequence SEQ_suminsur_increm
+minvalue 1
+maxvalue 99999999999999
+start with 1
+increment by 1
+cache 20;

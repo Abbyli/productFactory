@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.abclife.productfactory.dao.PfRiskRateManageDaoImpl" interface="">
+      <baseInfo>
+         <author value="think" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.List" />
+      <import value="org.springframework.jdbc.support.rowset.SqlRowSet" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.abclife.productfactory.entity.TDimensionDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjRateDimenRef" />
+      <import value="com.neusoft.abclife.util.excelUpload" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TDimensionDef" type="entity" dc="factoryabclife" ref="tDimensionDef" />
+      <dependence name="TObjRate" type="entity" dc="factoryabclife" ref="tObjRate" />
+      <dependence name="TObjRateDimenRef" type="entity" dc="factoryabclife" ref="tObjRateDimenRef" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfRiskRateManageDaoImpl" returnType="" accessStrategy="public" />
+      <method name="queryRiskRateById" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询对象费率表]]></comment>
+         <parameter name="insurtypeCode" type="String" />
+         <parameter name="verNo" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+      </method>
+      <method name="queryRiskRateDimenRefById" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询对象费率表 维度数据]]></comment>
+         <parameter name="objRateId" type="String" />
+      </method>
+      <method name="queryTDimensionDefs" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询维度表]]></comment>
+         <parameter name="rateType" type="String" />
+         <parameter name="matchFlag" type="String" />
+      </method>
+      <method name="checkRiskRate" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[校验对象费率表]]></comment>
+         <parameter name="insurtypeCode" type="String" />
+         <parameter name="verNo" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="rateType" type="String" />
+      </method>
+      <method name="saveTObjRate" returnType="void" accessStrategy="public">
+         <comment><![CDATA[保存对象费率表]]></comment>
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="delTObjRate" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除对象费率表]]></comment>
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="saveTObjRateDimenRef" returnType="void" accessStrategy="public">
+         <comment><![CDATA[保存对象费率表维度表]]></comment>
+         <parameter name="conditionCol" type="java.util.List" />
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="delTObjRateDimenRef" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除对象费率表维度表]]></comment>
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="saveTable" returnType="void" accessStrategy="public">
+         <comment><![CDATA[创建表]]></comment>
+         <parameter name="sql" type="String" />
+      </method>
+      <method name="delTable" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除表]]></comment>
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="delTableDatas" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除表数据]]></comment>
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="saveTableDatas" returnType="void" accessStrategy="public">
+         <comment><![CDATA[插入表数据  旧]]></comment>
+         <parameter name="sql" type="String" />
+         <parameter name="insertList" type="java.util.List" />
+      </method>
+      <method name="saveTableDatasBatch" returnType="void" accessStrategy="public">
+         <comment><![CDATA[插入表数据 新 20161215]]></comment>
+         <parameter name="sql" type="String" />
+         <parameter name="insertList" type="java.util.List" />
+      </method>
+      <method name="getRateTable" returnType="org.springframework.jdbc.support.rowset.SqlRowSet" accessStrategy="public">
+         <comment><![CDATA[查询精算数据表信息
+@param tableName
+@return]]></comment>
+         <parameter name="tableName" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

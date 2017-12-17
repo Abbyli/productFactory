@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.abclife.productfactory.blo.WebServiceCoreBoImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="think" />
+      </baseInfo>
+      <import value="java.io.Serializable" />
+      <import value="java.math.BigDecimal" />
+      <import value="java.math.RoundingMode" />
+      <import value="java.text.ParseException" />
+      <import value="java.text.SimpleDateFormat" />
+      <import value="java.util.Calendar" />
+      <import value="java.util.Date" />
+      <import value="java.util.GregorianCalendar" />
+      <import value="java.util.HashMap" />
+      <import value="java.util.List" />
+      <import value="java.util.Map" />
+      <import value="java.util.Set" />
+      <import value="java.util.Map.Entry" />
+      <import value="java.util.regex.Matcher" />
+      <import value="java.util.regex.Pattern" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.slf4j.Logger" />
+      <import value="org.slf4j.LoggerFactory" />
+      <import value="org.springframework.expression.ExpressionParser" />
+      <import value="org.springframework.expression.spel.standard.SpelExpressionParser" />
+      <import value="org.springframework.expression.spel.support.StandardEvaluationContext" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.abclife.productfactory.dao.WebServiceCoreDaoImpl" />
+      <import value="com.neusoft.abclife.productfactory.entity.PfDynamicBean" />
+      <import value="com.neusoft.abclife.productfactory.entity.TFormulaDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TFormulaParamRef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjEntrance" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjEntranceCombine" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjFormula" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjParam" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjRelation" />
+      <import value="com.neusoft.abclife.productfactory.entity.TRelationDef" />
+      <import value="com.neusoft.abclife.util.PfIndicatorContextHolder" />
+      <import value="com.neusoft.fdframework.arithmetic.engine.job.commons.Util" />
+      <import value="com.neusoft.fdframework.arithmetic.engine.job.expressions.Context" />
+      <import value="com.neusoft.fdframework.arithmetic.engine.job.expressions.ExpressionInterpreter" />
+      <import value="com.neusoft.fdframework.arithmetic.engine.job.models.TypeConverter" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TFormulaDef" type="entity" dc="factoryabclife" ref="tFormulaDef" />
+      <dependence name="TFormulaParamRef" type="entity" dc="factoryabclife" ref="tFormulaParamRef" />
+      <dependence name="TObjEntrance" type="entity" dc="factoryabclife" ref="tObjEntrance" />
+      <dependence name="TObjEntranceCombine" type="entity" dc="factoryabclife" ref="tObjEntranceCombine" />
+      <dependence name="TObjFormula" type="entity" dc="factoryabclife" ref="tObjFormula" />
+      <dependence name="TObjParam" type="entity" dc="factoryabclife" ref="tObjParam" />
+      <dependence name="TObjRelation" type="entity" dc="factoryabclife" ref="tObjRelation" />
+      <dependence name="TRelationDef" type="entity" dc="factoryabclife" ref="tRelationDef" />
+      <dependence name="webServiceCoreDaoImpl" type="dao" dc="factoryabclife" ref="webServiceCoreDao" />
+      <method name="WebServiceCoreBoImpl" returnType="" accessStrategy="public" />
+      <method name="cal" returnType="java.math.BigDecimal" accessStrategy="public">
+         <comment><![CDATA[执行计算接口  core接口
+@throws Exception]]></comment>
+         <parameter name="riskCode" type="String" />
+         <parameter name="riskVer" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="protecLiabCode" type="String" />
+         <parameter name="algoType" type="String" />
+         <parameter name="subType1" type="String" />
+         <parameter name="subType2" type="String" />
+         <parameter name="subGetdutyCode" type="String" />
+         <parameter name="paramObj" type="java.util.Map" />
+         <exception type="Exception" />
+      </method>
+      <method name="calCombo" returnType="java.math.BigDecimal" accessStrategy="public">
+         <parameter name="comboCode" type="String" />
+         <parameter name="comboVer" type="String" />
+         <parameter name="comboInsurelemrelId" type="String" />
+         <parameter name="algoType" type="String" />
+         <parameter name="subType1" type="String" />
+         <parameter name="subType2" type="String" />
+         <parameter name="paramObj" type="java.util.Map" />
+         <exception type="Exception" />
+      </method>
+      <method name="splitExpression" returnType="java.util.Map" accessStrategy="private">
+         <comment><![CDATA[解析公式，拆分步骤
+解析"#n{}n#", "#n{}n#"内部的表达式优先执行, 生成1个uuid的key和公式结果放入context中, 
+eg: #{function} ---> ${uuid} {key:uuid,value:return function()}]]></comment>
+         <parameter name="expression" type="String" />
+         <parameter name="order" type="int" />
+         <parameter name="map" type="java.util.Map" />
+      </method>
+      <method name="prepareObjFormula" returnType="Object" accessStrategy="private">
+         <comment><![CDATA[执行公式]]></comment>
+         <parameter name="itemFormula" type="com.neusoft.abclife.productfactory.entity.TObjFormula" />
+         <parameter name="paramBean" type="com.neusoft.abclife.productfactory.entity.PfDynamicBean" />
+         <exception type="Exception" />
+      </method>
+      <method name="prepareObjParam" returnType="void" accessStrategy="private">
+         <comment><![CDATA[处理函数参数
+@throws Exception]]></comment>
+         <parameter name="mapParam" type="java.util.Map" />
+         <parameter name="tObjFormula" type="com.neusoft.abclife.productfactory.entity.TObjFormula" />
+         <parameter name="paramBean" type="com.neusoft.abclife.productfactory.entity.PfDynamicBean" />
+         <exception type="Exception" />
+      </method>
+      <method name="prepareCheckObjRelation" returnType="boolean" accessStrategy="public">
+         <comment><![CDATA[匹配公式的相关性]]></comment>
+         <parameter name="tObjFormula" type="com.neusoft.abclife.productfactory.entity.TObjFormula" />
+         <parameter name="paramBean" type="com.neusoft.abclife.productfactory.entity.PfDynamicBean" />
+      </method>
+      <method name="excuteCheckObjRelation" returnType="boolean" accessStrategy="private">
+         <comment><![CDATA[执行相关性校验]]></comment>
+         <parameter name="bomValue" type="Object" />
+         <parameter name="relaDefOpt" type="String" />
+         <parameter name="relaDefValue" type="String" />
+      </method>
+      <method name="getDynamicBeanValue" returnType="Object" accessStrategy="private">
+         <comment><![CDATA[获取PfDynamicBean中的属性]]></comment>
+         <parameter name="refValue" type="String" />
+         <parameter name="returnType" type="String" />
+         <parameter name="paramBean" type="com.neusoft.abclife.productfactory.entity.PfDynamicBean" />
+      </method>
+      <method name="setScale" returnType="Object" accessStrategy="private">
+         <comment><![CDATA[设置精度]]></comment>
+         <parameter name="value" type="Object" />
+         <parameter name="scale" type="Integer" />
+         <parameter name="roundMode" type="String" />
+      </method>
+      <method name="getInsuredBirthDay" returnType="String" accessStrategy="private">
+         <comment><![CDATA[保存首个保单周年日
+@param birthday
+ 
+@param bdsxr
+ 
+@param paramObj
+ 
+@throws ParseException]]></comment>
+         <parameter name="slipEge" type="java.math.BigDecimal" />
+         <parameter name="bdsxr" type="Object" />
+         <parameter name="birthday" type="Object" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<!--<import resource="applicationContext-bo.xml" />
+    --><!--<import resource="applicationContext-dao.xml" />
+	 --><!-- ***** baseTxProxy ***** -->
+	<bean id="codelist" class="com.neusoft.unieap.techcomp.ria.codelist.activator.CodelistActivator">
+		<!--<property name="cacheAllOnStartUp" value="true"></property>
+		<property name="updateTimeStampOnStartUp" value="true"></property>
+		<property name="codeListBO" ref="ria_CodeListBO_bo" />
+		<property name="cacheManager" ref="eapCacheManager" />
+		<property name="cacheLoader" ref="codeListCacheLoader" />
+		<property name="cacheSynchronizeManager" ref="cacheSynchronizeManager" />
+		<property name="codeListCacheUpdater" ref="codeListCacheUpdater" />
+	--></bean>
+
+	<!-- 代码表CacheLoader --><!--
+	<bean id="codeListCacheLoader"
+		class="com.neusoft.unieap.techcomp.ria.codelist.cache.CodeListCacheLoader">
+		<property name="codeListDAO">
+			<ref bean="ria_codeListDAO_dao" />
+		</property>
+	</bean>
+
+	--><bean id="techcomp_codelist_action_translateCode" class="com.neusoft.unieap.techcomp.ria.codelist.action.TranslateCodeAction">
+		<!--<property name="codeListManager">
+			<ref bean="ria_CodeListManager_bo"/>
+		</property>
+		<property name="cacheSynchronizeManager">
+			<ref bean="cacheSynchronizeManager"/>
+		</property>		
+	--></bean>
+	
+	<!--<bean id="techcomp_codelist_action_checkCache" class="com.neusoft.unieap.techcomp.ria.codelist.action.CheckCacheAction">
+		<property name="codeListManager">
+			<ref bean="ria_CodeListManager_bo"/>
+		</property>
+		<property name="cacheSynchronizeManager">
+			<ref bean="cacheSynchronizeManager"/>
+		</property>		
+	</bean>
+	
+	<bean id="codeListCacheUpdater" class="com.neusoft.unieap.techcomp.ria.codelist.cache.CodeListCacheUpdater">
+		<property name="codeListDAO">
+			<ref bean="ria_codeListDAO_dao" />
+		</property>
+		<property name="codeListCache">
+			<ref bean="ria_CodeListCache_bo"/>
+		</property>
+		<property name="cacheTaskUtil">
+			<ref bean="cacheTaskUtil"/>
+		</property>
+	</bean>
+
+--></beans>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false"
+	monitoring="autodetect" dynamicConfig="true" name="unieap">
+	<diskStore path="user.dir" />
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" />
+	<!-- 缓存过期时间为2分钟，内存最大缓存40000条数据，多出会自动缓存到硬盘上，缓存淘汰策略是:最近最少使用 -->
+	<cache name="ariEngineCache" 
+		eternal="false"
+		maxElementsInMemory="40000"
+		overflowToDisk="true" 
+		maxElementsOnDisk="0" 
+		diskPersistent="false" 
+		timeToIdleSeconds="120"
+		timeToLiveSeconds="120" 
+		diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU"/>
+</ehcache>
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.fdframework.productfactory.dao.UploadFileDao" interface="">
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.Calendar" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjAttach" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="PfObjAttach" type="entity" dc="factory" ref="pfObjAttach" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="UploadFileDao" returnType="" accessStrategy="public" />
+      <method name="getFiles" returnType="com.neusoft.fdframework.core.base.QueryResult" accessStrategy="public">
+         <comment><![CDATA[获得文件
+type = 1险种版本对象, type = 2 产品版本对象]]></comment>
+         <parameter name="verId" type="String" />
+         <parameter name="type" type="int" />
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+      </method>
+      <method name="getFilesNoPage" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获得文件无分页
+type = 1险种版本对象, type = 2 产品版本对象]]></comment>
+         <parameter name="verId" type="String" />
+         <parameter name="type" type="int" />
+      </method>
+      <method name="saveFile" returnType="void" accessStrategy="public">
+         <comment><![CDATA[上传文件]]></comment>
+         <parameter name="pfObjAttach" type="com.neusoft.fdframework.productfactory.entity.PfObjAttach" />
+         <parameter name="riskVerId" type="String" />
+         <parameter name="fileName" type="String" />
+         <parameter name="filePath" type="String" />
+      </method>
+      <method name="delFile" returnType="int" accessStrategy="public">
+         <comment><![CDATA[删除文件]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="getDataListByRiskVerId" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[获得险种版本关联的接触点,险种版本复制功能使用]]></comment>
+         <parameter name="riskVerId" type="String" />
+      </method>
+      <method name="savePfPrdtFile" returnType="int" accessStrategy="public">
+         <parameter name="pfObjAttach" type="com.neusoft.fdframework.productfactory.entity.PfObjAttach" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

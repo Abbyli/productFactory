@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+   <!-- 定义UI RIA通用技术组件的启动类 -->
+   <!--<bean id="ria" class="com.neusoft.unieap.techcomp.ria.bootstrap.RIAActivator" >
+		<property name="id" value="ria"/>
+		<property name="title" value="富客户端应用"/>
+		<property name="enabled" value="true"/>
+		<property name="menuBO" ref="ria_menuBO_bo"/>
+		<property name="sc" ref="techcomp"/>
+		<property name="codeList" ref="codelist"/>
+		<property name="cacheSynchronizeManager" ref="cacheSynchronizeManager"/>
+		<property name="menuCacheUpdater" ref="menuCacheUpdater"/>
+	</bean>
+	
+	<import resource="applicationContext-bo.xml"/>
+	<import resource="applicationContext-dao.xml"/>	
+	<import resource="applicationContext-base.xml"/>
+	<import resource="applicationContext-menu.xml"/>
+	<import resource="applicationContext-view.xml"/>	
+	
+	-->
+   <!-- 注释掉该配置,平台的rest服务才能够好用 -->
+   <!--<import resource="applicationContext-rest.xml" />-->
+   <import resource="applicationContext-codelist.xml" />
+   <!--
+	<import resource="applicationContext-rest.xml" />
+	-->
+   <bean id="baseEntry" class="com.neusoft.unieap.techcomp.ria.action.BaseEntry">
+      <!--<property name="baseBO" ref="baseBO" />
+		<property name="gridIndividualBO" ref="ria_gridIndividualBO_bo"/>
+		<property name="eapCacheManager" ref="eapCacheManager"/>
+	-->
+   </bean>
+   <bean id="baseProcessor" class="com.neusoft.unieap.techcomp.ria.action.BaseProcessor" parent="baseEntry" />
+   <bean id="commonProcessor" class="com.neusoft.unieap.techcomp.ria.common.action.CommonProcessor" parent="baseProcessor" scope="prototype">
+      <!--		<property name="sessionFactory" ref="sessionFactory" />-->
+   </bean>
+   <bean id="ria_uploader_action" class="com.neusoft.unieap.techcomp.ria.uploader.action.DefaultUploadAction" />
+   <bean id="csvExportAction" class="com.neusoft.unieap.techcomp.ria.export.action.CsvExportAction" scope="prototype">
+      <property name="serverExportMaxCount" value="-1" />
+   </bean>
+   <bean id="gridImportValidation" class="com.neusoft.fdframework.validate.FDGridImportValidation" />
+   <bean id="ria" class="com.neusoft.unieap.core.base.model.DCActivator">
+      <property name="id" value="ria" />
+      <property name="enabled" value="true" />
+      <property name="sc" ref="techcomp" />
+      <property name="version" value="1.0.0" />
+   </bean>
+</beans>
+

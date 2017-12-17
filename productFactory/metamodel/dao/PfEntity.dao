@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.fdframework.productfactory.dao.PfEntityDao" interface="">
+      <baseInfo>
+         <author value="liu.w" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.util.List" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.core.base.QueryResult" />
+      <import value="com.neusoft.fdframework.productfactory.dto.TreeDTO" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TreeDTO" type="dto" dc="factory" ref="treeDTO" />
+      <dependence name="PfMEntity" type="entity" dc="factory" ref="pfMEntity" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="PfEntityDao" returnType="" accessStrategy="public" />
+      <method name="getEntitiesByModelVerId" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[根据模型版本,查询实体]]></comment>
+         <parameter name="modelVersionId" type="String" />
+      </method>
+      <method name="addPfEntityTree" returnType="com.neusoft.fdframework.productfactory.entity.PfMEntity" accessStrategy="public">
+         <comment><![CDATA[实体树增加节点]]></comment>
+         <parameter name="pfMEntity" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      </method>
+      <method name="updPfEntity" returnType="int" accessStrategy="public">
+         <comment><![CDATA[实体树/实体 修改节点]]></comment>
+         <parameter name="pfMEntity" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      </method>
+      <method name="delPfEntity" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除实体]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="getParentPfMEntity" returnType="com.neusoft.fdframework.productfactory.entity.PfMEntity" accessStrategy="public">
+         <comment><![CDATA[获取实体树当前节点的父节点]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="getPfEntityRiskTree" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[险种定义页面,根据模型版本,查询实体树]]></comment>
+         <parameter name="modelVersionId" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fdframework-business xmlns="http://www.neusoft.com/fdframework/business"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<business id="pfrisk.abclife.queryRisk" name="" desc="" returnkey="queryRiskResult">
+		<step id="1" bean="factoryabclife_pfRiskBO_bo" method="queryRisk" returnkey="queryRiskResult" desc="">
+			<property refkey="riskCode" type="pojo(com.neusoft.abclife.productfactoty.entity.TInsurtypeBasicInf)"></property>
+		</step>
+	</business>
+	
+	<business id="pfrisk.abclife.saveRisk" name="" desc="" returnkey="rtnMessage">
+		<step id="1" bean="factoryabclife_pfRiskBO_bo" method="saveRisk" returnkey="rtnMessage" desc="">
+			<property refkey="tInsurtypeBasicInf" type="pojo(com.neusoft.abclife.productfactoty.entity.TInsurtypeBasicInf)"></property>
+			<property refkey="opt" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="pfrisk.abclife.getRisksByCondition" name="" desc="" returnkey="rtnRisksByCon">
+		<step id="1" bean="factoryabclife_pfRiskBO_bo" method="getRisksByCondition" returnkey="rtnRisksByCon" desc="">
+			<property refkey="tInsurtypeBasicInf" type="pojo(com.neusoft.abclife.productfactoty.entity.TInsurtypeBasicInf)"></property>
+			<property refkey="pageNumber" type="int"></property>
+			<property refkey="pageSize" type="int"></property>
+		</step>
+	</business>
+	
+	<business id="pfrisk.abclife.updateRiskBase" name="" desc="" returnkey="rtnMessage">
+		<step id="1" bean="factoryabclife_pfRiskBO_bo" method="updateRiskBase" returnkey="rtnMessage" desc="">
+			<property refkey="tInsurtypeBasicInf" type="pojo(com.neusoft.abclife.productfactoty.entity.TInsurtypeBasicInf)"></property>
+		</step>
+	</business>
+	
+	<business id="pfrisk.abclife.delRiskBase" name="" desc="" returnkey="rtnMessage">
+		<step id="1" bean="factoryabclife_pfRiskBO_bo" method="delRiskBase" returnkey="rtnMessage" desc="">
+			<property refkey="tInsurtypeBasicInf" type="pojo(com.neusoft.abclife.productfactoty.entity.TInsurtypeBasicInf)"></property>
+		</step>
+	</business>
+	
+	<business id="pfrisk.abclife.submitReview" name="" desc="提交审核" returnkey="submitReview">
+		<step id="1" bean="factoryabclife_pfRiskBO_bo" method="submitReview" returnkey="submitReview">
+			<property refkey="tInsurtypeBasicInf" type="pojo(com.neusoft.abclife.productfactoty.entity.TInsurtypeBasicInf)"></property>
+		</step>
+	</business>
+	
+	<!--
+	<business id="pfrisk.abclife.getRisks" name="" desc="" returnkey="rtnRisks">
+		<step id="1" bean="factoryabclife_pfRiskBO_bo" method="getRisks" returnkey="rtnRisks" desc="">
+			<property refkey="pageNumber" type="int"></property>
+			<property refkey="pageSize" type="int"></property>
+		</step>
+	</business>
+	
+	<business id="pfrisk.new.getRisksByCondition" name="" desc="" returnkey="rtnRisksByCon">
+		<step id="1" bean="productfactory_PfRiskService_bo" method="getRisksByCondition_new" returnkey="rtnRisksByCon" desc="">
+			<property refkey="pfRisk" type="pojo(com.neusoft.fdframework.productfactory.entity.PfRisk)"></property>
+			<property refkey="pageNumber" type="int"></property>
+			<property refkey="pageSize" type="int"></property>
+		</step>
+	</business>
+		
+    <business id="pfrisk.delRisk" name="" desc="" returnkey="rtnMessage">
+        <step id="1" bean="productfactory_PfRiskService_bo" method="delRisk" returnkey="rtnMessage" desc="">
+            <property refkey="pfObjRisk" type="pojo(com.neusoft.fdframework.productfactory.entity.PfObjRisk)"></property>
+        </step>
+    </business>
+	
+	<business id="pfrisk.updateRiskVer" name="" desc="" returnkey="rtnMessage">
+        <step id="1" bean="productfactory_PfRiskService_bo" method="updateRiskVer" returnkey="rtnMessage" desc="">
+        	<property refkey="risk" type="pojo(com.neusoft.fdframework.productfactory.entity.PfObjRisk)"></property>
+            <property refkey="riskVer" type="pojo(com.neusoft.fdframework.productfactory.entity.PfObjRiskVer)"></property>
+        </step>
+    </business>
+    
+    <business id="pfrisk.delRiskVer" name="" desc="" returnkey="rtnMessage">
+        <step id="1" bean="productfactory_PfRiskService_bo" method="delRiskVer" returnkey="rtnMessage" desc="">
+            <property refkey="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer"></property>
+        </step>
+    </business>
+	
+	<business id="pfrisk.copyRiskByModelVerId" name="" desc="根据模型复制" returnkey="rtnMessage">
+        <step id="1" bean="productfactory_PfRiskService_bo" method="copyRiskByModelVerId" returnkey="rtnMessage" desc="">
+        	<property refkey="risk" type="pojo(com.neusoft.fdframework.productfactory.entity.PfObjRisk)"></property>
+            <property refkey="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer"></property>
+            <property refkey="selectModelVerId" type="String"></property>
+        </step>
+    </business>
+    
+    <business id="pfrisk.copyRiskByRiskVerId" name="" desc="根据险种复制" returnkey="rtnMessage">
+        <step id="1" bean="productfactory_PfRiskService_bo" method="copyRiskByRiskVerId" returnkey="rtnMessage" desc="">
+			<property refkey="risk" type="pojo(com.neusoft.fdframework.productfactory.entity.PfObjRisk)"></property>
+            <property refkey="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer"></property>
+            <property refkey="selectRiskVerId" type="String"></property>
+        </step>
+    </business>
+    
+    <business id="pfrisk.new.addRiskVer" name="" desc="新增险种版本" returnkey="rtnMessage">
+        <step id="1" bean="productfactory_PfRiskService_bo" method="addRiskVer_new" returnkey="rtnMessage" desc="">
+            <property refkey="riskVer" type="com.neusoft.fdframework.productfactory.entity.PfRiskVer"></property>
+        </step>
+    </business>
+       
+    <business id="ProductService.addVer2Arith" name="" desc="" returnkey="result">
+        <step id="1" bean="productfactory_PfRiskService_bo" method="addVer2Arith" returnkey="result" desc="">
+            <property refkey="pfObjRisk" type="pojo(com.neusoft.fdframework.productfactory.entity.PfObjRisk)"></property>
+			<property refkey="pfObjRiskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer"></property>
+        </step>
+    </business>
+    	
+    <business id="ProductService.qryArithVer" name="" desc="" returnkey="result">
+        <step id="1" bean="productfactory_PfRiskService_bo" method="getArithVersionObj" returnkey="result" desc="">
+            <property refkey="pfObjRisk" type="pojo(com.neusoft.fdframework.productfactory.entity.PfObjRisk)"></property>
+			<property refkey="pfObjRiskVer" type="com.neusoft.fdframework.productfactory.entity.PfObjRiskVer"></property>
+        </step>
+    </business>	 -->
+    
+</fdframework-business>

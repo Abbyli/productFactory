@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/dao">
+   <dc:dao class="com.neusoft.abclife.productfactory.dao.WebServiceCoreDaoImpl" interface="">
+      <baseInfo>
+         <author value="think" />
+      </baseInfo>
+      <dataSource sessionFactoryID="dataSource" ref="dataSource" />
+      <import value="java.math.BigDecimal" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.HashMap" />
+      <import value="java.util.Iterator" />
+      <import value="java.util.List" />
+      <import value="java.util.Locale" />
+      <import value="java.util.Map" />
+      <import value="java.util.Set" />
+      <import value="java.util.Map.Entry" />
+      <import value="java.util.regex.Matcher" />
+      <import value="java.util.regex.Pattern" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.jdbc.support.rowset.SqlRowSet" />
+      <import value="org.springframework.stereotype.Component" />
+      <import value="com.neusoft.abclife.productfactory.entity.TClaimGivepayDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TComboInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TComboInsurtypeElemRel" />
+      <import value="com.neusoft.abclife.productfactory.entity.TDimensionDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TFeeRate" />
+      <import value="com.neusoft.abclife.productfactory.entity.TFormulaDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TFormulaParamRef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TFunctionArgRef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TFunctionDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjEntrance" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjEntranceCombine" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjFormula" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjParam" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjRateDimenRef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjRelation" />
+      <import value="com.neusoft.abclife.productfactory.entity.TObjSkelement" />
+      <import value="com.neusoft.abclife.productfactory.entity.TOccRate" />
+      <import value="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TProtecLiabDef" />
+      <import value="com.neusoft.abclife.productfactory.entity.TRelationDef" />
+      <import value="com.neusoft.abclife.util.StringUtil" />
+      <import value="com.neusoft.fdframework.core.base.BaseDao" />
+      <import value="com.neusoft.fdframework.jdbc.CustomerDataSourceDaoTemplates" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="TClaimGivepayDef" type="entity" dc="factoryabclife" ref="tClaimGivepayDef" />
+      <dependence name="TComboInf" type="entity" dc="factoryabclife" ref="tComboInf" />
+      <dependence name="TComboInsurtypeElemRel" type="entity" dc="factoryabclife" ref="tComboInsurtypeElemRel" />
+      <dependence name="TDimensionDef" type="entity" dc="factoryabclife" ref="tDimensionDef" />
+      <dependence name="TFeeRate" type="entity" dc="factoryabclife" ref="tFeeRate" />
+      <dependence name="TFormulaDef" type="entity" dc="factoryabclife" ref="tFormulaDef" />
+      <dependence name="TFormulaParamRef" type="entity" dc="factoryabclife" ref="tFormulaParamRef" />
+      <dependence name="TFunctionArgRef" type="entity" dc="factoryabclife" ref="tFunctionArgRef" />
+      <dependence name="TFunctionDef" type="entity" dc="factoryabclife" ref="tFunctionDef" />
+      <dependence name="TInsurtypeBasicInf" type="entity" dc="factoryabclife" ref="tInsurtypeBasicInf" />
+      <dependence name="TObjEntrance" type="entity" dc="factoryabclife" ref="tObjEntrance" />
+      <dependence name="TObjEntranceCombine" type="entity" dc="factoryabclife" ref="tObjEntranceCombine" />
+      <dependence name="TObjFormula" type="entity" dc="factoryabclife" ref="tObjFormula" />
+      <dependence name="TObjParam" type="entity" dc="factoryabclife" ref="tObjParam" />
+      <dependence name="TObjRate" type="entity" dc="factoryabclife" ref="tObjRate" />
+      <dependence name="TObjRateDimenRef" type="entity" dc="factoryabclife" ref="tObjRateDimenRef" />
+      <dependence name="TObjRelation" type="entity" dc="factoryabclife" ref="tObjRelation" />
+      <dependence name="TObjSkelement" type="entity" dc="factoryabclife" ref="tObjSkelement" />
+      <dependence name="TOccRate" type="entity" dc="factoryabclife" ref="tOccRate" />
+      <dependence name="TPricingLiabDef" type="entity" dc="factoryabclife" ref="tPricingLiabDef" />
+      <dependence name="TProtecLiabDef" type="entity" dc="factoryabclife" ref="tProtecLiabDef" />
+      <dependence name="TRelationDef" type="entity" dc="factoryabclife" ref="tRelationDef" />
+      <method name="getTemplateName" returnType="String" accessStrategy="protected" />
+      <method name="WebServiceCoreDaoImpl" returnType="" accessStrategy="public" />
+      <method name="queryObjEntrance" returnType="java.util.List" accessStrategy="public">
+         <parameter name="riskCode" type="String" />
+         <parameter name="riskVer" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="protecLiabCode" type="String" />
+         <parameter name="algoType" type="String" />
+         <parameter name="subType1" type="String" />
+         <parameter name="subType2" type="String" />
+         <parameter name="subGetdutyCode" type="String" />
+      </method>
+      <method name="getEntranceQuerySQL" returnType="String" accessStrategy="private">
+         <parameter name="riskCode" type="String" />
+         <parameter name="riskVer" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="protecLiabCode" type="String" />
+         <parameter name="algoType" type="String" />
+         <parameter name="subType1" type="String" />
+         <parameter name="subType2" type="String" />
+         <parameter name="subGetdutyCode" type="String" />
+      </method>
+      <method name="getEntranceQuerySQLAttr" returnType="Object[]" accessStrategy="private">
+         <parameter name="riskCode" type="String" />
+         <parameter name="riskVer" type="String" />
+         <parameter name="pricingLiabCode" type="String" />
+         <parameter name="protecLiabCode" type="String" />
+         <parameter name="algoType" type="String" />
+         <parameter name="subType1" type="String" />
+         <parameter name="subType2" type="String" />
+         <parameter name="subGetdutyCode" type="String" />
+      </method>
+      <method name="queryDutyGetFormula" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询公式]]></comment>
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="queryObjRelationByObjSeq" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[由objSeq查询T_OBJ_RELATION]]></comment>
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="queryRelationDef" returnType="com.neusoft.abclife.productfactory.entity.TRelationDef" accessStrategy="public">
+         <comment><![CDATA[由relaDefId查询T_RELATION_DEF 获取ref_value]]></comment>
+         <parameter name="relaDefId" type="String" />
+      </method>
+      <method name="queryRelationDef2" returnType="com.neusoft.abclife.productfactory.entity.TRelationDef" accessStrategy="public">
+         <comment><![CDATA[由property查询T_RELATION_DEF 获取ref_value]]></comment>
+         <parameter name="property" type="String" />
+      </method>
+      <method name="queryFormulaDef" returnType="com.neusoft.abclife.productfactory.entity.TFormulaDef" accessStrategy="public">
+         <comment><![CDATA[由formulaId查询T_FORMULA_DEF获取公式]]></comment>
+         <parameter name="formulaId" type="String" />
+      </method>
+      <method name="queryFormulaParamRef" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[由formulaId查询T_FORMULA_PARAM_REF获取公式参数]]></comment>
+         <parameter name="formulaId" type="String" />
+      </method>
+      <method name="queryObjParamByObjSeq" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[由objSeq查询T_OBJ_PARAM]]></comment>
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="queryTFunctionDef" returnType="com.neusoft.abclife.productfactory.entity.TFunctionDef" accessStrategy="public">
+         <comment><![CDATA[查询函数]]></comment>
+         <parameter name="name" type="String" />
+      </method>
+      <method name="queryTFunctionDefArg" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询函数参数]]></comment>
+         <parameter name="funcId" type="String" />
+         <parameter name="flag" type="String" />
+      </method>
+      <method name="queryFee" returnType="java.math.BigDecimal" accessStrategy="public">
+         <comment><![CDATA[查询费用定义
+@param set]]></comment>
+         <parameter name="set" type="java.util.Set" />
+         <parameter name="argMap" type="java.util.Map" />
+      </method>
+      <method name="getFeeQuerySQL" returnType="String" accessStrategy="private">
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="queryRate" returnType="java.math.BigDecimal" accessStrategy="public">
+         <comment><![CDATA[查询费率
+@param set
+@param paramMap
+@return]]></comment>
+         <parameter name="set" type="java.util.Set" />
+         <parameter name="paramMap" type="java.util.Map" />
+      </method>
+      <method name="queryRateRange" returnType="java.math.BigDecimal" accessStrategy="private">
+         <comment><![CDATA[查询费率带范围的
+@param tObjRate
+ 
+@param paramMap
+ 
+@param set
+@param paramMap
+@return 
+@return]]></comment>
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+         <parameter name="paramMap" type="java.util.Map" />
+      </method>
+      <method name="circularProcess" returnType="boolean" accessStrategy="private">
+         <comment><![CDATA[循环比较范围值
+@param rangeK
+@param rangeV
+@return]]></comment>
+         <parameter name="rangeK" type="String" />
+         <parameter name="rangeV" type="int" />
+      </method>
+      <method name="getRateSQL" returnType="String" accessStrategy="private">
+         <comment><![CDATA[获取查询费率SQL
+@param tableName
+@param set
+@return]]></comment>
+         <parameter name="tableName" type="String" />
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="getRateTable" returnType="com.neusoft.abclife.productfactory.entity.TObjRate" accessStrategy="private">
+         <comment><![CDATA[获取费率表信息
+@param set
+@return]]></comment>
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="getDimen" returnType="java.util.List" accessStrategy="private">
+         <comment><![CDATA[获得维度信息
+@param tObjRate
+@return]]></comment>
+         <parameter name="tObjRate" type="com.neusoft.abclife.productfactory.entity.TObjRate" />
+      </method>
+      <method name="queryDemension" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询相关维度信息
+@param set
+ 
+@return]]></comment>
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="getRateTableQuerySQl" returnType="String" accessStrategy="private">
+         <comment><![CDATA[获取费率表查询SQL
+@param set
+@return]]></comment>
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="getRateQuerySQLAttr" returnType="Object[]" accessStrategy="private">
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="getFeeQuerySQLAttr" returnType="Object[]" accessStrategy="private">
+         <parameter name="set" type="java.util.Set" />
+      </method>
+      <method name="modelName2dbNAME" returnType="String" accessStrategy="private">
+         <parameter name="modelName" type="String" />
+      </method>
+      <method name="getOccRate" returnType="com.neusoft.abclife.productfactory.entity.TOccRate" accessStrategy="public">
+         <parameter name="payIntv" type="String" />
+         <parameter name="job" type="String" />
+      </method>
+      <method name="getTInsurtypeBasicInf" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" accessStrategy="public">
+         <parameter name="insurtypeId" type="Long" />
+      </method>
+      <method name="getTObjRelation" returnType="com.neusoft.abclife.productfactory.entity.TObjRelation" accessStrategy="public">
+         <parameter name="relaId" type="Long" />
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="getTPricingLiabDef" returnType="com.neusoft.abclife.productfactory.entity.TPricingLiabDef" accessStrategy="public">
+         <parameter name="insurId" type="Long" />
+         <parameter name="pricingLiabCode" type="String" />
+      </method>
+      <method name="getTInsurtypeBasicInf" returnType="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf" accessStrategy="public">
+         <parameter name="Code" type="String" />
+         <parameter name="verNo" type="String" />
+      </method>
+      <method name="queryObjEntranceCombine" returnType="com.neusoft.abclife.productfactory.entity.TObjEntranceCombine" accessStrategy="public">
+         <parameter name="comboCode" type="String" />
+         <parameter name="comboVer" type="String" />
+         <parameter name="comboInsurelemrelId" type="String" />
+         <parameter name="algoType" type="String" />
+         <parameter name="subType1" type="String" />
+         <parameter name="subType2" type="String" />
+      </method>
+      <method name="queryTObjFormula" returnType="com.neusoft.abclife.productfactory.entity.TObjFormula" accessStrategy="public">
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="getTComboInsurtype" returnType="java.util.List" accessStrategy="public">
+         <parameter name="comboId" type="String" />
+      </method>
+      <method name="queryAnotherOneElem" returnType="com.neusoft.abclife.productfactory.entity.TComboInsurtypeElemRel" accessStrategy="public">
+         <parameter name="comboId" type="String" />
+         <parameter name="pricingCode" type="String" />
+         <parameter name="elemName" type="String" />
+      </method>
+      <method name="queryComboInfById" returnType="com.neusoft.abclife.productfactory.entity.TComboInf" accessStrategy="public">
+         <parameter name="comboId" type="String" />
+      </method>
+      <method name="queryTObjSkelement" returnType="com.neusoft.abclife.productfactory.entity.TObjSkelement" accessStrategy="public">
+         <parameter name="id" type="Long" />
+      </method>
+      <method name="queryTPricingLiabDef" returnType="java.util.List" accessStrategy="public">
+         <parameter name="insurtypeId" type="Long" />
+      </method>
+      <method name="queryObjRate" returnType="java.util.List" accessStrategy="public">
+         <parameter name="pricingliabCode" type="String" />
+         <parameter name="verNo" type="String" />
+      </method>
+   </dc:dao>
+</dc:dc>
+

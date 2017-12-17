@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<bean id="menuDAO"
+		class="com.neusoft.unieap.techcomp.ria.menu.dao.impl.MenuDAOImpl" parent="baseDAO">
+	</bean>
+
+	<bean id="menuProcessor"
+		class="com.neusoft.unieap.techcomp.ria.menu.action.MenuProcessor" scope="prototype">
+		<property name="menuBO">
+			<ref bean="ria_menuBO_bo" />
+		</property>
+		<property name="extInfoBO">
+			<ref bean="ria_extInfoBO_bo" />
+		</property>
+		
+	</bean>
+	<bean id="menuNavigatorProcessor"
+		class="com.neusoft.unieap.techcomp.ria.menu.action.MenuNavigatorProcessor" scope="prototype">
+		<property name="menuBO">
+			<ref bean="ria_menuBO_bo" />
+		</property>
+		<property name="menuAuthBO">
+			<ref bean="ria_menuAuthBO_bo" />
+		</property>
+		<property name="extInfoBO">
+			<ref bean="ria_extInfoBO_bo" />
+		</property>
+	</bean>
+	
+   <bean id="security_resourceAuthorizeBO_bo" class="com.neusoft.unieap.techcomp.ria.menu.bo.impl.DefaultResourceAuthorizeBOImpl">
+   		<property name="menuBO" ref="ria_menuBO_bo" />
+   </bean>
+   
+	<bean id="menuCacheUpdater" class="com.neusoft.unieap.techcomp.ria.menu.cache.MenuCacheUpdater">
+		<property name="menuBO">
+			<ref bean="ria_menuBO_bo" />
+		</property>
+		<property name="cacheTaskUtil">
+			<ref bean="cacheTaskUtil"/>
+		</property>
+	</bean>
+</beans>

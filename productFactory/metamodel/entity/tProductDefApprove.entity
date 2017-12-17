@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+  <dc:entity class="com.neusoft.abclife.productfactory.entity.TProductDefApprove" table="T_PRODUCT_DEF_APPROVE" extends="com.neusoft.unieap.core.di.DomainObject">
+    <id name="prodAssessId" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="PROD_ASSESS_ID" length="16" />
+      <generator class="sequence">
+        <param name="sequence" value="SEQ_PRODUCT_DEF_APPROVE" />
+      </generator>
+    </id>
+    <property name="mngorgId" label="管理机构ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="MNGORG_ID" not-null="false" length="16" />
+    </property>
+    <property name="deptId" label="部门ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="DEPT_ID" not-null="false" length="16" />
+    </property>
+    <property name="assessMngorgId" label="审核机构ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="ASSESS_MNGORG_ID" not-null="false" length="16" />
+    </property>
+    <property name="assessDeptId" label="审核部门ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="ASSESS_DEPT_ID" not-null="false" length="16" />
+    </property>
+    <property name="assessObjId" label="审核对象ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="ASSESS_OBJ_ID" not-null="false" length="16" />
+    </property>
+    <property name="assessType" label="01-险种 02-产品 " type="string" getStrategy="public" setStrategy="public">
+      <column name="ASSESS_TYPE" not-null="false" length="2" />
+    </property>
+    <property name="assessStatus" label="01 已审批 02 未审批 " type="string" getStrategy="public" setStrategy="public">
+      <column name="ASSESS_STATUS" not-null="false" length="2" />
+    </property>
+    <property name="productStatusType" label="01-险种设计期 02-险种运行期 03-产品设计期 04-产品运行期 " type="string" getStrategy="public" setStrategy="public">
+      <column name="PRODUCT_STATUS_TYPE" not-null="false" length="2" />
+    </property>
+    <property name="productStatus" label="险种状态 01-险种定义 02-险种审核 03-审核回退 04-发布测试 05-测试回退 06-待发布 07-正式发布 08-正式回退  产品状态 01-产品定义 02-产品审核 03-审核回退 04-发布测试 05-测试回退 06-待发布 07-正式发布 08-正式回退" type="string" getStrategy="public" setStrategy="public">
+      <column name="PRODUCT_STATUS" not-null="false" length="2" />
+    </property>
+    <property name="assessConclusion" label="01 审批不通过 02 审批通过    " type="string" getStrategy="public" setStrategy="public">
+      <column name="ASSESS_CONCLUSION" not-null="false" length="2" />
+    </property>
+    <property name="assessPsnnlId" label="审核人员ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="ASSESS_PSNNL_ID" not-null="false" length="16" />
+    </property>
+    <property name="assessFinishDate" label="审核完成日期" type="date" getStrategy="public" setStrategy="public">
+      <column name="ASSESS_FINISH_DATE" not-null="false" />
+    </property>
+    <property name="submitAssessDate" label="提交审核日期" type="date" getStrategy="public" setStrategy="public">
+      <column name="SUBMIT_ASSESS_DATE" not-null="false" />
+    </property>
+    <property name="submitApproverId" label="提交审核人ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+      <column name="SUBMIT_APPROVER_ID" not-null="false" length="16" />
+    </property>
+    <property name="submitAssessReason" label="考核审批、 薪资审批、 变更申请审批 雇员（特殊年龄入司审批、二次入司审批、正常增员审批、职级调整审批） 组织（团队调整审批、主管任命审批） 新增中介机构" type="string" getStrategy="public" setStrategy="public">
+      <column name="SUBMIT_ASSESS_REASON" not-null="false" length="500" />
+    </property>
+    <property name="flowNodeCode" label="01 信息保存 02 提交审核 03 险种审核 04 险种测试 05 险种审批 06 险种发布" type="string" getStrategy="public" setStrategy="public">
+      <column name="FLOW_NODE_CODE" not-null="false" length="2" />
+    </property>
+    <property name="approveOpinion" label="审核意见" type="string" getStrategy="public" setStrategy="public">
+      <column name="APPROVE_OPINION" not-null="false" length="300" />
+    </property>
+    <property name="insertOper" label="插入操作员" type="string" getStrategy="public" setStrategy="public">
+      <column name="INSERT_OPER" not-null="false" length="40" />
+    </property>
+    <property name="insertTime" label="插入时间" type="date" getStrategy="public" setStrategy="public">
+      <column name="INSERT_TIME" not-null="false" />
+    </property>
+    <property name="updateOper" label="更新操作员" type="string" getStrategy="public" setStrategy="public">
+      <column name="UPDATE_OPER" not-null="false" length="40" />
+    </property>
+    <property name="updateTime" label="更新时间" type="date" getStrategy="public" setStrategy="public">
+      <column name="UPDATE_TIME" not-null="false" />
+    </property>
+    <property name="insertConsignor" label="插入委托人" type="string" getStrategy="public" setStrategy="public">
+      <column name="INSERT_CONSIGNOR" not-null="false" length="40" />
+    </property>
+    <property name="updateConsignor" label="更新委托人" type="string" getStrategy="public" setStrategy="public">
+      <column name="UPDATE_CONSIGNOR" not-null="false" length="40" />
+    </property>
+    <import value="java.io.Serializable" />
+    <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+    <import value="com.neusoft.fdframework.core.annotation.Column" />
+    <import value="com.neusoft.fdframework.core.annotation.Entity" />
+    <import value="com.neusoft.fdframework.core.annotation.ID" />
+    <import value="com.neusoft.fdframework.core.annotation.Transient" />
+    <import value="com.neusoft.unieap.core.di.DomainObject" />
+  </dc:entity>
+</dc:dc>
+

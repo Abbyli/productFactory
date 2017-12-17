@@ -1,0 +1,2310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="dongyw" />
+         <creationTime value="2015-06-30 09:44:18" />
+         <modificationTime value="2015-11-23 15:55:14" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getKindList" sync="true" onSuccess="">
+	<comment><![CDATA[]]>
+	</comment>
+	<context>
+		
+	<pojo name="aeKind" dataStoreName="uiKind" /></context>
+	<arguments>
+		
+	<argument name="aeKind" type="dataStore"></argument></arguments>
+	<bo name="versionObjectTrace.business.xml"
+		method="arithengine.basic.versionObjectTrace.getKindListByVersionId"></bo>
+</pMethod>
+	<dependence name="kind.business.xml" ref="kind.business.xml | com.neusoft.business"
+		dc="basic" />
+	<pMethod name="getVersionList" sync="true" onSuccess="getVersionListSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<pojo name="aeVersion" dataStoreName="uiVersion" />
+		</context>
+		<arguments>
+			<argument name="aeVersion" type="dataStore"></argument>
+		</arguments>
+		<bo name="version.business.xml" method="arithengine.basic.version.queryForList"></bo>
+	</pMethod>
+	<dependence name="version.business.xml"
+		ref="version.business.xml | com.neusoft.business" dc="basic" />
+	<pMethod name="getFunctionList" onSuccess="" sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<pojo name="functionForm" dataStoreName="uiFunction" />
+		</context>
+		<arguments>
+			<argument name="functionForm" type="dataStore"></argument>
+		</arguments>
+		<bo name="function.business.xml" method="arithengine.basic.function.queryForList"></bo>
+	</pMethod>
+	<dependence name="function.business.xml"
+		ref="function.business.xml | com.neusoft.business" dc="basic" />
+	<pMethod name="getParameterList" onSuccess="" sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<pojo name="parameter" dataStoreName="uiParameter" />
+		</context>
+		<arguments>
+			<argument name="parameter" type="dataStore"></argument>
+		</arguments>
+		<bo name="paramter.business.xml" method="arithengine.basic.paramter.queryForList"></bo>
+	</pMethod>
+	<dependence name="paramter.business.xml"
+		ref="paramter.business.xml | com.neusoft.business" dc="basic" />
+	<dependence name="bom.business.xml" ref="bom.business.xml | com.neusoft.business"
+		dc="basic" />
+	<pMethod name="getBomList" sync="true" onSuccess="">
+	<comment><![CDATA[]]>
+	</comment>
+	<context>
+		
+	<string name="versionId" /></context>
+	<arguments>
+		
+	<argument name="versionId" type="string"></argument></arguments>
+	<bo name="versionObjectTrace.business.xml"
+		method="arithengine.basic.versionObjectTrace.getBomListByVersionId"></bo>
+</pMethod>
+	<pMethod name="getBomAttributeList" onSuccess="" sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<pojo name="bomattribute" dataStoreName="uiBomAttribute" />
+		</context>
+		<arguments>
+			<argument name="bomattribute" type="dataStore"></argument>
+		</arguments>
+		<bo name="bomattribute.business.xml" method="arithengine.basic.bomattribute.queryForList"></bo>
+	</pMethod>
+	<dependence name="bomattribute.business.xml"
+		ref="bomattribute.business.xml | com.neusoft.business" dc="basic" />
+	
+	<dependence name="formula.business.xml"
+		ref="formula.business.xml | com.neusoft.business" dc="config" />
+	<pMethod name="getIndicatorList" sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<pojo name="indicator" dataStoreName="indicator"></pojo>
+		</context>
+		<arguments>
+			<argument name="indicator" type="dataStore"></argument>
+		</arguments>
+		<bo name="indicator.business.xml" method="arithengine.config.indicator.queryIndicatorList"></bo>
+	</pMethod>
+	<dependence name="indicator.business.xml"
+		ref="indicator.business.xml | com.neusoft.business" dc="config"></dependence>
+	<pMethod name="getParameterRefList" sync="true"
+		onSuccess="getParameterRefListSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<context>
+			<pojo name="parameterRef" dataStoreName="uiParameterRef" />
+		</context>
+		<arguments>
+			<argument name="parameterRef" type="dataStore"></argument>
+		</arguments>
+		<bo name="formula.business.xml" method="arithengine.config.formula.getParameterRefList"></bo>
+	</pMethod>
+	<pMethod name="getArgList" sync="true" onSuccess="">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="function.business.xml" method="arithengine.basic.function.getArgList"></bo>
+		<context>
+			<pojo name="functionForm" dataStoreName="uiFunction" />
+		</context>
+		<arguments>
+			<argument name="functionForm" type="dataStore"></argument>
+		</arguments>
+	</pMethod>
+	
+<dependence name="versionObjectTrace.business.xml" ref="versionObjectTrace.business.xml | com.neusoft.business" dc="basic" /></processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="uiVersion" dependence="uiVersion" dc="aecommon"
+		path="com.neusoft.arithmetic.entity.UiVersion" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="parentId" label="parentId" type="string" />
+			<column name="versionProperty" label="versionProperty" type="string" />
+			<column name="versionName" label="versionName" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+		</columns>
+	</dataStore>
+	<dataStore name="uiBom" dependence="uiBom" dc="aecommon"
+		path="com.neusoft.arithmetic.entity.UiBom" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="className" label="className" type="string" />
+			<column name="versionId" label="versionId" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+			<column name="bomProperty" label="bomProperty" type="string" />
+		</columns>
+	</dataStore>
+	<dataStore name="uiBomAttribute" dependence="uiBomAttribute"
+		dc="aecommon" path="com.neusoft.arithmetic.entity.UiBomAttribute"
+		type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="property" label="property" type="string" />
+			<column name="bomId" label="bomId" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="TYPE" label="TYPE" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+			<column name="bomProperty" label="bomProperty" type="string" />
+			<column name="className" label="className" type="string" />
+		</columns>
+	</dataStore>
+	<dataStore name="uiFormula" dependence="uiFormula" dc="aecommon"
+		path="com.neusoft.arithmetic.entity.UiFormula" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="fmlProperty" label="fmlProperty" type="string" />
+			<column name="fmlName" label="fmlName" type="string" />
+			<column name="fmlExpression" label="fmlExpression" type="string" />
+			<column name="versionId" label="versionId" type="string" />
+			<column name="version" label="version" type="string" />
+			<column name="kindId" label="kindId" type="string" />
+			<column name="formulaKind" label="formulaKind" type="string" />
+			<column name="memo" label="memo" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+		</columns>
+	</dataStore>
+	<dataStore name="uiFunction" dependence="uiFunction" dc="aecommon"
+		path="com.neusoft.arithmetic.entity.UiFunction" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="funcProperty" label="funcProperty" type="string" />
+			<column name="funcName" label="funcName" type="string" />
+			<column name="className" label="className" type="string" />
+			<column name="versionId" label="versionId" type="string" />
+			<column name="methodName" label="methodName" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+		</columns>
+	</dataStore>
+	<dataStore name="uiParameter" dependence="uiParameter" dc="aecommon"
+		path="com.neusoft.arithmetic.entity.UiParameter" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="kindId" label="kindId" type="string" />
+			<column name="parameterKind" label="parameterKind" type="string" />
+			<column name="property" label="property" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="paramType" label="paramType" type="integer" />
+			<column name="sqlcontent" label="sqlcontent" type="string" />
+			<column name="dsId" label="dsId" type="string" />
+			<column name="datasource" label="datasource" type="string" />
+			<column name="className" label="className" type="string" />
+			<column name="methodName" label="methodName" type="string" />
+			<column name="returnType" label="returnType" type="string" />
+			<column name="defvalue" label="defvalue" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+		</columns>
+	</dataStore>
+	<dataStore name="uiKind" dependence="uiKind" dc="aecommon"
+		path="com.neusoft.arithmetic.entity.UiKind" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="kindType" label="kindType" type="integer" />
+			<column name="kindProperty" label="kindProperty" type="string" />
+			<column name="kindName" label="kindName" type="string" />
+			<column name="versionId" label="versionId" type="string" />
+			<column name="parentId" label="parentId" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+		</columns>
+	</dataStore>
+	<dataStore name="uiFormulaExt" dependence="uiFormulaExt" dc="aecommon"
+		path="com.neusoft.arithmetic.model.UiFormulaExt" type="pojo">
+		<columns>
+			<column name="id" label="id" type="string"></column>
+			<column name="fmlProperty" label="fmlProperty" type="string"></column>
+			<column name="fmlName" label="fmlName" type="string"></column>
+			<column name="fmlExpression" label="fmlExpression" type="string"></column>
+			<column name="versionId" label="versionId" type="string"></column>
+			<column name="version" label="version" type="string"></column>
+			<column name="kindId" label="kindId" type="string"></column>
+			<column name="formulaKind" label="formulaKind" type="string"></column>
+			<column name="memo" label="memo" type="string"></column>
+			<column name="createDate" label="createDate" type="date"></column>
+			<column name="bomObj" label="bomObj" type="string"></column>
+			<column name="bomAttribute" label="bomAttribute" type="string"></column>
+			<column name="modifyDate" label="modifyDate" type="date"></column>
+			<column name="parameter" label="parameter" type="string"></column>
+			<column name="function" label="function" type="string"></column>
+			<column name="params" label="params" type="string"></column>
+			<column name="indicator" label="indicator" type="string"></column>
+		</columns>
+	</dataStore>
+	<dataStore name="indicator" dependence="uiIndicatorDefine"
+		dc="aecommon" path="com.neusoft.arithmetic.entity.UiIndicatorDefine"
+		type="pojo">
+		<columns>
+			<column name="id" label="id" type="string"></column>
+			<column name="indicator" label="indicator" type="string"></column>
+			<column name="name" label="name" type="string"></column>
+			<column name="versionId" label="versionId" type="string"></column>
+			<column name="version" label="version" type="string"></column>
+			<column name="indicatorType" label="indicatorType" type="string"></column>
+			<column name="indicatorLevel" label="indicatorLevel" type="number"></column>
+			<column name="operateType" label="operateType" type="string"></column>
+			<column name="formulaExpression" label="formulaExpression"
+				type="string"></column>
+			<column name="ruleId" label="ruleId" type="string"></column>
+			<column name="ruleProperty" label="ruleProperty" type="string"></column>
+			<column name="indicatorLoader" label="indicatorLoader" type="string"></column>
+			<column name="createDate" label="createDate" type="date"></column>
+			<column name="modifyDate" label="modifyDate" type="date"></column>
+			<column name="params" label="params" type="string"></column>
+		</columns>
+	</dataStore>
+	<dataStore name="uiParameterRef" dependence="uiParameterRef"
+		dc="aecommon" path="com.neusoft.arithmetic.entity.UiParameterRef"
+		type="pojo">
+		<columns>
+			<column name="id" label="id" type="string" />
+			<column name="paramType" label="paramType" type="integer" />
+			<column name="name" label="name" type="string" />
+			<column name="refId" label="refId" type="string" />
+			<column name="property" label="property" type="string" />
+			<column name="orderNum" label="orderNum" type="integer" />
+			<column name="kindId" label="kindId" type="string" />
+			<column name="parameterKind" label="parameterKind" type="string" />
+			<column name="isRequired" label="isRequired" type="string" />
+			<column name="returnType" label="returnType" type="string" />
+			<column name="returnTypeId" label="returnTypeId" type="string" />
+			<column name="argType" label="argType" type="string" />
+			<column name="ref" label="ref" type="string" />
+			<column name="refValue" label="refValue" type="string" />
+			<column name="createDate" label="createDate" type="date" />
+			<column name="modifyDate" label="modifyDate" type="date" />
+			<column name="isPrivate" label="isPrivate" type="string" />
+			<column name="paramResource" label="paramResource" type="string" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><template id="template3" instance="false" type="com.neusoft.unieap.adaptiveLayout_1.0.0">
+    <adaptiveContainer id="adaptiveContainer1">
+      <adaptivePane height="300px" width="auto"  autoHeight="true"><titlePane id="titlePane1" private_displayOpen="true" title="公式信息" flexible="false">
+      <template id="template1" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    <form binding-store="uiFormulaExt" id="form1">
+    <tableLayout id="form1_tableLayout" tableLayout="fixed" width="100%">
+        <colgroup>
+          <col width="15%" />
+          <col width="30%" />
+          <col width="5%" />
+          <col width="15%" />
+          <col width="30%" />
+          <col width="5%" />
+        </colgroup>
+        <tbody>
+          <tr id="form1_1_tr">
+            <td id="fmlProperty_label_td" rowSpan="1" align="right">
+              <label id="fmlProperty_label" value="标识：" />
+            </td>
+            <td colSpan="1" id="fmlProperty_td" rowSpan="1">
+              <textBox binding-name="fmlProperty" id="fmlProperty"
+	width="100%" required="true" readOnly="true">
+	<events>
+	</events>
+</textBox>
+            </td>
+            <td></td>
+            <td id="fmlName_label_td" rowSpan="1" align="right">
+              <label id="fmlName_label" value="名称：" />
+            </td>
+            <td colSpan="1" id="fmlName_td" rowSpan="1">
+              <textBox binding-name="fmlName" id="fmlName" width="100%" required="true" readOnly="true"></textBox>
+            </td>
+            <td></td>
+          </tr>
+          <tr id="form1_3_tr">
+            <td id="versionId_label_td" rowSpan="1" align="right">
+              
+            <label id="version_label" value="版本：" /></td>
+            <td colSpan="1" id="versionId_td" rowSpan="1">
+              
+            <comboBox id="version" width="100%" binding-name="versionId" dataProvider-store="versionStore" decoder-displayAttr="versionName" decoder-valueAttr="id" required="true" popup-height="300%" readOnly="true" disabled="true">
+	<events>
+		
+	</events>
+</comboBox></td>
+            <td></td>
+            <td id="version_label_td" rowSpan="1" align="right">
+              
+            <label id="formulaKind_label" value="类别：" /></td>
+            <td colSpan="1" id="version_td" rowSpan="1">
+              
+            <comboBoxTree id="kindId" width="100%" binding-name="kindId" treeJson-binding="{leaf:'leaf',store:'formulaKindStore',id:'id',parent:'parentId',label:'kindName',query:{name:'parentId',relation:'=',value:null}}" required="true" disabled="true">
+	<events>
+	</events>
+</comboBoxTree></td><td></td>
+          </tr>
+          <tr id="form1_4_tr">
+            <td align="right">
+            <label id="formula_returnType_label" value="返回类型：" /></td>
+            <td><comboBox id="comboBox1" width="100%" dataProvider-store="inputTypeStore" binding-name="returnType" required="true" readOnly="true" disabled="true"></comboBox></td><td></td>
+            <td id="function_label_td" rowSpan="1" align="right">
+              
+            </td>
+            <td colSpan="1" id="function_td" rowSpan="1">
+              
+            </td>
+            <td></td>
+          </tr>
+          <tr id="form1_12_tr">
+          	<td id="memo_label_td" align="right">
+          	
+          	<label id="fmlExpression_label" value="表达式：" /></td>
+			<td></td>
+			<td></td>
+			<td></td><td></td>
+			<td></td>
+          </tr>
+          <tr id="form1_7_tr">
+            <td></td>
+            <td colSpan="4" id="memo_td" rowSpan="1">
+			<html id="html1" width="100%" height="100px"><![CDATA[<textarea readonly="true" rows="5" cols="115" id="box" class="u-form-textarea-input u-form-textbox-input-readonly u-form-textbox-input-required"></textarea>]]></html>
+			</td>
+            <td></td>
+          </tr>
+          <tr id="form1_11_tr">
+          	<td id="fmlExpression_label_td" align="right">
+          	
+          	<label id="memo_label" value="描述：" /></td>
+			<td></td>
+			<td></td>
+			<td></td><td></td>
+			<td></td>
+          </tr>
+          <tr id="form1_6_tr">
+            <td>
+            </td>
+            <td colSpan="4" id="fmlExpression_td" rowSpan="1">
+            	
+	            <textarea id="memo" width="100%" height="120px"
+					binding-name="memo" required="true" readOnly="true">
+				</textarea>
+			</td>
+            <td>
+            	
+            </td>
+          </tr>
+        </tbody>
+      </tableLayout></form>
+    
+  </template></titlePane><titlePane id="titlePane2" private_displayOpen="true" title="参数信息" flexible="false">
+  	<template id="template4" instance="true" type="com.neusoft.unieap.baseGrid_1.0.0">
+    <xgrid binding-store="uiParameterRef" edit-editType="readonly" height="600px" id="grid1" rows-rowsPerPage="10" selection-selectType="none" views-rowBar="false" views-rowNumber="true">
+      <header>
+        <row>
+          <xcell dataType="string" enable="false" id="cell_name" label="名称" name="name" width="30%" canSort="false"></xcell>
+          <xcell dataType="string" enable="false" id="cell_property" label="标识" name="property" width="30%" canSort="false"></xcell>
+          <xcell dataType="string" enable="false" id="cell_returnType"
+	label="类型" name="returnType" width="40%" canSort="false" decoder-store="parameterTypeStore"
+	decoder-displayAttr="CODENAME" decoder-valueAttr="CODEVALUE">
+	<events>
+		<event name="formatter" handlerFunction="cell_returnType_formatter">
+			<function name="cell_returnType_formatter" arguments="inValue,inRowIndex">
+				<script><![CDATA[var inValue=view.grid.getPropertyValue("grid1", "returnType", inRowIndex);
+var parameterTypeStore=dataCenter.getDataStore("parameterTypeStore");
+if(parameterTypeStore){
+	var rowSet=parameterTypeStore.getRowSet();
+	for(var index=0;index<rowSet.getRowCount();index++){
+		if(inValue==rowSet.getItemValue(index, "id")){
+			return rowSet.getItemValue(index, "name");
+		}
+	}
+}
+return  "";]]></script>
+			</function>
+		</event>
+	</events>
+</xcell>
+        </row>
+      </header>
+    </xgrid>
+  </template></titlePane></adaptivePane>
+  
+      <adaptivePane>
+      <tableLayout id="form1_ToolBarInfo" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="85px" />
+        <col width="85px" />
+        <col width="85px" />
+        <col width="85px" />
+      </colgroup>
+      <tbody>
+        <tr height="30px">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td align="center"></td>
+          <td>
+            
+          </td>
+          <td align="right">
+            <button id="form1_resetButton" label="取消" width="80px">
+	<events>
+		<event name="onClick" handlerFunction="form1_resetButton_onClick">
+			<function name="form1_resetButton_onClick" arguments="event">
+				<script><![CDATA[var newDC1=new unieap.ds.DataCenter();
+view.navigator.prePage("公式编辑成功", newDC1);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+        </tr>
+      </tbody>
+    </tableLayout></adaptivePane>
+    </adaptiveContainer>
+  </template><events><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[view.processor.getVersionList(null);
+
+var ds3 = unieap.ds.DataStore("parameterTypeStore", [ {
+	CODENAME : '数字型',
+	CODEVALUE : 'number'
+}, {
+	CODENAME : '字符串型',
+	CODEVALUE : 'string'
+}, {
+	CODENAME : '日期型',
+	CODEVALUE : 'date'
+} ]);
+dataCenter.addDataStore(ds3); //后续还在添加bom元素，因此没有复用
+
+
+var ds = unieap.ds.DataStore("inputTypeStore", [ {
+	CODENAME : '数字型',
+	CODEVALUE : 'number'
+}, {
+	CODENAME : '字符串型',
+	CODEVALUE : 'string'
+}, {
+	CODENAME : '日期型',
+	CODEVALUE : 'date'
+} ]);
+dataCenter.addDataStore(ds); ]]></script></function></event><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[view.navigator.receiveData("公式详情", receive);
+view.navigator.onComplete("公式详情", callBack);]]></script></function></event></events><dependence name="config/formula_edit_parameters" type="view" sc="arithengine" dc="config" ref="formula_edit_parameters" /><dependence name="config/formula_edit_parameters2" type="view" sc="arithengine" dc="config" ref="formula_edit_parameters2" /></controls>
+      <scripts ><function name="editExpression"
+	arguments="inputvalue,inputtext,clickType,isParamObj">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var box =unieap.getElementById("box");
+//var fmlExpressionObj=unieap.byId("fmlExpression");
+var memo=unieap.byId("memo");
+if(!formula_edit.formulas[0]){
+	formula_edit.formulas[0]="";
+	formula_edit.formulasM[0]="";
+}
+if(!formula_edit.formulas[1]){
+	formula_edit.formulas[1]="";
+	formula_edit.formulasM[1]="";
+}
+if ((clickType == 'button' || clickType == 'value') && inputvalue) {
+	formula_edit.index++;
+	//公式元素，保存着各个阶段的公式
+	formula_edit.elements[formula_edit.index] = formula_edit.formulas[0]+inputvalue+formula_edit.formulas[1];
+	//公式描述元素
+	formula_edit.elementsM[formula_edit.index] = formula_edit.formulasM[0]+inputtext+formula_edit.formulasM[1];
+} else if (clickType == 'clear') {
+	if (box.innerHTML) {
+//	if (fmlExpressionObj.getValue()){
+		formula_edit.index--;
+	}
+}
+if(formula_edit.elements[formula_edit.index]){
+	box.innerHTML=formula_edit.elements[formula_edit.index];
+//	fmlExpressionObj.setValue(formula_edit.elements[formula_edit.index]);
+//	fmlExpressionObj.setText(formula_edit.elements[formula_edit.index]);
+	
+	memo.setText(formula_edit.elementsM[formula_edit.index]);
+	memo.setValue(formula_edit.elementsM[formula_edit.index]);
+}else{
+	box.innerHTML="";
+//	fmlExpressionObj.setValue("");
+//	fmlExpressionObj.setText("");
+
+	memo.setText("");
+	memo.setValue("");
+}
+formula_edit.formulas[0]=box.innerHTML;
+//formula_edit.formulas[0]=fmlExpressionObj.getValue();
+formula_edit.formulas[1]="";
+
+formula_edit.formulasM[0]=memo.getText();
+formula_edit.formulasM[1]="";
+
+if(isParamObj&&(isParamObj=='parameter'||isParamObj=='bom'||isParamObj=='indicator')){
+	var returnType;
+	if(isParamObj=='bom'&&inputvalue.indexOf('.')>0){
+		inputvalue=inputvalue.split(".")[0];
+		inputtext=inputtext.split(".")[0];
+		returnType=inputvalue;
+	}
+	if(isParamObj=='indicator'){
+		returnType='number';
+	}
+	
+	if(isParamObj=='parameter'){
+		var rowSet=dataCenter.getDataStore("parameterStore").getRowSet();
+		for(var slt=0;slt<rowSet.getRowCount();slt++){
+			if(inputvalue==rowSet.getItemValue(slt, "property")){
+				returnType=rowSet.getItemValue(slt, "returnType");
+			}
+		}
+	}
+	
+	var data = {
+		property:inputvalue,
+		name:inputtext,
+		returnType:returnType,
+		paramResource:isParamObj
+	};
+	var gridRS=unieap.byId("grid1").getBinding().getDataStore().getRowSet();
+	var isAddRow=true;
+	if(gridRS.getRowCount()==0){
+		gridRS.addRows(data);
+	}else if(gridRS.getRowCount()>0){
+		var total=gridRS.getRowCount();
+		for(var m=0;m<total;m++){
+			if((gridRS.getItemValue(m, "property")==inputvalue)
+			    &&(gridRS.getItemValue(m, "name")==inputtext)
+			    &&(gridRS.getItemValue(m, "returnType")==returnType)){
+			    isAddRow=false;
+			}
+		}
+		if(isAddRow==true){
+		 	gridRS.addRows(data);
+		}
+	}
+}
+]]></script>
+</function><function name="getVersionListSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getVersionList方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[try {
+	var store = dc.getDataStore("result");
+	dataCenter.addDataStore("versionStore", store);
+} catch (e) {
+}]]></script>
+</function><function name="callBack" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(dc){
+	var returnDS=dc.getDataStore("returnDS");
+	var paramArray=dc.getParameter("paramArray");
+//	alert(paramArray);
+	if(paramArray){
+		view.form.setPropertyValue("form1", "params", paramArray.join());
+	}
+//	formula_edit_parameters.paramArray=formula_edit_parameters.paramArray.concat(paramArray.join(","));	
+	var funcObj=unieap.byId("function");
+	var rs=returnDS.getRowSet();
+	var funcText=new Array();
+	var funcValue=new Array(); 
+	for(var rowIndex=0;rowIndex<rs.getTotalCount();rowIndex++){
+		funcText[rowIndex]=rs.getItemValue(rowIndex, "argText");
+		funcValue[rowIndex]=rs.getItemValue(rowIndex, "argValue");
+	}
+	formula_edit.editExpression(funcObj.getValue()+"("+funcValue.join()+")", funcObj.getText()+"("+funcText.join()+")", "value",false);
+}]]>
+	</script>
+</function><function name="editFormulaSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:editFormula方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var code = dc.getParameter("result");
+var message="操作失败！";
+if(code>0){
+	message="操作成功！";
+} else if(code==-2){
+	message="存在相同标识的公式，操作失败！";
+} else if(code==-3){
+	message="公式校验失败！";
+}
+MessageBox.alert({
+        title: '提示信息',
+        message: message,
+        onComplete: function () {
+        	if(code>0){
+        		var newDC1=new unieap.ds.DataCenter();
+				view.navigator.prePage("公式编辑成功", newDC1);
+        	}
+        }
+});]]></script>
+</function><function name="receive" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[var flag=dc.getParameter('flag');
+var btnFlag=dc.getParameter("btnFlag");  
+var formulaDS=dc.getDataStore("formulaDS");
+//编辑页面
+if(formulaDS&&btnFlag&&btnFlag=="detail"){
+	//unieap.debug(formulaDS);
+	var formulaId=formulaDS.getRowSet().getRow(0).getItemValue("id");
+	var versionId=formulaDS.getRowSet().getRow(0).getItemValue("versionId");
+	unieap.getElementById("box").innerHTML=formulaDS.getRowSet().getRow(0).getItemValue("fmlExpression")
+	var data = {
+		id : formulaId,
+		fmlProperty: formulaDS.getRowSet().getRow(0).getItemValue("fmlProperty"),
+		fmlName: formulaDS.getRowSet().getRow(0).getItemValue("fmlName"),
+		fmlExpression: formulaDS.getRowSet().getRow(0).getItemValue("fmlExpression"),
+		versionId: versionId,
+		kindId: formulaDS.getRowSet().getRow(0).getItemValue("kindId"),
+		memo:formulaDS.getRowSet().getRow(0).getItemValue("memo"),
+		returnType:formulaDS.getRowSet().getRow(0).getItemValue("returnType")
+	};
+	var rowSet = new unieap.ds.RowSet(); rowSet.addRows(data);
+	var store = new unieap.ds.DataStore(); store.setRowSet(rowSet);
+	store.setRowSetName("com.neusoft.arithmetic.model.UiFormulaExt");
+	
+	
+//	var data1 = {
+//		versionId : versionId,
+//		kindType :'2'
+//	};
+//	var rowSet1 = new unieap.ds.RowSet(); rowSet1.addRows(data1);
+//	var store1 = new unieap.ds.DataStore();
+//	store1.setRowSet(rowSet1);
+//	store1.setRowSetName("com.neusoft.arithmetic.entity.UiKind");
+//	var dc1=view.processor.getKindList(store1);
+//	
+//	try {
+//		var store3 = dc1.getDataStore("result");
+//		dataCenter.addDataStore("formulaKindStore",store3);
+//		var treeJson={
+//			binding:{leaf:'leaf',store:'formulaKindStore',id:'id',label:'kindName',parent:'parentId',query:{name:'parentId',relation:'=',value:null}}
+//		};
+//		unieap.byId("kindId").setTreeJson(treeJson);
+//	} catch (e){
+//	}
+	
+	formula_detail.setKindComboxTreeValue(versionId);
+	
+	view.form.setDataStore("form1", store);
+	
+	// 
+//	var data4 = {
+//		versionId : versionId
+//	};
+//	var rowSet4 = new unieap.ds.RowSet(); rowSet4.addRows(data4);
+//	var store4 = new unieap.ds.DataStore();
+//	store4.setRowSet(rowSet4);
+//	store4.setRowSetName("com.neusoft.arithmetic.entity.UiBom");
+//	var dc4=view.processor.getBomList(store4);
+//	view.processor.getBomList(versionId);
+	//为grid1中的bom选择框添加值
+//	try {
+//		var store5 = dc4.getDataStore("result");
+//		var rowSet5 = store5.getRowSet();
+//		var array5= new Array();
+//		for(var i=0;i<rowSet5.getRowCount(0);i++){
+//			var bomProperty=rowSet5.getItemValue(i, "bomProperty", "primary");
+//			var name=rowSet5.getItemValue(i, "name", "primary");
+//			var className=rowSet5.getItemValue(i, "className", "primary");
+//			var data6= {
+//			        "CODENAME": name,       
+//			        "CODEVALUE" : bomProperty
+//			};
+//			array5.push(data6);
+//		}
+//		dataCenter.getDataStore("parameterTypeStore").getRowSet().addRows(array5);
+//	} catch (e) {
+//		
+//	}
+	formula_detail.setBomComboxTreeValue(versionId);
+	
+	var data2 = {
+		refId:formulaId
+	}
+	
+	var rowSet2 = new unieap.ds.RowSet(); rowSet2.addRows(data2);
+	var store2 = new unieap.ds.DataStore(); store2.setRowSet(rowSet2);
+	store2.setRowSetName("com.neusoft.arithmetic.entity.UiParameterRef");
+	
+	view.processor.getParameterRefList(store2);
+}]]>
+	</script>
+</function><function name="getParameterRefListSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getParameterRefList方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var store=dc.getDataStore("result");
+view.grid.setDataStore("grid1", store);]]></script>
+</function><variable name="elements"><script><![CDATA[new Array()]]></script><comment><![CDATA[]]></comment></variable><variable name="elementsM"><script><![CDATA[new Array()]]></script><comment><![CDATA[]]></comment></variable><variable name="index"><script><![CDATA[0]]></script><comment><![CDATA[]]></comment></variable><variable name="btnType"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><variable name="formulaParams"><script><![CDATA[new Array()]]></script><comment><![CDATA[]]></comment></variable><variable name="formulas"><script><![CDATA[new Array()]]></script><comment><![CDATA[]]></comment></variable><variable name="formulasM"><script><![CDATA[new Array()]]></script><comment><![CDATA[]]></comment></variable><function
+	name="setBomComboxTreeValue" arguments="versionId">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(versionId){
+	var dc=view.processor.getBomList(versionId);
+	//为grid1中的bom选择框添加值
+	try {
+		var store = dc.getDataStore("result");
+		
+		var rowSet = store.getRowSet();
+		var array= [{
+						name : '数字型',
+						id : 'number',
+						parentId:null
+					},{
+						name : '字符串型',
+						id : 'string',
+						parentId:null
+					}, {
+						name : '日期型',
+						id : 'date',
+						parentId:null
+					} ];
+		for(var i=0;i<rowSet.getRowCount(0);i++){
+			var id=rowSet.getItemValue(i, "id", "primary");  //此处不能使用ID，bom属性中需要用到property设置公式
+			var name=rowSet.getItemValue(i, "name", "primary");
+			var parentId=rowSet.getItemValue(i, "parentId", "primary");
+			var data= {
+			        name: name,       
+					id : id,
+					parentId:parentId
+			};
+			array.push(data);
+		}
+		var parameterTypeStore=dataCenter.getDataStore("parameterTypeStore");
+		parameterTypeStore.getRowSet().deleteAllRows();  //初始化，不同的版本的数据不会清除
+		parameterTypeStore.getRowSet().addRows(array);
+		
+	} catch (e) {
+	}
+}
+]]></script>
+</function><function name="setKindComboxTreeValue" arguments="versionId">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(versionId){
+	var data1 = {
+		versionId : versionId,
+		kindType :'2'
+	};
+	var rowSet1 = new unieap.ds.RowSet(); rowSet1.addRows(data1);
+	var store1 = new unieap.ds.DataStore();
+	store1.setRowSet(rowSet1);
+	store1.setRowSetName("com.neusoft.arithmetic.entity.UiKind");
+	
+	var dc3=view.processor.getKindList(store1);
+	try {
+		var store3 = dc3.getDataStore("result");
+		dataCenter.addDataStore("formulaKindStore",store3);
+		var treeJson={
+			binding:{leaf:'leaf',store:'formulaKindStore',id:'id',label:'kindName',parent:'parentId',query:{name:'parentId',relation:'=',value:null}}
+		};
+		unieap.byId("kindId").setTreeJson(treeJson);
+	} catch (e){
+	}
+}]]>
+	</script>
+</function></scripts>
+      <templateInstances>
+	<templateInstance target="template1"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form1</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>none</colType>
+        <colsPropertyList>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>id</name>
+            <label>id</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <properties/>
+                <binding__name>id</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>fmlProperty</name>
+            <label>fmlProperty</label>
+            <labelTD>
+              <id>fmlProperty_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>fmlProperty_label</id>
+                <value>fmlProperty</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>fmlProperty_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>fmlProperty</id>
+                <properties/>
+                <binding__name>fmlProperty</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>fmlName</name>
+            <label>fmlName</label>
+            <labelTD>
+              <id>fmlName_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>fmlName_label</id>
+                <value>fmlName</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>fmlName_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>fmlName</id>
+                <properties/>
+                <binding__name>fmlName</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>versionId</name>
+            <label>versionId</label>
+            <labelTD>
+              <id>versionId_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>versionId_label</id>
+                <value>versionId</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>versionId_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>versionId</id>
+                <properties/>
+                <binding__name>versionId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>version</name>
+            <label>version</label>
+            <labelTD>
+              <id>version_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>version_label</id>
+                <value>version</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>version_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>version</id>
+                <properties/>
+                <binding__name>version</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>kindId</name>
+            <label>kindId</label>
+            <labelTD>
+              <id>kindId_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>kindId_label</id>
+                <value>kindId</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>kindId_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>kindId</id>
+                <properties/>
+                <binding__name>kindId</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>formulaKind</name>
+            <label>formulaKind</label>
+            <labelTD>
+              <id>formulaKind_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>formulaKind_label</id>
+                <value>formulaKind</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>formulaKind_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>formulaKind</id>
+                <properties/>
+                <binding__name>formulaKind</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>memo</name>
+            <label>memo</label>
+            <labelTD>
+              <id>memo_label_td</id>
+              <rowSpan>4</rowSpan>
+              <colSpan>3</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>memo_label</id>
+                <value>memo</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>memo_td</id>
+              <rowSpan>4</rowSpan>
+              <colSpan>3</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>memo</id>
+                <properties/>
+                <binding__name>memo</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>4</colSpan>
+                <rowSpan>4</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>fmlExpression</name>
+            <label>fmlExpression</label>
+            <labelTD>
+              <id>fmlExpression_label_td</id>
+              <rowSpan>4</rowSpan>
+              <colSpan>3</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>fmlExpression_label</id>
+                <value>fmlExpression</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>fmlExpression_td</id>
+              <rowSpan>4</rowSpan>
+              <colSpan>3</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>fmlExpression</id>
+                <properties/>
+                <binding__name>fmlExpression</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>4</colSpan>
+                <rowSpan>4</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>createDate</name>
+            <label>createDate</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>dateTextBox</controlType>
+                <properties/>
+                <binding__name>createDate</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>date</type>
+            <length></length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>modifyDate</name>
+            <label>modifyDate</label>
+            <controlTD>
+              <rowSpan>-1</rowSpan>
+              <colSpan>-1</colSpan>
+              <control>
+                <controlType>dateTextBox</controlType>
+                <properties/>
+                <binding__name>modifyDate</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>date</type>
+            <length></length>
+            <isShow>false</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_1_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_3_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_5_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_6_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_7_4_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_7_5_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_7_6_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_7_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_8_0_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <isIdChange>true</isIdChange>
+        <lastId></lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form1_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_saveButton</id>
+              <name>form1_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_resetButton</id>
+              <name>form1_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form1_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form1</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form1</id>
+        <properties/>
+        <isMerge>false</isMerge>
+        <binding__store>aeFormula</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form1_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>9</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance>
+	<templateInstance target="template4"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Grid</functionName>
+  <description>该向导用于快速生成Grid控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.baseGrid_1.0.0</templateId>
+    <label>Grid</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成Grid控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>toolBarInfo</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>gridInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+        <rowCount>0</rowCount>
+        <colCount>0</colCount>
+        <countPerPage>10</countPerPage>
+        <printMetaData>
+          <intOrient>1</intOrient>
+          <strPageName>1</strPageName>
+          <top></top>
+          <topUnit>1</topUnit>
+          <left></left>
+          <leftUnit>1</leftUnit>
+          <width></width>
+          <widthUnit>1</widthUnit>
+          <height></height>
+          <heightUnit>1</heightUnit>
+          <bkgWidthUnit>1</bkgWidthUnit>
+          <bkgHeightUnit>1</bkgHeightUnit>
+          <pageWidthUnit>1</pageWidthUnit>
+          <pageHeightUnit>1</pageHeightUnit>
+          <pageNameArray>
+            <string>A3</string>
+            <string>A4</string>
+            <string>A4Small</string>
+            <string>A5</string>
+            <string>B4</string>
+            <string>B5</string>
+          </pageNameArray>
+          <fontNameArray>
+            <string>宋体</string>
+            <string>微软雅黑</string>
+            <string>黑体</string>
+            <string>隶书</string>
+          </fontNameArray>
+          <splitPages/>
+          <cancelRows/>
+          <wmImages/>
+          <styles/>
+          <headerfooters/>
+          <bindingStore>uiParameterRef</bindingStore>
+          <printMode>0</printMode>
+          <printType>0</printType>
+          <formListLineCount>0</formListLineCount>
+        </printMetaData>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>id</name>
+            <label>id</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>id</name>
+              <label>id</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>paramType</name>
+            <label>paramType</label>
+            <type>integer</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>paramType</name>
+              <label>paramType</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>name</name>
+            <label>name</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_name</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>name</name>
+              <label>name</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_name_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>refId</name>
+            <label>refId</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>refId</name>
+              <label>refId</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>property</name>
+            <label>property</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_property</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>property</name>
+              <label>property</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_property_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>orderNum</name>
+            <label>orderNum</label>
+            <type>integer</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>number</dataType>
+              <name>orderNum</name>
+              <label>orderNum</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>numberTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>numberTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>kindId</name>
+            <label>kindId</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>kindId</name>
+              <label>kindId</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>parameterKind</name>
+            <label>parameterKind</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>parameterKind</name>
+              <label>parameterKind</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>isRequired</name>
+            <label>isRequired</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>isRequired</name>
+              <label>isRequired</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>returnType</name>
+            <label>returnType</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <id>cell_returnType</id>
+              <properties/>
+              <dataType>string</dataType>
+              <name>returnType</name>
+              <label>returnType</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <id>cell_returnType_textBox</id>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>true</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>returnTypeId</name>
+            <label>returnTypeId</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>returnTypeId</name>
+              <label>returnTypeId</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>argType</name>
+            <label>argType</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>argType</name>
+              <label>argType</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>ref</name>
+            <label>ref</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>ref</name>
+              <label>ref</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>refValue</name>
+            <label>refValue</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>refValue</name>
+              <label>refValue</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>createDate</name>
+            <label>createDate</label>
+            <type>date</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>date</dataType>
+              <name>createDate</name>
+              <label>createDate</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>dateTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>dateTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>modifyDate</name>
+            <label>modifyDate</label>
+            <type>date</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>date</dataType>
+              <name>modifyDate</name>
+              <label>modifyDate</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>dateTextBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>dateTextBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>isPrivate</name>
+            <label>isPrivate</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>isPrivate</name>
+              <label>isPrivate</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+          <com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+            <name>paramResource</name>
+            <label>paramResource</label>
+            <type>string</type>
+            <isFake>false</isFake>
+            <cell>
+              <properties/>
+              <dataType>string</dataType>
+              <name>paramResource</name>
+              <label>paramResource</label>
+              <colSpan>1</colSpan>
+              <rowSpan>1</rowSpan>
+              <isMulTitle>false</isMulTitle>
+              <edit>false</edit>
+              <fixed>false</fixed>
+              <editor>textBox</editor>
+              <control>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+                <popup__height>300px</popup__height>
+                <properties/>
+                <controlType>textBox</controlType>
+                <dataProvider__store></dataProvider__store>
+              </control>
+            </cell>
+            <length></length>
+            <isCheckedShow>false</isCheckedShow>
+            <children/>
+          </com.neusoft.unieap.workshop.controlmode.model.grid.GridInfoPro>
+        </propertyList>
+        <binding__store>uiParameterRef</binding__store>
+        <views__rowBar>false</views__rowBar>
+        <selection__selectType>none</selection__selectType>
+        <id>grid1</id>
+        <lastId></lastId>
+        <dataStoreInfos>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiVersion</name>
+            <entityClass>UiVersion</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiVersion</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiBom</name>
+            <entityClass>UiBom</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiBom</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiBomAttribute</name>
+            <entityClass>UiBomAttribute</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiBomAttribute</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiFormula</name>
+            <entityClass>UiFormula</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiFormula</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiFunction</name>
+            <entityClass>UiFunction</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiFunction</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiParameter</name>
+            <entityClass>UiParameter</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiParameter</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiKind</name>
+            <entityClass>UiKind</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiKind</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiFormulaExt</name>
+            <entityClass>UiFormulaExt</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiFormulaExt</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>indicator</name>
+            <entityClass>UiIndicatorDefine</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiIndicatorDefine</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+          <com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+            <name>uiParameterRef</name>
+            <entityClass>UiParameterRef</entityClass>
+            <dc>aecommon</dc>
+            <type>pojo</type>
+            <dependence>uiParameterRef</dependence>
+          </com.neusoft.unieap.workshop.controlmode.model.dataStore.DataStoreInfo>
+        </dataStoreInfos>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>grid1_titlePane_qResult</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询结果</title>
+        </container>
+        <properties/>
+        <toolBar>
+          <id>grid1_ToolBar</id>
+          <properties/>
+        </toolBar>
+        <isMerge>false</isMerge>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>grid1_ToolBarInfo</id>
+          <colNum>0</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre></controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>0</colCount>
+        </toolBarInfo>
+        <rowNumber>1</rowNumber>
+        <edit__editType>readonly</edit__editType>
+        <height>100%</height>
+        <rows__rowsPerPage>10</rows__rowsPerPage>
+        <queryTmpStore>_queryCondition</queryTmpStore>
+        <ID__PREFIX></ID__PREFIX>
+        <showToolBar>true</showToolBar>
+        <views__rowNumber>true</views__rowNumber>
+      </com.neusoft.unieap.workshop.controlmode.model.grid.GridDataInfo>
+    </entry>
+    <entry>
+      <string>gridPrefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>gridId</string>
+      <string>grid1</string>
+    </entry>
+    <entry>
+      <string>girdType</string>
+      <string>1</string>
+    </entry>
+    <entry>
+      <string>selectionType</string>
+      <string>0</string>
+    </entry>
+    <entry>
+      <string>showLineInfo</string>
+      <boolean>true</boolean>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance>
+</templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

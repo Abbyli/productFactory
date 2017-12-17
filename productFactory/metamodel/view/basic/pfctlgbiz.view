@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="chen-gy" />
+         <creationTime value="2015-09-30 15:38:38" />
+         <modificationTime value="2016-03-08 14:07:09" />
+         <version value="1.0.0" />
+         <comment ><![CDATA[产品工厂_业务分类]]></comment>
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<dependence name="pfctlgbiz.business.xml"
+		ref="pfctlgbiz.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	
+	<pMethod name="getPfCtlgBizList" onSuccess="getPfCtlgBizListSuccess"
+		sync="true">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfctlgbiz.business.xml" method="pfctlgbiz.getPfCtlgBizList"></bo>
+	</pMethod>
+	<pMethod name="delPfCtlgBizTree" onSuccess="delPfCtlgBizTreeSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<context>
+		<string name="id" />
+		<string name="childIds" />
+	</context>
+	<arguments>
+		<argument name="id" type="string"></argument>
+		<argument name="childIds" type="string"></argument>
+	</arguments>
+	<bo name="pfctlgbiz.business.xml" method="pfctlgbiz.delPfCtlgBizTree"></bo>
+</pMethod>
+</processor>
+      <messageWires />
+      <dataCenter />
+      <controls ><xdialog id="addDialog" title="业务分类信息"
+	view-ref="factory/basic/pfctlgbizDialog" width="500px" height="177px"
+	minHeight="50" isExpand="false">
+	<events>
+		<event name="onComplete" handlerFunction="addDialog_onComplete">
+			<function name="addDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[var returnPfSort = returnObj.object;
+var data={
+	id: returnPfSort.id,
+	name: returnPfSort.name,
+	appId: '',
+	target: '',
+	url: '',
+	image: '',
+	orderNum: '',
+	isDefault: '1',
+	description: returnPfSort.description,        
+    parentId: returnPfSort.pid,
+    title: '',
+    businessId: '',
+    creator: '',
+	creationDate: '',
+	lastUpdator: '',
+	lastUpdateDate: ''
+}; //构造新节点的数据
+	          
+var rowSet = new unieap.ds.RowSet();
+rowSet.addRows(data);
+var menuTree = unieap.byId("tree1");
+var parentNode = menuTree.getCurrentNode(); //获取当前节点
+menuTree.createNode(data,parentNode); //给当前节点添加一个孩子节点
+	
+menuTree.expandNode(parentNode); 
+]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><xdialog id="updDialog" title="业务分类信息" width="500px"
+	height="177px" view-ref="factory/basic/pfctlgbizDialog" minHeight="50"
+	isExpand="false">
+	<events>
+		<event name="onComplete" handlerFunction="updDialog_onComplete">
+			<function name="updDialog_onComplete" arguments="returnObj">
+				<script><![CDATA[var returnPfSort = returnObj.object;
+var menuTree = unieap.byId("tree1");
+
+var node = menuTree.getCurrentNode();
+var row = menuTree.getBinding().getRow(node);
+row.setItemValue("name",returnPfSort.name);
+row.setItemValue("description",returnPfSort.description);
+//刷新
+menuTree.freshNodeLabel(node);
+	]]></script>
+			</function>
+		</event>
+	</events>
+</xdialog><titlePane height="100%" title="业务分类" flexible="false"><div id="div1" type="buttons" height="30px"><button
+	id="addbutton" label="新 增" width="100px" class="titlePane-button" iconClass="common_base_btn common_new_btn">
+	<events>
+		<event name="onClick" handlerFunction="addbutton_onClick">
+			<function name="addbutton_onClick" arguments="event">
+				<script><![CDATA[var node = unieap.byId("tree1").getCurrentNode();
+if (!node) {
+	return;
+}
+
+
+//获取xdialog控件
+var xdialog = unieap.byId("addDialog");
+
+//pid
+xdialog.dialogData = {
+	type: "add",
+	pid: node.getItem().data.id
+};
+
+//弹出窗口方法
+xdialog.show();
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="updbutton" label="修 改" width="100px"
+	class="titlePane-button" iconClass="common_base_btn common_modify_btn">
+	<events>
+		<event name="onClick" handlerFunction="updbutton_onClick">
+			<function name="updbutton_onClick" arguments="event">
+				<script><![CDATA[var node = unieap.byId("tree1").getCurrentNode();
+
+if (!node || node.getItem().data.id == "-1") {
+	return;
+}
+
+//获取xdialog控件
+var xdialog = unieap.byId("updDialog");
+
+//pid
+xdialog.dialogData = {
+	type: "upd",
+	id: node.getItem().data.id,
+	name: node.getItem().data.name,
+	desc: node.getItem().data.description
+};
+
+//弹出窗口方法
+xdialog.show();
+]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="delbutton" label="删 除" width="100px" class="titlePane-button" iconClass="common_base_btn common_del_btn">
+	<events>
+		<event name="onClick" handlerFunction="delbutton_onClick">
+			<function name="delbutton_onClick" arguments="event">
+				<script><![CDATA[var node = unieap.byId("tree1").getCurrentNode();
+
+if (node && node.item) {
+	thisNodeArray = new Array();
+	//递归遍历treeNodeId
+	if (node.item.children) {
+		for (var i = 0; i < node.item.children.length; i++){ 
+			var childNodeItem = node.item.children[i];
+			recursion(childNodeItem);
+		}
+	}
+}
+//console.info(thisNodeArray.toString());
+//return;
+if (node 
+	&& node.getItem() 
+	&& node.getItem().data 
+	&& node.getItem().data.id != "-1") {
+	
+	MessageBox.confirm({
+	    message: "是否删除？",
+	    yesStr: "是",
+	    noStr: "否",
+	    //关闭右上角的"X"按钮时执行onComplete函数
+	    iconCloseComplete:false,
+	    onComplete: function(value) {
+	        if (value) {
+		    	var nodeId = node.getItem().data.id;
+		    	var childIds = thisNodeArray.toString();
+		    	thisNodeArray = null;
+		    	view.processor.delPfCtlgBizTree(nodeId, childIds);
+		    }
+	    }
+	}, dojo.byId("confirm"));
+	    
+}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</button></div><tree id="tree1" binding-query="{name:'pid',relation:'=',value:'-1'}" binding-store="list" binding-rootNodeId="-1" binding-parent="pid" binding-id="id" binding-label="name" height="100%" width="100%" label="产品工厂">
+	<events>
+		
+	</events>
+</tree></titlePane><events><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[//tree
+view.processor.getPfCtlgBizList()
+]]></script></function></event><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[unieap.byId("tree1").expandNodeByLevel(1);]]></script></function></event></events><dependence name="factory/model/pfsortDialog" type="view" sc="ProductFactory" dc="factory" ref="model/pfsortDialog" /><dependence name="factory/ctlg/bizDialog" type="view" sc="ProductFactory" dc="factory" ref="ctlg/bizDialog" /><dependence name="factory/ctlg/pfctlgbizDialog" type="view" sc="ProductFactory" dc="factory" ref="ctlg/pfctlgbizDialog" /><dependence name="factory/basic/pfctlgbizDialog" type="view" sc="ProductFactory" dc="factory" ref="basic/pfctlgbizDialog" /></controls>
+      <scripts ><function name="recursion" arguments="nodeItem">
+	<comment><![CDATA[/**
+ * @description:
+ * 递归遍历node
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[//thisNodeArray
+if (nodeItem 
+	&& nodeItem.data) {
+	
+	var nodeId = nodeItem.data.id;
+	thisNodeArray.push(nodeId);
+	
+	if (nodeItem.children) {
+		for (var i = 0; i < nodeItem.children.length; i++){
+			var childNode = nodeItem.children[i];
+			recursion(childNode);
+		}
+	}
+}]]>
+	</script>
+</function><variable name="thisNodeArray"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><function
+	name="getPfCtlgBizListSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getPfCtlgBizList方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var ds = dc.getDataStore("list");
+dataCenter.addDataStore(ds);]]></script>
+</function><function name="delPfCtlgBizTreeSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:delPfCtlgBizTree方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var rtnMessage = dc.getParameter("rtnMessage");
+if(rtnMessage == ""){
+//	var nodeId = dc.parameters.rtnId;
+//	var delete_node = unieap.byId("tree1").getNodeById(nodeId); 
+	var delete_node = unieap.byId("tree1").getCurrentNode();	
+	unieap.byId("tree1").deleteNode(delete_node,true); //删除树节点
+}else{
+	MessageBox.alert({
+		title:'提示',
+		message:rtnMessage
+	});
+}
+]]></script>
+</function></scripts>
+      <templateInstances></templateInstances>
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

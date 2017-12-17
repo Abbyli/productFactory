@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+  <dc:entity class="com.neusoft.fdframework.productfactory.entity.PfMVersion" table="PF_M_VERSION" extends="com.neusoft.unieap.core.di.DomainObject">
+    <id name="id" type="string" getStrategy="public" setStrategy="public">
+      <column name="ID" length="32" />
+      <generator class="uuid" />
+    </id>
+    <property name="verCode" label="版本号" type="string" getStrategy="public" setStrategy="public">
+      <column name="VER_CODE" not-null="true" length="16" />
+    </property>
+    <property name="description" label="备注" type="string" getStrategy="public" setStrategy="public">
+      <column name="DESCRIPTION" not-null="false" length="3000" />
+    </property>
+    <property name="status" label="状态(-1:不可用 0:编辑 1:可用 2:激活)" type="big_decimal" getStrategy="public" setStrategy="public">
+      <column name="STATUS" not-null="true" length="22" />
+    </property>
+    <property name="modelId" label="关联的模型ID" type="string" getStrategy="public" setStrategy="public">
+      <column name="MODEL_ID" not-null="true" length="32" />
+    </property>
+    <property name="type" label="模型类型(0:基础模型 1:险种定义模型 2:险种对象模型 8:产品对象模型)" type="big_decimal" getStrategy="public" setStrategy="public">
+      <column name="TYPE" not-null="true" length="22" />
+    </property>
+    <import value="java.io.Serializable" />
+    <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+    <import value="com.neusoft.fdframework.core.annotation.Column" />
+    <import value="com.neusoft.fdframework.core.annotation.Entity" />
+    <import value="com.neusoft.fdframework.core.annotation.ID" />
+    <import value="com.neusoft.fdframework.core.annotation.Transient" />
+    <import value="com.neusoft.unieap.core.di.DomainObject" />
+  </dc:entity>
+</dc:dc>
+

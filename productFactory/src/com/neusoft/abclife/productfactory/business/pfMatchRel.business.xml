@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fdframework-business xmlns="http://www.neusoft.com/fdframework/business"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<business id="MatchRel.queryMatchRel" returnkey="queryMatchRelResult"
+		name="" desc="有效险种查询">
+		<step id="1" bean="factoryabclife_pfMatchRelBo_bo" method="queryMatchRel"
+			returnkey="queryMatchRelResult">
+			<property refkey="dto"
+				type="pojo(com.neusoft.abclife.productfactory.dto.ProMatchDto)"></property>
+			<property refkey="pageNumber" type="int"></property>
+			<property refkey="pageSize" type="int"></property>
+		</step>
+	</business>
+
+	<business id="MatchRel.queryAddition" returnkey="queryAdditionResult"
+		name="" desc="主附险查询">
+		<step id="1" bean="factoryabclife_pfMatchRelBo_bo" method="queryAddition"
+			returnkey="queryAdditionResult">
+			<property refkey="tInsurtypeBasicInf"
+				type="pojo(com.neusoft.abclife.productfactory.dto.ProMatchDto)"></property>
+			<property refkey="matchRel" type="string"></property>
+			<property refkey="pageNumber" type="int"></property>
+			<property refkey="pageSize" type="int"></property>
+		</step>
+	</business>
+	
+	<business id="MatchRel.queryMatchRow" returnkey="queryMatchRowResult"
+		name="" desc="搭配表查一条">
+		<step id="1" bean="factoryabclife_pfMatchRelBo_bo" method="queryMatchRow"
+			returnkey="queryMatchRowResult">
+			<property refkey="basic" type="string"></property>
+			<property refkey="addition" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="MatchRel.queryRiskName" returnkey="queryRiskNameResult"
+		name="" desc="险种名称查询">
+		<step id="1" bean="factoryabclife_pfMatchRelBo_bo" method="queryRiskName"
+			returnkey="queryRiskNameResult">
+			<property refkey="riskcode" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="MatchRel.savaAddition" returnkey="savaAdditionResult"
+		name="" desc="搭配信息保存">
+		<step id="1" bean="factoryabclife_pfMatchRelBo_bo" method="savaAddition"
+			returnkey="savaAdditionResult">
+			<property refkey="pfMatchRel"
+				type="pojo(com.neusoft.abclife.productfactory.entity.TProductInsurtypeMatchRel)"></property>
+			<property refkey="basic" type="string"></property>
+			<property refkey="opt" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="MatchRel.delAddition" returnkey="delAdditionResult"
+		name="" desc="搭配信息删除">
+		<step id="1" bean="factoryabclife_pfMatchRelBo_bo" method="delAddition"
+			returnkey="delAdditionResult">
+			<property refkey="basic" type="string"></property>
+			<property refkey="addition" type="string"></property>
+		</step>
+	</business>
+	
+</fdframework-business>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/bo">
+   <dc:bo class="com.neusoft.fdframework.productfactory.blo.PfEntityPropertyServiceImpl" interface="" scope="prototype">
+      <baseInfo>
+         <author value="user" />
+      </baseInfo>
+      <import value="java.math.BigDecimal" />
+      <import value="java.util.ArrayList" />
+      <import value="java.util.HashMap" />
+      <import value="java.util.Iterator" />
+      <import value="java.util.List" />
+      <import value="java.util.Map" />
+      <import value="java.util.Set" />
+      <import value="java.util.Map.Entry" />
+      <import value="javax.annotation.Resource" />
+      <import value="org.springframework.stereotype.Service" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfEntityPropertyDao" />
+      <import value="com.neusoft.fdframework.productfactory.dao.PfEntityPropertyShowDao" />
+      <import value="com.neusoft.fdframework.productfactory.dto.EntityPropAndPropEventDto" />
+      <import value="com.neusoft.fdframework.productfactory.dto.EntityPropAndPropShowDto" />
+      <import value="com.neusoft.fdframework.productfactory.dto.PropEventDTO" />
+      <import value="com.neusoft.fdframework.productfactory.dto.TreeDTO" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjAlgo" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjEntity" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfObjRule" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+      <import value="com.neusoft.fdframework.productfactory.entity.PfPropShowDef" />
+      <import value="com.neusoft.fdframework.util.StringUtil" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <dependence name="EntityPropAndPropEventDto" type="dto" dc="factory" ref="EntityPropAndPropEvent" />
+      <dependence name="EntityPropAndPropShowDto" type="dto" dc="factory" ref="EntityPropAndPropShow" />
+      <dependence name="PropEventDTO" type="dto" dc="factory" ref="PropEventDTO" />
+      <dependence name="TreeDTO" type="dto" dc="factory" ref="treeDTO" />
+      <dependence name="PfMEntity" type="entity" dc="factory" ref="pfMEntity" />
+      <dependence name="PfMProperty" type="entity" dc="factory" ref="pfMProperty" />
+      <dependence name="PfObjAlgo" type="entity" dc="factory" ref="pfObjAlgo" />
+      <dependence name="PfObjEntity" type="entity" dc="factory" ref="pfObjEntity" />
+      <dependence name="PfObjRule" type="entity" dc="factory" ref="pfObjRule" />
+      <dependence name="PfPropEventDef" type="entity" dc="factory" ref="pfPropEventDef" />
+      <dependence name="PfPropShowDef" type="entity" dc="factory" ref="pfPropShowDef" />
+      <method name="PfEntityPropertyServiceImpl" returnType="" accessStrategy="public" />
+      <method name="getEntityPropertysAndShows" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[险种配置页面riskDetailIndex
+查询实体关联属性 和show]]></comment>
+         <parameter name="entityId" type="String" />
+      </method>
+      <method name="getEntityPropertysAndEvents" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[险种配置页面riskDetailIndex
+查询实体关联属性 和事件]]></comment>
+         <parameter name="entityId" type="String" />
+      </method>
+      <method name="getPfEntityproperties" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询实体关联属性
+不在分页查询]]></comment>
+         <parameter name="pageNumber" type="int" />
+         <parameter name="pageSize" type="int" />
+         <parameter name="entityId" type="String" />
+      </method>
+      <method name="saveOrder" returnType="String" accessStrategy="public">
+         <comment><![CDATA[实体属性排序]]></comment>
+         <parameter name="selectRow" type="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+         <parameter name="destRow" type="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+         <parameter name="type" type="String" />
+      </method>
+      <method name="addPfEntityPropertyByBusinessPrimaryKey" returnType="int" accessStrategy="public">
+         <comment><![CDATA[根据业务主键添加属性和属性show
+@param pfEntity
+@return]]></comment>
+         <parameter name="rtnPfMEntity_T" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      </method>
+      <method name="addPfEntityPropertyByBusinessForeignKey" returnType="int" accessStrategy="public">
+         <comment><![CDATA[根据业务外键添加属性和属性show
+@param pfEntity
+@return]]></comment>
+         <parameter name="rtnPfMEntity_T" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+         <parameter name="parentPfMEntity" type="com.neusoft.fdframework.productfactory.entity.PfMEntity" />
+      </method>
+      <method name="addPfEntityProperty" returnType="com.neusoft.fdframework.productfactory.entity.PfMProperty" accessStrategy="public">
+         <comment><![CDATA[新增实体属性]]></comment>
+         <parameter name="pfMProperty" type="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+      </method>
+      <method name="addPfEntityProperty2" returnType="String" accessStrategy="public">
+         <comment><![CDATA[新建属性和属性展示
+@param pfMProperty
+ 属性
+@param pfPropShowDef
+ 属性展示
+@return]]></comment>
+         <parameter name="pfMProperty" type="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+         <parameter name="pfPropShowDef" type="com.neusoft.fdframework.productfactory.entity.PfPropShowDef" />
+         <parameter name="pfPropEventDef_load" type="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+         <parameter name="pfPropEventDef_change" type="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+         <parameter name="pfPropEventDef_blur" type="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+      </method>
+      <method name="updPfEntityProperty2" returnType="String" accessStrategy="public">
+         <comment><![CDATA[修改属性和属性展示
+@param pfMProperty
+ 属性
+@param pfPropShowDef
+ 属性展示
+@return]]></comment>
+         <parameter name="pfMProperty" type="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+         <parameter name="pfPropShowDef" type="com.neusoft.fdframework.productfactory.entity.PfPropShowDef" />
+         <parameter name="pfPropEventDef_load" type="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+         <parameter name="pfPropEventDef_change" type="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+         <parameter name="pfPropEventDef_blur" type="com.neusoft.fdframework.productfactory.entity.PfPropEventDef" />
+      </method>
+      <method name="updPfEntityProperty" returnType="String" accessStrategy="public">
+         <comment><![CDATA[修改实体属性]]></comment>
+         <parameter name="pfMProperty" type="com.neusoft.fdframework.productfactory.entity.PfMProperty" />
+      </method>
+      <method name="delPfEntityProperty" returnType="String" accessStrategy="public">
+         <comment><![CDATA[删除实体属性(实体属性, 属性展示值, 属性事件定义)]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="delPfEntityPropertyQuery" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除实体属性, 包括(实体属性, 属性展示值, 属性事件定义)]]></comment>
+         <parameter name="id" type="String" />
+      </method>
+      <method name="saveEntityPropertyValue" returnType="String" accessStrategy="public">
+         <comment><![CDATA[保存实体属性值和关联规则算法]]></comment>
+         <parameter name="riskVerId" type="String" />
+         <parameter name="entityId" type="String" />
+         <parameter name="map" type="java.util.Map" />
+         <parameter name="pfObjRules" type="java.util.List" />
+         <parameter name="pfObjAlgos" type="java.util.List" />
+         <parameter name="opt" type="String" />
+         <parameter name="type" type="int" />
+      </method>
+      <method name="deleteEntityPropertyValue" returnType="void" accessStrategy="public">
+         <comment><![CDATA[删除实体属性值和关联规则算法]]></comment>
+         <parameter name="riskVerId" type="String" />
+         <parameter name="entityId" type="String" />
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="getEntityPropertyValueList" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询实体所有值
+PfObjEntity对象(PF_OBJ_ENTITY表)说明:
+ENTITY_OBJ_ID: 同旧表objSeq字段(属性值归属);
+OWNER_TYPE: 0:实体对象,1:险种版本对象,2:产品版本对象;
+OWNER_OBJ_ID: 
+当OWNER_TYPE = 1时,OWNER_OBJ_ID为险种版本id;(表示关联在险种版本上的实体属性值)
+当OWNER_TYPE = 2时,OWNER_OBJ_ID为产品版本id;(表示关联在产品版本上的实体属性值)
+当OWNER_TYPE = 0时,在PF_OBJ_ENTITY表中不存在这个情况,在PF_OBJ_RULE和PF_OBJ_ALGO表中会存在
+OWNER_OBJ_ID的值和PF_OBJ_ENTITY表中的ENTITY_OBJ_ID关联(表示这个算法或规则属于某个实体属性的某个值)]]></comment>
+         <parameter name="riskVerId" type="String" />
+         <parameter name="entityId" type="String" />
+         <parameter name="type" type="String" />
+      </method>
+      <method name="getEntityPropertyValueR" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询objSeq关联的规则]]></comment>
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="getEntityPropertyValueA" returnType="java.util.List" accessStrategy="public">
+         <comment><![CDATA[查询objSeq关联的算法]]></comment>
+         <parameter name="objSeq" type="String" />
+      </method>
+      <method name="pfEntityPropertyValueCheck" returnType="String" accessStrategy="public">
+         <parameter name="riskVerId" type="String" />
+         <parameter name="currentNode" type="com.neusoft.fdframework.productfactory.dto.TreeDTO" />
+         <parameter name="parentNode" type="com.neusoft.fdframework.productfactory.dto.TreeDTO" />
+         <parameter name="list" type="java.util.List" />
+      </method>
+      <method name="pfEntityPropertyValueCheckAll" returnType="String" accessStrategy="public">
+         <parameter name="riskVerId" type="String" />
+         <parameter name="dsTreeDTO" type="java.util.List" />
+      </method>
+   </dc:bo>
+</dc:dc>
+

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="think" />
+         <creationTime value="2016-02-29 15:27:02" />
+         <modificationTime value="2016-03-04 13:38:43" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<dependence name="pfentity.business.xml"
+		ref="pfentity.business.xml | com.neusoft.fdframework.productfactory.business"
+		dc="factory" />
+	<pMethod name="exportBase" onSuccess="exportBaseSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="pfentity.business.xml" method="pfentity.basic.export"></bo>
+		<context>
+			<pojoList name="pfMEntitys" dataStoreName="pfMEntity_export" />
+			<string name="packages" />
+		</context>
+		<arguments>
+			<argument name="pfMEntitys" type="dataStore"></argument>
+			<argument name="packages" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<pMethod name="down" sync="true" onSuccess="">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="pfentity.business.xml" method="pfentity.basic.download"></bo>
+<context><string name="formId4Download" /></context><arguments><argument name="formId4Download" type="string"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="pfMEntity_export" dependence="pfMEntity" dc="factory"
+		path="pfMEntity.entity" type="entity">
+		<columns>
+			<column name="id" label="id" type="string" length="32" />
+			<column name="pid" label="父实体ID" type="string" length="32" />
+			<column name="nameCn" label="实体中文名称" type="string" length="300" />
+			<column name="nameEn" label="实体英文名称" type="string" length="128" />
+			<column name="keyWord" label="实体关键字" type="string" length="64" />
+			<column name="bizPk" label="业务主键" type="string" length="32" />
+			<column name="bizFk" label="如果是根实体，业务外键可为空" type="string"
+				length="32" />
+			<column name="entityRel" label="0:一对N 1:一对一" type="number"
+				length="22" />
+			<column name="baseModelFlag" label="0:非基础模型 1:基础模型" type="number"
+				length="22" />
+			<column name="modelVerId" label="关联的模型版本ID" type="string"
+				length="32" />
+			<column name="orderNum" label="排序字段" type="number" length="22" />
+		</columns>
+		<autoQuery>
+			<operators></operators>
+			<orders></orders>
+			<joinFetch></joinFetch>
+		</autoQuery>
+	</dataStore>
+</dataCenter>
+      <controls ><tableLayout id="tableLayout_package" width="100%"><colgroup><col width="25%" /><col width="50%" /><col width="25%" /></colgroup><tbody><tr height="25px"><td align="right"><label id="label_package" value="Package："/></td><td><textBox id="textBox_package" width="100%" required="true"></textBox></td><td align="center"><label id="info" value="例如：com.xxx.xxx" style="color:red"/></td></tr></tbody></tableLayout><tableLayout id="tableLayout_btn" width="100%" class="toolbar-table"><colgroup><col width="150px" /></colgroup><tbody><tr height="25px"><td align="right"><button
+	id="button_package" label="导 出" width="100px" iconClass="common_base_btn common_download_btn">
+	<events>
+		<event name="onClick" handlerFunction="button_package_onClick">
+			<function name="button_package_onClick" arguments="event">
+				<script><![CDATA[var packages = unieap.byId("textBox_package").getValue();
+if(packages){
+	view.processor.exportBase(treeDs, packages);
+	
+}]]></script>
+			</function>
+		</event>
+	</events>
+</button></td></tr></tbody></tableLayout><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[var datas = unieap.getXDialog().dialogData;
+treeDs = datas.data;
+//unieap.debug(treeDs);]]></script></function></event></events></controls>
+      <scripts ><variable name="treeDs"><script><![CDATA[null]]></script><comment><![CDATA[]]></comment></variable><function
+	name="exportBaseSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:exportBase方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var zipPath = dc.getParameter("zipPath");
+view.processor.down(zipPath);
+//unieap.getXDialog().close(false);]]>
+	</script>
+</function></scripts>
+      <templateInstances />
+      <resources>
+         <resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+      </resources>
+   </dc:view>
+</dc:dc>
+

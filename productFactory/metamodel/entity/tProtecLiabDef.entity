@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/entity">
+   <dc:entity class="com.neusoft.abclife.productfactory.entity.TProtecLiabDef" table="T_PROTEC_LIAB_DEF" extends="com.neusoft.unieap.core.di.DomainObject">
+      <id name="protecLiabId" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="PROTEC_LIAB_ID" length="16" />
+         <generator class="sequence">
+            <param name="sequence" value="SEQ_PROTEC_LIAB_DEF" />
+         </generator>
+      </id>
+      <property name="pricingLiabId" label="定价责任ID" type="java.lang.Long" getStrategy="public" setStrategy="public">
+         <column name="PRICING_LIAB_ID" not-null="false" length="16" />
+      </property>
+      <property name="protecLiabCode" label="保障责任代码" type="string" getStrategy="public" setStrategy="public">
+         <column name="PROTEC_LIAB_CODE" not-null="false" length="10" />
+      </property>
+      <property name="protecLiabName" label="保障责任名称" type="string" getStrategy="public" setStrategy="public">
+         <column name="PROTEC_LIAB_NAME" not-null="false" length="120" />
+      </property>
+      <property name="pricingLiabCode" label="定价责任代码" type="string" getStrategy="public" setStrategy="public">
+         <column name="PRICING_LIAB_CODE" not-null="false" length="32" />
+      </property>
+      <property name="protecLiabType" label="0-生存领取 1-理赔给付 " type="string" getStrategy="public" setStrategy="public">
+         <column name="PROTEC_LIAB_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="bnfcryType" label="I-被保险人 A-投保人 N-无限制 默认N" type="string" getStrategy="public" setStrategy="public">
+         <column name="BNFCRY_TYPE" not-null="false" length="2" />
+      </property>
+      <property name="startPayLimit" label="超过多少钱进行赔付，是否为该含义，待确认" type="big_decimal" getStrategy="public" setStrategy="public">
+         <column name="START_PAY_LIMIT" not-null="false" length="22" />
+      </property>
+      <property name="isCorrelToAcc" label="'Y-是 N-否' " type="string" getStrategy="public" setStrategy="public">
+         <column name="IS_CORREL_TO_ACC" not-null="false" length="2" />
+      </property>
+      <import value="java.io.Serializable" />
+      <import value="com.neusoft.unieap.core.annotation.ModelFile" />
+      <import value="com.neusoft.fdframework.core.annotation.Column" />
+      <import value="com.neusoft.fdframework.core.annotation.Entity" />
+      <import value="com.neusoft.fdframework.core.annotation.ID" />
+      <import value="com.neusoft.fdframework.core.annotation.Transient" />
+      <import value="com.neusoft.unieap.core.di.DomainObject" />
+   </dc:entity>
+</dc:dc>
+

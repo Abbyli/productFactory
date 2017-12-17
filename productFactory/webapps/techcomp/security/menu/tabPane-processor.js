@@ -1,0 +1,1 @@
+ /*** @author user * @creationTime 2014-09-10 15:09:30 * @modificationTime 2014-09-10 15:19:53 * @version 1.0.0* @generated */dojo.provide("_security.menu.tabPane.Processor");dojo.declare("_security.menu.tabPane.Processor",unieap.view.Processor, {});

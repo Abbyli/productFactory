@@ -1,0 +1,1168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dc:dc xmlns:dc="http://www.neusoft.com/2009/dc" xmlns="http://www.neusoft.com/2009/view" xmlns:wd="http://www.neusoft.com/2009/widget">
+   <dc:view theme="unieap">
+      <baseInfo>
+         <author value="Administrator" />
+         <creationTime value="2015-08-10 12:25:21" />
+         <modificationTime value="2015-12-23 16:32:14" />
+         <version value="1.0.0" />
+         <comment />
+      </baseInfo>
+      <dependences />
+      <entry>
+         <eMethod name="show" />
+      </entry>
+      <processor>
+	<pMethod name="getBomAttribute" title="获取Bom的参数列表" onSuccess="getBomAttributeSuccess">
+		<comment><![CDATA[]]>
+		</comment>
+		<bo name="rule.business.xml" method="arithengine.config.rule.getBomAttribute"></bo>
+		<context>
+			<string name="bomId" />
+		</context>
+		<arguments>
+			<argument name="bomId" type="string"></argument>
+		</arguments>
+	</pMethod>
+	<dependence name="rule.business.xml" ref="rule.business.xml | com.neusoft.business"
+		dc="config" />
+	<pMethod name="validCondition" title="校验条件表达式" onSuccess="validConditionSuccess">
+	<comment><![CDATA[]]>
+	</comment>
+	<bo name="rule.business.xml" method="arithengine.config.rule.validCondition"></bo>
+<context><string name="conditionStr" /></context><arguments><argument name="conditionStr" type="string"></argument></arguments></pMethod>
+</processor>
+      <messageWires />
+      <dataCenter>
+	<dataStore name="iFConditionPojo" dependence="iFConditionPojo"
+		dc="config" path="com.neusoft.arithmetic.pojo.IFConditionPojo" type="pojo">
+		<columns>
+			<column name="returnKey" label="returnKey" type="string" />
+			<column name="property" label="property" type="string" />
+			<column name="name" label="name" type="string" />
+			<column name="condition" label="condition" type="string" />
+			<column name="fixValue" label="fixValue" type="string" />
+			<column name="type" label="type" type="string" />
+			<column name="returnType" label="returnType" type="string" />
+		</columns>
+	</dataStore>
+</dataCenter>
+      <controls ><template id="template1" instance="false" type="com.neusoft.unieap.adaptiveLayout_1.0.0">
+    <adaptiveContainer id="adaptiveContainer1">
+      <adaptivePane adaptiveHeight="100%" autoHeight="true" height="220px" width="auto">
+        
+      <template id="template2" instance="true" type="com.neusoft.unieap.form_1.0.0">
+    <form binding-store="iFConditionPojo" id="form1">
+      <tableLayout id="form1_tableLayout" tableLayout="fixed" width="100%" height="177px">
+        <colgroup>
+          <col width="13%" />
+          <col width="30%" />
+          <col width="1%" />
+          <col width="13%" />
+          <col width="30%" />
+          <col width="20px" />
+        </colgroup>
+        <tbody>
+          <tr id="form1_2_tr">
+            <td id="returnKey_label_td" rowSpan="1" align="right">
+              <label id="returnKey_label" value="参数：" />
+            </td>
+            <td colSpan="1" id="returnKey_td" rowSpan="1">
+              <comboBox binding-name="returnKey"
+	dataProvider-store="paramStore" id="returnKey" popup-height="300px"
+	width="100%" decoder-valueAttr="returnKey" decoder-displayAttr="name">
+	<events>
+		<event name="onChange" handlerFunction="returnKey_onChange">
+			<function name="returnKey_onChange" arguments="value">
+				<script><![CDATA[var ds=unieap.byId("returnKey").getDataProvider().getDataStore();
+unieap.getElementById("img2").style.display='none';
+if(ds&&ds.getRowSet().getRowCount(0)>0)
+{
+	for(var i=0;i<ds.getRowSet().getRowCount(0);i++)
+	{
+		var returnType = ds.getRowSet().getRow(i).getItemValue("returnType");
+		var returnKey=ds.getRowSet().getRow(i).getItemValue("returnKey");
+		if(returnKey==value)
+		{
+			if(returnType!='string'&&returnType!='number'&&returnType!='date')
+			{
+				unieap.byId("property").setDisplay("");
+				unieap.getElementById("property_label").style.display='';
+				unieap.getElementById("img2").style.display='';
+				view.processor.getBomAttribute(returnType);
+			}
+			else
+			{
+				unieap.byId("property").setDisplay("none");
+				unieap.getElementById("property_label").style.display='none';
+				var attributeStore=new unieap.ds.DataStore("attributeStore");
+				unieap.byId("property").getDataProvider().setDataStore(attributeStore);
+			}
+		}
+	}
+}
+	
+		
+]]></script>
+			</function>
+		</event>
+	</events>
+</comboBox>
+            </td>
+            <td id="property_label_td" rowSpan="1">
+              
+            <img id="img1" width="16px" height="16px" style="cursor:hand"
+	title="选取" src="arithengine/images/add.gif">
+	<events>
+		<event name="onclick" handlerFunction="img1_onclick">
+			<function name="img1_onclick" arguments="">
+				<script><![CDATA[var returnKey=unieap.byId("returnKey").getValue();
+if(returnKey)
+{
+	var name=unieap.byId("name").getValue();
+	var condition=unieap.byId("condition").getValue();
+	ifCondition_sel.pushHistory({content:condition,name:name});
+	condition=condition+"#"+returnKey;
+	unieap.byId("condition").setValue(condition);
+	
+	
+	var returnName=unieap.byId("returnKey").getText();
+	name=name+returnName;
+	unieap.byId("name").setValue(name);
+}
+
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+            <td colSpan="1" id="property_td" rowSpan="1" align="right">
+              
+            <label id="property_label" value="属性：" /></td>
+            <td id="condition_label_td" rowSpan="1">
+            <comboBoxTree id="property" popup-height="300px" binding-name="property"
+					treeJson-binding="{store:'attributeStore',id:'id',label:'name',parent:'parentId',query:{name:'parentId',relation:'=',value:null}}" width="100%"></comboBoxTree>
+            </td>
+            <td colSpan="1" id="condition_td" rowSpan="1">
+              
+            <img id="img2" width="16px" height="16px" style="cursor:hand"
+	title="选择" src="arithengine/images/add.gif">
+	<events>
+		<event name="onclick" handlerFunction="img2_onclick">
+			<function name="img2_onclick" arguments="">
+				<script><![CDATA[var bomArributeObj=unieap.byId("property");
+var bomAttribute;
+
+var attributeStore=dataCenter.getDataStore("attributeStore");
+if(attributeStore)
+{
+	if(attributeStore&&attributeStore.getRowSet().getRowCount(0)>0)
+	{
+		for(var i=0,n=attributeStore.getRowSet().getRowCount(0);i<n;i++)
+		{
+			var id=attributeStore.getRowSet().getRow(i).getItemValue("id");
+			var property=attributeStore.getRowSet().getRow(i).getItemValue("property");
+			if(id==bomArributeObj.getValue())
+			{
+				bomAttribute=property;
+				break;
+			}
+		}
+	}
+}
+		
+
+if(bomAttribute)
+{
+	var name=unieap.byId("name").getValue();
+	var condition=unieap.byId("condition").getValue();
+	ifCondition_sel.pushHistory({content:condition,name:name});
+	var bomProperty=unieap.byId("returnKey").getValue();
+	condition=condition+"#"+bomProperty+"."+bomAttribute;
+	unieap.byId("condition").setValue(condition);
+	
+	
+	
+	
+	var returnName=unieap.byId("returnKey").getText();
+	var bomAttributeName=unieap.byId("property").getText();
+	name=name+returnName+"."+bomAttributeName;
+	unieap.byId("name").setValue(name);
+}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+          </tr>
+          <tr id="form1_7_tr">
+            <td id="returnKey_label_td" rowSpan="1" align="right">
+              
+            <label id="label1" value="类型："/></td>
+            <td colSpan="1" id="returnKey_td" rowSpan="1">
+              
+            <comboBox id="returnType" width="100%"
+	binding-name="returnType" dataProvider-store="ifTypeStore"
+	decoder-displayAttr="name" decoder-valueAttr="id">
+	<events>
+		<event name="onChange" handlerFunction="returnType_onChange">
+			<function name="returnType_onChange" arguments="value">
+				<script><![CDATA[if(value=='string')
+{
+	unieap.byId("fixValue").setDisplay("");
+	unieap.byId("numberTextBox1").setDisplay("none");
+}
+else
+{
+	unieap.byId("fixValue").setDisplay("none");
+	unieap.byId("numberTextBox1").setDisplay("");
+}]]></script>
+			</function>
+		</event>
+	</events>
+</comboBox></td>
+            <td id="property_label_td" rowSpan="1">
+              
+            </td>
+            <td colSpan="1" id="property_td" rowSpan="1" align="right">
+              
+            <label id="fixValue_label" value="固定值：" /></td>
+            <td id="condition_label_td" rowSpan="1">
+              
+            <textBox id="fixValue" width="100%" binding-name="fixValue"></textBox><numberTextBox id="numberTextBox1" width="100%"></numberTextBox></td>
+            <td colSpan="1" id="condition_td" rowSpan="1">
+              
+            <img id="img7" width="16px" height="16px" style="cursor:hand"
+	title="选取" src="arithengine/images/add.gif">
+	<events>
+		<event name="onclick" handlerFunction="img7_onclick">
+			<function name="img7_onclick" arguments="">
+				<script><![CDATA[var fixValue=unieap.byId("fixValue").getValue();
+var returnType=unieap.byId("returnType").getValue();
+if(returnType=='string')
+{
+	fixValue="'"+fixValue+"'";
+}
+else
+{
+	fixValue=unieap.byId("numberTextBox1").getValue()+"";
+}
+
+if(fixValue.length>0)
+{
+	var condition=unieap.byId("condition").getValue();
+	var name=unieap.byId("name").getValue();
+	ifCondition_sel.pushHistory({content:condition,name:name});
+	condition=condition+fixValue
+	unieap.byId("condition").setValue(condition);
+	
+	
+	name=name+fixValue;
+	unieap.byId("name").setValue(name);
+}
+
+]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+          </tr>
+          <tr id="form1_3_tr">
+          	<td></td>
+            <td colSpan="4" id="name_td" rowSpan="1">
+             	<button id="button1" label="并且">
+	<events>
+		<event name="onClick" handlerFunction="button1_onClick">
+			<function name="button1_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+"&&";
+unieap.byId("condition").setValue(condition);
+
+
+name=name+unieap.byId("button1").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+             	<button id="button2" label="或者">
+	<events>
+		<event name="onClick" handlerFunction="button2_onClick">
+			<function name="button2_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+"||";
+unieap.byId("condition").setValue(condition);
+
+
+
+name=name+unieap.byId("button2").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+             	<button id="button3" label="非">
+	<events>
+		<event name="onClick" handlerFunction="button3_onClick">
+			<function name="button3_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+"!";
+unieap.byId("condition").setValue(condition);
+
+
+name=name+unieap.byId("button3").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+             	<button id="button4" label="大于">
+	<events>
+		<event name="onClick" handlerFunction="button4_onClick">
+			<function name="button4_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+">";
+unieap.byId("condition").setValue(condition);
+
+name=name+unieap.byId("button4").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+             	<button id="button5" label="大于等于">
+	<events>
+		<event name="onClick" handlerFunction="button5_onClick">
+			<function name="button5_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+">=";
+unieap.byId("condition").setValue(condition);
+
+name=name+unieap.byId("button5").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+             	<button id="button6" label="等于">
+	<events>
+		<event name="onClick" handlerFunction="button6_onClick">
+			<function name="button6_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+"==";
+unieap.byId("condition").setValue(condition);
+
+
+
+name=name+unieap.byId("button6").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+				<button id="button11" label="不等于">
+	<events>
+		<event name="onClick" handlerFunction="button11_onClick">
+			<function name="button11_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+"!=";
+unieap.byId("condition").setValue(condition);
+
+
+name=name+unieap.byId("button11").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+             	<button id="button7" label="小于">
+	<events>
+		<event name="onClick" handlerFunction="button7_onClick">
+			<function name="button7_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+"<";
+unieap.byId("condition").setValue(condition);
+
+name=name+unieap.byId("button7").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+             	<button id="button8" label="小于等于">
+	<events>
+		<event name="onClick" handlerFunction="button8_onClick">
+			<function name="button8_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+"<=";
+unieap.byId("condition").setValue(condition);
+
+name=name+unieap.byId("button8").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+             	
+             	
+            </td>
+            <td></td>
+          </tr>
+          <tr id="form1_3_tr">
+          	 <td ></td>
+            <td colSpan="4" id="name_td" rowSpan="1">
+            <button id="nulBtn" label="空">
+	<events>
+		<event name="onClick" handlerFunction="nulBtn_onClick">
+			<function name="nulBtn_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+"null";
+unieap.byId("condition").setValue(condition);
+
+
+name=name+unieap.byId("nulBtn").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="button9" label="(">
+	<events>
+		<event name="onClick" handlerFunction="button9_onClick">
+			<function name="button9_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+condition=condition+"(";
+unieap.byId("condition").setValue(condition);
+
+var name=unieap.byId("name").getValue();
+name=name+unieap.byId("button9").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button><button id="button10" label=")">
+	<events>
+		<event name="onClick" handlerFunction="button10_onClick">
+			<function name="button10_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+var name=unieap.byId("name").getValue();
+ifCondition_sel.pushHistory({content:condition,name:name});
+condition=condition+")";
+unieap.byId("condition").setValue(condition);
+
+
+name=name+unieap.byId("button10").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+<button id="addButton" label="+">
+	<events>
+		<event name="onClick" handlerFunction="addButton_onClick">
+			<function name="addButton_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+condition=condition+"+";
+unieap.byId("condition").setValue(condition);
+
+var name=unieap.byId("name").getValue();
+name=name+unieap.byId("addButton").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+<button id="substractButton" label="-">
+	<events>
+		<event name="onClick" handlerFunction="substractButton_onClick">
+			<function name="substractButton_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+condition=condition+"-";
+unieap.byId("condition").setValue(condition);
+
+var name=unieap.byId("name").getValue();
+name=name+unieap.byId("substractButton").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+<button id="mitiButton" label="*">
+	<events>
+		<event name="onClick" handlerFunction="mitiButton_onClick">
+			<function name="mitiButton_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+condition=condition+"*";
+unieap.byId("condition").setValue(condition);
+
+var name=unieap.byId("name").getValue();
+name=name+unieap.byId("mutiButton").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+<button id="divideButton" label="/">
+	<events>
+		<event name="onClick" handlerFunction="divideButton_onClick">
+			<function name="divideButton_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+condition=condition+"/";
+unieap.byId("condition").setValue(condition);
+
+var name=unieap.byId("name").getValue();
+name=name+unieap.byId("divideButton").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+<button id="modButton" label="%">
+	<events>
+		<event name="onClick" handlerFunction="modButton_onClick">
+			<function name="modButton_onClick" arguments="event">
+				<script><![CDATA[var condition=unieap.byId("condition").getValue();
+condition=condition+"%";
+unieap.byId("condition").setValue(condition);
+
+var name=unieap.byId("name").getValue();
+name=name+unieap.byId("modButton").getValue();
+unieap.byId("name").setValue(name);]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+</td>
+            <td></td>
+          </tr>
+           <tr id="form1_4_tr">
+            <td id="name_label_td" rowSpan="1" align="right">
+              
+            <label id="condition_label" value="表达式：" /></td>
+            <td colSpan="4" id="name_td" rowSpan="1">
+              
+            <textarea binding-name="condition" id="condition"
+	width="100%">
+	<events>
+		<event name="onKeyUp" handlerFunction="condition_onKeyUp">
+			<function name="condition_onKeyUp" arguments="event">
+				<script><![CDATA[if (event.keyCode){
+	event.returnValue = false ;
+} 
+]]></script>
+			</function>
+		</event>
+		<event name="onKeyPress" handlerFunction="condition_onKeyPress">
+			<function name="condition_onKeyPress" arguments="event">
+				<script><![CDATA[if (event.keyCode){
+	event.returnValue = false ;
+} ]]></script>
+			</function>
+		</event>
+		<event name="onKeyDown" handlerFunction="condition_onKeyDown">
+			<function name="condition_onKeyDown" arguments="event">
+				<script><![CDATA[if (event.keyCode){
+	event.returnValue = false ;
+} ]]></script>
+			</function>
+		</event>
+	</events>
+</textarea></td>
+            <td><img id="img3" width="16px" height="16px" style="cursor:hand"
+	src="arithengine/images/clear.png" title="删除">
+	<events>
+		<event name="onclick" handlerFunction="img3_onclick">
+			<function name="img3_onclick" arguments="">
+				<script><![CDATA[var obj=ifCondition_sel.popHistory();
+unieap.byId("condition").setValue(obj.content);
+unieap.byId("name").setValue(obj.name);]]></script>
+			</function>
+		</event>
+	</events>
+</img></td>
+          </tr>
+           <tr id="form1_5_tr">
+            <td id="name_label_td" rowSpan="1" align="right">
+              <label id="name_label" value="描述：" />
+            </td>
+            <td colSpan="4" id="name_td" rowSpan="1">
+              <textarea binding-name="name" id="name" width="100%"></textarea>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </tableLayout>
+    </form>
+    <tableLayout id="form1_ToolBarInfo" tableLayout="fixed" width="100%">
+      <colgroup>
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="" />
+        <col width="85px" />
+        <col width="85px" />
+      </colgroup>
+      <tbody>
+        <tr height="30px">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td align="right"></td>
+          <td>
+            <button id="form1_saveButton" label="确定" width="80px">
+	<events>
+		<event name="onClick" handlerFunction="form1_saveButton_onClick">
+			<function name="form1_saveButton_onClick" arguments="event">
+				<script><![CDATA[view.processor.validCondition(unieap.byId("condition").getValue());]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+          <td>
+            <button id="form1_resetButton" label="关闭" width="80px">
+	<events>
+		<event name="onClick" handlerFunction="form1_resetButton_onClick">
+			<function name="form1_resetButton_onClick" arguments="event">
+				<script><![CDATA[unieap.getXDialog().close();]]></script>
+			</function>
+		</event>
+	</events>
+</button>
+          </td>
+        </tr>
+      </tbody>
+    </tableLayout>
+  </template></adaptivePane>
+    </adaptiveContainer>
+  </template><events><event name="load" handlerFunction="page_load"><function name="page_load" arguments=""><script><![CDATA[unieap.byId("property").setDisplay("none");
+
+unieap.getElementById("img2").style.display='none';
+unieap.getElementById("property_label").style.display='none';
+
+unieap.byId("returnType").setValue("string");
+ifCondition_sel.historyStack=new Array();
+
+unieap.byId("fixValue").setDisplay("");
+unieap.byId("numberTextBox1").setDisplay("none");
+
+var ruleContext=null;
+var dialogDs=unieap.getXDialog().dialogData;
+if(dialogDs.data !=null){
+	ruleContext= dialogDs.data;
+	paramStore=dataCenter.getDataStore("paramStore");
+	var paraArray=ruleContext.getParamList();
+	if(paraArray&&paraArray.length>0)
+	{
+		for(var i=0,n=paraArray.length;i<n;i++)
+		{
+			paramStore.getRowSet().addRow(paraArray[i]);
+		}
+	}
+}
+
+
+]]></script></function></event><event name="init" handlerFunction="page_init"><function name="page_init" arguments=""><script><![CDATA[var paramStore=new unieap.ds.DataStore("paramStore");
+var attributeStore=new unieap.ds.DataStore("attributeStore");
+
+var ifTypeStore=new unieap.ds.DataStore("ifTypeStore");
+ifTypeStore.getRowSet().addRow({id:'string',name:'字符串'});
+ifTypeStore.getRowSet().addRow({id:'number',name:'数值型'});
+
+dataCenter.addDataStore("ifTypeStore", ifTypeStore);
+dataCenter.addDataStore("paramStore", paramStore);
+dataCenter.addDataStore("attributeStore", attributeStore);]]></script></function></event></events></controls>
+      <scripts ><function name="getBomAttributeSuccess"
+	arguments="dc">
+	<comment><![CDATA[/**
+ * @description:getBomAttribute方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[try{
+	var store = dc.getDataStore("result");
+	if(store){
+		var attributeStore=dataCenter.getDataStore("attributeStore");
+		if(attributeStore)
+		{
+			var array=[];
+			if(store&&store.getRowSet().getRowCount(0)>0)
+			{
+				for(var i=0,n=store.getRowSet().getRowCount(0);i<n;i++)
+				{
+					var id=store.getRowSet().getRow(i).getItemValue("id");
+					var name=store.getRowSet().getRow(i).getItemValue("name");
+					var parentId=store.getRowSet().getRow(i).getItemValue("parentId");
+					var property=store.getRowSet().getRow(i).getItemValue("property");
+					array.push({id:id,name:name,parentId:parentId,property:property});
+				}
+			}
+			attributeStore.getRowSet().deleteAllRows();
+			attributeStore.getRowSet().addRows(array);
+		}
+		else
+		{
+			dataCenter.addDataStore("attributeStore",store);
+		}
+		var treeJson={
+			binding:{leaf:'leaf',store:'attributeStore',id:'id',parent:'parentId',label:'name',query:{name:'parentId',relation:'=',value:null}}
+		};
+		unieap.byId("property").setTreeJson(treeJson);
+	}
+}
+catch (e){
+}
+]]></script>
+</function><function name="validConditionSuccess" arguments="dc">
+	<comment><![CDATA[/**
+ * @description:validCondition方法的成功回调。
+ * 
+ */
+]]></comment>
+	<script><![CDATA[var code = dc.getParameter("result");
+
+if(code>0)
+{
+	var retObj={condition:unieap.byId("condition").getValue(),name:unieap.byId("name").getValue()};
+	unieap.getXDialog().setReturn(retObj);
+	unieap.getXDialog().close();
+	
+}
+else
+{
+	MessageBox.alert({
+        title: '提示信息',
+        message: "表达式不合法，请重新输入。",
+        onComplete: function () {
+		}
+	});
+}
+]]></script>
+</function><function name="pushHistory" arguments="contentObj">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[ifCondition_sel.historyStack.push(contentObj);]]>
+	</script>
+</function><function name="popHistory" arguments="">
+	<comment><![CDATA[/**
+ * @description:
+ * 
+* @param: {参数类型} arg0参数描述 
+ * @return:
+ * 
+ */]]></comment>
+	<script><![CDATA[if(ifCondition_sel.historyStack.length>0)
+{
+	return ifCondition_sel.historyStack.pop();
+}
+return {content:"",name:""};]]>
+	</script>
+</function></scripts>
+      <templateInstances>
+<templateInstance target="template2"><![CDATA[<com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>
+  <functionName>Form</functionName>
+  <description>该向导用于快速生成表单控件</description>
+  <templateInfo>
+    <templateId>com.neusoft.unieap.form_1.0.0</templateId>
+    <label>Form</label>
+    <version>1.0.0</version>
+    <description>该向导用于快速生成表单控件</description>
+  </templateInfo>
+  <wizardDataClassMap>
+    <entry>
+      <string>id</string>
+      <string>form1</string>
+    </entry>
+    <entry>
+      <string>formLayoutInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+        <colType>six_1320</colType>
+        <colsPropertyList>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+          <string></string>
+        </colsPropertyList>
+      </com.neusoft.unieap.workshop.controlmode.model.form.LayoutInfo>
+    </entry>
+    <entry>
+      <string>prefix</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>isGenerateForm</string>
+      <boolean>true</boolean>
+    </entry>
+    <entry>
+      <string>boList</string>
+      <list>
+        <com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+          <name></name>
+          <method></method>
+          <returnType></returnType>
+          <chosed>false</chosed>
+          <arguments></arguments>
+          <dc></dc>
+          <module></module>
+          <sc></sc>
+          <refName></refName>
+          <isMerge>true</isMerge>
+          <refBoID></refBoID>
+          <isProcess>false</isProcess>
+          <properties/>
+          <hasOnSuccess>false</hasOnSuccess>
+          <isChange>false</isChange>
+          <parameterNumber>3</parameterNumber>
+        </com.neusoft.unieap.workshop.controlmode.model.processor.Processor>
+      </list>
+    </entry>
+    <entry>
+      <string>dataSourceID</string>
+      <string></string>
+    </entry>
+    <entry>
+      <string>formInfo</string>
+      <com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+        <propertyList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>returnKey</name>
+            <label>参数：</label>
+            <labelTD>
+              <id>returnKey_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>returnKey_label</id>
+                <value>参数：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>returnKey_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>returnKey</id>
+                <properties/>
+                <binding__name>returnKey</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>paramStore</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>property</name>
+            <label>属性：</label>
+            <labelTD>
+              <id>property_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>property_label</id>
+                <value>属性：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>comboBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>property_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>comboBox</controlType>
+                <id>property</id>
+                <properties/>
+                <binding__name>property</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store>attributeStore</dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>comboBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>condition</name>
+            <label>表达式：</label>
+            <labelTD>
+              <id>condition_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>condition_label</id>
+                <value>表达式：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>condition_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>condition</id>
+                <properties/>
+                <binding__name>condition</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+          <com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+            <name>name</name>
+            <label>描述：</label>
+            <labelTD>
+              <id>name_label_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <properties/>
+              <labelInfo>
+                <id>name_label</id>
+                <value>描述：</value>
+                <properties/>
+              </labelInfo>
+              <controlType>textBox</controlType>
+            </labelTD>
+            <controlTD>
+              <id>name_td</id>
+              <rowSpan>1</rowSpan>
+              <colSpan>1</colSpan>
+              <control>
+                <controlType>textBox</controlType>
+                <id>name</id>
+                <properties/>
+                <binding__name>name</binding__name>
+                <binding__markDirty>true</binding__markDirty>
+                <dataProvider__store></dataProvider__store>
+                <width>100%</width>
+                <colSpan>1</colSpan>
+                <rowSpan>1</rowSpan>
+                <isRequired>false</isRequired>
+                <isReadOnly>false</isReadOnly>
+                <isDisabled>false</isDisabled>
+                <isGlobalEnabled>false</isGlobalEnabled>
+                <popup__displayStyle>list</popup__displayStyle>
+                <popup__height>300px</popup__height>
+                <iconClass></iconClass>
+                <treeJson__binding>{store:&apos;#&apos;,id:&apos;key&apos;,label:&apos;name&apos;,parent:&apos;parentId&apos;,query:{name:&apos;parentId&apos;,relation:&apos;=&apos;,value:&apos;-1&apos;}}</treeJson__binding>
+              </control>
+              <properties/>
+              <controlType>textBox</controlType>
+            </controlTD>
+            <labelDisplay>left</labelDisplay>
+            <type>string</type>
+            <length></length>
+            <isShow>true</isShow>
+            <isEnable>true</isEnable>
+            <isFake>false</isFake>
+            <isCondition>false</isCondition>
+            <isRequired>false</isRequired>
+            <isReadOnly>false</isReadOnly>
+            <isDisabled>false</isDisabled>
+            <isGlobalEnabled>false</isGlobalEnabled>
+          </com.neusoft.unieap.workshop.controlmode.model.form.FormProperty>
+        </propertyList>
+        <trList>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_2_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+          <com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+            <id>form1_3_tr</id>
+            <properties/>
+            <propertyList/>
+          </com.neusoft.unieap.workshop.controlmode.model.form.Tr>
+        </trList>
+        <colStateArray>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+          <int>0</int>
+        </colStateArray>
+        <isDataStoreChange>true</isDataStoreChange>
+        <isIdChange>true</isIdChange>
+        <lastId></lastId>
+        <isHaveChosedBoMethod>false</isHaveChosedBoMethod>
+        <tableInfo>
+          <id>form1_tableLayout</id>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+        </tableInfo>
+        <toolBarInfo>
+          <WIDTH>width</WIDTH>
+          <COLWIDTH>colwidth</COLWIDTH>
+          <propertyList>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_saveButton</id>
+              <name>form1_saveButton</name>
+              <label>保存</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>保存</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+            <com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+              <id>form1_resetButton</id>
+              <name>form1_resetButton</name>
+              <label>重置</label>
+              <type>button</type>
+              <width>140px</width>
+              <colWidth>145px</colWidth>
+              <widthType>px</widthType>
+              <iconClass></iconClass>
+              <value>重置</value>
+              <properties/>
+            </com.neusoft.unieap.workshop.controlmode.model.toolbar.ToolBarProperty>
+          </propertyList>
+          <valColWidth>145px</valColWidth>
+          <valWidth>140px</valWidth>
+          <alignType>1</alignType>
+          <height>30px</height>
+          <id>form1_ToolBarInfo</id>
+          <colNum>7</colNum>
+          <noNeedNewAlign>false</noNeedNewAlign>
+          <controlIDPre>form1</controlIDPre>
+          <tableLayout>fixed</tableLayout>
+          <width>100%</width>
+          <properties/>
+          <trHeight>30px</trHeight>
+          <colCount>7</colCount>
+        </toolBarInfo>
+        <functionList/>
+        <isGenerateForm>true</isGenerateForm>
+        <id>form1</id>
+        <properties/>
+        <isMerge>false</isMerge>
+        <binding__store>iFConditionPojo</binding__store>
+        <markDirty>true</markDirty>
+        <container class="com.neusoft.unieap.workshop.controlmode.model.control.TitlePane">
+          <id>form1_titlePane_qCondition</id>
+          <properties/>
+          <flexible>false</flexible>
+          <title>查询条件</title>
+        </container>
+        <colCount>0</colCount>
+        <trListCount>2</trListCount>
+      </com.neusoft.unieap.workshop.controlmode.model.form.FormInfo>
+    </entry>
+  </wizardDataClassMap>
+</com.neusoft.unieap.workshop.ui.template.function.TemplateInstanceImpl>]]></templateInstance></templateInstances>
+      <resources>
+	<resource type="jsp" src="/techcomp/ria/base/base.jsp" />
+	<resource type="jsp" src="/arithengine/jsp/pop.jsp" />
+</resources>
+   </dc:view>
+</dc:dc>
+

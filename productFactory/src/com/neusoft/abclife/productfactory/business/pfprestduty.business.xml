@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fdframework-business xmlns="http://www.neusoft.com/fdframework/business"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<business id="pfinsurtypeaccdef.queryGivePaid" returnkey="queryGivePaidResult" name="" desc="查询给付后处理">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="queryGivePaid" returnkey="queryGivePaidResult">
+			<property refkey="givepatId" type="string"></property>
+		</step>
+	</business>
+	<business id="pfinsurtypeaccdef.getPfInsurtypePrest" returnkey="insurtyprestduty" name="" desc="定价责任查询">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="getPfInsurtypePrest" returnkey="insurtyprestduty">
+			<property refkey="insurtypebasciinf" type="com.neusoft.abclife.productfactory.entity.TInsurtypeBasicInf"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.queryPriceDutyId" returnkey="queryPrestResult" name="" desc="保障责任查询分页">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="queryPriceDutyId" returnkey="queryPrestResult">
+			<property refkey="priceDutyId" type="long"></property>
+			<property refkey="pageNumber" type="int"></property>
+			<property refkey="pageSize" type="int"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.queryPriceDutyIdNoPage" returnkey="queryPrestResultNoPage" name="" desc="保障责任查询无分页">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="queryPriceDutyIdNoPage" returnkey="queryPrestResultNoPage">
+			<property refkey="priceDutyId" type="long"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.queryClaim" returnkey="queryClaimResult" name="" desc="理赔给付查询">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="queryClaim" returnkey="queryClaimResult">
+			<property refkey="tqueryClaim" type="long"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.addPrest" returnkey="addPrestResult" name="" desc="保障责任添加">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="addPrest" returnkey="addPrestResult">
+			<property refkey="prest" type="com.neusoft.abclife.productfactory.entity.TProtecLiabDef"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.addPrestClaim" returnkey="addPrestClaimResult" name="" desc="理赔给付保存">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="addPrestClaim" returnkey="addPrestClaimResult">
+			<property refkey="prestClaim" type="com.neusoft.abclife.productfactory.entity.TClaimGivepayDef"></property>
+			<property refkey="givePaid" type="list"></property>
+			<property refkey="protecLiabType" type="string"></property>
+			<property refkey="opt" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.delPrestClaim" returnkey="delPrestClaimResult" name="" desc="删除理赔信息">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="delPrestClaim" returnkey="delPrestClaimResult">
+			<property refkey="tdelClaim" type="com.neusoft.abclife.productfactory.entity.TClaimGivepayDef"></property>
+			<property refkey="type" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.saveTSurvvGivepayDef" returnkey="saveTSurvvGivepayDef" desc="保存生存给付">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="saveTSurvvGivepayDef" returnkey="saveTSurvvGivepayDef">
+			<property refkey="tSurvvGivepayDef" type="pojo(com.neusoft.abclife.productfactory.entity.TSurvvGivepayDef)"></property>
+			<property refkey="opt" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.queryTSurvvGivepayDef" returnkey="queryTSurvvGivepayDef" desc="查询生存给付信息">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="queryTSurvvGivepayDef" returnkey="queryTSurvvGivepayDef">
+			<property refkey="tProtecLiabDef" type="pojo(com.neusoft.abclife.productfactory.entity.TProtecLiabDef)"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.delTSurvvGivepayDef" returnkey="" name="" desc="删除生存给付信息">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="delTSurvvGivepayDef" returnkey="">
+			<property refkey="tSurvvGivepayDef" type="pojo(com.neusoft.abclife.productfactory.entity.TSurvvGivepayDef)"></property>
+			<property refkey="type" type="string"></property>
+		</step>
+	</business>
+	
+	<business id="pfinsurtypeaccdef.delTProtecLiabDef" returnkey="" name="" desc="保障责任删除">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="delTProtecLiabDef" returnkey="">
+			<property refkey="tProtecLiabDef" type="pojo(com.neusoft.abclife.productfactory.entity.TProtecLiabDef)"></property>
+		</step>
+	</business>
+	
+	<business id="pfprestduty.getTObjFormula" returnkey="getTObjFormula" name="" desc="包含翻页查询对象公式表">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="getTObjFormula" returnkey="getTObjFormula">
+			<property refkey="id" type="long"></property>
+			<property refkey="type" type="string"></property>
+		</step>
+	</business>
+	<business id="pfprestduty.getAllProtecLiab" returnkey="getAllProtecLiab" name="" desc="查询所有保障责任">
+		<step id="1" bean="factoryabclife_pfPrestDutyBo_bo" method="getAllProtecLiab" returnkey="getAllProtecLiab"></step>
+	</business>
+	
+</fdframework-business>
